@@ -31,7 +31,7 @@ class SecondaryButton extends StatelessWidget {
               ? AppColors.textDark
               : AppColors.primaryDeepBlue,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             side: const BorderSide(color: AppColors.softGray, width: 1),
           ),
           elevation: 0,

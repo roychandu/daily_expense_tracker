@@ -83,7 +83,7 @@ class _CustomCardState extends State<CustomCard>
                 color:
                     widget.backgroundColor ??
                     (isDark ? AppColors.cardDark : AppColors.cardLight),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),
