@@ -1,0 +1,22 @@
+{
+  "@@locale": "de",
+  "appTitle": "Täglicher Ausgaben-Tracker",
+  "settings": "Einstellungen",
+  "preferences": "EINSTELLUNGEN",
+  "language": "Sprache",
+  "currency": "Währung",
+  "darkMode": "Dunkelmodus",
+  "dailyReminder": "Tägliche Erinnerung",
+  "data": "DATEN",
+  "exportCsv": "CSV Exportieren",
+  "exportPdf": "PDF Exportieren",
+  "watchAd": "Anzeige ansehen",
+  "premium": "PREMIUM",
+  "removeAds": "Anzeigen entfernen - 3,99 $",
+  "about": "ÜBER",
+  "privacyPolicy": "Datenschutzerklärung",
+  "termsOfService": "Nutzungsbedingungen",
+  "version": "Version",
+  "selectLanguage": "Sprache auswählen",
+  "selectCurrency": "Währung auswählen"
+}

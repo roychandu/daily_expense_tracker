@@ -6,6 +6,10 @@ import '../../common_widgets/custom_card.dart';
 import '../../common_widgets/custom_text_field.dart';
 import '../../services/database_service.dart';
 import '../../models/expense.dart';
+import '../../controllers/settings_controller.dart';
+import '../../l10n/app_localizations.dart';
+import '../../utils/formatters.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
   const ExpenseHistoryScreen({super.key});
@@ -49,6 +53,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   }
 
   void _filterExpenses() {
+    final l10n = AppLocalizations.of(context)!;
     final query = _searchController.text.toLowerCase();
     final filtered = _allExpenses.where((e) {
       return e.category.toLowerCase().contains(query) ||
@@ -67,11 +72,14 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
       final dateStr = DateFormat('yyyy-MM-dd').format(e.date);
       String label;
       if (dateStr == todayStr) {
-        label = 'TODAY';
+        label = l10n.today.toUpperCase();
       } else if (dateStr == yesterdayStr) {
-        label = 'YESTERDAY';
+        label = l10n.yesterday;
       } else {
-        label = DateFormat('MMMM dd, yyyy').format(e.date).toUpperCase();
+        label = DateFormat(
+          'MMMM dd, yyyy',
+          Localizations.localeOf(context).toString(),
+        ).format(e.date).toUpperCase();
       }
 
       if (!groups.containsKey(label)) {
@@ -92,12 +100,14 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<SettingsController>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final keys = _groupedExpenses.keys.toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        title: Text(l10n.history),
         actions: [
           IconButton(
             icon: const Icon(Icons.download),
@@ -116,7 +126,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                 Expanded(
                   child: CustomTextField(
                     controller: _searchController,
-                    hintText: 'Search expenses...',
+                    hintText: l10n.searchExpenses,
                     prefixIcon: const Icon(
                       Icons.search,
                       color: AppColors.softGray,
@@ -152,7 +162,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                 : _groupedExpenses.isEmpty
                 ? Center(
                     child: Text(
-                      'No history found',
+                      l10n.noHistoryFound,
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.softGray,
                       ),
@@ -242,7 +252,11 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                         ),
                                       ),
                                       Text(
-                                        '\$${item.amount.toStringAsFixed(2)}',
+                                        AppFormatters.formatCurrency(
+                                          item.amount,
+                                          settings.currency,
+                                          settings.locale,
+                                        ),
                                         style: AppTextStyles.body.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: item.isExpense

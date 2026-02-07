@@ -1,0 +1,22 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Rastreador de Despesas Diárias",
+  "settings": "Configurações",
+  "preferences": "PREFERÊNCIAS",
+  "language": "Idioma",
+  "currency": "Moeda",
+  "darkMode": "Modo Escuro",
+  "dailyReminder": "Lembrete Diário",
+  "data": "DADOS",
+  "exportCsv": "Exportar CSV",
+  "exportPdf": "Exportar PDF",
+  "watchAd": "Ver Anúncio",
+  "premium": "PREMIUM",
+  "removeAds": "Remover Anúncios - $3.99",
+  "about": "SOBRE",
+  "privacyPolicy": "Política de Privacidade",
+  "termsOfService": "Termos de Serviço",
+  "version": "Versão",
+  "selectLanguage": "Selecionar Idioma",
+  "selectCurrency": "Selecionar Moeda"
+}

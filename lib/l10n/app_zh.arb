@@ -1,0 +1,22 @@
+{
+  "@@locale": "zh",
+  "appTitle": "日常开支追踪器",
+  "settings": "设置",
+  "preferences": "偏好",
+  "language": "语言",
+  "currency": "货币",
+  "darkMode": "深色模式",
+  "dailyReminder": "每日提醒",
+  "data": "数据",
+  "exportCsv": "导出 CSV",
+  "exportPdf": "导出 PDF",
+  "watchAd": "观看广告",
+  "premium": "高级版",
+  "removeAds": "移除广告 - $3.99",
+  "about": "关于",
+  "privacyPolicy": "隐私政策",
+  "termsOfService": "服务条款",
+  "version": "版本",
+  "selectLanguage": "选择语言",
+  "selectCurrency": "选择货币"
+}

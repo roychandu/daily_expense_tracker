@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'controllers/settings_controller.dart';
+import 'l10n/app_localizations.dart';
 import 'common_widgets/app_theme.dart';
 import 'screens/home_screen/home_screen.dart';
 
-void main() {
+import 'package:provider/provider.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
@@ -14,26 +20,38 @@ void main() {
     databaseFactory = databaseFactoryFfi;
   }
 
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  runApp(const MyApp());
-}
+  final prefs = await SharedPreferences.getInstance();
+  final settingsController = SettingsController(prefs);
 
-final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  runApp(
+    ChangeNotifierProvider.value(
+      value: settingsController,
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
-      builder: (context, currentMode, child) {
+    return Consumer<SettingsController>(
+      builder: (context, settingsController, child) {
         return MaterialApp(
           title: 'Daily Expense Tracker',
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
-          themeMode: currentMode,
+          themeMode: settingsController.themeMode,
+          locale: settingsController.locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           home: const HomeScreen(),
         );

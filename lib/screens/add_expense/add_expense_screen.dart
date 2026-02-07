@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_text_field.dart';
@@ -6,6 +7,8 @@ import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../models/expense.dart';
 import '../../services/database_service.dart';
+import '../../controllers/settings_controller.dart';
+import '../../l10n/app_localizations.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final bool isExpense;
@@ -36,15 +39,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     super.dispose();
   }
 
-  Future<void> _handleSave() async {
+  Future<void> _handleSave(AppLocalizations l10n) async {
     if (_amountController.text.isEmpty ||
         double.tryParse(_amountController.text) == null ||
         double.parse(_amountController.text) <= 0) {
-      showCustomSnackBar(context, 'Please enter a valid amount', isError: true);
+      showCustomSnackBar(context, l10n.pleaseEnterValidAmount, isError: true);
       return;
     }
     if (_selectedCategory.isEmpty) {
-      showCustomSnackBar(context, 'Please select a category', isError: true);
+      showCustomSnackBar(context, l10n.pleaseSelectCategory, isError: true);
       return;
     }
 
@@ -61,7 +64,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     if (mounted) {
       showCustomSnackBar(
         context,
-        '${widget.isExpense ? 'Expense' : 'Income'} saved ✓',
+        widget.isExpense ? l10n.expenseSaved : l10n.incomeSaved,
       );
       Navigator.pop(
         context,
@@ -72,9 +75,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<SettingsController>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final currencySymbol = SettingsController.supportedCurrencies.firstWhere(
+      (c) => c['code'] == settings.currency,
+    )['symbol'];
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Expense')),
+      appBar: AppBar(
+        title: Text(widget.isExpense ? l10n.addExpense : l10n.addIncome),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -87,7 +99,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     // Amount Input
                     TextField(
                       controller: _amountController,
-                      keyboardType: TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       autofocus: true,
@@ -95,7 +107,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       style: AppTextStyles.amountDisplay.copyWith(fontSize: 48),
                       decoration: InputDecoration(
                         hintText: '0.00',
-                        prefixText: '\$ ',
+                        prefixText: '$currencySymbol ',
                         prefixStyle: AppTextStyles.amountDisplay.copyWith(
                           fontSize: 48,
                           color: AppColors.softGray,
@@ -108,7 +120,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     // Categories
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Category', style: AppTextStyles.caption),
+                      child: Text(l10n.category, style: AppTextStyles.caption),
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
@@ -145,13 +157,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                           )
                                         : Border.all(
                                             color: AppColors.softGray
-                                                .withOpacity(0.3),
+                                                .withValues(alpha: 0.3),
                                           ),
                                     boxShadow: isSelected
                                         ? [
                                             BoxShadow(
                                               color: AppColors.accentTeal
-                                                  .withOpacity(0.2),
+                                                  .withValues(alpha: 0.2),
                                               blurRadius: 8,
                                               offset: const Offset(0, 4),
                                             ),
@@ -181,7 +193,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     // Note
                     CustomTextField(
                       controller: _noteController,
-                      hintText: 'Add note (optional)',
+                      hintText: l10n.addNoteOptional,
                     ),
                   ],
                 ),
@@ -192,12 +204,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             Padding(
               padding: const EdgeInsets.all(16),
               child: PrimaryButton(
-                title: 'Save Expense',
-                onPressed: _handleSave,
+                title: widget.isExpense ? l10n.saveExpense : l10n.saveIncome,
+                onPressed: () => _handleSave(l10n),
               ),
             ),
-            // Padding for keyboard would be handled by scaffold/scroll view usually,
-            // but for now this is fixed at bottom
           ],
         ),
       ),

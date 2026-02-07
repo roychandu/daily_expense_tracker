@@ -1,0 +1,22 @@
+{
+  "@@locale": "es",
+  "appTitle": "Rastreador de Gastos Diarios",
+  "settings": "Ajustes",
+  "preferences": "PREFERENCIAS",
+  "language": "Idioma",
+  "currency": "Moneda",
+  "darkMode": "Modo Oscuro",
+  "dailyReminder": "Recordatorio Diario",
+  "data": "DATOS",
+  "exportCsv": "Exportar CSV",
+  "exportPdf": "Exportar PDF",
+  "watchAd": "Ver Anuncio",
+  "premium": "PREMIUM",
+  "removeAds": "Eliminar Anuncios - $3.99",
+  "about": "ACERCA DE",
+  "privacyPolicy": "Política de Privacidad",
+  "termsOfService": "Términos de Servicio",
+  "version": "Versión",
+  "selectLanguage": "Seleccionar Idioma",
+  "selectCurrency": "Seleccionar Moneda"
+}

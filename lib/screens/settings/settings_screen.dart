@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
-import '../../main.dart';
+import '../../controllers/settings_controller.dart';
+import '../../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,56 +17,75 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<SettingsController>();
+    final currentLanguage = SettingsController.supportedLanguages.firstWhere(
+      (l) => l['code'] == settings.locale.languageCode,
+    )['name'];
+    final currentCurrency = SettingsController.supportedCurrencies.firstWhere(
+      (c) => c['code'] == settings.currency,
+    )['code'];
+    final currentCurrencySymbol = SettingsController.supportedCurrencies
+        .firstWhere((c) => c['code'] == settings.currency)['symbol'];
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionHeader('PREFERENCES'),
-            ValueListenableBuilder<ThemeMode>(
-              valueListenable: themeNotifier,
-              builder: (context, currentMode, child) {
-                final isDarkMode = currentMode == ThemeMode.dark;
-                return _buildSettingsCard([
-                  _buildRow('Language', 'English', hasNav: true),
-                  const Divider(height: 1),
-                  _buildRow('Currency', 'USD (\$)', hasNav: true),
-                  const Divider(height: 1),
-                  _buildSwitchRow('Dark Mode', isDarkMode, (val) {
-                    themeNotifier.value = val
-                        ? ThemeMode.dark
-                        : ThemeMode.light;
-                  }),
-                  const Divider(height: 1),
-                  _buildSwitchRow(
-                    'Daily Reminder',
-                    _dailyReminder,
-                    (val) => setState(() => _dailyReminder = val),
-                  ),
-                ]);
-              },
-            ),
-
-            const SizedBox(height: 24),
-
-            _buildSectionHeader('DATA'),
+            _buildSectionHeader(l10n.preferences),
             _buildSettingsCard([
-              _buildRow('Export CSV', 'Watch Ad', isBonus: true),
+              _buildRow(
+                l10n.language,
+                currentLanguage!,
+                hasNav: true,
+                onTap: () => _showLanguageDialog(context, settings),
+              ),
               const Divider(height: 1),
-              _buildRow('Export PDF', 'Watch Ad', isBonus: true),
+              _buildRow(
+                l10n.currency,
+                '$currentCurrency ($currentCurrencySymbol)',
+                hasNav: true,
+                onTap: () => _showCurrencyDialog(context, settings),
+              ),
+              const Divider(height: 1),
+              _buildSwitchRow(
+                l10n.darkMode,
+                settings.themeMode == ThemeMode.dark,
+                (val) {
+                  settings.updateThemeMode(
+                    val ? ThemeMode.dark : ThemeMode.light,
+                  );
+                },
+              ),
+              const Divider(height: 1),
+              _buildSwitchRow(
+                l10n.dailyReminder,
+                _dailyReminder,
+                (val) => setState(() => _dailyReminder = val),
+              ),
             ]),
 
             const SizedBox(height: 24),
 
-            _buildSectionHeader('PREMIUM'),
+            _buildSectionHeader(l10n.data),
+            _buildSettingsCard([
+              _buildRow(l10n.exportCsv, l10n.watchAd, isBonus: true),
+              const Divider(height: 1),
+              _buildRow(l10n.exportPdf, l10n.watchAd, isBonus: true),
+            ]),
+
+            const SizedBox(height: 24),
+
+            _buildSectionHeader(l10n.premium),
             _buildSettingsCard([
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Center(
                   child: Text(
-                    'Remove Ads - \$3.99',
+                    l10n.removeAds,
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.accentTeal,
                       fontWeight: FontWeight.bold,
@@ -75,20 +96,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ]),
 
             const SizedBox(height: 24),
-            _buildSectionHeader('ABOUT'),
+            _buildSectionHeader(l10n.about),
             _buildSettingsCard([
-              _buildRow('Privacy Policy', '', hasNav: true),
+              _buildRow(l10n.privacyPolicy, '', hasNav: true),
               const Divider(height: 1),
-              _buildRow('Terms of Service', '', hasNav: true),
+              _buildRow(l10n.termsOfService, '', hasNav: true),
               const Divider(height: 1),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Center(
-                  child: Text('Version 1.0.0', style: AppTextStyles.caption),
+                  child: Text(
+                    '${l10n.version} 1.0.0',
+                    style: AppTextStyles.caption,
+                  ),
                 ),
               ),
             ]),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context, SettingsController settings) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.selectLanguage),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: SettingsController.supportedLanguages.length,
+            itemBuilder: (context, index) {
+              final lang = SettingsController.supportedLanguages[index];
+              return ListTile(
+                title: Text(lang['name']!),
+                trailing: settings.locale.languageCode == lang['code']
+                    ? const Icon(Icons.check, color: AppColors.accentTeal)
+                    : null,
+                onTap: () {
+                  settings.updateLocale(Locale(lang['code']!));
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showCurrencyDialog(BuildContext context, SettingsController settings) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.selectCurrency),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: SettingsController.supportedCurrencies.length,
+            itemBuilder: (context, index) {
+              final currency = SettingsController.supportedCurrencies[index];
+              return ListTile(
+                title: Text('${currency['name']} (${currency['symbol']})'),
+                subtitle: Text(currency['code']!),
+                trailing: settings.currency == currency['code']
+                    ? const Icon(Icons.check, color: AppColors.accentTeal)
+                    : null,
+                onTap: () {
+                  settings.updateCurrency(currency['code']!);
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -115,7 +200,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: const Offset(0, 2),
             blurRadius: 4,
           ),
@@ -130,6 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     String subtitle, {
     bool hasNav = false,
     bool isBonus = false,
+    VoidCallback? onTap,
   }) {
     return ListTile(
       title: Text(title, style: AppTextStyles.body),
@@ -167,7 +253,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ],
       ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 

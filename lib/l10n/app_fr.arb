@@ -1,0 +1,22 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Suivi des Dépenses Quotidiennes",
+  "settings": "Paramètres",
+  "preferences": "PRÉFÉRENCES",
+  "language": "Langue",
+  "currency": "Devise",
+  "darkMode": "Mode Sombre",
+  "dailyReminder": "Rappel Quotidien",
+  "data": "DONNÉES",
+  "exportCsv": "Exporter CSV",
+  "exportPdf": "Exporter PDF",
+  "watchAd": "Voir l'annonce",
+  "premium": "PREMIUM",
+  "removeAds": "Supprimer les publicités - 3,99 $",
+  "about": "À PROPOS",
+  "privacyPolicy": "Politique de Confidentialité",
+  "termsOfService": "Conditions d'Utilisation",
+  "version": "Version",
+  "selectLanguage": "Choisir la Langue",
+  "selectCurrency": "Choisir la Devise"
+}

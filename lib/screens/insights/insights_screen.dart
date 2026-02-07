@@ -3,6 +3,7 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
 import '../../services/database_service.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class InsightsScreen extends StatefulWidget {
@@ -57,8 +58,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Insights')),
+      appBar: AppBar(title: Text(l10n.insights)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -75,14 +77,14 @@ class _InsightsScreenState extends State<InsightsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            '🔥 LOGGING STREAK',
+                            l10n.loggingStreak,
                             style: AppTextStyles.h2Section.copyWith(
                               fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            '🔥 $_streakCount ${_streakCount == 1 ? 'Day' : 'Days'}',
+                            '🔥 $_streakCount ${_streakCount == 1 ? l10n.day : l10n.days}',
                             style: TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.bold,
@@ -96,8 +98,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
                           const SizedBox(height: 8),
                           Text(
                             _streakCount > 0
-                                ? 'Keep it going!'
-                                : 'Start logging today!',
+                                ? l10n.keepItGoing
+                                : l10n.startLoggingToday,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.accentTeal,
                             ),
@@ -109,7 +111,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
                               Container(
                                 height: 12,
                                 decoration: BoxDecoration(
-                                  color: AppColors.softGray.withOpacity(0.2),
+                                  color: AppColors.softGray.withValues(
+                                    alpha: 0.2,
+                                  ),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                               ),
@@ -150,7 +154,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
                     // Weekly Activity
                     Text(
-                      'WEEKLY ACTIVITY',
+                      l10n.weeklyActivity,
                       style: AppTextStyles.h2Section.copyWith(fontSize: 18),
                     ),
                     const SizedBox(height: 12),
@@ -194,7 +198,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              '${_weeklyLogged.where((e) => e).length} of 7 days logged',
+                              '${_weeklyLogged.where((e) => e).length} ${l10n.daysLogged}',
                               style: AppTextStyles.body,
                             ),
                           ],
@@ -206,7 +210,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
                     // Insights
                     Text(
-                      'INSIGHTS',
+                      l10n.insights.toUpperCase(),
                       style: AppTextStyles.h2Section.copyWith(fontSize: 18),
                     ),
                     const SizedBox(height: 12),
@@ -223,8 +227,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
                           Expanded(
                             child: Text(
                               _streakCount > 5
-                                  ? "You've been consistent! Keep tracking to see more trends."
-                                  : "Log more frequently to unlock personal spending insights.",
+                                  ? l10n.consistentInsight
+                                  : l10n.startInsight,
                               style: AppTextStyles.body,
                             ),
                           ),
@@ -262,7 +266,7 @@ class _DayCircle extends StatelessWidget {
             shape: BoxShape.circle,
             border: isLogged
                 ? null
-                : Border.all(color: AppColors.softGray.withOpacity(0.5)),
+                : Border.all(color: AppColors.softGray.withValues(alpha: 0.5)),
           ),
           child: isLogged
               ? const Icon(Icons.check, color: Colors.white, size: 20)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
@@ -6,6 +7,9 @@ import '../../common_widgets/primary_button.dart';
 import '../../services/database_service.dart';
 import '../../models/expense.dart';
 import 'package:intl/intl.dart';
+import '../../controllers/settings_controller.dart';
+import '../../l10n/app_localizations.dart';
+import '../../utils/formatters.dart';
 
 class MonthlySummaryScreen extends StatefulWidget {
   const MonthlySummaryScreen({super.key});
@@ -68,8 +72,13 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<SettingsController>();
     final now = DateTime.now();
-    final monthName = DateFormat('MMMM yyyy').format(now);
+    final monthName = DateFormat(
+      'MMMM yyyy',
+      settings.locale.toString(),
+    ).format(now);
 
     return Scaffold(
       appBar: AppBar(
@@ -94,21 +103,25 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'MONTHLY TOTAL',
+                            l10n.monthlyTotal,
                             style: AppTextStyles.caption.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '\$${_totalAmount.toStringAsFixed(2)}',
+                            AppFormatters.formatCurrency(
+                              _totalAmount,
+                              settings.currency,
+                              settings.locale,
+                            ),
                             style: AppTextStyles.amountDisplay.copyWith(
                               fontSize: 32,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${_monthlyExpenses.length} expenses',
+                            '${_monthlyExpenses.length} ${l10n.expenses}',
                             style: AppTextStyles.body,
                           ),
                           if (!_isUnlocked && _monthlyExpenses.isNotEmpty) ...[
@@ -116,7 +129,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Top category: ',
+                                  '${l10n.topCategory}: ',
                                   style: AppTextStyles.caption,
                                 ),
                                 Text(
@@ -136,53 +149,65 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                   const SizedBox(height: 24),
 
                   if (!_isUnlocked)
-                    _buildLockedState()
+                    _buildLockedState(settings, l10n)
                   else
-                    _buildUnlockedState(),
+                    _buildUnlockedState(settings, l10n),
                 ],
               ),
             ),
     );
   }
 
-  Widget _buildLockedState() {
+  Widget _buildLockedState(SettingsController settings, AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('DETAILS', style: AppTextStyles.h2Section.copyWith(fontSize: 18)),
+        Text(
+          l10n.details,
+          style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+        ),
         const SizedBox(height: 12),
         CustomCard(
           child: Column(
             children: [
               const Icon(Icons.lock, size: 48, color: AppColors.accentTeal),
               const SizedBox(height: 16),
-              Text('Unlock Full Breakdown', style: AppTextStyles.h2Section),
+              Text(l10n.unlockFullBreakdown, style: AppTextStyles.h2Section),
               const SizedBox(height: 16),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('• Category breakdown', style: AppTextStyles.body),
-                    Text('• Daily average spend', style: AppTextStyles.body),
-                    Text('• Highest spend day', style: AppTextStyles.body),
+                    Text(
+                      '• ${l10n.categoryBreakdown}',
+                      style: AppTextStyles.body,
+                    ),
+                    Text(
+                      '• ${l10n.dailyAverageSpend}',
+                      style: AppTextStyles.body,
+                    ),
+                    Text(
+                      '• ${l10n.highestSpendDay}',
+                      style: AppTextStyles.body,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                title: 'Watch Ad to Unlock',
+                title: l10n.watchAd,
                 onPressed: () {
                   setState(() => _isUnlocked = true);
                 },
               ),
               const SizedBox(height: 12),
-              Text('or', style: AppTextStyles.caption),
+              Text(l10n.or, style: AppTextStyles.caption),
               const SizedBox(height: 12),
               GestureDetector(
                 onTap: () {},
                 child: Text(
-                  'Remove Ads - \$3.99',
+                  l10n.removeAds,
                   style: AppTextStyles.body.copyWith(
                     color: Theme.of(context).brightness == Brightness.dark
                         ? AppColors.accentTeal
@@ -199,12 +224,15 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
     );
   }
 
-  Widget _buildUnlockedState() {
+  Widget _buildUnlockedState(
+    SettingsController settings,
+    AppLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'CATEGORY BREAKDOWN',
+          l10n.categoryBreakdownTitle,
           style: AppTextStyles.h2Section.copyWith(fontSize: 18),
         ),
         const SizedBox(height: 12),
@@ -214,14 +242,21 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
               : 0.0;
           return _buildCategoryRow(
             '${_getCategoryIcon(entry.key)} ${entry.key}',
-            '\$${entry.value.toStringAsFixed(2)}',
+            AppFormatters.formatCurrency(
+              entry.value,
+              settings.currency,
+              settings.locale,
+            ),
             percentage,
           );
         }),
 
         const SizedBox(height: 24),
 
-        Text('INSIGHTS', style: AppTextStyles.h2Section.copyWith(fontSize: 18)),
+        Text(
+          l10n.insights.toUpperCase(),
+          style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+        ),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -231,10 +266,14 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Daily Avg', style: AppTextStyles.caption),
+                    Text(l10n.dailyAvg, style: AppTextStyles.caption),
                     const SizedBox(height: 4),
                     Text(
-                      '\$${(_totalAmount / DateTime.now().day).toStringAsFixed(2)}',
+                      AppFormatters.formatCurrency(
+                        _totalAmount / DateTime.now().day,
+                        settings.currency,
+                        settings.locale,
+                      ),
                       style: AppTextStyles.body.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -250,7 +289,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total Items', style: AppTextStyles.caption),
+                    Text(l10n.totalItems, style: AppTextStyles.caption),
                     const SizedBox(height: 4),
                     Text(
                       '${_monthlyExpenses.length}',
@@ -311,7 +350,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                   child: Container(
                     height: 8,
                     decoration: BoxDecoration(
-                      color: AppColors.softGray.withOpacity(0.2),
+                      color: AppColors.softGray.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),

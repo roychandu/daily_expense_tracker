@@ -1,0 +1,22 @@
+{
+  "@@locale": "hi",
+  "appTitle": "दैनिक व्यय ट्रैकर",
+  "settings": "सेटिंग्स",
+  "preferences": "वरीयताएँ",
+  "language": "भाषा",
+  "currency": "मुद्रा",
+  "darkMode": "डार्क मोड",
+  "dailyReminder": "दैनिक अनुस्मारक",
+  "data": "डेटा",
+  "exportCsv": "CSV निर्यात करें",
+  "exportPdf": "PDF निर्यात करें",
+  "watchAd": "विज्ञापन देखें",
+  "premium": "प्रीमियम",
+  "removeAds": "विज्ञापन हटाएं - $3.99",
+  "about": "के बारे में",
+  "privacyPolicy": "गोपनीयता नीति",
+  "termsOfService": "सेवा की शर्तें",
+  "version": "संस्करण",
+  "selectLanguage": "भाषा चुनें",
+  "selectCurrency": "मुद्रा चुनें"
+}
