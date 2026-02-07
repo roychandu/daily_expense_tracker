@@ -137,9 +137,10 @@ class AppTheme {
         fontFamily: 'Inter',
         fontWeight: FontWeight.w600,
         fontSize: 16,
+        color: AppColors.charcoal,
       ), // Button text
       bodySmall: AppTextStyles.caption,
-    );
+    ).apply(bodyColor: AppColors.charcoal, displayColor: AppColors.charcoal);
   }
 
   static TextTheme get _textThemeDark {
@@ -158,6 +159,6 @@ class AppTheme {
         color: Colors.white,
       ),
       bodySmall: AppTextStyles.caption.copyWith(color: AppColors.softGray),
-    );
+    ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark);
   }
 }
