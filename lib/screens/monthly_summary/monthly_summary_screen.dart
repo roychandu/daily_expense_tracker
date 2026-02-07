@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
+import '../../utils/category_utils.dart';
 
 class MonthlySummaryScreen extends StatefulWidget {
   const MonthlySummaryScreen({super.key});
@@ -369,19 +370,6 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
   }
 
   String _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Food':
-        return '🍔';
-      case 'Transport':
-        return '🚗';
-      case 'Home':
-        return '🏠';
-      case 'Fun':
-        return '🎮';
-      case 'Health':
-        return '💊';
-      default:
-        return '💰';
-    }
+    return CategoryUtils.getIcon(category);
   }
 }

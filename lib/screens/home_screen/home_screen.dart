@@ -14,6 +14,7 @@ import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
+import '../../utils/category_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool _isExpenseSelected = true;
+  int _refreshCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> pages = [
       _TodayView(
         isExpenseSelected: _isExpenseSelected,
+        refreshCount: _refreshCount,
         onToggle: (val) {
           setState(() {
             _isExpenseSelected = val;
@@ -52,14 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(top: 20),
         child: FloatingActionButton(
           onPressed: () async {
-            await Navigator.push(
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) =>
                     AddExpenseScreen(isExpense: _isExpenseSelected),
               ),
             );
-            setState(() {}); // Refresh data after returning
+            if (result == true) {
+              setState(() {
+                _refreshCount++;
+              });
+            }
           },
           elevation: 8,
           backgroundColor: const Color(0xFF00FFEA),
@@ -120,9 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _TodayView extends StatefulWidget {
   final bool isExpenseSelected;
+  final int refreshCount;
   final ValueChanged<bool> onToggle;
 
-  const _TodayView({required this.isExpenseSelected, required this.onToggle});
+  const _TodayView({
+    required this.isExpenseSelected,
+    required this.refreshCount,
+    required this.onToggle,
+  });
 
   @override
   State<_TodayView> createState() => _TodayViewState();
@@ -142,7 +154,8 @@ class _TodayViewState extends State<_TodayView> {
   @override
   void didUpdateWidget(_TodayView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.isExpenseSelected != widget.isExpenseSelected) {
+    if (oldWidget.isExpenseSelected != widget.isExpenseSelected ||
+        oldWidget.refreshCount != widget.refreshCount) {
       _loadData();
     }
   }
@@ -426,19 +439,6 @@ class _TodayViewState extends State<_TodayView> {
   }
 
   String _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Food':
-        return '🍔';
-      case 'Transport':
-        return '🚗';
-      case 'Home':
-        return '🏠';
-      case 'Fun':
-        return '🎮';
-      case 'Health':
-        return '💊';
-      default:
-        return '💰';
-    }
+    return CategoryUtils.getIcon(category);
   }
 }

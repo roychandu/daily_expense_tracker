@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../add_expense/add_expense_screen.dart';
 import 'package:intl/intl.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
@@ -9,6 +10,7 @@ import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
+import '../../utils/category_utils.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
@@ -209,6 +211,20 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                   ),
                                 ),
                                 child: CustomCard(
+                                  onTap: () async {
+                                    final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddExpenseScreen(
+                                          isExpense: item.isExpense,
+                                          expense: item,
+                                        ),
+                                      ),
+                                    );
+                                    if (result == true) {
+                                      _loadHistory();
+                                    }
+                                  },
                                   padding: const EdgeInsets.all(12),
                                   child: Row(
                                     children: [
@@ -281,19 +297,6 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   }
 
   String _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Food':
-        return '🍔';
-      case 'Transport':
-        return '🚗';
-      case 'Home':
-        return '🏠';
-      case 'Fun':
-        return '🎮';
-      case 'Health':
-        return '💊';
-      default:
-        return '💰';
-    }
+    return CategoryUtils.getIcon(category);
   }
 }

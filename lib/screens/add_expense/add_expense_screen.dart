@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
@@ -9,10 +10,13 @@ import '../../models/expense.dart';
 import '../../services/database_service.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
+import '../../utils/category_utils.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final bool isExpense;
-  const AddExpenseScreen({super.key, this.isExpense = true});
+  final Expense? expense;
+
+  const AddExpenseScreen({super.key, this.isExpense = true, this.expense});
 
   @override
   State<AddExpenseScreen> createState() => _AddExpenseScreenState();
@@ -22,21 +26,65 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   String _selectedCategory = '';
+  DateTime _selectedDate = DateTime.now();
 
-  final List<Map<String, String>> _categories = [
-    {'icon': '🍔', 'name': 'Food'},
-    {'icon': '🚗', 'name': 'Transport'},
-    {'icon': '🏠', 'name': 'Home'},
-    {'icon': '🎮', 'name': 'Fun'},
-    {'icon': '💊', 'name': 'Health'},
-    {'icon': '➕', 'name': 'Add'},
+  final List<Map<String, String>> _expenseCategories = [
+    ...CategoryUtils.expenseCategories,
+    {'icon': '➕', 'name': 'Other'},
   ];
+
+  final List<Map<String, String>> _incomeCategories = [
+    ...CategoryUtils.incomeCategories,
+    {'icon': '➕', 'name': 'Other'},
+  ];
+
+  List<Map<String, String>> get _categories =>
+      widget.isExpense ? _expenseCategories : _incomeCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.expense != null) {
+      _amountController.text = widget.expense!.amount.toString();
+      _noteController.text = widget.expense!.note;
+      _selectedCategory = widget.expense!.category;
+      _selectedDate = widget.expense!.date;
+    }
+  }
 
   @override
   void dispose() {
     _amountController.dispose();
     _noteController.dispose();
     super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.accentTeal,
+              onPrimary: Colors.white,
+              onSurface: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textDark
+                  : AppColors.charcoal,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 
   Future<void> _handleSave(AppLocalizations l10n) async {
@@ -52,24 +100,26 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     }
 
     final expense = Expense(
+      id: widget.expense?.id,
       amount: double.parse(_amountController.text),
       category: _selectedCategory,
       note: _noteController.text,
-      date: DateTime.now(),
+      date: _selectedDate,
       isExpense: widget.isExpense,
     );
 
-    await DatabaseService.instance.create(expense);
+    if (widget.expense != null) {
+      await DatabaseService.instance.update(expense);
+    } else {
+      await DatabaseService.instance.create(expense);
+    }
 
     if (mounted) {
       showCustomSnackBar(
         context,
         widget.isExpense ? l10n.expenseSaved : l10n.incomeSaved,
       );
-      Navigator.pop(
-        context,
-        true,
-      ); // Return true to indicate something was saved
+      Navigator.pop(context, true);
     }
   }
 
@@ -85,7 +135,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isExpense ? l10n.addExpense : l10n.addIncome),
+        title: Text(
+          widget.expense != null
+              ? (widget.isExpense ? 'Edit Expense' : 'Edit Income')
+              : (widget.isExpense ? l10n.addExpense : l10n.addIncome),
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -96,13 +150,52 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // Date Picker Trigger
+                    GestureDetector(
+                      onTap: () => _selectDate(context),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColors.cardDark
+                              : AppColors.softGray.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.calendar_today,
+                              size: 16,
+                              color: AppColors.accentTeal,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              DateFormat(
+                                'MMMM dd, yyyy',
+                                settings.locale.toString(),
+                              ).format(_selectedDate),
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.accentTeal,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
                     // Amount Input
                     TextField(
                       controller: _amountController,
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
-                      autofocus: true,
+                      autofocus: widget.expense == null,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.amountDisplay.copyWith(fontSize: 48),
                       decoration: InputDecoration(
@@ -124,7 +217,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
-                      height: 80,
+                      height: 85,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: _categories.length,
@@ -179,7 +272,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 Text(
                                   cat['name']!,
                                   style: AppTextStyles.caption.copyWith(
-                                    fontSize: 12,
+                                    fontSize: 10,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: isSelected
+                                        ? AppColors.accentTeal
+                                        : AppColors.softGray,
                                   ),
                                 ),
                               ],
@@ -204,7 +303,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             Padding(
               padding: const EdgeInsets.all(16),
               child: PrimaryButton(
-                title: widget.isExpense ? l10n.saveExpense : l10n.saveIncome,
+                title: widget.expense != null
+                    ? 'Update'
+                    : (widget.isExpense ? l10n.saveExpense : l10n.saveIncome),
                 onPressed: () => _handleSave(l10n),
               ),
             ),
