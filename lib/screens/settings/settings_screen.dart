@@ -180,7 +180,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: Text(title, style: AppTextStyles.body),
       value: value,
       onChanged: onChanged,
-      activeColor: AppColors.accentTeal,
+      activeThumbColor: AppColors.accentTeal,
     );
   }
 }

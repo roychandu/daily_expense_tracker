@@ -8,6 +8,8 @@ import '../settings/settings_screen.dart';
 import '../history/expense_history_screen.dart';
 import '../monthly_summary/monthly_summary_screen.dart';
 import '../insights/insights_screen.dart';
+import '../../services/database_service.dart';
+import '../../models/expense.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,69 +20,176 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  bool _isExpenseSelected = true;
 
-  final List<Widget> _pages = [
-    const _TodayView(),
-    const ExpenseHistoryScreen(),
-    const MonthlySummaryScreen(),
-    const InsightsScreen(),
-  ];
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPages();
+  }
+
+  void _initPages() {
+    _pages = [
+      _TodayView(
+        isExpenseSelected: _isExpenseSelected,
+        onToggle: (val) {
+          setState(() {
+            _isExpenseSelected = val;
+            _onDataChanged();
+          });
+        },
+      ),
+      const MonthlySummaryScreen(),
+      const InsightsScreen(),
+      const SettingsScreen(),
+    ];
+  }
+
+  void _onDataChanged() {
+    setState(() {
+      _pages[0] = _TodayView(
+        isExpenseSelected: _isExpenseSelected,
+        onToggle: (val) {
+          setState(() {
+            _isExpenseSelected = val;
+            _onDataChanged();
+          });
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _pages),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.accentTeal,
-        unselectedItemColor: AppColors.softGray,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.today), label: 'Today'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Summary',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.lightbulb),
-            label: 'Insights',
-          ),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        margin: const EdgeInsets.only(top: 20),
+        child: FloatingActionButton(
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    AddExpenseScreen(isExpense: _isExpenseSelected),
+              ),
+            );
+            if (result == true) {
+              _onDataChanged();
+            }
+          },
+          elevation: 8,
+          backgroundColor: const Color(0xFF00FFEA),
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: Colors.black, size: 32),
+        ),
       ),
-      floatingActionButton: _currentIndex == 0
-          ? FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddExpenseScreen(),
-                  ),
-                );
-              },
-              backgroundColor: AppColors.accentTeal,
-              child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        padding: EdgeInsets.zero,
+        height: 80,
+        color: isDark ? AppColors.cardDark : Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(0, Icons.home_filled, 'Home'),
+            _buildNavItem(1, Icons.query_stats, 'Summary'),
+            const SizedBox(width: 48), // Space for FAB
+            _buildNavItem(2, Icons.assessment_outlined, 'Insights'),
+            _buildNavItem(3, Icons.settings_outlined, 'Settings'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final isSelected = _currentIndex == index;
+    final color = isSelected
+        ? AppColors.primaryDeepBlue
+        : AppColors.softGray.withOpacity(0.8);
+
+    return InkWell(
+      onTap: () => setState(() => _currentIndex = index),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 28),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class _TodayView extends StatefulWidget {
-  const _TodayView();
+  final bool isExpenseSelected;
+  final ValueChanged<bool> onToggle;
+
+  const _TodayView({required this.isExpenseSelected, required this.onToggle});
 
   @override
   State<_TodayView> createState() => _TodayViewState();
 }
 
 class _TodayViewState extends State<_TodayView> {
-  bool _isExpenseSelected = true;
+  List<Expense> _recentExpenses = [];
+  double _totalAmount = 0;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  @override
+  void didUpdateWidget(_TodayView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isExpenseSelected != widget.isExpenseSelected) {
+      _loadData();
+    }
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    final expenses = await DatabaseService.instance.readExpensesByDay(
+      DateTime.now(),
+    );
+
+    final filtered = expenses
+        .where((e) => e.isExpense == widget.isExpenseSelected)
+        .toList();
+
+    double total = 0;
+    for (var e in filtered) {
+      total += e.amount;
+    }
+
+    setState(() {
+      _recentExpenses = filtered.take(5).toList();
+      _totalAmount = total;
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +198,13 @@ class _TodayViewState extends State<_TodayView> {
         title: const Text('Today'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.history),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                MaterialPageRoute(
+                  builder: (context) => const ExpenseHistoryScreen(),
+                ),
               );
             },
           ),
@@ -104,27 +215,39 @@ class _TodayViewState extends State<_TodayView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Toggle
             _buildToggle(),
             const SizedBox(height: 24),
 
-            // Total Card
-            _buildTotalCard(),
-            const SizedBox(height: 24),
+            if (_isLoading)
+              const Center(child: CircularProgressIndicator())
+            else ...[
+              _buildTotalCard(),
+              const SizedBox(height: 24),
 
-            // Recent Transactions
-            Text(
-              'RECENT',
-              style: AppTextStyles.h2Section.copyWith(fontSize: 18),
-            ),
-            const SizedBox(height: 12),
-            _buildRecentTransactions(),
+              Text(
+                'RECENT',
+                style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+              ),
+              const SizedBox(height: 12),
+              _recentExpenses.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Text(
+                          'No ${widget.isExpenseSelected ? 'expenses' : 'income'} yet',
+                          style: AppTextStyles.body.copyWith(
+                            color: AppColors.softGray,
+                          ),
+                        ),
+                      ),
+                    )
+                  : _buildRecentTransactions(),
+            ],
 
             const SizedBox(height: 16),
             SecondaryButton(
               title: 'View All History',
               onPressed: () {
-                // In a real app, you might want to switch the tab instead of pushing
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -134,7 +257,7 @@ class _TodayViewState extends State<_TodayView> {
               },
             ),
 
-            const SizedBox(height: 70), // Space for FAB
+            const SizedBox(height: 70),
           ],
         ),
       ),
@@ -153,11 +276,11 @@ class _TodayViewState extends State<_TodayView> {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => setState(() => _isExpenseSelected = true),
+              onTap: () => widget.onToggle(true),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
-                  color: _isExpenseSelected
+                  color: widget.isExpenseSelected
                       ? AppColors.accentTeal
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(7),
@@ -166,7 +289,7 @@ class _TodayViewState extends State<_TodayView> {
                 child: Text(
                   'Expense',
                   style: AppTextStyles.body.copyWith(
-                    color: _isExpenseSelected
+                    color: widget.isExpenseSelected
                         ? Colors.white
                         : (isDark
                               ? AppColors.textDark.withOpacity(0.6)
@@ -179,11 +302,11 @@ class _TodayViewState extends State<_TodayView> {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => setState(() => _isExpenseSelected = false),
+              onTap: () => widget.onToggle(false),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
-                  color: !_isExpenseSelected
+                  color: !widget.isExpenseSelected
                       ? AppColors.accentTeal
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(7),
@@ -192,7 +315,7 @@ class _TodayViewState extends State<_TodayView> {
                 child: Text(
                   'Income',
                   style: AppTextStyles.body.copyWith(
-                    color: !_isExpenseSelected
+                    color: !widget.isExpenseSelected
                         ? Colors.white
                         : (isDark
                               ? AppColors.textDark.withOpacity(0.6)
@@ -222,25 +345,28 @@ class _TodayViewState extends State<_TodayView> {
           Row(
             children: [
               Text(
-                r'$247.50',
+                '\$${_totalAmount.toStringAsFixed(2)}',
                 style: AppTextStyles.amountDisplay.copyWith(fontSize: 32),
               ),
             ],
           ),
           const SizedBox(height: 4),
-          Text('8 expenses', style: AppTextStyles.caption),
+          Text(
+            '${_recentExpenses.length} ${widget.isExpenseSelected ? 'expenses' : 'items'}',
+            style: AppTextStyles.caption,
+          ),
           const SizedBox(height: 8),
           Row(
             children: [
               const Icon(
-                Icons.arrow_upward,
-                color: AppColors.softCoral,
+                Icons.info_outline,
+                color: AppColors.accentTeal,
                 size: 16,
               ),
               Text(
-                r' $15 more than yesterday',
+                ' Total ${widget.isExpenseSelected ? 'Expenses' : 'Income'} for today',
                 style: AppTextStyles.caption.copyWith(
-                  color: AppColors.softCoral,
+                  color: AppColors.accentTeal,
                 ),
               ),
             ],
@@ -252,19 +378,9 @@ class _TodayViewState extends State<_TodayView> {
 
   Widget _buildRecentTransactions() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final transactions = [
-      {'title': 'Coffee', 'amount': r'$4.50', 'time': '9:30am', 'icon': '☕'},
-      {'title': 'Lunch', 'amount': r'$12.00', 'time': '1:15pm', 'icon': '🍔'},
-      {
-        'title': 'Groceries',
-        'amount': r'$45.00',
-        'time': '6:20pm',
-        'icon': '🛒',
-      },
-    ];
 
     return Column(
-      children: transactions.map((tx) {
+      children: _recentExpenses.map((tx) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: CustomCard(
@@ -282,7 +398,7 @@ class _TodayViewState extends State<_TodayView> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    tx['icon']!,
+                    _getCategoryIcon(tx.category),
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
@@ -292,17 +408,20 @@ class _TodayViewState extends State<_TodayView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        tx['title']!,
+                        tx.category,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(tx['time']!, style: AppTextStyles.caption),
+                      Text(
+                        tx.note.isEmpty ? 'Logged' : tx.note,
+                        style: AppTextStyles.caption,
+                      ),
                     ],
                   ),
                 ),
                 Text(
-                  tx['amount']!,
+                  '\$${tx.amount.toStringAsFixed(2)}',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -313,5 +432,22 @@ class _TodayViewState extends State<_TodayView> {
         );
       }).toList(),
     );
+  }
+
+  String _getCategoryIcon(String category) {
+    switch (category) {
+      case 'Food':
+        return '🍔';
+      case 'Transport':
+        return '🚗';
+      case 'Home':
+        return '🏠';
+      case 'Fun':
+        return '🎮';
+      case 'Health':
+        return '💊';
+      default:
+        return '💰';
+    }
   }
 }

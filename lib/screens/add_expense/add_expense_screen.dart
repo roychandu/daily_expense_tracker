@@ -4,9 +4,12 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_snackbar.dart';
+import '../../models/expense.dart';
+import '../../services/database_service.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-  const AddExpenseScreen({super.key});
+  final bool isExpense;
+  const AddExpenseScreen({super.key, this.isExpense = true});
 
   @override
   State<AddExpenseScreen> createState() => _AddExpenseScreenState();
@@ -33,7 +36,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     super.dispose();
   }
 
-  void _handleSave() {
+  Future<void> _handleSave() async {
     if (_amountController.text.isEmpty ||
         double.tryParse(_amountController.text) == null ||
         double.parse(_amountController.text) <= 0) {
@@ -45,9 +48,26 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       return;
     }
 
-    // Todo: Save to DB
-    showCustomSnackBar(context, 'Expense saved ✓');
-    Navigator.pop(context);
+    final expense = Expense(
+      amount: double.parse(_amountController.text),
+      category: _selectedCategory,
+      note: _noteController.text,
+      date: DateTime.now(),
+      isExpense: widget.isExpense,
+    );
+
+    await DatabaseService.instance.create(expense);
+
+    if (mounted) {
+      showCustomSnackBar(
+        context,
+        '${widget.isExpense ? 'Expense' : 'Income'} saved ✓',
+      );
+      Navigator.pop(
+        context,
+        true,
+      ); // Return true to indicate something was saved
+    }
   }
 
   @override
