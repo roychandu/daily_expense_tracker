@@ -91,15 +91,34 @@ class SettingsController extends ChangeNotifier {
     await _prefs.setString('currency', currency);
   }
 
-  Future<void> updateDailyReminder(bool enabled) async {
+  Future<void> updateDailyReminder(
+    bool enabled, {
+    String? title,
+    String? body,
+  }) async {
     _isDailyReminderEnabled = enabled;
     notifyListeners();
     await _prefs.setBool('isDailyReminderEnabled', enabled);
 
     if (enabled) {
-      await NotificationService().scheduleDailyReminder();
+      await NotificationService().scheduleDailyReminder(
+        title: title,
+        body: body,
+      );
     } else {
       await NotificationService().cancelAllNotifications();
+    }
+  }
+
+  Future<void> rescheduleReminder({
+    required String title,
+    required String body,
+  }) async {
+    if (_isDailyReminderEnabled) {
+      await NotificationService().scheduleDailyReminder(
+        title: title,
+        body: body,
+      );
     }
   }
 }

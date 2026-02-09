@@ -34,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    // Explicitly watch settings to ensure absolute reactivity for tabs
+    context.watch<SettingsController>();
 
     final List<Widget> pages = [
       _TodayView(

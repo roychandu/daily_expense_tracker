@@ -66,22 +66,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectCurrency => 'मुद्रा चुनें';
 
   @override
-  String get home => 'Home';
+  String get home => 'होम';
 
   @override
-  String get summary => 'Summary';
+  String get summary => 'सारांश';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'अन्तर्दृष्टि';
 
   @override
-  String get today => 'Today';
+  String get today => 'आज';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'खर्च';
 
   @override
-  String get income => 'Income';
+  String get income => 'आय';
 
   @override
   String get recent => 'RECENT';
@@ -111,10 +111,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get logged => 'Logged';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'खर्च जोड़ें';
 
   @override
-  String get addIncome => 'Add Income';
+  String get addIncome => 'आय जोड़ें';
 
   @override
   String get category => 'Category';
@@ -123,10 +123,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get addNoteOptional => 'Add note (optional)';
 
   @override
-  String get saveExpense => 'Save Expense';
+  String get saveExpense => 'खर्च सहेजें';
 
   @override
-  String get saveIncome => 'Save Income';
+  String get saveIncome => 'आय सहेजें';
 
   @override
   String get pleaseEnterValidAmount => 'Please enter a valid amount';
@@ -203,7 +203,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get totalItems => 'Total Items';
 
   @override
-  String get history => 'History';
+  String get history => 'इतिहास';
 
   @override
   String get searchExpenses => 'Search expenses...';
@@ -212,11 +212,105 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noHistoryFound => 'No history found';
 
   @override
-  String get yesterday => 'YESTERDAY';
+  String get yesterday => 'कल';
 
   @override
   String get moreThanYesterday => 'more than yesterday';
 
   @override
   String get lessThanYesterday => 'less than yesterday';
+
+  @override
+  String get dateWiseLog => 'DATE-WISE LOG';
+
+  @override
+  String get editExpense => 'खर्च संपादित करें';
+
+  @override
+  String get editIncome => 'आय संपादित करें';
+
+  @override
+  String get update => 'अपडेट करें';
+
+  @override
+  String get other => 'अन्य';
+
+  @override
+  String get all => 'सभी';
+
+  @override
+  String get filters => 'फ़िल्टर';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get reset => 'रीसेट करें';
+
+  @override
+  String get apply => 'लागू करें';
+
+  @override
+  String get reportID => 'ID';
+
+  @override
+  String get reportDate => 'Date';
+
+  @override
+  String get reportCategory => 'Category';
+
+  @override
+  String get reportAmount => 'Amount';
+
+  @override
+  String get reportType => 'Type';
+
+  @override
+  String get reportNote => 'Note';
+
+  @override
+  String get expenseReport => 'Expense Report';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get fileSavedTo => 'File saved to';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get couldNotFindExportDir => 'Could not find export directory';
+
+  @override
+  String get generatingCsv => 'Generating CSV...';
+
+  @override
+  String get generatingPdf => 'Generating PDF...';
+
+  @override
+  String get noDataFound => 'No data found for selected range';
+
+  @override
+  String get internetRequired => 'इंटरनेट आवश्यक';
+
+  @override
+  String get reminderInternetRequirement =>
+      'दैनिक अनुस्मारक सुविधा को सक्षम और सिंक करने के लिए एक सक्रिय इंटरनेट कनेक्शन की आवश्यकता है। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।';
+
+  @override
+  String get exportingCsv => 'Exporting CSV...';
+
+  @override
+  String get ok => 'ठीक है';
+
+  @override
+  String get reminderBody => 'आज के अपने खर्चों को दर्ज करना न भूलें! 📝';
 }

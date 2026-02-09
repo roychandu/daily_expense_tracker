@@ -54,7 +54,12 @@ class NotificationService {
     await _notificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> scheduleDailyReminder({int hour = 20, int minute = 0}) async {
+  Future<void> scheduleDailyReminder({
+    int hour = 20,
+    int minute = 0,
+    String? title,
+    String? body,
+  }) async {
     await cancelAllNotifications();
 
     const androidDetails = AndroidNotificationDetails(
@@ -72,8 +77,8 @@ class NotificationService {
 
     await _notificationsPlugin.zonedSchedule(
       0, // id
-      'Daily Expense Tracker', // title
-      'Don\'t forget to log your expenses for today! 📝', // body
+      title ?? 'Daily Expense Tracker', // title
+      body ?? 'Don\'t forget to log your expenses for today! 📝', // body
       _nextInstanceOfTime(hour, minute), // scheduledDate
       notificationDetails, // notificationDetails
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,

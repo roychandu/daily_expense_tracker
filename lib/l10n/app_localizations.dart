@@ -529,6 +529,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'less than yesterday'**
   String get lessThanYesterday;
+
+  /// No description provided for @dateWiseLog.
+  ///
+  /// In en, this message translates to:
+  /// **'DATE-WISE LOG'**
+  String get dateWiseLog;
+
+  /// No description provided for @editExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Expense'**
+  String get editExpense;
+
+  /// No description provided for @editIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Income'**
+  String get editIncome;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @reportID.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get reportID;
+
+  /// No description provided for @reportDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get reportDate;
+
+  /// No description provided for @reportCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get reportCategory;
+
+  /// No description provided for @reportAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get reportAmount;
+
+  /// No description provided for @reportType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get reportType;
+
+  /// No description provided for @reportNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get reportNote;
+
+  /// No description provided for @expenseReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Report'**
+  String get expenseReport;
+
+  /// No description provided for @totalExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expenses'**
+  String get totalExpenses;
+
+  /// No description provided for @totalIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Income'**
+  String get totalIncome;
+
+  /// No description provided for @fileSavedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved to'**
+  String get fileSavedTo;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @couldNotFindExportDir.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find export directory'**
+  String get couldNotFindExportDir;
+
+  /// No description provided for @generatingCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating CSV...'**
+  String get generatingCsv;
+
+  /// No description provided for @generatingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF...'**
+  String get generatingPdf;
+
+  /// No description provided for @noDataFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No data found for selected range'**
+  String get noDataFound;
+
+  /// No description provided for @internetRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet Required'**
+  String get internetRequired;
+
+  /// No description provided for @reminderInternetRequirement.
+  ///
+  /// In en, this message translates to:
+  /// **'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.'**
+  String get reminderInternetRequirement;
+
+  /// No description provided for @exportingCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting CSV...'**
+  String get exportingCsv;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @reminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log your expenses for today! 📝'**
+  String get reminderBody;
 }
 
 class _AppLocalizationsDelegate

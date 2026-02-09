@@ -170,8 +170,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 trailing: settings.locale.languageCode == lang['code']
                     ? const Icon(Icons.check, color: AppColors.accentTeal)
                     : null,
-                onTap: () {
-                  settings.updateLocale(Locale(lang['code']!));
+                onTap: () async {
+                  await settings.updateLocale(Locale(lang['code']!));
+                  if (!mounted) return;
+                  final newL10n = AppLocalizations.of(context)!;
+                  await settings.rescheduleReminder(
+                    title: newL10n.appTitle,
+                    body: newL10n.reminderBody,
+                  );
                   Navigator.pop(context);
                 },
               );
@@ -295,36 +301,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool enabled,
     SettingsController settings,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     if (enabled) {
       final connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.none)) {
         if (mounted) {
-          _showNoInternetDialog(context);
+          _showNoInternetDialog(context, l10n);
         }
         return;
       }
     }
-    await settings.updateDailyReminder(enabled);
+    await settings.updateDailyReminder(
+      enabled,
+      title: l10n.appTitle,
+      body: l10n.reminderBody,
+    );
   }
 
-  void _showNoInternetDialog(BuildContext context) {
+  void _showNoInternetDialog(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.wifi_off, color: Colors.orange),
-            SizedBox(width: 8),
-            Text('Internet Required'),
+            const Icon(Icons.wifi_off, color: Colors.orange),
+            const SizedBox(width: 8),
+            Text(l10n.internetRequired),
           ],
         ),
-        content: const Text(
-          'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.',
-        ),
+        content: Text(l10n.reminderInternetRequirement),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text(l10n.ok),
           ),
         ],
       ),
@@ -332,6 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _handleExport(BuildContext context, bool isCsv) async {
+    final l10n = AppLocalizations.of(context)!;
     final DateTimeRange? picked = await showDateRangePicker(
       context: context,
       firstDate: DateTime(2000),
@@ -344,7 +354,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (picked != null) {
       if (!mounted) return;
-      showCustomSnackBar(context, 'Generating ${isCsv ? 'CSV' : 'PDF'}...');
+      showCustomSnackBar(
+        context,
+        isCsv ? l10n.generatingCsv : l10n.generatingPdf,
+      );
 
       final expenses = await DatabaseService.instance.readExpensesByDateRange(
         picked.start,
@@ -353,11 +366,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       if (expenses.isEmpty) {
         if (!mounted) return;
-        showCustomSnackBar(
-          context,
-          'No data found for selected range',
-          isError: true,
-        );
+        showCustomSnackBar(context, l10n.noDataFound, isError: true);
         return;
       }
 
@@ -366,13 +375,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       String? result;
       if (isCsv) {
-        result = await ExportService.exportToCSV(expenses, fileName);
+        result = await ExportService.exportToCSV(
+          expenses,
+          fileName,
+          headers: [
+            l10n.reportID,
+            l10n.reportDate,
+            l10n.reportCategory,
+            l10n.reportAmount,
+            l10n.reportType,
+            l10n.reportNote,
+          ],
+          expenseLabel: l10n.expense,
+          incomeLabel: l10n.income,
+          fileSavedLabel: l10n.fileSavedTo,
+          errorLabel: l10n.error,
+          noDirLabel: l10n.couldNotFindExportDir,
+        );
       } else {
         result = await ExportService.exportToPDF(
           expenses,
           fileName,
           picked.start,
           picked.end,
+          headers: [
+            l10n.reportDate,
+            l10n.reportCategory,
+            l10n.reportType,
+            l10n.reportAmount,
+            l10n.reportNote,
+          ],
+          reportTitle: l10n.expenseReport,
+          totalExpenseLabel: l10n.totalExpenses,
+          totalIncomeLabel: l10n.totalIncome,
+          expLabelShort: 'Exp', // Standard abbreviations
+          incLabelShort: 'Inc',
+          fileSavedLabel: l10n.fileSavedTo,
+          errorLabel: l10n.error,
+          noDirLabel: l10n.couldNotFindExportDir,
         );
       }
 

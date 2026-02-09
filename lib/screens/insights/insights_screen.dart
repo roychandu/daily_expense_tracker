@@ -6,6 +6,7 @@ import '../../common_widgets/custom_card.dart';
 import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import '../../controllers/settings_controller.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -18,6 +19,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final settings = context.watch<SettingsController>();
     final expenseController = context.watch<ExpenseController>();
 
     if (expenseController.isLoading) {
@@ -41,12 +43,14 @@ class _InsightsScreenState extends State<InsightsScreen> {
     // Weekly Activity (Current Week)
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    List<bool> weeklyLogged = [];
+    List<Map<String, dynamic>> weeklyActivity = [];
     for (int i = 0; i < 7; i++) {
       final date = startOfWeek.add(Duration(days: i));
-      weeklyLogged.add(
-        loggedDates.contains(DateFormat('yyyy-MM-dd').format(date)),
-      );
+      final label = DateFormat.E(settings.locale.toString()).format(date)[0];
+      weeklyActivity.add({
+        'label': label,
+        'isLogged': loggedDates.contains(DateFormat('yyyy-MM-dd').format(date)),
+      });
     }
 
     return Scaffold(
@@ -139,19 +143,16 @@ class _InsightsScreenState extends State<InsightsScreen> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _DayCircle(label: 'M', isLogged: weeklyLogged[0]),
-                          _DayCircle(label: 'T', isLogged: weeklyLogged[1]),
-                          _DayCircle(label: 'W', isLogged: weeklyLogged[2]),
-                          _DayCircle(label: 'T', isLogged: weeklyLogged[3]),
-                          _DayCircle(label: 'F', isLogged: weeklyLogged[4]),
-                          _DayCircle(label: 'S', isLogged: weeklyLogged[5]),
-                          _DayCircle(label: 'S', isLogged: weeklyLogged[6]),
-                        ],
+                        children: weeklyActivity.map((day) {
+                          return _DayCircle(
+                            label: day['label'],
+                            isLogged: day['isLogged'],
+                          );
+                        }).toList(),
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        '${weeklyLogged.where((e) => e).length} ${l10n.daysLogged}',
+                        '${weeklyActivity.where((e) => e['isLogged'] as bool).length} ${l10n.daysLogged}',
                         style: AppTextStyles.body,
                       ),
                     ],

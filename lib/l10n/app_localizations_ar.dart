@@ -111,22 +111,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get logged => 'تم التسجيل';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة مصروف';
 
   @override
-  String get addIncome => 'Add Income';
+  String get addIncome => 'إضافة دخل';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get addNoteOptional => 'Add note (optional)';
+  String get addNoteOptional => 'إضافة ملاحظة (اختياري)';
 
   @override
-  String get saveExpense => 'Save Expense';
+  String get saveExpense => 'حفظ المصروف';
 
   @override
-  String get saveIncome => 'Save Income';
+  String get saveIncome => 'حفظ الدخل';
 
   @override
   String get pleaseEnterValidAmount => 'Please enter a valid amount';
@@ -203,20 +203,114 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalItems => 'Total Items';
 
   @override
-  String get history => 'History';
+  String get history => 'السجل';
 
   @override
-  String get searchExpenses => 'Search expenses...';
+  String get searchExpenses => 'البحث عن مصاريف...';
 
   @override
-  String get noHistoryFound => 'No history found';
+  String get noHistoryFound => 'لم يتم العثور على سجل';
 
   @override
-  String get yesterday => 'YESTERDAY';
+  String get yesterday => 'أمس';
 
   @override
   String get moreThanYesterday => 'more than yesterday';
 
   @override
   String get lessThanYesterday => 'less than yesterday';
+
+  @override
+  String get dateWiseLog => 'سجل التواريخ';
+
+  @override
+  String get editExpense => 'تعديل المصروف';
+
+  @override
+  String get editIncome => 'تعديل الدخل';
+
+  @override
+  String get update => 'تحديث';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get filters => 'تصفية';
+
+  @override
+  String get type => 'النوع';
+
+  @override
+  String get categories => 'الفئات';
+
+  @override
+  String get reset => 'إعادة تعيين';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get reportID => 'ID';
+
+  @override
+  String get reportDate => 'Date';
+
+  @override
+  String get reportCategory => 'Category';
+
+  @override
+  String get reportAmount => 'Amount';
+
+  @override
+  String get reportType => 'Type';
+
+  @override
+  String get reportNote => 'Note';
+
+  @override
+  String get expenseReport => 'Expense Report';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get fileSavedTo => 'File saved to';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get couldNotFindExportDir => 'Could not find export directory';
+
+  @override
+  String get generatingCsv => 'Generating CSV...';
+
+  @override
+  String get generatingPdf => 'Generating PDF...';
+
+  @override
+  String get noDataFound => 'No data found for selected range';
+
+  @override
+  String get internetRequired => 'الاتصال بالإنترنت مطلوب';
+
+  @override
+  String get reminderInternetRequirement =>
+      'مطلوب اتصال نشط بالإنترنت لتمكين ومزامنة ميزة التذكير اليومي. يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
+  String get exportingCsv => 'تصدير CSV...';
+
+  @override
+  String get ok => 'حسناً';
+
+  @override
+  String get reminderBody => 'لا تنسى تسجيل مصاريفك لهذا اليوم! 📝';
 }

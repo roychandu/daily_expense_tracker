@@ -53,9 +53,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           e.category.toLowerCase().contains(query) ||
           e.note.toLowerCase().contains(query);
       final matchesType =
-          _selectedType == 'All' ||
-          (_selectedType == 'Expense' && e.isExpense) ||
-          (_selectedType == 'Income' && !e.isExpense);
+          _selectedType == 'All' || // logic remains same for internal state
+          _selectedType == l10n.all ||
+          (_selectedType == l10n.expense && e.isExpense) ||
+          (_selectedType == l10n.income && !e.isExpense);
       final matchesCategory =
           _selectedCategories.isEmpty ||
           _selectedCategories.contains(e.category);
@@ -115,7 +116,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: () {
-              showCustomSnackBar(context, 'Exporting CSV...');
+              showCustomSnackBar(context, l10n.exportingCsv);
             },
           ),
         ],
@@ -294,13 +295,14 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   }
 
   void _showFilterBottomSheet(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final categories = CategoryUtils.expenseCategories
         .map((c) => c['name']!)
         .toList();
     categories.addAll(CategoryUtils.incomeCategories.map((c) => c['name']!));
-    categories.add('Other');
+    categories.add(l10n.other);
     final uniqueCategories = categories.toSet().toList();
 
     showModalBottomSheet(
@@ -329,21 +331,23 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
-                  Text('Filters', style: AppTextStyles.h2Section),
+                  Text(l10n.filters, style: AppTextStyles.h2Section),
                   const SizedBox(height: 16),
                   Expanded(
                     child: ListView(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       children: [
                         Text(
-                          'Type',
+                          l10n.type,
                           style: AppTextStyles.caption.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Row(
-                          children: ['All', 'Expense', 'Income'].map((type) {
+                          children: [l10n.all, l10n.expense, l10n.income].map((
+                            String type,
+                          ) {
                             final isSelected = _selectedType == type;
                             return Padding(
                               padding: const EdgeInsets.only(right: 8),
@@ -368,7 +372,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'Categories',
+                          l10n.categories,
                           style: AppTextStyles.caption.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -414,16 +418,16 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                           child: OutlinedButton(
                             onPressed: () {
                               setModalState(() {
-                                _selectedType = 'All';
+                                _selectedType = l10n.all;
                                 _selectedCategories.clear();
                               });
                               setState(() {
-                                _selectedType = 'All';
+                                _selectedType = l10n.all;
                                 _selectedCategories.clear();
                               });
                               Navigator.pop(context);
                             },
-                            child: const Text('Reset'),
+                            child: Text(l10n.reset),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -434,7 +438,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                               foregroundColor: Colors.white,
                             ),
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('Apply'),
+                            child: Text(l10n.apply),
                           ),
                         ),
                       ],

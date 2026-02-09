@@ -30,16 +30,20 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   final List<Map<String, String>> _expenseCategories = [
     ...CategoryUtils.expenseCategories,
-    {'icon': '➕', 'name': 'Other'},
   ];
 
   final List<Map<String, String>> _incomeCategories = [
     ...CategoryUtils.incomeCategories,
-    {'icon': '➕', 'name': 'Other'},
   ];
 
-  List<Map<String, String>> get _categories =>
-      widget.isExpense ? _expenseCategories : _incomeCategories;
+  List<Map<String, String>> get _categories {
+    final l10n = AppLocalizations.of(context)!;
+    final base = widget.isExpense ? _expenseCategories : _incomeCategories;
+    return [
+      ...base,
+      {'icon': '➕', 'name': l10n.other},
+    ];
+  }
 
   @override
   void initState() {
@@ -138,7 +142,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       appBar: AppBar(
         title: Text(
           widget.expense != null
-              ? (widget.isExpense ? 'Edit Expense' : 'Edit Income')
+              ? (widget.isExpense ? l10n.editExpense : l10n.editIncome)
               : (widget.isExpense ? l10n.addExpense : l10n.addIncome),
         ),
       ),
@@ -305,7 +309,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               padding: const EdgeInsets.all(16),
               child: PrimaryButton(
                 title: widget.expense != null
-                    ? 'Update'
+                    ? l10n.update
                     : (widget.isExpense ? l10n.saveExpense : l10n.saveIncome),
                 onPressed: () => _handleSave(l10n),
               ),

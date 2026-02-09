@@ -219,4 +219,98 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lessThanYesterday => 'less than yesterday';
+
+  @override
+  String get dateWiseLog => 'DATE-WISE LOG';
+
+  @override
+  String get editExpense => 'Edit Expense';
+
+  @override
+  String get editIncome => 'Edit Income';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get reportID => 'ID';
+
+  @override
+  String get reportDate => 'Date';
+
+  @override
+  String get reportCategory => 'Category';
+
+  @override
+  String get reportAmount => 'Amount';
+
+  @override
+  String get reportType => 'Type';
+
+  @override
+  String get reportNote => 'Note';
+
+  @override
+  String get expenseReport => 'Expense Report';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get fileSavedTo => 'File saved to';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get couldNotFindExportDir => 'Could not find export directory';
+
+  @override
+  String get generatingCsv => 'Generating CSV...';
+
+  @override
+  String get generatingPdf => 'Generating PDF...';
+
+  @override
+  String get noDataFound => 'No data found for selected range';
+
+  @override
+  String get internetRequired => 'Internet Required';
+
+  @override
+  String get reminderInternetRequirement =>
+      'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.';
+
+  @override
+  String get exportingCsv => 'Exporting CSV...';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get reminderBody => 'Don\'t forget to log your expenses for today! 📝';
 }

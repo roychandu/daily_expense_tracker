@@ -51,7 +51,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
       dailyTotals[dateStr] = (dailyTotals[dateStr] ?? 0) + e.amount;
     }
 
-    String topCategory = 'None';
+    String topCategory = l10n.all; // Fallback to All or None
     double maxCatAmount = 0;
     categoryTotals.forEach((cat, amt) {
       if (amt > maxCatAmount) {
@@ -60,7 +60,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
       }
     });
 
-    String highestSpendDay = 'None';
+    String highestSpendDay = '';
     double highestSpendAmount = 0;
     dailyTotals.forEach((day, amt) {
       if (amt > highestSpendAmount) {
@@ -295,9 +295,9 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                     Text(l10n.highestSpendDay, style: AppTextStyles.caption),
                     const SizedBox(height: 4),
                     Text(
-                      highestSpendDay == 'None'
+                      highestSpendDay.isEmpty
                           ? 'N/A'
-                          : '${DateFormat('MMM dd').format(DateTime.parse(highestSpendDay))} (${AppFormatters.formatCurrency(highestSpendAmount, settings.currency, settings.locale)})',
+                          : '${DateFormat('MMM dd', settings.locale.toString()).format(DateTime.parse(highestSpendDay))} (${AppFormatters.formatCurrency(highestSpendAmount, settings.currency, settings.locale)})',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
@@ -311,7 +311,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
         ),
         const SizedBox(height: 24),
         Text(
-          'DATE-WISE LOG',
+          l10n.dateWiseLog,
           style: AppTextStyles.h2Section.copyWith(fontSize: 18),
         ),
         const SizedBox(height: 12),
@@ -328,6 +328,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                       Text(
                         DateFormat(
                           'MMMM dd, yyyy',
+                          settings.locale.toString(),
                         ).format(DateTime.parse(entry.key)),
                         style: AppTextStyles.body.copyWith(
                           fontWeight: FontWeight.bold,

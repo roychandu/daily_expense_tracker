@@ -11,8 +11,14 @@ import '../models/expense.dart';
 class ExportService {
   static Future<String?> exportToCSV(
     List<Expense> expenses,
-    String fileName,
-  ) async {
+    String fileName, {
+    required List<String> headers,
+    required String expenseLabel,
+    required String incomeLabel,
+    required String fileSavedLabel,
+    required String errorLabel,
+    required String noDirLabel,
+  }) async {
     try {
       if (Platform.isAndroid || Platform.isIOS) {
         if (await Permission.manageExternalStorage.isRestricted) {
@@ -25,7 +31,7 @@ class ExportService {
 
       List<List<dynamic>> rows = [];
       // Header
-      rows.add(['ID', 'Date', 'Category', 'Amount', 'Type', 'Note']);
+      rows.add(headers);
 
       for (var expense in expenses) {
         rows.add([
@@ -33,7 +39,7 @@ class ExportService {
           DateFormat('yyyy-MM-dd HH:mm').format(expense.date),
           expense.category,
           expense.amount,
-          expense.isExpense ? 'Expense' : 'Income',
+          expense.isExpense ? expenseLabel : incomeLabel,
           expense.note,
         ]);
       }
@@ -41,15 +47,15 @@ class ExportService {
       String csvData = const ListToCsvConverter().convert(rows);
 
       final directory = await _getExportDirectory();
-      if (directory == null) return 'Could not find export directory';
+      if (directory == null) return noDirLabel;
 
       final file = File(p.join(directory.path, '$fileName.csv'));
       await file.writeAsString(csvData);
 
-      return 'File saved to: ${file.path}';
+      return '$fileSavedLabel: ${file.path}';
     } catch (e) {
       print('Error: $e');
-      return 'Error: $e';
+      return '$errorLabel: $e';
     }
   }
 
@@ -57,8 +63,17 @@ class ExportService {
     List<Expense> expenses,
     String fileName,
     DateTime start,
-    DateTime end,
-  ) async {
+    DateTime end, {
+    required List<String> headers,
+    required String reportTitle,
+    required String totalExpenseLabel,
+    required String totalIncomeLabel,
+    required String expLabelShort,
+    required String incLabelShort,
+    required String fileSavedLabel,
+    required String errorLabel,
+    required String noDirLabel,
+  }) async {
     try {
       if (Platform.isAndroid || Platform.isIOS) {
         if (await Permission.manageExternalStorage.isRestricted) {
@@ -81,18 +96,18 @@ class ExportService {
               level: 0,
               child: pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [pw.Text('Expense Report'), pw.Text(dateRange)],
+                children: [pw.Text(reportTitle), pw.Text(dateRange)],
               ),
             ),
             pw.SizedBox(height: 20),
             pw.TableHelper.fromTextArray(
-              headers: ['Date', 'Category', 'Type', 'Amount', 'Note'],
+              headers: headers,
               data: expenses
                   .map(
                     (e) => [
                       DateFormat('MMM dd, HH:mm').format(e.date),
                       _cleanString(e.category),
-                      e.isExpense ? 'Exp' : 'Inc',
+                      e.isExpense ? expLabelShort : incLabelShort,
                       e.amount.toStringAsFixed(2),
                       _cleanString(e.note),
                     ],
@@ -117,7 +132,7 @@ class ExportService {
               mainAxisAlignment: pw.MainAxisAlignment.end,
               children: [
                 pw.Text(
-                  'Total Expenses: ${expenses.where((e) => e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
+                  '$totalExpenseLabel: ${expenses.where((e) => e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
                 ),
               ],
             ),
@@ -125,7 +140,7 @@ class ExportService {
               mainAxisAlignment: pw.MainAxisAlignment.end,
               children: [
                 pw.Text(
-                  'Total Income: ${expenses.where((e) => !e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
+                  '$totalIncomeLabel: ${expenses.where((e) => !e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
                 ),
               ],
             ),
@@ -134,15 +149,15 @@ class ExportService {
       );
 
       final directory = await _getExportDirectory();
-      if (directory == null) return 'Could not find export directory';
+      if (directory == null) return noDirLabel;
 
       final file = File(p.join(directory.path, '$fileName.pdf'));
       await file.writeAsBytes(await pdf.save());
 
-      return 'File saved to: ${file.path}';
+      return '$fileSavedLabel: ${file.path}';
     } catch (e) {
       print('Error: $e');
-      return 'Error: $e';
+      return '$errorLabel: $e';
     }
   }
 
