@@ -4,10 +4,10 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
 import '../../common_widgets/primary_button.dart';
-import '../../services/database_service.dart';
 import '../../models/expense.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/settings_controller.dart';
+import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
@@ -21,77 +21,69 @@ class MonthlySummaryScreen extends StatefulWidget {
 
 class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
   bool _isUnlocked = false;
-  List<Expense> _monthlyExpenses = [];
-  double _totalAmount = 0;
-  Map<String, double> _categoryTotals = {};
-  bool _isLoading = true;
-  String _topCategory = 'None';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSummary();
-  }
-
-  Future<void> _loadSummary() async {
-    setState(() => _isLoading = true);
-    final all = await DatabaseService.instance.readAllExpenses();
-    final now = DateTime.now();
-    final thisMonthExpenses = all
-        .where(
-          (e) =>
-              e.date.month == now.month &&
-              e.date.year == now.year &&
-              e.isExpense,
-        )
-        .toList();
-
-    double total = 0;
-    Map<String, double> catTotals = {};
-    for (var e in thisMonthExpenses) {
-      total += e.amount;
-      catTotals[e.category] = (catTotals[e.category] ?? 0) + e.amount;
-    }
-
-    String topCat = 'None';
-    double maxAmount = 0;
-    catTotals.forEach((cat, amt) {
-      if (amt > maxAmount) {
-        maxAmount = amt;
-        topCat = cat;
-      }
-    });
-
-    setState(() {
-      _monthlyExpenses = thisMonthExpenses;
-      _totalAmount = total;
-      _categoryTotals = catTotals;
-      _topCategory = topCat;
-      _isLoading = false;
-    });
-  }
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final settings = context.watch<SettingsController>();
-    final now = DateTime.now();
+    final expenseController = context.watch<ExpenseController>();
+
     final monthName = DateFormat(
       'MMMM yyyy',
       settings.locale.toString(),
-    ).format(now);
+    ).format(_selectedDate);
+
+    // Filter and calculate data
+    final allExpenses = expenseController.expenses;
+    final thisMonthExpenses = allExpenses.where((e) {
+      return e.date.month == _selectedDate.month &&
+          e.date.year == _selectedDate.year &&
+          e.isExpense;
+    }).toList();
+
+    double totalAmount = 0;
+    Map<String, double> categoryTotals = {};
+    Map<String, double> dailyTotals = {};
+    for (var e in thisMonthExpenses) {
+      totalAmount += e.amount;
+      categoryTotals[e.category] = (categoryTotals[e.category] ?? 0) + e.amount;
+      final dateStr = DateFormat('yyyy-MM-dd').format(e.date);
+      dailyTotals[dateStr] = (dailyTotals[dateStr] ?? 0) + e.amount;
+    }
+
+    String topCategory = 'None';
+    double maxCatAmount = 0;
+    categoryTotals.forEach((cat, amt) {
+      if (amt > maxCatAmount) {
+        maxCatAmount = amt;
+        topCategory = cat;
+      }
+    });
+
+    String highestSpendDay = 'None';
+    double highestSpendAmount = 0;
+    dailyTotals.forEach((day, amt) {
+      if (amt > highestSpendAmount) {
+        highestSpendAmount = amt;
+        highestSpendDay = day;
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(monthName),
-            const Icon(Icons.arrow_drop_down, color: AppColors.accentTeal),
-          ],
+        title: GestureDetector(
+          onTap: () => _showMonthPicker(context),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(monthName),
+              const Icon(Icons.arrow_drop_down, color: AppColors.accentTeal),
+            ],
+          ),
         ),
       ),
-      body: _isLoading
+      body: expenseController.isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -112,7 +104,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                           const SizedBox(height: 8),
                           Text(
                             AppFormatters.formatCurrency(
-                              _totalAmount,
+                              totalAmount,
                               settings.currency,
                               settings.locale,
                             ),
@@ -122,10 +114,10 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${_monthlyExpenses.length} ${l10n.expenses}',
+                            '${thisMonthExpenses.length} ${l10n.expenses}',
                             style: AppTextStyles.body,
                           ),
-                          if (!_isUnlocked && _monthlyExpenses.isNotEmpty) ...[
+                          if (!_isUnlocked && thisMonthExpenses.isNotEmpty) ...[
                             const SizedBox(height: 12),
                             Row(
                               children: [
@@ -134,7 +126,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                                   style: AppTextStyles.caption,
                                 ),
                                 Text(
-                                  '${_getCategoryIcon(_topCategory)} $_topCategory',
+                                  '${_getCategoryIcon(topCategory)} $topCategory',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -146,20 +138,26 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 24),
-
                   if (!_isUnlocked)
-                    _buildLockedState(settings, l10n)
+                    _buildLockedState(l10n)
                   else
-                    _buildUnlockedState(settings, l10n),
+                    _buildUnlockedState(
+                      settings,
+                      l10n,
+                      totalAmount,
+                      categoryTotals,
+                      highestSpendDay,
+                      highestSpendAmount,
+                      dailyTotals,
+                    ),
                 ],
               ),
             ),
     );
   }
 
-  Widget _buildLockedState(SettingsController settings, AppLocalizations l10n) {
+  Widget _buildLockedState(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -228,6 +226,11 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
   Widget _buildUnlockedState(
     SettingsController settings,
     AppLocalizations l10n,
+    double totalAmount,
+    Map<String, double> categoryTotals,
+    String highestSpendDay,
+    double highestSpendAmount,
+    Map<String, double> dailyTotals,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,10 +240,8 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
           style: AppTextStyles.h2Section.copyWith(fontSize: 18),
         ),
         const SizedBox(height: 12),
-        ..._categoryTotals.entries.map((entry) {
-          final percentage = _totalAmount > 0
-              ? entry.value / _totalAmount
-              : 0.0;
+        ...categoryTotals.entries.map((entry) {
+          final percentage = totalAmount > 0 ? entry.value / totalAmount : 0.0;
           return _buildCategoryRow(
             '${_getCategoryIcon(entry.key)} ${entry.key}',
             AppFormatters.formatCurrency(
@@ -251,9 +252,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
             percentage,
           );
         }),
-
         const SizedBox(height: 24),
-
         Text(
           l10n.insights.toUpperCase(),
           style: AppTextStyles.h2Section.copyWith(fontSize: 18),
@@ -271,7 +270,11 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                     const SizedBox(height: 4),
                     Text(
                       AppFormatters.formatCurrency(
-                        _totalAmount / DateTime.now().day,
+                        totalAmount /
+                            DateUtils.getDaysInMonth(
+                              _selectedDate.year,
+                              _selectedDate.month,
+                            ),
                         settings.currency,
                         settings.locale,
                       ),
@@ -290,13 +293,15 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.totalItems, style: AppTextStyles.caption),
+                    Text(l10n.highestSpendDay, style: AppTextStyles.caption),
                     const SizedBox(height: 4),
                     Text(
-                      '${_monthlyExpenses.length}',
+                      highestSpendDay == 'None'
+                          ? 'N/A'
+                          : '${DateFormat('MMM dd').format(DateTime.parse(highestSpendDay))} (${AppFormatters.formatCurrency(highestSpendAmount, settings.currency, settings.locale)})',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -305,8 +310,66 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
             ),
           ],
         ),
+        const SizedBox(height: 24),
+        Text(
+          'DATE-WISE LOG',
+          style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+        ),
+        const SizedBox(height: 12),
+        ...(dailyTotals.entries.toList()
+              ..sort((a, b) => b.key.compareTo(a.key)))
+            .map((entry) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: CustomCard(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        DateFormat(
+                          'MMMM dd, yyyy',
+                        ).format(DateTime.parse(entry.key)),
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        AppFormatters.formatCurrency(
+                          entry.value,
+                          settings.currency,
+                          settings.locale,
+                        ),
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.softCoral,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            })
+            .toList(),
       ],
     );
+  }
+
+  void _showMonthPicker(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+    if (picked != null &&
+        (picked.month != _selectedDate.month ||
+            picked.year != _selectedDate.year)) {
+      setState(() {
+        _selectedDate = DateTime(picked.year, picked.month);
+      });
+    }
   }
 
   Widget _buildCategoryRow(String title, String amount, double percentage) {

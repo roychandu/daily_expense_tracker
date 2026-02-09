@@ -213,4 +213,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yesterday => 'YESTERDAY';
+
+  @override
+  String get moreThanYesterday => 'more than yesterday';
+
+  @override
+  String get lessThanYesterday => 'less than yesterday';
 }

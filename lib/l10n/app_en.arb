@@ -70,5 +70,7 @@
   "history": "History",
   "searchExpenses": "Search expenses...",
   "noHistoryFound": "No history found",
-  "yesterday": "YESTERDAY"
+  "yesterday": "YESTERDAY",
+  "moreThanYesterday": "more than yesterday",
+  "lessThanYesterday": "less than yesterday"
 }

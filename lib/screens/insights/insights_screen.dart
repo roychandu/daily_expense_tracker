@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
-import '../../services/database_service.dart';
+import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -14,19 +15,16 @@ class InsightsScreen extends StatefulWidget {
 }
 
 class _InsightsScreenState extends State<InsightsScreen> {
-  int _streakCount = 0;
-  List<bool> _weeklyLogged = List.filled(7, false);
-  bool _isLoading = true;
-
   @override
-  void initState() {
-    super.initState();
-    _loadInsights();
-  }
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final expenseController = context.watch<ExpenseController>();
 
-  Future<void> _loadInsights() async {
-    setState(() => _isLoading = true);
-    final all = await DatabaseService.instance.readAllExpenses();
+    if (expenseController.isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    final all = expenseController.expenses;
 
     // Calculate Streak
     final Set<String> loggedDates = all
@@ -43,202 +41,151 @@ class _InsightsScreenState extends State<InsightsScreen> {
     // Weekly Activity (Current Week)
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    List<bool> weekly = [];
+    List<bool> weeklyLogged = [];
     for (int i = 0; i < 7; i++) {
       final date = startOfWeek.add(Duration(days: i));
-      weekly.add(loggedDates.contains(DateFormat('yyyy-MM-dd').format(date)));
+      weeklyLogged.add(
+        loggedDates.contains(DateFormat('yyyy-MM-dd').format(date)),
+      );
     }
 
-    setState(() {
-      _streakCount = streak;
-      _weeklyLogged = weekly;
-      _isLoading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.insights)),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: _loadInsights,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                physics: const AlwaysScrollableScrollPhysics(),
+      body: RefreshIndicator(
+        onRefresh: () => expenseController.refreshExpenses(),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              // Logging Streak
+              CustomCard(
+                padding: const EdgeInsets.all(24),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Logging Streak
-                    CustomCard(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            l10n.loggingStreak,
-                            style: AppTextStyles.h2Section.copyWith(
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            '🔥 $_streakCount ${_streakCount == 1 ? l10n.day : l10n.days}',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color:
-                                  Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? AppColors.textDark
-                                  : AppColors.primaryDeepBlue,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _streakCount > 0
-                                ? l10n.keepItGoing
-                                : l10n.startLoggingToday,
-                            style: AppTextStyles.body.copyWith(
-                              color: AppColors.accentTeal,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                height: 12,
-                                decoration: BoxDecoration(
-                                  color: AppColors.softGray.withValues(
-                                    alpha: 0.2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: FractionallySizedBox(
-                                  widthFactor: (_streakCount / 30).clamp(
-                                    0.01,
-                                    1.0,
-                                  ),
-                                  child: Container(
-                                    height: 12,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.accentTeal,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '$_streakCount',
-                                style: AppTextStyles.caption,
-                              ),
-                              const Text('30', style: AppTextStyles.caption),
-                            ],
-                          ),
-                        ],
+                    Text(
+                      l10n.loggingStreak,
+                      style: AppTextStyles.h2Section.copyWith(fontSize: 16),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      '🔥 $streak ${streak == 1 ? l10n.day : l10n.days}',
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.textDark
+                            : AppColors.primaryDeepBlue,
                       ),
                     ),
-
-                    const SizedBox(height: 24),
-
-                    // Weekly Activity
+                    const SizedBox(height: 8),
                     Text(
-                      l10n.weeklyActivity,
-                      style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+                      streak > 0 ? l10n.keepItGoing : l10n.startLoggingToday,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.accentTeal,
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    CustomCard(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                _DayCircle(
-                                  label: 'M',
-                                  isLogged: _weeklyLogged[0],
-                                ),
-                                _DayCircle(
-                                  label: 'T',
-                                  isLogged: _weeklyLogged[1],
-                                ),
-                                _DayCircle(
-                                  label: 'W',
-                                  isLogged: _weeklyLogged[2],
-                                ),
-                                _DayCircle(
-                                  label: 'T',
-                                  isLogged: _weeklyLogged[3],
-                                ),
-                                _DayCircle(
-                                  label: 'F',
-                                  isLogged: _weeklyLogged[4],
-                                ),
-                                _DayCircle(
-                                  label: 'S',
-                                  isLogged: _weeklyLogged[5],
-                                ),
-                                _DayCircle(
-                                  label: 'S',
-                                  isLogged: _weeklyLogged[6],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              '${_weeklyLogged.where((e) => e).length} ${l10n.daysLogged}',
-                              style: AppTextStyles.body,
-                            ),
-                          ],
+                    const SizedBox(height: 16),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: AppColors.softGray.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Insights
-                    Text(
-                      l10n.insights.toUpperCase(),
-                      style: AppTextStyles.h2Section.copyWith(fontSize: 18),
-                    ),
-                    const SizedBox(height: 12),
-                    CustomCard(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.lightbulb,
-                            color: Colors.orange,
-                            size: 32,
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              _streakCount > 5
-                                  ? l10n.consistentInsight
-                                  : l10n.startInsight,
-                              style: AppTextStyles.body,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: FractionallySizedBox(
+                            widthFactor: (streak / 30).clamp(0.01, 1.0),
+                            child: Container(
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: AppColors.accentTeal,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
                             ),
                           ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('$streak', style: AppTextStyles.caption),
+                        const Text('30', style: AppTextStyles.caption),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Weekly Activity
+              Text(
+                l10n.weeklyActivity,
+                style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+              ),
+              const SizedBox(height: 12),
+              CustomCard(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _DayCircle(label: 'M', isLogged: weeklyLogged[0]),
+                          _DayCircle(label: 'T', isLogged: weeklyLogged[1]),
+                          _DayCircle(label: 'W', isLogged: weeklyLogged[2]),
+                          _DayCircle(label: 'T', isLogged: weeklyLogged[3]),
+                          _DayCircle(label: 'F', isLogged: weeklyLogged[4]),
+                          _DayCircle(label: 'S', isLogged: weeklyLogged[5]),
+                          _DayCircle(label: 'S', isLogged: weeklyLogged[6]),
                         ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        '${weeklyLogged.where((e) => e).length} ${l10n.daysLogged}',
+                        style: AppTextStyles.body,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Insights
+              Text(
+                l10n.insights.toUpperCase(),
+                style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+              ),
+              const SizedBox(height: 12),
+              CustomCard(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    const Icon(Icons.lightbulb, color: Colors.orange, size: 32),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        streak > 5 ? l10n.consistentInsight : l10n.startInsight,
+                        style: AppTextStyles.body,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

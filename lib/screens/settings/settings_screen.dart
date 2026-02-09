@@ -4,6 +4,8 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
+import '../database/database_viewer_screen.dart';
+import '../../common_widgets/custom_snackbar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -72,9 +74,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             _buildSectionHeader(l10n.data),
             _buildSettingsCard([
-              _buildRow(l10n.exportCsv, l10n.watchAd, isBonus: true),
+              _buildRow(
+                l10n.exportCsv,
+                l10n.watchAd,
+                isBonus: true,
+                onTap: () {
+                  showCustomSnackBar(context, 'Exporting CSV...');
+                },
+              ),
               const Divider(height: 1),
-              _buildRow(l10n.exportPdf, l10n.watchAd, isBonus: true),
+              _buildRow(
+                l10n.exportPdf,
+                l10n.watchAd,
+                isBonus: true,
+                onTap: () {
+                  showCustomSnackBar(context, 'Exporting PDF...');
+                },
+              ),
             ]),
 
             const SizedBox(height: 24),
@@ -110,6 +126,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: AppTextStyles.caption,
                   ),
                 ),
+              ),
+            ]),
+
+            const SizedBox(height: 24),
+            _buildSectionHeader('DEBUG'),
+            _buildSettingsCard([
+              _buildRow(
+                'View Raw Database',
+                '',
+                hasNav: true,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DatabaseViewerScreen(),
+                    ),
+                  );
+                },
               ),
             ]),
           ],

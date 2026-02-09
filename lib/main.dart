@@ -6,6 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/settings_controller.dart';
+import 'controllers/expense_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'common_widgets/app_theme.dart';
 import 'screens/home_screen/home_screen.dart';
@@ -22,11 +23,15 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   final settingsController = SettingsController(prefs);
+  final expenseController = ExpenseController();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
-    ChangeNotifierProvider.value(
-      value: settingsController,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: settingsController),
+        ChangeNotifierProvider.value(value: expenseController),
+      ],
       child: const MyApp(),
     ),
   );

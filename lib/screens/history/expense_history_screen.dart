@@ -5,12 +5,13 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
 import '../../common_widgets/custom_text_field.dart';
-import '../../services/database_service.dart';
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
+import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import '../../common_widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
@@ -22,14 +23,13 @@ class ExpenseHistoryScreen extends StatefulWidget {
 
 class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<Expense> _allExpenses = [];
+  String _selectedType = 'All';
+  List<String> _selectedCategories = [];
   Map<String, List<Expense>> _groupedExpenses = {};
-  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadHistory();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -41,25 +41,26 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   }
 
   void _onSearchChanged() {
-    _filterExpenses();
+    setState(() {}); // Re-filter on search change
   }
 
-  Future<void> _loadHistory() async {
-    setState(() => _isLoading = true);
-    final expenses = await DatabaseService.instance.readAllExpenses();
-    setState(() {
-      _allExpenses = expenses;
-      _isLoading = false;
-    });
-    _filterExpenses();
-  }
-
-  void _filterExpenses() {
+  void _filterAndGroupExpenses(List<Expense> allExpenses) {
     final l10n = AppLocalizations.of(context)!;
     final query = _searchController.text.toLowerCase();
-    final filtered = _allExpenses.where((e) {
-      return e.category.toLowerCase().contains(query) ||
+
+    final filtered = allExpenses.where((e) {
+      final matchesQuery =
+          e.category.toLowerCase().contains(query) ||
           e.note.toLowerCase().contains(query);
+      final matchesType =
+          _selectedType == 'All' ||
+          (_selectedType == 'Expense' && e.isExpense) ||
+          (_selectedType == 'Income' && !e.isExpense);
+      final matchesCategory =
+          _selectedCategories.isEmpty ||
+          _selectedCategories.contains(e.category);
+
+      return matchesQuery && matchesType && matchesCategory;
     }).toList();
 
     // Grouping
@@ -89,21 +90,21 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
       }
       groups[label]!.add(e);
     }
-
-    setState(() {
-      _groupedExpenses = groups;
-    });
+    _groupedExpenses = groups;
   }
 
   Future<void> _deleteExpense(int id) async {
-    await DatabaseService.instance.delete(id);
-    _loadHistory();
+    await context.read<ExpenseController>().deleteExpense(id);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final settings = context.watch<SettingsController>();
+    final expenseController = context.watch<ExpenseController>();
+
+    _filterAndGroupExpenses(expenseController.expenses);
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final keys = _groupedExpenses.keys.toList();
 
@@ -114,13 +115,14 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: () {
-              // Mock export
+              showCustomSnackBar(context, 'Exporting CSV...');
             },
           ),
         ],
       ),
       body: Column(
         children: [
+          if (expenseController.isLoading) const LinearProgressIndicator(),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -151,7 +153,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                           ? AppColors.accentTeal
                           : AppColors.primaryDeepBlue,
                     ),
-                    onPressed: () {},
+                    onPressed: () => _showFilterBottomSheet(context),
                   ),
                 ),
               ],
@@ -159,9 +161,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           ),
 
           Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _groupedExpenses.isEmpty
+            child: _groupedExpenses.isEmpty
                 ? Center(
                     child: Text(
                       l10n.noHistoryFound,
@@ -212,7 +212,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                 ),
                                 child: CustomCard(
                                   onTap: () async {
-                                    final result = await Navigator.push(
+                                    await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => AddExpenseScreen(
@@ -221,9 +221,6 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                         ),
                                       ),
                                     );
-                                    if (result == true) {
-                                      _loadHistory();
-                                    }
                                   },
                                   padding: const EdgeInsets.all(12),
                                   child: Row(
@@ -293,6 +290,162 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final categories = CategoryUtils.expenseCategories
+        .map((c) => c['name']!)
+        .toList();
+    categories.addAll(CategoryUtils.incomeCategories.map((c) => c['name']!));
+    categories.add('Other');
+    final uniqueCategories = categories.toSet().toList();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.backgroundDark : AppColors.warmCream,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: AppColors.softGray.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  Text('Filters', style: AppTextStyles.h2Section),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      children: [
+                        Text(
+                          'Type',
+                          style: AppTextStyles.caption.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: ['All', 'Expense', 'Income'].map((type) {
+                            final isSelected = _selectedType == type;
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: ChoiceChip(
+                                label: Text(type),
+                                selected: isSelected,
+                                onSelected: (val) {
+                                  if (val) {
+                                    setModalState(() => _selectedType = type);
+                                    setState(() => _selectedType = type);
+                                  }
+                                },
+                                selectedColor: AppColors.accentTeal,
+                                labelStyle: TextStyle(
+                                  color: isSelected
+                                      ? Colors.white
+                                      : (isDark ? Colors.white : Colors.black),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'Categories',
+                          style: AppTextStyles.caption.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: uniqueCategories.map((cat) {
+                            final isSelected = _selectedCategories.contains(
+                              cat,
+                            );
+                            return ChoiceChip(
+                              label: Text(cat),
+                              selected: isSelected,
+                              onSelected: (val) {
+                                setModalState(() {
+                                  if (val) {
+                                    _selectedCategories.add(cat);
+                                  } else {
+                                    _selectedCategories.remove(cat);
+                                  }
+                                });
+                                setState(() {});
+                              },
+                              selectedColor: AppColors.accentTeal,
+                              labelStyle: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : (isDark ? Colors.white : Colors.black),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              setModalState(() {
+                                _selectedType = 'All';
+                                _selectedCategories.clear();
+                              });
+                              setState(() {
+                                _selectedType = 'All';
+                                _selectedCategories.clear();
+                              });
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Reset'),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.accentTeal,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Apply'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

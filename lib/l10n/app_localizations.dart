@@ -517,6 +517,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'YESTERDAY'**
   String get yesterday;
+
+  /// No description provided for @moreThanYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'more than yesterday'**
+  String get moreThanYesterday;
+
+  /// No description provided for @lessThanYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'less than yesterday'**
+  String get lessThanYesterday;
 }
 
 class _AppLocalizationsDelegate

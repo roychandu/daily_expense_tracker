@@ -7,8 +7,8 @@ import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../models/expense.dart';
-import '../../services/database_service.dart';
 import '../../controllers/settings_controller.dart';
+import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/category_utils.dart';
 
@@ -108,10 +108,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       isExpense: widget.isExpense,
     );
 
+    final controller = context.read<ExpenseController>();
     if (widget.expense != null) {
-      await DatabaseService.instance.update(expense);
+      await controller.updateExpense(expense);
     } else {
-      await DatabaseService.instance.create(expense);
+      await controller.addExpense(expense);
     }
 
     if (mounted) {

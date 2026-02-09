@@ -15,6 +15,8 @@ import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import 'package:intl/intl.dart';
+import '../../controllers/expense_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -141,51 +143,44 @@ class _TodayView extends StatefulWidget {
 }
 
 class _TodayViewState extends State<_TodayView> {
-  List<Expense> _recentExpenses = [];
-  double _totalAmount = 0;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
-  @override
-  void didUpdateWidget(_TodayView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.isExpenseSelected != widget.isExpenseSelected ||
-        oldWidget.refreshCount != widget.refreshCount) {
-      _loadData();
-    }
-  }
-
-  Future<void> _loadData() async {
-    setState(() => _isLoading = true);
-    final expenses = await DatabaseService.instance.readExpensesByDay(
-      DateTime.now(),
-    );
-
-    final filtered = expenses
-        .where((e) => e.isExpense == widget.isExpenseSelected)
-        .toList();
-
-    double total = 0;
-    for (var e in filtered) {
-      total += e.amount;
-    }
-
-    setState(() {
-      _recentExpenses = filtered.take(5).toList();
-      _totalAmount = total;
-      _isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final settings = context.watch<SettingsController>();
+    final expenseController = context.watch<ExpenseController>();
+
+    if (expenseController.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final allExpenses = expenseController.expenses;
+    final now = DateTime.now();
+    final todayStr = DateFormat('yyyy-MM-dd').format(now);
+    final yesterdayStr = DateFormat(
+      'yyyy-MM-dd',
+    ).format(now.subtract(const Duration(days: 1)));
+
+    final todayExpenses = allExpenses.where((e) {
+      return DateFormat('yyyy-MM-dd').format(e.date) == todayStr &&
+          e.isExpense == widget.isExpenseSelected;
+    }).toList();
+
+    final yesterdayExpenses = allExpenses.where((e) {
+      return DateFormat('yyyy-MM-dd').format(e.date) == yesterdayStr &&
+          e.isExpense == widget.isExpenseSelected;
+    }).toList();
+
+    double totalAmount = 0;
+    for (var e in todayExpenses) {
+      totalAmount += e.amount;
+    }
+
+    double yesterdayTotal = 0;
+    for (var e in yesterdayExpenses) {
+      yesterdayTotal += e.amount;
+    }
+
+    final recentExpenses = todayExpenses.take(5).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -212,33 +207,35 @@ class _TodayViewState extends State<_TodayView> {
             _buildToggle(l10n),
             const SizedBox(height: 24),
 
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator())
-            else ...[
-              _buildTotalCard(l10n, settings),
-              const SizedBox(height: 24),
+            _buildTotalCard(
+              l10n,
+              settings,
+              totalAmount,
+              yesterdayTotal,
+              recentExpenses.length,
+            ),
+            const SizedBox(height: 24),
 
-              Text(
-                l10n.recent,
-                style: AppTextStyles.h2Section.copyWith(fontSize: 18),
-              ),
-              const SizedBox(height: 12),
-              _recentExpenses.isEmpty
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
-                        child: Text(
-                          widget.isExpenseSelected
-                              ? l10n.noExpensesYet
-                              : l10n.noIncomeYet,
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.softGray,
-                          ),
+            Text(
+              l10n.recent,
+              style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+            ),
+            const SizedBox(height: 12),
+            recentExpenses.isEmpty
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Text(
+                        widget.isExpenseSelected
+                            ? l10n.noExpensesYet
+                            : l10n.noIncomeYet,
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.softGray,
                         ),
                       ),
-                    )
-                  : _buildRecentTransactions(settings),
-            ],
+                    ),
+                  )
+                : _buildRecentTransactions(settings, recentExpenses),
 
             const SizedBox(height: 16),
             SecondaryButton(
@@ -327,7 +324,17 @@ class _TodayViewState extends State<_TodayView> {
     );
   }
 
-  Widget _buildTotalCard(AppLocalizations l10n, SettingsController settings) {
+  Widget _buildTotalCard(
+    AppLocalizations l10n,
+    SettingsController settings,
+    double totalAmount,
+    double yesterdayTotal,
+    int recentCount,
+  ) {
+    final diff = totalAmount - yesterdayTotal;
+    final isMore = diff > 0;
+    final absDiff = diff.abs();
+
     return CustomCard(
       onTap: () {
         Navigator.push(
@@ -342,7 +349,7 @@ class _TodayViewState extends State<_TodayView> {
             children: [
               Text(
                 AppFormatters.formatCurrency(
-                  _totalAmount,
+                  totalAmount,
                   settings.currency,
                   settings.locale,
                 ),
@@ -352,21 +359,27 @@ class _TodayViewState extends State<_TodayView> {
           ),
           const SizedBox(height: 4),
           Text(
-            '${_recentExpenses.length} ${widget.isExpenseSelected ? l10n.expenses : l10n.items}',
+            '$recentCount ${widget.isExpenseSelected ? l10n.expenses : l10n.items}',
             style: AppTextStyles.caption,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(
-                Icons.info_outline,
-                color: AppColors.accentTeal,
+              Icon(
+                isMore ? Icons.arrow_upward : Icons.arrow_downward,
+                color: widget.isExpenseSelected
+                    ? (isMore ? AppColors.softCoral : AppColors.successGreen)
+                    : (isMore ? AppColors.successGreen : AppColors.softCoral),
                 size: 16,
               ),
+              const SizedBox(width: 4),
               Text(
-                ' ${widget.isExpenseSelected ? l10n.totalExpensesToday : l10n.totalIncomeToday}',
+                '${AppFormatters.formatCurrency(absDiff, settings.currency, settings.locale)} ${isMore ? l10n.moreThanYesterday : l10n.lessThanYesterday}',
                 style: AppTextStyles.caption.copyWith(
-                  color: AppColors.accentTeal,
+                  color: widget.isExpenseSelected
+                      ? (isMore ? AppColors.softCoral : AppColors.successGreen)
+                      : (isMore ? AppColors.successGreen : AppColors.softCoral),
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
@@ -376,11 +389,14 @@ class _TodayViewState extends State<_TodayView> {
     );
   }
 
-  Widget _buildRecentTransactions(SettingsController settings) {
+  Widget _buildRecentTransactions(
+    SettingsController settings,
+    List<Expense> recentExpenses,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
-      children: _recentExpenses.map((tx) {
+      children: recentExpenses.map((tx) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: CustomCard(
