@@ -61,6 +61,35 @@ class DatabaseService {
     return result.map((json) => Expense.fromMap(json)).toList();
   }
 
+  Future<List<Expense>> readExpensesByDateRange(
+    DateTime start,
+    DateTime end,
+  ) async {
+    final db = await instance.database;
+    final startStr = DateTime(
+      start.year,
+      start.month,
+      start.day,
+    ).toIso8601String();
+    final endStr = DateTime(
+      end.year,
+      end.month,
+      end.day,
+      23,
+      59,
+      59,
+    ).toIso8601String();
+
+    final result = await db.query(
+      'expenses',
+      where: 'date >= ? AND date <= ?',
+      whereArgs: [startStr, endStr],
+      orderBy: 'date DESC',
+    );
+
+    return result.map((json) => Expense.fromMap(json)).toList();
+  }
+
   Future<int> update(Expense expense) async {
     final db = await instance.database;
 

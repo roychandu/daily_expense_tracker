@@ -43,6 +43,11 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.3.5
   provider: ^6.1.2
+  csv: ^6.0.0
+  pdf: ^3.11.3
+  path_provider: ^2.1.5
+  open_filex: ^4.7.0
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:

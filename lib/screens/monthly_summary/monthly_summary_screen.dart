@@ -4,7 +4,6 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
 import '../../common_widgets/primary_button.dart';
-import '../../models/expense.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/settings_controller.dart';
 import '../../controllers/expense_controller.dart';

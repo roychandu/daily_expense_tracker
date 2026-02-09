@@ -4,8 +4,11 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
-import '../database/database_viewer_screen.dart';
+// import '../database/database_viewer_screen.dart'; // No longer used as DEBUG section is hidden
 import '../../common_widgets/custom_snackbar.dart';
+import '../../services/export_service.dart';
+import '../../services/database_service.dart';
+import 'package:intl/intl.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -78,18 +81,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 l10n.exportCsv,
                 l10n.watchAd,
                 isBonus: true,
-                onTap: () {
-                  showCustomSnackBar(context, 'Exporting CSV...');
-                },
+                onTap: () => _handleExport(context, true),
               ),
               const Divider(height: 1),
               _buildRow(
                 l10n.exportPdf,
                 l10n.watchAd,
                 isBonus: true,
-                onTap: () {
-                  showCustomSnackBar(context, 'Exporting PDF...');
-                },
+                onTap: () => _handleExport(context, false),
               ),
             ]),
 
@@ -129,23 +128,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ]),
 
-            const SizedBox(height: 24),
-            _buildSectionHeader('DEBUG'),
-            _buildSettingsCard([
-              _buildRow(
-                'View Raw Database',
-                '',
-                hasNav: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DatabaseViewerScreen(),
-                    ),
-                  );
-                },
-              ),
-            ]),
+            // const SizedBox(height: 24),
+            // _buildSectionHeader('DEBUG'),
+            // _buildSettingsCard([
+            //   _buildRow(
+            //     'View Raw Database',
+            //     '',
+            //     hasNav: true,
+            //     onTap: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => const DatabaseViewerScreen(),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ]),
           ],
         ),
       ),
@@ -289,6 +288,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       onTap: onTap,
     );
+  }
+
+  void _handleExport(BuildContext context, bool isCsv) async {
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      initialDateRange: DateTimeRange(
+        start: DateTime.now().subtract(const Duration(days: 30)),
+        end: DateTime.now(),
+      ),
+    );
+
+    if (picked != null) {
+      if (!mounted) return;
+      showCustomSnackBar(context, 'Generating ${isCsv ? 'CSV' : 'PDF'}...');
+
+      final expenses = await DatabaseService.instance.readExpensesByDateRange(
+        picked.start,
+        picked.end,
+      );
+
+      if (expenses.isEmpty) {
+        if (!mounted) return;
+        showCustomSnackBar(
+          context,
+          'No data found for selected range',
+          isError: true,
+        );
+        return;
+      }
+
+      final fileName =
+          'Expenses_${DateFormat('yyyyMMdd').format(picked.start)}_${DateFormat('yyyyMMdd').format(picked.end)}';
+
+      String? result;
+      if (isCsv) {
+        result = await ExportService.exportToCSV(expenses, fileName);
+      } else {
+        result = await ExportService.exportToPDF(
+          expenses,
+          fileName,
+          picked.start,
+          picked.end,
+        );
+      }
+
+      if (!mounted) return;
+      if (result != null && result.startsWith('File saved')) {
+        showCustomSnackBar(context, result);
+      } else {
+        showCustomSnackBar(context, result ?? 'Unknown error', isError: true);
+      }
+    }
   }
 
   Widget _buildSwitchRow(
