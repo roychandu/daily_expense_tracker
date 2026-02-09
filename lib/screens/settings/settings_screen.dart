@@ -9,6 +9,7 @@ import '../../common_widgets/custom_snackbar.dart';
 import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import 'package:intl/intl.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -18,7 +19,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _dailyReminder = true;
+  // bool _dailyReminder = true; // Removed local state
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +69,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const Divider(height: 1),
               _buildSwitchRow(
                 l10n.dailyReminder,
-                _dailyReminder,
-                (val) => setState(() => _dailyReminder = val),
+                settings.isDailyReminderEnabled,
+                (val) => _handleReminderToggle(val, settings),
               ),
             ]),
 
@@ -287,6 +288,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
       onTap: onTap,
+    );
+  }
+
+  Future<void> _handleReminderToggle(
+    bool enabled,
+    SettingsController settings,
+  ) async {
+    if (enabled) {
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.none)) {
+        if (mounted) {
+          _showNoInternetDialog(context);
+        }
+        return;
+      }
+    }
+    await settings.updateDailyReminder(enabled);
+  }
+
+  void _showNoInternetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.wifi_off, color: Colors.orange),
+            SizedBox(width: 8),
+            Text('Internet Required'),
+          ],
+        ),
+        content: const Text(
+          'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 

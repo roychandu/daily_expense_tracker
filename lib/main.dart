@@ -12,6 +12,8 @@ import 'common_widgets/app_theme.dart';
 import 'screens/home_screen/home_screen.dart';
 
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,12 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Initialize Notifications
+  await NotificationService().init();
 
   final prefs = await SharedPreferences.getInstance();
   final settingsController = SettingsController(prefs);

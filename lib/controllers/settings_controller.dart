@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/notification_service.dart';
 
 class SettingsController extends ChangeNotifier {
   SettingsController(this._prefs) {
@@ -11,10 +12,12 @@ class SettingsController extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   Locale _locale = const Locale('en');
   String _currency = 'USD';
+  bool _isDailyReminderEnabled = true;
 
   ThemeMode get themeMode => _themeMode;
   Locale get locale => _locale;
   String get currency => _currency;
+  bool get isDailyReminderEnabled => _isDailyReminderEnabled;
 
   static const List<Map<String, String>> supportedLanguages = [
     {'code': 'en', 'name': 'English'},
@@ -58,6 +61,13 @@ class SettingsController extends ChangeNotifier {
     _locale = Locale(languageCode);
 
     _currency = _prefs.getString('currency') ?? 'USD';
+    _isDailyReminderEnabled = _prefs.getBool('isDailyReminderEnabled') ?? true;
+
+    // Auto-schedule if enabled
+    if (_isDailyReminderEnabled) {
+      NotificationService().scheduleDailyReminder();
+    }
+
     notifyListeners();
   }
 
@@ -79,5 +89,17 @@ class SettingsController extends ChangeNotifier {
     _currency = currency;
     notifyListeners();
     await _prefs.setString('currency', currency);
+  }
+
+  Future<void> updateDailyReminder(bool enabled) async {
+    _isDailyReminderEnabled = enabled;
+    notifyListeners();
+    await _prefs.setBool('isDailyReminderEnabled', enabled);
+
+    if (enabled) {
+      await NotificationService().scheduleDailyReminder();
+    } else {
+      await NotificationService().cancelAllNotifications();
+    }
   }
 }

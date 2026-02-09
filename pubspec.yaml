@@ -48,6 +48,11 @@ dependencies:
   path_provider: ^2.1.5
   open_filex: ^4.7.0
   permission_handler: ^12.0.1
+  flutter_local_notifications: 18.0.1
+  timezone: 0.9.4
+  flutter_timezone: ^5.0.1
+  connectivity_plus: ^7.0.0
+  firebase_core: ^4.4.0
 
 dev_dependencies:
   flutter_test:
