@@ -26,16 +26,56 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   late bool _isExpense;
 
   final List<Map<String, String>> _displayCategories = [
-    {'name': 'Transport', 'icon': 'asstes/icons/transport-light-icon.png'},
-    {'name': 'Food', 'icon': 'asstes/icons/food-light-icon.png'},
-    {'name': 'Rent', 'icon': 'asstes/icons/rent-light-icon.png'},
-    {'name': 'Bills', 'icon': 'asstes/icons/bills-light-icon.png'},
-    {'name': 'Fun', 'icon': 'asstes/icons/fun-light-icon.png'},
-    {'name': 'Shopping', 'icon': 'asstes/icons/shopping-light-icon.png'},
-    {'name': 'Dinning', 'icon': 'asstes/icons/dinning-light-icon.png'},
-    {'name': 'Health', 'icon': 'asstes/icons/health-light-icon.png'},
-    {'name': 'Grocerry', 'icon': 'asstes/icons/grocerry-light-icon.png'},
-    {'name': 'Add new', 'icon': 'asstes/icons/add-new-light-icon.png'},
+    {
+      'name': 'Transport',
+      'darkIcon': 'assets/icons/transport-dark-icon.png',
+      'lightIcon': 'assets/icons/transport-light-icon.png',
+    },
+    {
+      'name': 'Food',
+      'darkIcon': 'assets/icons/food-dark-icon.png',
+      'lightIcon': 'assets/icons/food-light-icon.png',
+    },
+    {
+      'name': 'Rent',
+      'darkIcon': 'assets/icons/rent-dark-icon.png',
+      'lightIcon': 'assets/icons/rent-light-icon.png',
+    },
+    {
+      'name': 'Bills',
+      'darkIcon': 'assets/icons/bills-dark-icon.png',
+      'lightIcon': 'assets/icons/bills-light-icon.png',
+    },
+    {
+      'name': 'Fun',
+      'darkIcon': 'assets/icons/fun-dark-icon.png',
+      'lightIcon': 'assets/icons/fun-light-icon.png',
+    },
+    {
+      'name': 'Shopping',
+      'darkIcon': 'assets/icons/shopping-dark-icon.png',
+      'lightIcon': 'assets/icons/shopping-light-icon.png',
+    },
+    {
+      'name': 'Dinning',
+      'darkIcon': 'assets/icons/dinning-dark-icon.png',
+      'lightIcon': 'assets/icons/dinning-light-icon.png',
+    },
+    {
+      'name': 'Health',
+      'darkIcon': 'assets/icons/health-dark-icon.png',
+      'lightIcon': 'assets/icons/health-light-icon.png',
+    },
+    {
+      'name': 'Grocerry',
+      'darkIcon': 'assets/icons/grocerry-dark-icon.png',
+      'lightIcon': 'assets/icons/grocerry-light-icon.png',
+    },
+    {
+      'name': 'Add new',
+      'darkIcon': 'assets/icons/add-new-dark-icon.png',
+      'lightIcon': 'assets/icons/add-new-light-icon.png',
+    },
   ];
 
   @override
@@ -340,10 +380,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black.withValues(
-                                        alpha: 0.2,
+                                        alpha: 0.05,
                                       ),
-                                      blurRadius: 12,
-                                      offset: const Offset(0, 5),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 4),
                                     ),
                                     if (isSelected)
                                       BoxShadow(
@@ -360,7 +400,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                         )
                                       : null,
                                 ),
-                                child: Image.asset(cat['icon']!),
+                                child: Image.asset(
+                                  isDark ? cat['darkIcon']! : cat['lightIcon']!,
+                                ),
                               ),
                               const SizedBox(height: 8),
                               Text(
@@ -371,8 +413,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                       ? FontWeight.bold
                                       : FontWeight.w500,
                                   color: isSelected
-                                      ? const Color(0xFF4C5E7F)
-                                      : const Color(0xFF8D99AE),
+                                      ? AppColors.primarySelected
+                                      : (isDark
+                                            ? Colors.white54
+                                            : const Color(0xFF8D99AE)),
                                 ),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,

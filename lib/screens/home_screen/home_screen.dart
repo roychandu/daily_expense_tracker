@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'asstes/icons/$iconName-${isSelected ? 'selected' : 'unselected'}-${isDark ? 'dark' : 'light'}-icon.png',
+              'assets/icons/$iconName-${isSelected ? 'selected' : 'unselected'}-${isDark ? 'dark' : 'light'}-icon.png',
               width: 26,
               height: 26,
             ),
