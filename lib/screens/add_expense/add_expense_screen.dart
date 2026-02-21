@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
-import '../../common_widgets/app_text_styles.dart';
-import '../../common_widgets/custom_text_field.dart';
-import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
-import '../../utils/category_utils.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final bool isExpense;
@@ -27,32 +23,31 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final TextEditingController _noteController = TextEditingController();
   String _selectedCategory = '';
   DateTime _selectedDate = DateTime.now();
+  late bool _isExpense;
 
-  final List<Map<String, String>> _expenseCategories = [
-    ...CategoryUtils.expenseCategories,
+  final List<Map<String, String>> _displayCategories = [
+    {'name': 'Transport', 'icon': 'asstes/icons/transport-light-icon.png'},
+    {'name': 'Food', 'icon': 'asstes/icons/food-light-icon.png'},
+    {'name': 'Rent', 'icon': 'asstes/icons/rent-light-icon.png'},
+    {'name': 'Bills', 'icon': 'asstes/icons/bills-light-icon.png'},
+    {'name': 'Fun', 'icon': 'asstes/icons/fun-light-icon.png'},
+    {'name': 'Shopping', 'icon': 'asstes/icons/shopping-light-icon.png'},
+    {'name': 'Dinning', 'icon': 'asstes/icons/dinning-light-icon.png'},
+    {'name': 'Health', 'icon': 'asstes/icons/health-light-icon.png'},
+    {'name': 'Grocerry', 'icon': 'asstes/icons/grocerry-light-icon.png'},
+    {'name': 'Add new', 'icon': 'asstes/icons/add-new-light-icon.png'},
   ];
-
-  final List<Map<String, String>> _incomeCategories = [
-    ...CategoryUtils.incomeCategories,
-  ];
-
-  List<Map<String, String>> get _categories {
-    final l10n = AppLocalizations.of(context)!;
-    final base = widget.isExpense ? _expenseCategories : _incomeCategories;
-    return [
-      ...base,
-      {'icon': '➕', 'name': l10n.other},
-    ];
-  }
 
   @override
   void initState() {
     super.initState();
+    _isExpense = widget.isExpense;
     if (widget.expense != null) {
       _amountController.text = widget.expense!.amount.toString();
       _noteController.text = widget.expense!.note;
       _selectedCategory = widget.expense!.category;
       _selectedDate = widget.expense!.date;
+      _isExpense = widget.expense!.isExpense;
     }
   }
 
@@ -109,7 +104,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       category: _selectedCategory,
       note: _noteController.text,
       date: _selectedDate,
-      isExpense: widget.isExpense,
+      isExpense: _isExpense,
     );
 
     final controller = context.read<ExpenseController>();
@@ -122,7 +117,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     if (mounted) {
       showCustomSnackBar(
         context,
-        widget.isExpense ? l10n.expenseSaved : l10n.incomeSaved,
+        _isExpense ? l10n.expenseSaved : l10n.incomeSaved,
       );
       Navigator.pop(context, true);
     }
@@ -139,165 +134,298 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     )['symbol'];
 
     return Scaffold(
+      backgroundColor: isDark
+          ? AppColors.backgroundDark
+          : const Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: Text(
-          widget.expense != null
-              ? (widget.isExpense ? l10n.editExpense : l10n.editIncome)
-              : (widget.isExpense ? l10n.addExpense : l10n.addIncome),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SafeArea(
         child: Column(
           children: [
+            // Toggle
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEE4CB),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => _isExpense = false),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: !_isExpense
+                                ? AppColors.primarySelected
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            l10n.addIncome,
+                            style: TextStyle(
+                              color: !_isExpense
+                                  ? Colors.white
+                                  : AppColors.charcoal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => _isExpense = true),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: _isExpense
+                                ? AppColors.primarySelected
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            l10n.addExpense,
+                            style: TextStyle(
+                              color: _isExpense
+                                  ? Colors.white
+                                  : AppColors.charcoal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Date Picker Trigger
+                    // Date Display
                     GestureDetector(
                       onTap: () => _selectDate(context),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.cardDark
-                              : AppColors.softGray.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.calendar_today,
-                              size: 16,
-                              color: AppColors.primarySelected,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              DateFormat(
-                                'MMMM dd, yyyy',
-                                settings.locale.toString(),
-                              ).format(_selectedDate),
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.primarySelected,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                      child: Text(
+                        DateFormat(
+                          'MMM dd, yyyy',
+                        ).format(_selectedDate).toUpperCase(),
+                        style: const TextStyle(
+                          color: AppColors.primarySelected,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.2,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
 
                     // Amount Input
-                    TextField(
-                      controller: _amountController,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      autofocus: widget.expense == null,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.amountDisplay.copyWith(fontSize: 48),
-                      decoration: InputDecoration(
-                        hintText: '0.00',
-                        prefixText: '$currencySymbol ',
-                        prefixStyle: AppTextStyles.amountDisplay.copyWith(
-                          fontSize: 48,
-                          color: AppColors.softGray,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$currencySymbol',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.charcoal.withValues(alpha: 0.6),
+                          ),
                         ),
-                        border: InputBorder.none,
-                      ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            controller: _amountController,
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 56,
+                              fontWeight: FontWeight.w600,
+                              color: isDark
+                                  ? Colors.white70
+                                  : const Color(0xFFCAD1E0),
+                            ),
+                            decoration: const InputDecoration(
+                              hintText: '0',
+                              hintStyle: TextStyle(color: Color(0xFFCAD1E0)),
+                              border: InputBorder.none,
+                              isDense: true,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 1.5,
+                          color: const Color(0xFFCAD1E0),
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                        ),
+                        const Text(
+                          '.00',
+                          style: TextStyle(
+                            fontSize: 56,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFCAD1E0),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 48),
 
                     // Categories
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(l10n.category, style: AppTextStyles.caption),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 85,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _categories.length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 16),
-                        itemBuilder: (context, index) {
-                          final cat = _categories[index];
-                          final isSelected = _selectedCategory == cat['name'];
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedCategory = cat['name']!;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 56,
-                                  height: 56,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? AppColors.cardDark
-                                        : Colors.white,
-                                    shape: BoxShape.circle,
-                                    border: isSelected
-                                        ? Border.all(
-                                            color: AppColors.primarySelected,
-                                            width: 2,
-                                          )
-                                        : Border.all(
-                                            color: AppColors.softGray
-                                                .withValues(alpha: 0.3),
-                                          ),
-                                    boxShadow: isSelected
-                                        ? [
-                                            BoxShadow(
-                                              color: AppColors.primarySelected
-                                                  .withValues(alpha: 0.2),
-                                              blurRadius: 8,
-                                              offset: const Offset(0, 4),
-                                            ),
-                                          ]
-                                        : [],
-                                  ),
-                                  child: Text(
-                                    cat['icon']!,
-                                    style: const TextStyle(fontSize: 24),
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  cat['name']!,
-                                  style: AppTextStyles.caption.copyWith(
-                                    fontSize: 10,
-                                    fontWeight: isSelected
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: isSelected
-                                        ? AppColors.primarySelected
-                                        : AppColors.softGray,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                      child: Text(
+                        'Select Category',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
                       ),
+                    ),
+                    const SizedBox(height: 24),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: 0.75,
+                          ),
+                      itemCount: _displayCategories.length,
+                      itemBuilder: (context, index) {
+                        final cat = _displayCategories[index];
+                        final isSelected = _selectedCategory == cat['name'];
+                        return GestureDetector(
+                          onTap: () =>
+                              setState(() => _selectedCategory = cat['name']!),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 52,
+                                height: 52,
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: isDark
+                                      ? AppColors.cardDark
+                                      : Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                    if (isSelected)
+                                      BoxShadow(
+                                        color: AppColors.primarySelected
+                                            .withValues(alpha: 0.6),
+                                        blurRadius: 16,
+                                        offset: const Offset(0, 6),
+                                      ),
+                                  ],
+                                  border: isSelected
+                                      ? Border.all(
+                                          color: AppColors.primarySelected,
+                                          width: 2,
+                                        )
+                                      : null,
+                                ),
+                                child: Image.asset(cat['icon']!),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                cat['name']!,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: isSelected
+                                      ? FontWeight.bold
+                                      : FontWeight.w500,
+                                  color: isSelected
+                                      ? const Color(0xFF4C5E7F)
+                                      : const Color(0xFF8D99AE),
+                                ),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 32),
 
-                    // Note
-                    CustomTextField(
-                      controller: _noteController,
-                      hintText: l10n.addNoteOptional,
+                    // Note Section
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Add Note',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF7F0),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFFFE4CB)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TextField(
+                            controller: _noteController,
+                            maxLines: 3,
+                            decoration: const InputDecoration(
+                              hintText: 'Write here..',
+                              hintStyle: TextStyle(color: Color(0xFFB0B8C1)),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                          const Text(
+                            'Optional',
+                            style: TextStyle(
+                              color: Color(0xFFB0B8C1),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -307,11 +435,27 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             // Save Button
             Padding(
               padding: const EdgeInsets.all(16),
-              child: PrimaryButton(
-                title: widget.expense != null
-                    ? l10n.update
-                    : (widget.isExpense ? l10n.saveExpense : l10n.saveIncome),
-                onPressed: () => _handleSave(l10n),
+              child: SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () => _handleSave(l10n),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primarySelected,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                    shadowColor: AppColors.primarySelected.withValues(
+                      alpha: 0.5,
+                    ),
+                  ),
+                  child: const Text(
+                    'Save Transaction',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ),
           ],

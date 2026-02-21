@@ -64,18 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(
-              0,
-              Icons.home_outlined,
-              Icons.home_rounded,
-              l10n.home,
-            ),
-            _buildNavItem(
-              1,
-              Icons.assessment_outlined,
-              Icons.assessment_rounded,
-              'Insight',
-            ),
+            _buildNavItem(0, 'home', l10n.home),
+            _buildNavItem(1, 'insight', 'Insight'),
             GestureDetector(
               onTap: () async {
                 final result = await Navigator.push(
@@ -98,37 +88,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.primarySelected,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.add_rounded,
-                  color: Colors.white,
+                  color: isDark ? AppColors.charcoal : Colors.white,
                   size: 36,
                 ),
               ),
             ),
-            _buildNavItem(
-              2,
-              Icons.auto_graph_rounded,
-              Icons.auto_graph_rounded,
-              'Progress',
-            ),
-            _buildNavItem(
-              3,
-              Icons.settings_outlined,
-              Icons.settings_rounded,
-              l10n.settings,
-            ),
+            _buildNavItem(2, 'progress', 'Progress'),
+            _buildNavItem(3, 'settings', l10n.settings),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(
-    int index,
-    IconData outlineIcon,
-    IconData filledIcon,
-    String label,
-  ) {
+  Widget _buildNavItem(int index, String iconName, String label) {
     final isSelected = _currentIndex == index;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isSelected
@@ -143,7 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(isSelected ? filledIcon : outlineIcon, color: color, size: 26),
+            Image.asset(
+              'asstes/icons/$iconName-${isSelected ? 'selected' : 'unselected'}-${isDark ? 'dark' : 'light'}-icon.png',
+              width: 26,
+              height: 26,
+            ),
             const SizedBox(height: 4),
             Text(
               label,

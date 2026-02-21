@@ -12,7 +12,7 @@ import 'common_widgets/app_theme.dart';
 import 'screens/home_screen/home_screen.dart';
 
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'services/notification_service.dart';
 
 void main() async {
@@ -22,9 +22,6 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-
-  // Initialize Firebase
-  await Firebase.initializeApp();
 
   // Initialize Notifications
   await NotificationService().init();
