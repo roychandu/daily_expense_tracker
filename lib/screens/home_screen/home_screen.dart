@@ -54,27 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: pages),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  AddExpenseScreen(isExpense: _isExpenseSelected),
-            ),
-          );
-          if (result == true) {
-            setState(() {
-              _refreshCount++;
-            });
-          }
-        },
-        elevation: 4,
-        backgroundColor: AppColors.primarySelected,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Colors.white, size: 30),
-      ),
+      floatingActionButton: null,
+      floatingActionButtonLocation: null,
       bottomNavigationBar: BottomAppBar(
         elevation: 8,
         padding: EdgeInsets.zero,
@@ -91,11 +72,39 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             _buildNavItem(
               1,
-              Icons.insert_chart_outlined_rounded,
-              Icons.insert_chart_rounded,
+              Icons.assessment_outlined,
+              Icons.assessment_rounded,
               'Insight',
             ),
-            const SizedBox(width: 48), // Space for FAB
+            GestureDetector(
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AddExpenseScreen(isExpense: _isExpenseSelected),
+                  ),
+                );
+                if (result == true) {
+                  setState(() {
+                    _refreshCount++;
+                  });
+                }
+              },
+              child: Container(
+                width: 52,
+                height: 52,
+                decoration: const BoxDecoration(
+                  color: AppColors.primarySelected,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.add_rounded,
+                  color: Colors.white,
+                  size: 36,
+                ),
+              ),
+            ),
             _buildNavItem(
               2,
               Icons.auto_graph_rounded,
@@ -124,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isSelected
         ? AppColors.primarySelected
-        : (isDark ? Colors.white70 : const Color(0xFF818181));
+        : (isDark ? Colors.white70 : const Color(0xFF9E9E9E));
 
     return InkWell(
       onTap: () => setState(() => _currentIndex = index),
