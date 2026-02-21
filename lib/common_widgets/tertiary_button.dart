@@ -17,9 +17,9 @@ class TertiaryButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        foregroundColor: AppColors.accentTeal,
+        foregroundColor: AppColors.primarySelected,
         textStyle: AppTextStyles.body.copyWith(
-          color: AppColors.accentTeal,
+          color: AppColors.primarySelected,
           decoration: TextDecoration.underline,
         ),
       ),

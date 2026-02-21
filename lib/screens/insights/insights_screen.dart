@@ -80,14 +80,14 @@ class _InsightsScreenState extends State<InsightsScreen> {
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).brightness == Brightness.dark
                             ? AppColors.textDark
-                            : AppColors.primaryDeepBlue,
+                            : AppColors.primarySelected,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       streak > 0 ? l10n.keepItGoing : l10n.startLoggingToday,
                       style: AppTextStyles.body.copyWith(
-                        color: AppColors.accentTeal,
+                        color: AppColors.primarySelected,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -108,7 +108,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                             child: Container(
                               height: 12,
                               decoration: BoxDecoration(
-                                color: AppColors.accentTeal,
+                                color: AppColors.primarySelected,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
@@ -210,7 +210,7 @@ class _DayCircle extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: isLogged ? AppColors.accentTeal : Colors.transparent,
+            color: isLogged ? AppColors.primarySelected : Colors.transparent,
             shape: BoxShape.circle,
             border: isLogged
                 ? null

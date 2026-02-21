@@ -10,8 +10,8 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.backgroundLight,
       colorScheme: const ColorScheme.light(
-        primary: AppColors.primaryDeepBlue,
-        secondary: AppColors.accentTeal,
+        primary: AppColors.primarySelected,
+        secondary: AppColors.primarySelected,
         error: AppColors.softCoral,
         surface: AppColors.cardLight,
         // background is deprecated in ColorScheme from seed but still used here safely
@@ -21,8 +21,8 @@ class AppTheme {
         onSurface: AppColors.charcoal,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primaryDeepBlue,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.primarySelected,
+        foregroundColor: AppColors.charcoal, // Black text in light mode
         elevation: 0,
       ),
       textTheme: _textThemeLight,
@@ -39,7 +39,10 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.accentTeal, width: 2),
+          borderSide: const BorderSide(
+            color: AppColors.primarySelected,
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -53,8 +56,8 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.accentTeal,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.primarySelected,
+          foregroundColor: AppColors.charcoal, // Black text in light mode
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -71,8 +74,8 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.backgroundDark,
       colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryDeepBlue,
-        secondary: AppColors.accentTeal,
+        primary: AppColors.primarySelected,
+        secondary: AppColors.primarySelected,
         error: AppColors.softCoral,
         surface: AppColors.cardDark,
         onPrimary: Colors.white,
@@ -81,8 +84,9 @@ class AppTheme {
         onSurface: AppColors.textDark,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.darkNavy, // Or primaryDeepBlue
-        foregroundColor: AppColors.textDark,
+        backgroundColor:
+            AppColors.primarySelected, // Consistent with light theme
+        foregroundColor: AppColors.textDark, // White text in dark mode
         elevation: 0,
       ),
       textTheme: _textThemeDark,
@@ -99,7 +103,10 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.accentTeal, width: 2),
+          borderSide: const BorderSide(
+            color: AppColors.primarySelected,
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -113,8 +120,8 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.accentTeal,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.primarySelected,
+          foregroundColor: AppColors.textDark, // White text in dark mode
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

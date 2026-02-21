@@ -9,7 +9,7 @@ import '../settings/settings_screen.dart';
 import '../history/expense_history_screen.dart';
 import '../monthly_summary/monthly_summary_screen.dart';
 import '../insights/insights_screen.dart';
-import '../../services/database_service.dart';
+
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
@@ -55,64 +55,86 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: pages),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: FloatingActionButton(
-          onPressed: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    AddExpenseScreen(isExpense: _isExpenseSelected),
-              ),
-            );
-            if (result == true) {
-              setState(() {
-                _refreshCount++;
-              });
-            }
-          },
-          elevation: 8,
-          backgroundColor: const Color(0xFF00FFEA),
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add, color: Colors.black, size: 32),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  AddExpenseScreen(isExpense: _isExpenseSelected),
+            ),
+          );
+          if (result == true) {
+            setState(() {
+              _refreshCount++;
+            });
+          }
+        },
+        elevation: 4,
+        backgroundColor: AppColors.primarySelected,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
+        elevation: 8,
         padding: EdgeInsets.zero,
-        height: 80,
+        height: 72,
         color: isDark ? AppColors.cardDark : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(0, Icons.home_filled, l10n.home),
-            _buildNavItem(1, Icons.query_stats, l10n.summary),
+            _buildNavItem(
+              0,
+              Icons.home_outlined,
+              Icons.home_rounded,
+              l10n.home,
+            ),
+            _buildNavItem(
+              1,
+              Icons.insert_chart_outlined_rounded,
+              Icons.insert_chart_rounded,
+              'Insight',
+            ),
             const SizedBox(width: 48), // Space for FAB
-            _buildNavItem(2, Icons.assessment_outlined, l10n.insights),
-            _buildNavItem(3, Icons.settings_outlined, l10n.settings),
+            _buildNavItem(
+              2,
+              Icons.auto_graph_rounded,
+              Icons.auto_graph_rounded,
+              'Progress',
+            ),
+            _buildNavItem(
+              3,
+              Icons.settings_outlined,
+              Icons.settings_rounded,
+              l10n.settings,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label) {
+  Widget _buildNavItem(
+    int index,
+    IconData outlineIcon,
+    IconData filledIcon,
+    String label,
+  ) {
     final isSelected = _currentIndex == index;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isSelected
-        ? AppColors.primaryDeepBlue
-        : AppColors.softGray.withValues(alpha: 0.8);
+        ? AppColors.primarySelected
+        : (isDark ? Colors.white70 : const Color(0xFF818181));
 
     return InkWell(
       onTap: () => setState(() => _currentIndex = index),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 28),
+            Icon(isSelected ? filledIcon : outlineIcon, color: color, size: 26),
             const SizedBox(height: 4),
             Text(
               label,
@@ -184,23 +206,41 @@ class _TodayViewState extends State<_TodayView> {
 
     final recentExpenses = todayExpenses.take(5).toList();
 
+    // Dynamic Streak Calculation
+    int currentStreak = 0;
+    DateTime checkDate = now;
+    while (true) {
+      final dateStr = DateFormat('yyyy-MM-dd').format(checkDate);
+      final hasEntry = allExpenses.any(
+        (e) => DateFormat('yyyy-MM-dd').format(e.date) == dateStr,
+      );
+      if (hasEntry) {
+        currentStreak++;
+        checkDate = checkDate.subtract(const Duration(days: 1));
+      } else {
+        break;
+      }
+    }
+
+    final milestone = 30; // Target milestone
+
+    final daysToMilestone = milestone - currentStreak;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.today),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ExpenseHistoryScreen(),
-                ),
-              );
-            },
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: false,
+        title: Text(
+          l10n.home,
+          style: AppTextStyles.h1Display.copyWith(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.textDark
+                : AppColors.charcoal,
           ),
-        ],
+        ),
       ),
+      extendBodyBehindAppBar: false,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -209,13 +249,16 @@ class _TodayViewState extends State<_TodayView> {
             _buildToggle(l10n),
             const SizedBox(height: 24),
 
-            _buildTotalCard(
+            _buildTodayCard(
               l10n,
               settings,
               totalAmount,
               yesterdayTotal,
-              recentExpenses.length,
+              todayExpenses.length,
             ),
+            const SizedBox(height: 24),
+
+            _buildStreakCard(l10n, currentStreak, milestone, daysToMilestone),
             const SizedBox(height: 24),
 
             Text(
@@ -260,36 +303,33 @@ class _TodayViewState extends State<_TodayView> {
   }
 
   Widget _buildToggle(AppLocalizations l10n) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : AppColors.warmCream,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.softGray),
+        color: AppColors.primaryUnselected,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => widget.onToggle(true),
+              onTap: () => widget.onToggle(false),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: widget.isExpenseSelected
-                      ? AppColors.accentTeal
+                  color: !widget.isExpenseSelected
+                      ? AppColors.primarySelected
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(7),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  l10n.expense,
+                  l10n.addIncome,
                   style: AppTextStyles.body.copyWith(
-                    color: widget.isExpenseSelected
+                    color: !widget.isExpenseSelected
                         ? Colors.white
-                        : (isDark
-                              ? AppColors.textDark.withValues(alpha: 0.6)
-                              : AppColors.softGray),
-                    fontWeight: FontWeight.w600,
+                        : AppColors.charcoal,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -297,25 +337,23 @@ class _TodayViewState extends State<_TodayView> {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => widget.onToggle(false),
+              onTap: () => widget.onToggle(true),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: !widget.isExpenseSelected
-                      ? AppColors.accentTeal
+                  color: widget.isExpenseSelected
+                      ? AppColors.primarySelected
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(7),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  l10n.income,
+                  l10n.addExpense,
                   style: AppTextStyles.body.copyWith(
-                    color: !widget.isExpenseSelected
+                    color: widget.isExpenseSelected
                         ? Colors.white
-                        : (isDark
-                              ? AppColors.textDark.withValues(alpha: 0.6)
-                              : AppColors.softGray),
-                    fontWeight: FontWeight.w600,
+                        : AppColors.charcoal,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -326,65 +364,157 @@ class _TodayViewState extends State<_TodayView> {
     );
   }
 
-  Widget _buildTotalCard(
+  Widget _buildTodayCard(
     AppLocalizations l10n,
     SettingsController settings,
     double totalAmount,
     double yesterdayTotal,
-    int recentCount,
+    int count,
   ) {
     final diff = totalAmount - yesterdayTotal;
     final isMore = diff > 0;
     final absDiff = diff.abs();
 
     return CustomCard(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MonthlySummaryScreen()),
-        );
-      },
+      backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Text(
-                AppFormatters.formatCurrency(
-                  totalAmount,
-                  settings.currency,
-                  settings.locale,
-                ),
-                style: AppTextStyles.amountDisplay.copyWith(fontSize: 32),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '$recentCount ${widget.isExpenseSelected ? l10n.expenses : l10n.items}',
-            style: AppTextStyles.caption,
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Icon(
-                isMore ? Icons.arrow_upward : Icons.arrow_downward,
-                color: widget.isExpenseSelected
-                    ? (isMore ? AppColors.softCoral : AppColors.successGreen)
-                    : (isMore ? AppColors.successGreen : AppColors.softCoral),
-                size: 16,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${AppFormatters.formatCurrency(absDiff, settings.currency, settings.locale)} ${isMore ? l10n.moreThanYesterday : l10n.lessThanYesterday}',
+                'TODAY',
                 style: AppTextStyles.caption.copyWith(
-                  color: widget.isExpenseSelected
-                      ? (isMore ? AppColors.softCoral : AppColors.successGreen)
-                      : (isMore ? AppColors.successGreen : AppColors.softCoral),
+                  color: AppColors.primarySelected,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const Icon(
+                Icons.keyboard_arrow_down,
+                color: AppColors.primarySelected,
+                size: 20,
+              ),
             ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            AppFormatters.formatCurrency(
+              totalAmount,
+              settings.currency,
+              settings.locale,
+            ),
+            style: AppTextStyles.amountDisplay.copyWith(
+              fontSize: 36,
+              color: AppColors.charcoal,
+            ),
+          ),
+          Text(
+            '$count Entries today',
+            style: AppTextStyles.caption.copyWith(color: AppColors.softGray),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            '${AppFormatters.formatCurrency(absDiff, settings.currency, settings.locale)} ${isMore ? l10n.moreThanYesterday : l10n.lessThanYesterday}',
+            style: AppTextStyles.body.copyWith(
+              color: isMore ? Colors.red : Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStreakCard(
+    AppLocalizations l10n,
+    int streak,
+    int milestone,
+    int daysTo,
+  ) {
+    return CustomCard(
+      padding: EdgeInsets.zero,
+      backgroundColor: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const Text('🔥', style: TextStyle(fontSize: 48)),
+                const SizedBox(height: 8),
+                Text(
+                  '$streak DAYS STREAK',
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: AppColors.primaryUnselected,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'STREAK PROGRESS',
+                  style: AppTextStyles.caption.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.softGray,
+                  ),
+                ),
+                Text(
+                  '$streak/$milestone Days to next milestone',
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Stack(
+                  children: [
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    FractionallySizedBox(
+                      widthFactor: (streak / milestone).clamp(0.0, 1.0),
+                      child: Container(
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: AppColors.primarySelected,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  daysTo > 0
+                      ? 'You are $daysTo days away from a silver badge!'
+                      : 'Milestone reached! Check your rewards.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.softGray,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -395,29 +525,26 @@ class _TodayViewState extends State<_TodayView> {
     SettingsController settings,
     List<Expense> recentExpenses,
   ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Column(
       children: recentExpenses.map((tx) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: CustomCard(
+            backgroundColor: Colors.white,
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 48,
+                  height: 48,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? AppColors.backgroundDark
-                        : AppColors.warmCream,
-                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.backgroundLight,
+                    shape: BoxShape.circle,
                   ),
                   child: Text(
                     _getCategoryIcon(tx.category),
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 24),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -428,13 +555,26 @@ class _TodayViewState extends State<_TodayView> {
                       Text(
                         tx.category,
                         style: AppTextStyles.body.copyWith(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.charcoal,
                         ),
                       ),
                       Text(
-                        tx.note.isEmpty ? 'Logged' : tx.note,
-                        style: AppTextStyles.caption,
+                        '${DateFormat('dd MMM').format(tx.date)} • ${DateFormat('h:mm a').format(tx.date)}',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.softGray,
+                          fontSize: 12,
+                        ),
                       ),
+                      if (tx.note.isNotEmpty)
+                        Text(
+                          tx.note,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.softGray,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                     ],
                   ),
                 ),
@@ -446,6 +586,7 @@ class _TodayViewState extends State<_TodayView> {
                   ),
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: AppColors.charcoal,
                   ),
                 ),
               ],

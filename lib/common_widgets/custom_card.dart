@@ -6,6 +6,8 @@ class CustomCard extends StatefulWidget {
   final VoidCallback? onTap;
   final EdgeInsetsGeometry padding;
   final Color? backgroundColor;
+  final Gradient? gradient;
+  final BorderRadius? borderRadius;
 
   const CustomCard({
     super.key,
@@ -13,6 +15,8 @@ class CustomCard extends StatefulWidget {
     this.onTap,
     this.padding = const EdgeInsets.all(16),
     this.backgroundColor,
+    this.gradient,
+    this.borderRadius,
   });
 
   @override
@@ -80,10 +84,12 @@ class _CustomCardState extends State<CustomCard>
             child: Container(
               padding: widget.padding,
               decoration: BoxDecoration(
-                color:
-                    widget.backgroundColor ??
-                    (isDark ? AppColors.cardDark : AppColors.cardLight),
-                borderRadius: BorderRadius.circular(8),
+                color: widget.gradient != null
+                    ? null
+                    : widget.backgroundColor ??
+                          (isDark ? AppColors.cardDark : AppColors.cardLight),
+                gradient: widget.gradient,
+                borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.08),

@@ -73,7 +73,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.accentTeal,
+              primary: AppColors.primarySelected,
               onPrimary: Colors.white,
               onSurface: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.textDark
@@ -175,7 +175,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             const Icon(
                               Icons.calendar_today,
                               size: 16,
-                              color: AppColors.accentTeal,
+                              color: AppColors.primarySelected,
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -184,7 +184,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 settings.locale.toString(),
                               ).format(_selectedDate),
                               style: AppTextStyles.caption.copyWith(
-                                color: AppColors.accentTeal,
+                                color: AppColors.primarySelected,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -250,7 +250,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                     shape: BoxShape.circle,
                                     border: isSelected
                                         ? Border.all(
-                                            color: AppColors.accentTeal,
+                                            color: AppColors.primarySelected,
                                             width: 2,
                                           )
                                         : Border.all(
@@ -260,7 +260,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                     boxShadow: isSelected
                                         ? [
                                             BoxShadow(
-                                              color: AppColors.accentTeal
+                                              color: AppColors.primarySelected
                                                   .withValues(alpha: 0.2),
                                               blurRadius: 8,
                                               offset: const Offset(0, 4),
@@ -282,7 +282,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                         ? FontWeight.bold
                                         : FontWeight.normal,
                                     color: isSelected
-                                        ? AppColors.accentTeal
+                                        ? AppColors.primarySelected
                                         : AppColors.softGray,
                                   ),
                                 ),

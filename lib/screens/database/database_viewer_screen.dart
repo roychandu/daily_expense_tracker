@@ -49,7 +49,7 @@ class _DatabaseViewerScreenState extends State<DatabaseViewerScreen> {
                 child: DataTable(
                   headingTextStyle: AppTextStyles.caption.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.accentTeal,
+                    color: AppColors.primarySelected,
                   ),
                   dataTextStyle: AppTextStyles.body.copyWith(fontSize: 12),
                   columns: _data.first.keys.map((key) {

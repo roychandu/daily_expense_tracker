@@ -20,30 +20,33 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? AppColors.textDark : AppColors.charcoal;
+
     return SizedBox(
       width: width ?? double.infinity,
       height: height,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.accentTeal,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.primarySelected,
+          foregroundColor: textColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
         ),
         child: isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
-                  color: Colors.white,
+                  color: textColor,
                   strokeWidth: 2.5,
                 ),
               )
             : Text(
                 title,
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: textColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),

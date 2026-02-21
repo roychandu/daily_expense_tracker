@@ -103,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Text(
                     l10n.removeAds,
                     style: AppTextStyles.body.copyWith(
-                      color: AppColors.accentTeal,
+                      color: AppColors.primarySelected,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -168,7 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return ListTile(
                 title: Text(lang['name']!),
                 trailing: settings.locale.languageCode == lang['code']
-                    ? const Icon(Icons.check, color: AppColors.accentTeal)
+                    ? const Icon(Icons.check, color: AppColors.primarySelected)
                     : null,
                 onTap: () async {
                   await settings.updateLocale(Locale(lang['code']!));
@@ -205,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: Text('${currency['name']} (${currency['symbol']})'),
                 subtitle: Text(currency['code']!),
                 trailing: settings.currency == currency['code']
-                    ? const Icon(Icons.check, color: AppColors.accentTeal)
+                    ? const Icon(Icons.check, color: AppColors.primarySelected)
                     : null,
                 onTap: () {
                   settings.updateCurrency(currency['code']!);
@@ -270,7 +270,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.accentTeal,
+                      color: AppColors.primarySelected,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -434,7 +434,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: Text(title, style: AppTextStyles.body),
       value: value,
       onChanged: onChanged,
-      activeThumbColor: AppColors.accentTeal,
+      activeThumbColor: AppColors.primarySelected,
     );
   }
 }

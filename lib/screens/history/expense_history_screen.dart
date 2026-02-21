@@ -151,8 +151,8 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                     icon: Icon(
                       Icons.tune,
                       color: isDark
-                          ? AppColors.accentTeal
-                          : AppColors.primaryDeepBlue,
+                          ? AppColors.primarySelected
+                          : AppColors.primarySelected,
                     ),
                     onPressed: () => _showFilterBottomSheet(context),
                   ),
@@ -231,7 +231,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                         decoration: BoxDecoration(
                                           color: isDark
                                               ? AppColors.backgroundDark
-                                              : AppColors.warmCream,
+                                              : AppColors.backgroundLight,
                                           borderRadius: BorderRadius.circular(
                                             8,
                                           ),
@@ -315,7 +315,9 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
             return Container(
               height: MediaQuery.of(context).size.height * 0.7,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.backgroundDark : AppColors.warmCream,
+                color: isDark
+                    ? AppColors.backgroundDark
+                    : AppColors.backgroundLight,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
@@ -360,7 +362,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                     setState(() => _selectedType = type);
                                   }
                                 },
-                                selectedColor: AppColors.accentTeal,
+                                selectedColor: AppColors.primarySelected,
                                 labelStyle: TextStyle(
                                   color: isSelected
                                       ? Colors.white
@@ -398,7 +400,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                 });
                                 setState(() {});
                               },
-                              selectedColor: AppColors.accentTeal,
+                              selectedColor: AppColors.primarySelected,
                               labelStyle: TextStyle(
                                 color: isSelected
                                     ? Colors.white
@@ -434,7 +436,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.accentTeal,
+                              backgroundColor: AppColors.primarySelected,
                               foregroundColor: Colors.white,
                             ),
                             onPressed: () => Navigator.pop(context),

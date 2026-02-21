@@ -77,7 +77,10 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(monthName),
-              const Icon(Icons.arrow_drop_down, color: AppColors.accentTeal),
+              const Icon(
+                Icons.arrow_drop_down,
+                color: AppColors.primarySelected,
+              ),
             ],
           ),
         ),
@@ -89,6 +92,11 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
               child: Column(
                 children: [
                   CustomCard(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primarySelected, Color(0xFFFFB169)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     child: SizedBox(
                       width: double.infinity,
                       child: Column(
@@ -98,6 +106,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                             l10n.monthlyTotal,
                             style: AppTextStyles.caption.copyWith(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white70,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -109,12 +118,15 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                             ),
                             style: AppTextStyles.amountDisplay.copyWith(
                               fontSize: 32,
+                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             '${thisMonthExpenses.length} ${l10n.expenses}',
-                            style: AppTextStyles.body,
+                            style: AppTextStyles.body.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                           if (!_isUnlocked && thisMonthExpenses.isNotEmpty) ...[
                             const SizedBox(height: 12),
@@ -122,12 +134,15 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                               children: [
                                 Text(
                                   '${l10n.topCategory}: ',
-                                  style: AppTextStyles.caption,
+                                  style: AppTextStyles.caption.copyWith(
+                                    color: Colors.white70,
+                                  ),
                                 ),
                                 Text(
                                   '${_getCategoryIcon(topCategory)} $topCategory',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -168,7 +183,11 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
         CustomCard(
           child: Column(
             children: [
-              const Icon(Icons.lock, size: 48, color: AppColors.accentTeal),
+              const Icon(
+                Icons.lock,
+                size: 48,
+                color: AppColors.primarySelected,
+              ),
               const SizedBox(height: 16),
               Text(l10n.unlockFullBreakdown, style: AppTextStyles.h2Section),
               const SizedBox(height: 16),
@@ -207,9 +226,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                 child: Text(
                   l10n.removeAds,
                   style: AppTextStyles.body.copyWith(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? AppColors.accentTeal
-                        : AppColors.primaryDeepBlue,
+                    color: AppColors.primarySelected,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
                   ),
@@ -404,7 +421,7 @@ class _MonthlySummaryScreenState extends State<MonthlySummaryScreen> {
                   child: Container(
                     height: 8,
                     decoration: BoxDecoration(
-                      color: AppColors.accentTeal,
+                      color: AppColors.primarySelected,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),

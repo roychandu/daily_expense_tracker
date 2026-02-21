@@ -26,10 +26,10 @@ class SecondaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isDark ? AppColors.cardDark : AppColors.warmCream,
-          foregroundColor: isDark
-              ? AppColors.textDark
-              : AppColors.primaryDeepBlue,
+          backgroundColor: isDark
+              ? AppColors.cardDark
+              : AppColors.backgroundLight,
+          foregroundColor: isDark ? AppColors.textDark : AppColors.charcoal,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
             side: const BorderSide(color: AppColors.softGray, width: 1),
@@ -39,7 +39,7 @@ class SecondaryButton extends StatelessWidget {
         child: Text(
           title,
           style: AppTextStyles.body.copyWith(
-            color: isDark ? AppColors.textDark : AppColors.primaryDeepBlue,
+            color: isDark ? AppColors.textDark : AppColors.charcoal,
             fontWeight: FontWeight.w600,
           ),
         ),
