@@ -58,9 +58,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primarySelected,
           foregroundColor: AppColors.charcoal, // Black text in light mode
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
           textStyle: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600),
           minimumSize: const Size.fromHeight(48),
@@ -122,9 +120,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primarySelected,
           foregroundColor: AppColors.textDark, // White text in dark mode
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
           textStyle: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600),
           minimumSize: const Size.fromHeight(48),

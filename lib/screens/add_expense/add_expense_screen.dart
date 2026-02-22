@@ -198,7 +198,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFEE4CB),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
                   children: [
@@ -211,7 +211,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             color: !_isExpense
                                 ? AppColors.primarySelected
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           alignment: Alignment.center,
                           child: Text(
@@ -236,7 +236,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             color: _isExpense
                                 ? AppColors.primarySelected
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           alignment: Alignment.center,
                           child: Text(
@@ -446,7 +446,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF7F0),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: const Color(0xFFFFE4CB)),
                       ),
                       child: Column(
@@ -488,7 +488,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     backgroundColor: AppColors.primarySelected,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 4,
                     shadowColor: AppColors.primarySelected.withValues(

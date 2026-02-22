@@ -271,7 +271,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.primarySelected,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       subtitle,

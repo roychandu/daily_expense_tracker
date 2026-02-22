@@ -302,7 +302,7 @@ class _TodayViewState extends State<_TodayView> {
         color: Theme.of(context).brightness == Brightness.dark
             ? AppColors.accentDarkSecondary
             : AppColors.primaryUnselected,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         children: [
@@ -315,7 +315,7 @@ class _TodayViewState extends State<_TodayView> {
                   color: !widget.isExpenseSelected
                       ? AppColors.primarySelected
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -341,7 +341,7 @@ class _TodayViewState extends State<_TodayView> {
                   color: widget.isExpenseSelected
                       ? AppColors.primarySelected
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -466,8 +466,8 @@ class _TodayViewState extends State<_TodayView> {
                   ? AppColors.accentDarkSecondary
                   : AppColors.primaryUnselected,
               borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(12),
-                bottomRight: Radius.circular(12),
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
               ),
             ),
             child: Column(
