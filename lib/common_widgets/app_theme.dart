@@ -165,7 +165,9 @@ class AppTheme {
         fontSize: 16,
         color: Colors.white,
       ),
-      bodySmall: AppTextStyles.caption.copyWith(color: AppColors.softGray),
+      bodySmall: AppTextStyles.caption.copyWith(
+        color: AppColors.textSecondaryDark,
+      ),
     ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark);
   }
 }

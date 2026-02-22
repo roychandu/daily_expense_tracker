@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 8,
         padding: EdgeInsets.zero,
         height: 72,
-        color: isDark ? AppColors.cardDark : Colors.white,
+        color: isDark ? AppColors.backgroundDark : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Icon(
                   Icons.add_rounded,
-                  color: isDark ? AppColors.charcoal : Colors.white,
+                  color: isDark ? Colors.white : Colors.white,
                   size: 36,
                 ),
               ),
@@ -251,7 +251,12 @@ class _TodayViewState extends State<_TodayView> {
 
             Text(
               l10n.recent,
-              style: AppTextStyles.h2Section.copyWith(fontSize: 18),
+              style: AppTextStyles.h2Section.copyWith(
+                fontSize: 18,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.textDark
+                    : AppColors.charcoal,
+              ),
             ),
             const SizedBox(height: 12),
             recentExpenses.isEmpty
@@ -294,7 +299,9 @@ class _TodayViewState extends State<_TodayView> {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.primaryUnselected,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.accentDarkSecondary
+            : AppColors.primaryUnselected,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -316,7 +323,9 @@ class _TodayViewState extends State<_TodayView> {
                   style: AppTextStyles.body.copyWith(
                     color: !widget.isExpenseSelected
                         ? Colors.white
-                        : AppColors.charcoal,
+                        : (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.charcoal),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -340,7 +349,9 @@ class _TodayViewState extends State<_TodayView> {
                   style: AppTextStyles.body.copyWith(
                     color: widget.isExpenseSelected
                         ? Colors.white
-                        : AppColors.charcoal,
+                        : (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.charcoal),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -364,7 +375,6 @@ class _TodayViewState extends State<_TodayView> {
     final absDiff = diff.abs();
 
     return CustomCard(
-      backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -393,18 +403,24 @@ class _TodayViewState extends State<_TodayView> {
             ),
             style: AppTextStyles.amountDisplay.copyWith(
               fontSize: 36,
-              color: AppColors.charcoal,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textDark
+                  : AppColors.charcoal,
             ),
           ),
           Text(
             '$count Entries today',
-            style: AppTextStyles.caption.copyWith(color: AppColors.softGray),
+            style: AppTextStyles.caption.copyWith(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.softGray,
+            ),
           ),
           const SizedBox(height: 12),
           Text(
             '${AppFormatters.formatCurrency(absDiff, settings.currency, settings.locale)} ${isMore ? l10n.moreThanYesterday : l10n.lessThanYesterday}',
             style: AppTextStyles.body.copyWith(
-              color: isMore ? Colors.red : Colors.green,
+              color: AppColors.successGreen,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
@@ -422,7 +438,6 @@ class _TodayViewState extends State<_TodayView> {
   ) {
     return CustomCard(
       padding: EdgeInsets.zero,
-      backgroundColor: Colors.white,
       child: Column(
         children: [
           Padding(
@@ -436,6 +451,9 @@ class _TodayViewState extends State<_TodayView> {
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textDark
+                        : AppColors.charcoal,
                   ),
                 ),
               ],
@@ -443,9 +461,11 @@ class _TodayViewState extends State<_TodayView> {
           ),
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryUnselected,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.accentDarkSecondary
+                  : AppColors.primaryUnselected,
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
               ),
@@ -458,7 +478,9 @@ class _TodayViewState extends State<_TodayView> {
                   style: AppTextStyles.caption.copyWith(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.softGray,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.softGray,
                   ),
                 ),
                 Text(
@@ -466,6 +488,9 @@ class _TodayViewState extends State<_TodayView> {
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textDark
+                        : AppColors.charcoal,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -475,7 +500,9 @@ class _TodayViewState extends State<_TodayView> {
                       height: 8,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -497,7 +524,9 @@ class _TodayViewState extends State<_TodayView> {
                       ? 'You are $daysTo days away from a silver badge!'
                       : 'Milestone reached! Check your rewards.',
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.softGray,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.softGray,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -518,7 +547,6 @@ class _TodayViewState extends State<_TodayView> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: CustomCard(
-            backgroundColor: Colors.white,
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
@@ -527,7 +555,9 @@ class _TodayViewState extends State<_TodayView> {
                   height: 48,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : AppColors.backgroundLight,
                     shape: BoxShape.circle,
                   ),
                   child: Text(
@@ -544,13 +574,17 @@ class _TodayViewState extends State<_TodayView> {
                         tx.category,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.charcoal,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textDark
+                              : AppColors.charcoal,
                         ),
                       ),
                       Text(
                         '${DateFormat('dd MMM').format(tx.date)} • ${DateFormat('h:mm a').format(tx.date)}',
                         style: AppTextStyles.caption.copyWith(
-                          color: AppColors.softGray,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.softGray,
                           fontSize: 12,
                         ),
                       ),
@@ -558,7 +592,10 @@ class _TodayViewState extends State<_TodayView> {
                         Text(
                           tx.note,
                           style: AppTextStyles.caption.copyWith(
-                            color: AppColors.softGray,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.softGray,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -574,7 +611,9 @@ class _TodayViewState extends State<_TodayView> {
                   ),
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.charcoal,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textDark
+                        : AppColors.charcoal,
                   ),
                 ),
               ],
