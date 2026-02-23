@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import '../history/expense_history_screen.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -17,6 +18,113 @@ class InsightsScreen extends StatefulWidget {
 }
 
 class _InsightsScreenState extends State<InsightsScreen> {
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectMonth(BuildContext context) async {
+    int selectedYear = _selectedDate.year;
+    int selectedMonth = _selectedDate.month;
+
+    final result = await showDialog<DateTime>(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF1E1E1E)
+                  : Colors.white,
+              title: const Text(
+                'Select Month',
+                style: TextStyle(fontFamily: 'Serif'),
+              ),
+              content: SizedBox(
+                width: 300,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios, size: 16),
+                          onPressed: () => setDialogState(() => selectedYear--),
+                        ),
+                        Text(
+                          '$selectedYear',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward_ios, size: 16),
+                          onPressed: () => setDialogState(() => selectedYear++),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 1.5,
+                          ),
+                      itemCount: 12,
+                      itemBuilder: (context, index) {
+                        final month = index + 1;
+                        final isSelected = selectedMonth == month;
+                        return InkWell(
+                          onTap: () {
+                            setDialogState(() => selectedMonth = month);
+                            Navigator.pop(
+                              context,
+                              DateTime(selectedYear, selectedMonth),
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.primarySelected
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              DateFormat('MMM').format(DateTime(2022, month)),
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : (Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white70
+                                          : Colors.black87),
+                                fontWeight: isSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    if (result != null) {
+      setState(() {
+        _selectedDate = result;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -31,9 +139,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
     final allExpenses = expenseController.expenses
         .where((e) => e.isExpense)
         .toList();
-    final now = DateTime.now();
     final monthExpenses = allExpenses.where((e) {
-      return e.date.month == now.month && e.date.year == now.year;
+      return e.date.month == _selectedDate.month &&
+          e.date.year == _selectedDate.year;
     }).toList();
 
     final totalMonthlyAmount = monthExpenses.fold(
@@ -68,15 +176,26 @@ class _InsightsScreenState extends State<InsightsScreen> {
       highestDate = DateTime.parse(highestDayEntry.key);
     }
 
-    // Weekly Chart Data (Current Week - Sun to Sat)
-    final startOfWeek = now.subtract(Duration(days: now.weekday % 7));
+    // Weekly Chart Data (Based on selected month or current week if selected month is current)
+    DateTime chartStartDate;
+    if (_selectedDate.month == DateTime.now().month &&
+        _selectedDate.year == DateTime.now().year) {
+      chartStartDate = DateTime.now().subtract(
+        Duration(days: DateTime.now().weekday % 7),
+      );
+    } else {
+      chartStartDate = DateTime(_selectedDate.year, _selectedDate.month, 1);
+    }
+
     List<double> weeklyData = [];
     for (int i = 0; i < 7; i++) {
-      final date = startOfWeek.add(Duration(days: i));
+      final date = chartStartDate.add(Duration(days: i));
       final dateStr = DateFormat('yyyy-MM-dd').format(date);
       weeklyData.add(dayTotals[dateStr] ?? 0.0);
     }
-    final maxWeekly = weeklyData.reduce((a, b) => a > b ? a : b);
+    final maxWeekly = weeklyData.isEmpty
+        ? 0.0
+        : weeklyData.reduce((a, b) => a > b ? a : b);
 
     return Scaffold(
       backgroundColor: isDark
@@ -98,95 +217,132 @@ class _InsightsScreenState extends State<InsightsScreen> {
       body: RefreshIndicator(
         onRefresh: () => expenseController.refreshExpenses(),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+          padding: const EdgeInsets.fromLTRB(0, 8, 0, 100),
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Summary Section
-              Text(
-                '${DateFormat('MMMM').format(now).toUpperCase()} SUMMARY',
-                style: AppTextStyles.caption.copyWith(
-                  letterSpacing: 1.2,
-                  color: isDark ? Colors.white60 : Colors.black54,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${DateFormat('MMMM yyyy').format(_selectedDate).toUpperCase()} SUMMARY',
+                      style: AppTextStyles.caption.copyWith(
+                        letterSpacing: 1.2,
+                        color: isDark ? Colors.white60 : Colors.black54,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppFormatters.formatCurrency(
+                            totalMonthlyAmount,
+                            settings.currency,
+                            settings.locale,
+                          ),
+                          style: AppTextStyles.amountDisplay.copyWith(
+                            fontSize: 42,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Serif',
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => _selectMonth(context),
+                          icon: const Icon(
+                            Icons.calendar_month_outlined,
+                            color: AppColors.primarySelected,
+                            size: 28,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    _TransactionChip(count: transactionCount),
+                  ],
                 ),
               ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppFormatters.formatCurrency(
-                      totalMonthlyAmount,
-                      settings.currency,
-                      settings.locale,
-                    ),
-                    style: AppTextStyles.amountDisplay.copyWith(
-                      fontSize: 42,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Serif',
-                    ),
-                  ),
-                  Icon(
-                    Icons.calendar_month_outlined,
-                    color: AppColors.primarySelected,
-                    size: 28,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              _TransactionChip(count: transactionCount),
 
               const SizedBox(height: 32),
 
               // Spending Breakdown Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Spending Breakdown',
-                    style: AppTextStyles.h2Section.copyWith(
-                      fontSize: 20,
-                      fontFamily: 'Serif',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Spending Breakdown',
+                          style: AppTextStyles.h2Section.copyWith(
+                            fontSize: 20,
+                            fontFamily: 'Serif',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ExpenseHistoryScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'VIEW ALL',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.primarySelected,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    'VIEW ALL',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.primarySelected,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    ...sortedCategories.map((entry) {
+                      final percentage = totalMonthlyAmount > 0
+                          ? (entry.value / totalMonthlyAmount) * 100
+                          : 0.0;
+                      return _CategoryProgressBar(
+                        category: entry.key,
+                        amount: entry.value,
+                        percentage: percentage,
+                        settings: settings,
+                      );
+                    }),
+                  ],
+                ),
               ),
-              const SizedBox(height: 16),
-              ...sortedCategories.map((entry) {
-                final percentage = (entry.value / totalMonthlyAmount) * 100;
-                return _CategoryProgressBar(
-                  category: entry.key,
-                  amount: entry.value,
-                  percentage: percentage,
-                  settings: settings,
-                );
-              }),
 
               const SizedBox(height: 32),
 
               // Smart Insights Section
-              Text(
-                'Smart Insights',
-                style: AppTextStyles.h2Section.copyWith(
-                  fontSize: 20,
-                  fontFamily: 'Serif',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Smart Insights',
+                  style: AppTextStyles.h2Section.copyWith(
+                    fontSize: 20,
+                    fontFamily: 'Serif',
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 250,
+                height: 180, // Reduced height
                 child: ListView(
                   scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ), // Padding here instead of parent
                   children: [
                     _HighestSpendDayCard(
                       date: highestDate,
@@ -200,7 +356,15 @@ class _InsightsScreenState extends State<InsightsScreen> {
                     ),
                     const SizedBox(width: 16),
                     _BalanceInsightCard(
-                      dailyAvg: totalMonthlyAmount / now.day,
+                      dailyAvg:
+                          _selectedDate.month == DateTime.now().month &&
+                              _selectedDate.year == DateTime.now().year
+                          ? totalMonthlyAmount / DateTime.now().day
+                          : totalMonthlyAmount /
+                                DateUtils.getDaysInMonth(
+                                  _selectedDate.year,
+                                  _selectedDate.month,
+                                ),
                       settings: settings,
                     ),
                   ],
@@ -468,7 +632,7 @@ class _HighestSpendDayCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 8,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white60,
+                      color: AppColors.charcoal,
                     ),
                   ),
                 ],
@@ -493,7 +657,7 @@ class _BalanceInsightCard extends StatelessWidget {
 
     return Container(
       width: 280,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(24),
@@ -509,6 +673,7 @@ class _BalanceInsightCard extends StatelessWidget {
                 'Daily Average',
                 style: AppTextStyles.body.copyWith(
                   color: isDark ? Colors.white70 : Colors.black87,
+                  fontSize: 14,
                 ),
               ),
               Text(
@@ -518,24 +683,29 @@ class _BalanceInsightCard extends StatelessWidget {
                   settings.locale,
                 ),
                 style: AppTextStyles.amountDisplay.copyWith(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontFamily: 'Serif',
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Your average spending is stable compared to last month. Great job on staying within budget!',
-            style: AppTextStyles.body.copyWith(
-              fontSize: 14,
-              color: isDark ? Colors.white60 : Colors.black54,
-              fontStyle: FontStyle.italic,
+          const SizedBox(height: 12),
+          Expanded(
+            child: Text(
+              'Your average spending is stable compared to last month. Great job on staying within budget!',
+              style: AppTextStyles.body.copyWith(
+                fontSize: 13,
+                color: isDark ? Colors.white60 : Colors.black54,
+                fontStyle: FontStyle.italic,
+                height: 1.3,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: 12),
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: AppColors.primarySelected.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
@@ -545,7 +715,7 @@ class _BalanceInsightCard extends StatelessWidget {
                 const Icon(
                   Icons.trending_down,
                   color: AppColors.successGreen,
-                  size: 20,
+                  size: 18,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -553,6 +723,7 @@ class _BalanceInsightCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.successGreen,
                     fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
                 ),
               ],
