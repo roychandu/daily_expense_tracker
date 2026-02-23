@@ -13,11 +13,13 @@ class SettingsController extends ChangeNotifier {
   Locale _locale = const Locale('en');
   String _currency = 'USD';
   bool _isDailyReminderEnabled = true;
+  DateTime _reminderTime = DateTime(2024, 1, 1, 20, 0); // Default 8:00 PM
 
   ThemeMode get themeMode => _themeMode;
   Locale get locale => _locale;
   String get currency => _currency;
   bool get isDailyReminderEnabled => _isDailyReminderEnabled;
+  DateTime get reminderTime => _reminderTime;
 
   static const List<Map<String, String>> supportedLanguages = [
     {'code': 'en', 'name': 'English'},
@@ -63,9 +65,22 @@ class SettingsController extends ChangeNotifier {
     _currency = _prefs.getString('currency') ?? 'USD';
     _isDailyReminderEnabled = _prefs.getBool('isDailyReminderEnabled') ?? true;
 
+    final timeStr = _prefs.getString('reminderTime') ?? "20:00";
+    final parts = timeStr.split(':');
+    _reminderTime = DateTime(
+      2024,
+      1,
+      1,
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+    );
+
     // Auto-schedule if enabled
     if (_isDailyReminderEnabled) {
-      NotificationService().scheduleDailyReminder();
+      NotificationService().scheduleDailyReminder(
+        hour: _reminderTime.hour,
+        minute: _reminderTime.minute,
+      );
     }
 
     notifyListeners();
@@ -102,11 +117,35 @@ class SettingsController extends ChangeNotifier {
 
     if (enabled) {
       await NotificationService().scheduleDailyReminder(
+        hour: _reminderTime.hour,
+        minute: _reminderTime.minute,
         title: title,
         body: body,
       );
     } else {
       await NotificationService().cancelAllNotifications();
+    }
+  }
+
+  Future<void> updateReminderTime(
+    DateTime time, {
+    String? title,
+    String? body,
+  }) async {
+    _reminderTime = time;
+    notifyListeners();
+    await _prefs.setString(
+      'reminderTime',
+      "${time.hour}:${time.minute.toString().padLeft(2, '0')}",
+    );
+
+    if (_isDailyReminderEnabled) {
+      await NotificationService().scheduleDailyReminder(
+        hour: time.hour,
+        minute: time.minute,
+        title: title,
+        body: body,
+      );
     }
   }
 
@@ -116,6 +155,8 @@ class SettingsController extends ChangeNotifier {
   }) async {
     if (_isDailyReminderEnabled) {
       await NotificationService().scheduleDailyReminder(
+        hour: _reminderTime.hour,
+        minute: _reminderTime.minute,
         title: title,
         body: body,
       );
