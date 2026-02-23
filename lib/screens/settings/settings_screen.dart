@@ -9,6 +9,8 @@ import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import 'package:intl/intl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'about_screen.dart';
+import 'privacy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -90,6 +92,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       val ? ThemeMode.dark : ThemeMode.light,
                     );
                   },
+                ),
+                _buildSettingsRow(
+                  icon: Icons.language_rounded,
+                  iconColor: Colors.purpleAccent,
+                  title: 'Privacy policy',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyScreen(),
+                    ),
+                  ),
+                ),
+                _buildSettingsRow(
+                  icon: Icons.layers_rounded,
+                  iconColor: Colors.greenAccent,
+                  title: 'About Us',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutScreen(),
+                    ),
+                  ),
                 ),
               ]),
 
