@@ -274,12 +274,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         style: const TextStyle(
                           color: AppColors.primarySelected,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
-                          fontSize: 16,
+                          letterSpacing: 2.0,
+                          fontSize: 18,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 32),
 
                     // Amount Input
                     Row(
@@ -291,27 +291,34 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.charcoal.withValues(alpha: 0.6),
+                            fontFamily: 'Serif',
+                            color: isDark
+                                ? Colors.white70
+                                : const Color(0xFF4A4A4A),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
+                        IntrinsicWidth(
                           child: TextField(
                             controller: _amountController,
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
                             ),
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 56,
-                              fontWeight: FontWeight.w600,
-                              color: isDark
-                                  ? Colors.white70
-                                  : const Color(0xFFCAD1E0),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Serif',
+                              color: Color(0xFFCAD1E0),
                             ),
                             decoration: const InputDecoration(
                               hintText: '0',
-                              hintStyle: TextStyle(color: Color(0xFFCAD1E0)),
+                              hintStyle: TextStyle(
+                                color: Color(0xFFCAD1E0),
+                                fontSize: 48,
+                                fontFamily: 'Serif',
+                                fontWeight: FontWeight.bold,
+                              ),
                               border: InputBorder.none,
                               isDense: true,
                               contentPadding: EdgeInsets.zero,
@@ -319,16 +326,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           ),
                         ),
                         Container(
-                          height: 50,
-                          width: 1.5,
-                          color: const Color(0xFFCAD1E0),
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          height: 40,
+                          width: 2,
+                          color: const Color(0xFFCAD1E0).withValues(alpha: 0.5),
+                          margin: const EdgeInsets.symmetric(horizontal: 12),
                         ),
                         const Text(
                           '.00',
                           style: TextStyle(
-                            fontSize: 56,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Serif',
                             color: Color(0xFFCAD1E0),
                           ),
                         ),
