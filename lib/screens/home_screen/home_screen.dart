@@ -7,7 +7,7 @@ import '../../common_widgets/secondary_button.dart';
 import '../add_expense/add_expense_screen.dart';
 import '../settings/settings_screen.dart';
 import '../history/expense_history_screen.dart';
-import '../monthly_summary/monthly_summary_screen.dart';
+import '../progress/progress_screen.dart';
 import '../insights/insights_screen.dart';
 
 import '../../models/expense.dart';
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       const InsightsScreen(),
-      const MonthlySummaryScreen(),
+      const ProgressScreen(),
       const SettingsScreen(),
     ];
 

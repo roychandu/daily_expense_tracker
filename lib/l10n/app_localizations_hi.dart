@@ -75,6 +75,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get insights => 'अन्तर्दृष्टि';
 
   @override
+  String get progress => 'Progress';
+
+  @override
   String get today => 'आज';
 
   @override

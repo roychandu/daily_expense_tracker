@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'Insights'**
   String get insights;
 
+  /// No description provided for @progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
   /// No description provided for @today.
   ///
   /// In en, this message translates to:
