@@ -5,11 +5,13 @@ class AppFormatters {
   static String formatCurrency(
     double amount,
     String currencyCode,
-    Locale locale,
-  ) {
+    Locale locale, {
+    int? decimalDigits,
+  }) {
     final format = NumberFormat.simpleCurrency(
       locale: locale.toString(),
       name: currencyCode,
+      decimalDigits: decimalDigits,
     );
     return format.format(amount);
   }

@@ -47,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
-      const MonthlySummaryScreen(),
       const InsightsScreen(),
+      const MonthlySummaryScreen(),
       const SettingsScreen(),
     ];
 
