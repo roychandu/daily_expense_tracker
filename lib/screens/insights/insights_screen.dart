@@ -325,15 +325,26 @@ class _SummarySection extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                IconButton(
-                  onPressed: onSelectMonth,
-                  icon: const Icon(
-                    Icons.calendar_month_outlined,
-                    color: Colors.orange,
-                    size: 24,
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: isDark
+                        ? Border.all(color: AppColors.primarySelected, width: 2)
+                        : null,
+                    color: isDark
+                        ? AppColors.primarySelected.withOpacity(0.4)
+                        : null,
                   ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  child: IconButton(
+                    onPressed: onSelectMonth,
+                    icon: const Icon(
+                      Icons.calendar_month_outlined,
+                      color: Colors.orange,
+                      size: 24,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(),
+                  ),
                 ),
               ],
             ),
