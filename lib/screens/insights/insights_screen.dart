@@ -244,7 +244,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
               if (isLocked) ...[
                 const SizedBox(height: 32),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: _LockedInsightsCard(),
                 ),
               ],
@@ -266,6 +266,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         ),
       ),
       centerTitle: false,
+      titleSpacing: 10,
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
@@ -294,9 +295,9 @@ class _SummarySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 24),
         decoration: BoxDecoration(
           color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
           borderRadius: BorderRadius.circular(24),
@@ -464,7 +465,7 @@ class _SpendingBreakdownSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           Row(
@@ -546,7 +547,7 @@ class _SmartInsightsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             'Smart Insights',
             style: AppTextStyles.h2Section.copyWith(
@@ -560,7 +561,7 @@ class _SmartInsightsSection extends StatelessWidget {
           height: 200,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             children: [
               _HighestSpendDayCard(
                 date: highestDate,
@@ -599,7 +600,7 @@ class _LockedInsightsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       decoration: BoxDecoration(
         color: const Color(0xFF0D1B2A),
         borderRadius: BorderRadius.circular(24),
