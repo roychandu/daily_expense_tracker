@@ -9,6 +9,7 @@ import '../settings/settings_screen.dart';
 import '../history/expense_history_screen.dart';
 import '../progress/progress_screen.dart';
 import '../insights/insights_screen.dart';
+import '../../common_widgets/adaptive_banner_ad.dart';
 
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
@@ -56,49 +57,55 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(index: _currentIndex, children: pages),
       floatingActionButton: null,
       floatingActionButtonLocation: null,
-      bottomNavigationBar: BottomAppBar(
-        elevation: 8,
-        padding: EdgeInsets.zero,
-        height: 72,
-        color: isDark ? AppColors.backgroundDark : Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, 'home', l10n.home),
-            _buildNavItem(1, 'insight', 'Insight'),
-            GestureDetector(
-              onTap: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        AddExpenseScreen(isExpense: _isExpenseSelected),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const AdaptiveBannerAd(),
+          BottomAppBar(
+            elevation: 8,
+            padding: EdgeInsets.zero,
+            height: 72,
+            color: isDark ? AppColors.backgroundDark : Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildNavItem(0, 'home', l10n.home),
+                _buildNavItem(1, 'insight', 'Insight'),
+                GestureDetector(
+                  onTap: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AddExpenseScreen(isExpense: _isExpenseSelected),
+                      ),
+                    );
+                    if (result == true) {
+                      setState(() {
+                        _refreshCount++;
+                      });
+                    }
+                  },
+                  child: Container(
+                    width: 52,
+                    height: 52,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primarySelected,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.add_rounded,
+                      color: isDark ? Colors.white : Colors.white,
+                      size: 36,
+                    ),
                   ),
-                );
-                if (result == true) {
-                  setState(() {
-                    _refreshCount++;
-                  });
-                }
-              },
-              child: Container(
-                width: 52,
-                height: 52,
-                decoration: const BoxDecoration(
-                  color: AppColors.primarySelected,
-                  shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.add_rounded,
-                  color: isDark ? Colors.white : Colors.white,
-                  size: 36,
-                ),
-              ),
+                _buildNavItem(2, 'progress', 'Progress'),
+                _buildNavItem(3, 'settings', l10n.settings),
+              ],
             ),
-            _buildNavItem(2, 'progress', 'Progress'),
-            _buildNavItem(3, 'settings', l10n.settings),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

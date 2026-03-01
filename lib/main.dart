@@ -14,9 +14,11 @@ import 'screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'services/notification_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
     sqfliteFfiInit();
