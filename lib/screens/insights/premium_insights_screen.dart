@@ -6,6 +6,10 @@ import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
 import '../history/expense_history_screen.dart';
+import '../../services/export_service.dart';
+import '../../services/database_service.dart';
+import '../../common_widgets/custom_snackbar.dart';
+import '../../l10n/app_localizations.dart';
 
 Widget buildPremiumInsightsBody({
   required BuildContext context,
@@ -749,23 +753,127 @@ Widget _sixMonthTrendSection({
 
 class _ReportSection extends StatelessWidget {
   const _ReportSection();
+
+  void _onExport(BuildContext context, bool isCsv) async {
+    final l10n = AppLocalizations.of(context)!;
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      initialDateRange: DateTimeRange(
+        start: DateTime.now().subtract(const Duration(days: 30)),
+        end: DateTime.now(),
+      ),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(
+              context,
+            ).colorScheme.copyWith(primary: AppColors.primarySelected),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      if (!context.mounted) return;
+      showCustomSnackBar(
+        context,
+        isCsv ? l10n.generatingCsv : l10n.generatingPdf,
+      );
+
+      final expenses = await DatabaseService.instance.readExpensesByDateRange(
+        picked.start,
+        picked.end,
+      );
+
+      if (expenses.isEmpty) {
+        if (!context.mounted) return;
+        showCustomSnackBar(context, l10n.noDataFound, isError: true);
+        return;
+      }
+
+      final fileName =
+          'Expenses_${DateFormat('yyyyMMdd').format(picked.start)}_${DateFormat('yyyyMMdd').format(picked.end)}';
+
+      String? result;
+      if (isCsv) {
+        result = await ExportService.exportToCSV(
+          expenses,
+          fileName,
+          headers: [
+            l10n.reportID,
+            l10n.reportDate,
+            l10n.reportCategory,
+            l10n.reportAmount,
+            l10n.reportType,
+            l10n.reportNote,
+          ],
+          expenseLabel: l10n.expense,
+          incomeLabel: l10n.income,
+          fileSavedLabel: l10n.fileSavedTo,
+          errorLabel: l10n.error,
+          noDirLabel: l10n.couldNotFindExportDir,
+        );
+      } else {
+        result = await ExportService.exportToPDF(
+          expenses,
+          fileName,
+          picked.start,
+          picked.end,
+          headers: [
+            l10n.reportDate,
+            l10n.reportCategory,
+            l10n.reportType,
+            l10n.reportAmount,
+            l10n.reportNote,
+          ],
+          reportTitle: l10n.expenseReport,
+          totalExpenseLabel: l10n.totalExpenses,
+          totalIncomeLabel: l10n.totalIncome,
+          expLabelShort: 'Exp',
+          incLabelShort: 'Inc',
+          fileSavedLabel: l10n.fileSavedTo,
+          errorLabel: l10n.error,
+          noDirLabel: l10n.couldNotFindExportDir,
+        );
+      }
+
+      if (!context.mounted) return;
+      if (result != null && result.startsWith('File saved')) {
+        showCustomSnackBar(context, result);
+      } else {
+        showCustomSnackBar(context, result ?? 'Unknown error', isError: true);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
-        _reportItem(
-          Icons.download_for_offline,
-          'Export Transaction History',
-          'CSV',
-          isDark,
+        InkWell(
+          onTap: () => _onExport(context, true),
+          borderRadius: BorderRadius.circular(16),
+          child: _reportItem(
+            Icons.download_for_offline,
+            'Export Transaction History',
+            'CSV',
+            isDark,
+          ),
         ),
         const SizedBox(height: 16),
-        _reportItem(
-          Icons.picture_as_pdf,
-          'Annual Financial Report',
-          'PDF',
-          isDark,
+        InkWell(
+          onTap: () => _onExport(context, false),
+          borderRadius: BorderRadius.circular(16),
+          child: _reportItem(
+            Icons.picture_as_pdf,
+            'Annual Financial Report',
+            'PDF',
+            isDark,
+          ),
         ),
       ],
     );
