@@ -9,6 +9,7 @@ import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
 import '../history/expense_history_screen.dart';
+import 'dart:ui';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -136,23 +137,24 @@ class _InsightsScreenState extends State<InsightsScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final allExpenses = expenseController.expenses
-        .where((e) => e.isExpense)
-        .toList();
-    final monthExpenses = allExpenses.where((e) {
+    final monthTransactions = expenseController.expenses.where((e) {
       return e.date.month == _selectedDate.month &&
           e.date.year == _selectedDate.year;
     }).toList();
 
-    final totalMonthlyAmount = monthExpenses.fold(
-      0.0,
-      (sum, e) => sum + e.amount,
-    );
-    final transactionCount = monthExpenses.length;
+    final totalMonthlyIncome = monthTransactions
+        .where((e) => !e.isExpense)
+        .fold(0.0, (sum, e) => sum + e.amount);
 
-    // Category Breakdown
+    final totalMonthlyExpense = monthTransactions
+        .where((e) => e.isExpense)
+        .fold(0.0, (sum, e) => sum + e.amount);
+
+    final netBalance = totalMonthlyIncome - totalMonthlyExpense;
+
+    // Category Breakdown (Expenses only)
     final categoryTotals = <String, double>{};
-    for (final e in monthExpenses) {
+    for (final e in monthTransactions.where((e) => e.isExpense)) {
       categoryTotals[e.category] =
           (categoryTotals[e.category] ?? 0.0) + e.amount;
     }
@@ -161,7 +163,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
     // Highest Spend Day
     final dayTotals = <String, double>{};
-    for (final e in monthExpenses) {
+    for (final e in monthTransactions.where((e) => e.isExpense)) {
       final dayKey = DateFormat('yyyy-MM-dd').format(e.date);
       dayTotals[dayKey] = (dayTotals[dayKey] ?? 0.0) + e.amount;
     }
@@ -176,7 +178,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
       highestDate = DateTime.parse(highestDayEntry.key);
     }
 
-    // Weekly Chart Data (Based on selected month or current week if selected month is current)
+    // Weekly Chart Data
     DateTime chartStartDate;
     if (_selectedDate.month == DateTime.now().month &&
         _selectedDate.year == DateTime.now().year) {
@@ -197,216 +199,492 @@ class _InsightsScreenState extends State<InsightsScreen> {
         ? 0.0
         : weeklyData.reduce((a, b) => a > b ? a : b);
 
+    final isLocked = !settings.isPremium;
+
     return Scaffold(
       backgroundColor: isDark
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(
-          l10n.insights,
-          style: AppTextStyles.h1Display.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 28,
-            fontFamily: 'Serif', // Fallback to serif for elegant look
-          ),
-        ),
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: _buildAppBar(l10n),
       body: RefreshIndicator(
         onRefresh: () => expenseController.refreshExpenses(),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(0, 8, 0, 100),
+          padding: const EdgeInsets.fromLTRB(0, 8, 0, 32),
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Summary Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${DateFormat('MMMM yyyy').format(_selectedDate).toUpperCase()} SUMMARY',
-                      style: AppTextStyles.caption.copyWith(
-                        letterSpacing: 1.2,
-                        color: isDark ? Colors.white60 : Colors.black54,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppFormatters.formatCurrency(
-                            totalMonthlyAmount,
-                            settings.currency,
-                            settings.locale,
-                          ),
-                          style: AppTextStyles.amountDisplay.copyWith(
-                            fontSize: 42,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Serif',
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => _selectMonth(context),
-                          icon: const Icon(
-                            Icons.calendar_month_outlined,
-                            color: AppColors.primarySelected,
-                            size: 28,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    _TransactionChip(count: transactionCount),
-                  ],
-                ),
+              _SummarySection(
+                isDark: isDark,
+                netBalance: netBalance,
+                totalMonthlyIncome: totalMonthlyIncome,
+                totalMonthlyExpense: totalMonthlyExpense,
+                settings: settings,
+                selectedDate: _selectedDate,
+                onSelectMonth: () => _selectMonth(context),
               ),
-
               const SizedBox(height: 32),
-
-              // Spending Breakdown Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Spending Breakdown',
-                          style: AppTextStyles.h2Section.copyWith(
-                            fontSize: 20,
-                            fontFamily: 'Serif',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ExpenseHistoryScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'VIEW ALL',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.primarySelected,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ...sortedCategories.map((entry) {
-                      final percentage = totalMonthlyAmount > 0
-                          ? (entry.value / totalMonthlyAmount) * 100
-                          : 0.0;
-                      return _CategoryProgressBar(
-                        category: entry.key,
-                        amount: entry.value,
-                        percentage: percentage,
-                        settings: settings,
-                      );
-                    }),
-                  ],
-                ),
+              _SpendingBreakdownSection(
+                sortedCategories: sortedCategories,
+                totalMonthlyExpense: totalMonthlyExpense,
+                settings: settings,
+                isLocked: isLocked,
               ),
-
               const SizedBox(height: 32),
-
-              // Smart Insights Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Smart Insights',
-                  style: AppTextStyles.h2Section.copyWith(
-                    fontSize: 20,
-                    fontFamily: 'Serif',
-                  ),
-                ),
+              _SmartInsightsSection(
+                highestDate: highestDate,
+                highestDayEntryValue: highestDayEntry?.value ?? 0,
+                weeklyData: weeklyData,
+                maxWeekly: maxWeekly,
+                settings: settings,
+                sortedCategories: sortedCategories,
+                totalMonthlyExpense: totalMonthlyExpense,
+                selectedDate: _selectedDate,
               ),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 180, // Reduced height
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ), // Padding here instead of parent
-                  children: [
-                    _HighestSpendDayCard(
-                      date: highestDate,
-                      amount: highestDayEntry?.value ?? 0,
-                      weeklyData: weeklyData,
-                      maxAmount: maxWeekly,
-                      settings: settings,
-                      primaryCategory: sortedCategories.isNotEmpty
-                          ? sortedCategories.first.key
-                          : null,
-                    ),
-                    const SizedBox(width: 16),
-                    _BalanceInsightCard(
-                      dailyAvg:
-                          _selectedDate.month == DateTime.now().month &&
-                              _selectedDate.year == DateTime.now().year
-                          ? totalMonthlyAmount / DateTime.now().day
-                          : totalMonthlyAmount /
-                                DateUtils.getDaysInMonth(
-                                  _selectedDate.year,
-                                  _selectedDate.month,
-                                ),
-                      settings: settings,
-                    ),
-                  ],
+              if (isLocked) ...[
+                const SizedBox(height: 32),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: _LockedInsightsCard(),
                 ),
-              ),
+              ],
             ],
           ),
         ),
       ),
     );
   }
+
+  PreferredSizeWidget _buildAppBar(AppLocalizations l10n) {
+    return AppBar(
+      title: Text(
+        l10n.insights,
+        style: AppTextStyles.h1Display.copyWith(
+          fontWeight: FontWeight.w700,
+          fontSize: 28,
+          fontFamily: 'Serif',
+        ),
+      ),
+      centerTitle: false,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+  }
 }
 
-class _TransactionChip extends StatelessWidget {
-  final int count;
-  const _TransactionChip({required this.count});
+class _SummarySection extends StatelessWidget {
+  final bool isDark;
+  final double netBalance;
+  final double totalMonthlyIncome;
+  final double totalMonthlyExpense;
+  final SettingsController settings;
+  final DateTime selectedDate;
+  final VoidCallback onSelectMonth;
+
+  const _SummarySection({
+    required this.isDark,
+    required this.netBalance,
+    required this.totalMonthlyIncome,
+    required this.totalMonthlyExpense,
+    required this.settings,
+    required this.selectedDate,
+    required this.onSelectMonth,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.08)
-            : Colors.black.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? Colors.black.withOpacity(0.4)
+                  : Colors.black.withOpacity(0.1),
+              blurRadius: 30,
+              offset: const Offset(0, 12),
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+                  style: AppTextStyles.caption.copyWith(
+                    letterSpacing: 1.2,
+                    color: isDark ? Colors.white60 : Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                IconButton(
+                  onPressed: onSelectMonth,
+                  icon: const Icon(
+                    Icons.calendar_month_outlined,
+                    color: Colors.orange,
+                    size: 24,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                AppFormatters.formatCurrency(
+                  netBalance,
+                  settings.currency,
+                  settings.locale,
+                ),
+                style: AppTextStyles.amountDisplay.copyWith(
+                  fontSize: 42,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Serif',
+                ),
+              ),
+            ),
+            Text(
+              'Net Balance',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.successGreen,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                _SummaryItem(
+                  label: 'Income',
+                  amount: totalMonthlyIncome,
+                  color: AppColors.successGreen,
+                  isDark: isDark,
+                  settings: settings,
+                ),
+                _SummaryItem(
+                  label: 'Expense',
+                  amount: totalMonthlyExpense,
+                  color: AppColors.softCoral,
+                  isDark: isDark,
+                  settings: settings,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+    );
+  }
+}
+
+class _SummaryItem extends StatelessWidget {
+  final String label;
+  final double amount;
+  final Color color;
+  final bool isDark;
+  final SettingsController settings;
+
+  const _SummaryItem({
+    required this.label,
+    required this.amount,
+    required this.color,
+    required this.isDark,
+    required this.settings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.receipt_long_outlined,
-            size: 16,
-            color: isDark ? Colors.white70 : Colors.black54,
-          ),
-          const SizedBox(width: 8),
           Text(
-            '$count Transactions',
+            label,
             style: AppTextStyles.caption.copyWith(
-              color: isDark ? Colors.white70 : Colors.black54,
-              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.white60 : Colors.black54,
+            ),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              AppFormatters.formatCurrency(
+                amount,
+                settings.currency,
+                settings.locale,
+              ),
+              style: AppTextStyles.body.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                fontFamily: 'Serif',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SpendingBreakdownSection extends StatelessWidget {
+  final List<MapEntry<String, double>> sortedCategories;
+  final double totalMonthlyExpense;
+  final SettingsController settings;
+  final bool isLocked;
+
+  const _SpendingBreakdownSection({
+    required this.sortedCategories,
+    required this.totalMonthlyExpense,
+    required this.settings,
+    required this.isLocked,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Top Spending Breakdown',
+                style: AppTextStyles.h2Section.copyWith(
+                  fontSize: 20,
+                  fontFamily: 'Serif',
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ExpenseHistoryScreen(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'VIEW ALL',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.primarySelected,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ...List.generate(sortedCategories.length, (index) {
+            final entry = sortedCategories[index];
+            final percentage = totalMonthlyExpense > 0
+                ? (entry.value / totalMonthlyExpense) * 100
+                : 0.0;
+            final shouldBlur = isLocked && index >= 2;
+
+            return _CategoryProgressBar(
+              category: entry.key,
+              amount: entry.value,
+              percentage: percentage,
+              settings: settings,
+              isBlurred: shouldBlur,
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmartInsightsSection extends StatelessWidget {
+  final DateTime? highestDate;
+  final double highestDayEntryValue;
+  final List<double> weeklyData;
+  final double maxWeekly;
+  final SettingsController settings;
+  final List<MapEntry<String, double>> sortedCategories;
+  final double totalMonthlyExpense;
+  final DateTime selectedDate;
+
+  const _SmartInsightsSection({
+    required this.highestDate,
+    required this.highestDayEntryValue,
+    required this.weeklyData,
+    required this.maxWeekly,
+    required this.settings,
+    required this.sortedCategories,
+    required this.totalMonthlyExpense,
+    required this.selectedDate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Smart Insights',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 200,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            children: [
+              _HighestSpendDayCard(
+                date: highestDate,
+                amount: highestDayEntryValue,
+                weeklyData: weeklyData,
+                maxAmount: maxWeekly,
+                settings: settings,
+                primaryCategory: sortedCategories.isNotEmpty
+                    ? sortedCategories.first.key
+                    : null,
+              ),
+              const SizedBox(width: 16),
+              _BalanceInsightCard(
+                dailyAvg:
+                    selectedDate.month == DateTime.now().month &&
+                        selectedDate.year == DateTime.now().year
+                    ? totalMonthlyExpense / DateTime.now().day
+                    : totalMonthlyExpense /
+                          DateUtils.getDaysInMonth(
+                            selectedDate.year,
+                            selectedDate.month,
+                          ),
+                settings: settings,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LockedInsightsCard extends StatelessWidget {
+  const _LockedInsightsCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0D1B2A),
+        borderRadius: BorderRadius.circular(24),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/locked-card-bg.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.auto_awesome, color: Colors.orange, size: 24),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Unlock to watch full Inishgts',
+                  style: AppTextStyles.h2Section.copyWith(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _BulletPoint(text: 'Detailed spending breakdown'),
+          _BulletPoint(text: 'Smart tailored insights'),
+          _BulletPoint(text: 'Weekly Inc vs Exp trend'),
+          _BulletPoint(text: 'Monthly trend'),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text(
+                    'Upgrade Now',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.orange,
+                    side: BorderSide.none,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text(
+                    'Watch Ads',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BulletPoint extends StatelessWidget {
+  final String text;
+  const _BulletPoint({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          const Icon(Icons.circle, color: Colors.white70, size: 6),
+          const SizedBox(width: 12),
+          Text(
+            text,
+            style: AppTextStyles.body.copyWith(
+              color: Colors.white,
+              fontSize: 14,
             ),
           ),
         ],
@@ -421,11 +699,14 @@ class _CategoryProgressBar extends StatelessWidget {
   final double percentage;
   final SettingsController settings;
 
+  final bool isBlurred;
+
   const _CategoryProgressBar({
     required this.category,
     required this.amount,
     required this.percentage,
     required this.settings,
+    this.isBlurred = false,
   });
 
   @override
@@ -433,7 +714,7 @@ class _CategoryProgressBar extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = _getCategoryColor(category);
 
-    return Padding(
+    Widget content = Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: [
@@ -453,16 +734,22 @@ class _CategoryProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                AppFormatters.formatCurrency(
-                  amount,
-                  settings.currency,
-                  settings.locale,
-                  decimalDigits: 0,
-                ),
-                style: AppTextStyles.body.copyWith(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 100),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppFormatters.formatCurrency(
+                      amount,
+                      settings.currency,
+                      settings.locale,
+                      decimalDigits: 0,
+                    ),
+                    style: AppTextStyles.body.copyWith(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -470,7 +757,7 @@ class _CategoryProgressBar extends StatelessWidget {
                 '${percentage.toStringAsFixed(0)}%',
                 style: AppTextStyles.caption.copyWith(
                   fontSize: 11,
-                  color: Colors.white54,
+                  color: isDark ? Colors.white54 : Colors.black54,
                 ),
               ),
             ],
@@ -501,6 +788,17 @@ class _CategoryProgressBar extends StatelessWidget {
         ],
       ),
     );
+
+    if (isBlurred) {
+      return ClipRect(
+        child: ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: content,
+        ),
+      );
+    }
+
+    return content;
   }
 
   Color _getCategoryColor(String category) {
@@ -574,30 +872,37 @@ class _HighestSpendDayCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    AppFormatters.formatCurrency(
-                      amount,
-                      settings.currency,
-                      settings.locale,
-                    ),
-                    style: AppTextStyles.amountDisplay.copyWith(
-                      fontSize: 22,
-                      fontFamily: 'Serif',
-                      color: isDark ? Colors.white : Colors.black,
-                    ),
-                  ),
-                  if (primaryCategory != null)
-                    Text(
-                      'Primarily $primaryCategory',
-                      style: AppTextStyles.caption.copyWith(
-                        fontSize: 10,
-                        color: isDark ? Colors.white38 : Colors.black38,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        AppFormatters.formatCurrency(
+                          amount,
+                          settings.currency,
+                          settings.locale,
+                        ),
+                        style: AppTextStyles.amountDisplay.copyWith(
+                          fontSize: 22,
+                          fontFamily: 'Serif',
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
                       ),
                     ),
-                ],
+                    if (primaryCategory != null)
+                      Text(
+                        'Primarily $primaryCategory',
+                        style: AppTextStyles.caption.copyWith(
+                          fontSize: 10,
+                          color: isDark ? Colors.white38 : Colors.black38,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -676,15 +981,20 @@ class _BalanceInsightCard extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
-              Text(
-                AppFormatters.formatCurrency(
-                  dailyAvg,
-                  settings.currency,
-                  settings.locale,
-                ),
-                style: AppTextStyles.amountDisplay.copyWith(
-                  fontSize: 18,
-                  fontFamily: 'Serif',
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppFormatters.formatCurrency(
+                      dailyAvg,
+                      settings.currency,
+                      settings.locale,
+                    ),
+                    style: AppTextStyles.amountDisplay.copyWith(
+                      fontSize: 18,
+                      fontFamily: 'Serif',
+                    ),
+                  ),
                 ),
               ),
             ],

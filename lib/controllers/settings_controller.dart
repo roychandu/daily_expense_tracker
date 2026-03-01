@@ -55,6 +55,9 @@ class SettingsController extends ChangeNotifier {
     {'code': 'TRY', 'symbol': '₺', 'name': 'Turkish Lira'},
   ];
 
+  bool _isPremium = false;
+  bool get isPremium => _isPremium;
+
   void _loadSettings() {
     final themeIndex = _prefs.getInt('themeMode') ?? 0;
     _themeMode = ThemeMode.values[themeIndex];
@@ -64,6 +67,7 @@ class SettingsController extends ChangeNotifier {
 
     _currency = _prefs.getString('currency') ?? 'USD';
     _isDailyReminderEnabled = _prefs.getBool('isDailyReminderEnabled') ?? true;
+    _isPremium = _prefs.getBool('isPremium') ?? false;
 
     final timeStr = _prefs.getString('reminderTime') ?? "20:00";
     final parts = timeStr.split(':');
@@ -161,5 +165,11 @@ class SettingsController extends ChangeNotifier {
         body: body,
       );
     }
+  }
+
+  Future<void> updatePremium(bool isPremium) async {
+    _isPremium = isPremium;
+    notifyListeners();
+    await _prefs.setBool('isPremium', isPremium);
   }
 }

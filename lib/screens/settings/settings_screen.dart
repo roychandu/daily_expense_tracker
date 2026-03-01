@@ -59,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Premium Card - Re-designed with a Banner approach
-              _buildPremiumCard(context),
+              _buildPremiumCard(context, settings),
 
               const SizedBox(height: 32),
 
@@ -289,7 +289,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildPremiumCard(BuildContext context) {
+  Widget _buildPremiumCard(BuildContext context, SettingsController settings) {
     return Container(
       width: double.infinity,
       constraints: const BoxConstraints(minHeight: 200),
@@ -366,7 +366,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(
                         width: cardWidth * 0.4,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            settings.updatePremium(!settings.isPremium);
+                            showCustomSnackBar(
+                              context,
+                              settings.isPremium
+                                  ? 'Premium Features Unlocked!'
+                                  : 'Switched to Free Version',
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             foregroundColor: const Color(0xFFF2994A),
