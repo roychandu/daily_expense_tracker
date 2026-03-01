@@ -58,6 +58,9 @@ class SettingsController extends ChangeNotifier {
   bool _isPremium = false;
   bool get isPremium => _isPremium;
 
+  bool _isInsightsUnlockedViaAd = false;
+  bool get isInsightsUnlockedViaAd => _isInsightsUnlockedViaAd;
+
   void _loadSettings() {
     final themeIndex = _prefs.getInt('themeMode') ?? 0;
     _themeMode = ThemeMode.values[themeIndex];
@@ -171,5 +174,10 @@ class SettingsController extends ChangeNotifier {
     _isPremium = isPremium;
     notifyListeners();
     await _prefs.setBool('isPremium', isPremium);
+  }
+
+  void unlockInsightsViaAd() {
+    _isInsightsUnlockedViaAd = true;
+    notifyListeners();
   }
 }

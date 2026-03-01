@@ -199,7 +199,39 @@ class _InsightsScreenState extends State<InsightsScreen> {
         ? 0.0
         : weeklyData.reduce((a, b) => a > b ? a : b);
 
-    final isLocked = !settings.isPremium;
+    final isLocked = !settings.isPremium && !settings.isInsightsUnlockedViaAd;
+
+    // Weekly Income vs Expense calculation
+    final weeklyIncome = List.filled(4, 0.0);
+    final weeklyExpense = List.filled(4, 0.0);
+    for (final e in monthTransactions) {
+      int week = ((e.date.day - 1) ~/ 7).clamp(0, 3);
+      if (e.isExpense) {
+        weeklyExpense[week] += e.amount;
+      } else {
+        weeklyIncome[week] += e.amount;
+      }
+    }
+
+    // 6-Month Income Trend
+    final sixMonthIncomeData = <Map<String, dynamic>>[];
+    for (int i = 5; i >= 0; i--) {
+      final monthDate = DateTime(
+        _selectedDate.year,
+        _selectedDate.month - i,
+        1,
+      );
+      final monthTransactions6 = expenseController.expenses.where((e) {
+        return e.date.month == monthDate.month && e.date.year == monthDate.year;
+      });
+      final monthIncome = monthTransactions6
+          .where((e) => !e.isExpense)
+          .fold(0.0, (sum, e) => sum + e.amount);
+      sixMonthIncomeData.add({
+        'month': DateFormat('MMM').format(monthDate),
+        'income': monthIncome,
+      });
+    }
 
     return Scaffold(
       backgroundColor: isDark
@@ -247,6 +279,17 @@ class _InsightsScreenState extends State<InsightsScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: _LockedInsightsCard(),
                 ),
+              ],
+              if (!isLocked) ...[
+                const SizedBox(height: 32),
+                _AdvanceInsightsSection(
+                  weeklyIncome: weeklyIncome,
+                  weeklyExpense: weeklyExpense,
+                ),
+                const SizedBox(height: 32),
+                _SixMonthTrendSection(sixMonthIncomeData: sixMonthIncomeData),
+                const SizedBox(height: 32),
+                const _PremiumExportLockSection(),
               ],
             ],
           ),
@@ -464,47 +507,28 @@ class _SpendingBreakdownSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayCount = isLocked ? 3 : 4;
+    final itemsToShow = sortedCategories.take(displayCount).toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Top Spending Breakdown',
-                style: AppTextStyles.h2Section.copyWith(
-                  fontSize: 20,
-                  fontFamily: 'Serif',
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ExpenseHistoryScreen(),
-                    ),
-                  );
-                },
-                child: Text(
-                  'VIEW ALL',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.primarySelected,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-            ],
+          Text(
+            'Top Spending Breakdown',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
+            ),
           ),
           const SizedBox(height: 16),
-          ...List.generate(sortedCategories.length, (index) {
-            final entry = sortedCategories[index];
+          ...List.generate(itemsToShow.length, (index) {
+            final entry = itemsToShow[index];
             final percentage = totalMonthlyExpense > 0
                 ? (entry.value / totalMonthlyExpense) * 100
                 : 0.0;
-            final shouldBlur = isLocked && index >= 2;
+            final shouldBlur = isLocked && index == 2;
 
             return _CategoryProgressBar(
               category: entry.key,
@@ -514,6 +538,29 @@ class _SpendingBreakdownSection extends StatelessWidget {
               isBlurred: shouldBlur,
             );
           }),
+          if (!isLocked && sortedCategories.length > 4) ...[
+            const SizedBox(height: 12),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ExpenseHistoryScreen(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'View Full Breakdown',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.primarySelected,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -656,7 +703,9 @@ class _LockedInsightsCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<SettingsController>().unlockInsightsViaAd();
+                  },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.orange,
@@ -1052,6 +1101,341 @@ class _BalanceInsightCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AdvanceInsightsSection extends StatelessWidget {
+  final List<double> weeklyIncome;
+  final List<double> weeklyExpense;
+
+  const _AdvanceInsightsSection({
+    required this.weeklyIncome,
+    required this.weeklyExpense,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    double maxVal = 0;
+    for (int i = 0; i < 4; i++) {
+      if (weeklyIncome[i] > maxVal) maxVal = weeklyIncome[i];
+      if (weeklyExpense[i] > maxVal) maxVal = weeklyExpense[i];
+    }
+    if (maxVal == 0) maxVal = 1000; // default
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            'Advance Insights',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Income vs Expense Trend',
+                style: AppTextStyles.body.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: List.generate(4, (index) {
+                  return _WeeklyComparisonBar(
+                    income: weeklyIncome[index],
+                    expense: weeklyExpense[index],
+                    maxVal: maxVal,
+                    weekLabel: 'WEEK ${index + 1}',
+                  );
+                }),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _ChartLegend(color: AppColors.successGreen, label: 'Income'),
+                  const SizedBox(width: 24),
+                  _ChartLegend(color: AppColors.softCoral, label: 'Expense'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _WeeklyComparisonBar extends StatelessWidget {
+  final double income;
+  final double expense;
+  final double maxVal;
+  final String weekLabel;
+
+  const _WeeklyComparisonBar({
+    required this.income,
+    required this.expense,
+    required this.maxVal,
+    required this.weekLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const double chartHeight = 100.0;
+    final incomeHeight = (income / maxVal) * chartHeight;
+    final expenseHeight = (expense / maxVal) * chartHeight;
+
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              width: 12,
+              height: incomeHeight.clamp(4, chartHeight),
+              decoration: BoxDecoration(
+                color: AppColors.successGreen,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Container(
+              width: 12,
+              height: expenseHeight.clamp(4, chartHeight),
+              decoration: BoxDecoration(
+                color: AppColors.softCoral,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          weekLabel,
+          style: const TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ChartLegend extends StatelessWidget {
+  final Color color;
+  final String label;
+
+  const _ChartLegend({required this.color, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 8),
+        Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+      ],
+    );
+  }
+}
+
+class _SixMonthTrendSection extends StatelessWidget {
+  final List<Map<String, dynamic>> sixMonthIncomeData;
+
+  const _SixMonthTrendSection({required this.sixMonthIncomeData});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    double maxIncome = 0;
+    for (var d in sixMonthIncomeData) {
+      if (d['income'] > maxIncome) maxIncome = d['income'];
+    }
+    if (maxIncome == 0) maxIncome = 1000;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            '6-Month Income Trend',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: List.generate(sixMonthIncomeData.length, (index) {
+                  final data = sixMonthIncomeData[index];
+                  final height = (data['income'] / maxIncome) * 120;
+
+                  // Shade logic like image
+                  Color barColor;
+                  if (index == 0) {
+                    barColor = const Color(0xFF3D2C1E);
+                  } else if (index == 1) {
+                    barColor = const Color(0xFF5D3D2E);
+                  } else if (index == 2) {
+                    barColor = const Color(0xFF7D4E3E);
+                  } else if (index == 3) {
+                    barColor = const Color(0xFF9D5E4E);
+                  } else if (index == 4) {
+                    barColor = const Color(0xFFBD6E5E);
+                  } else {
+                    barColor = Colors.orange;
+                  }
+
+                  return Column(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: height.clamp(10.0, 120.0),
+                        decoration: BoxDecoration(
+                          color: barColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        data['month'].toString().toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PremiumExportLockSection extends StatelessWidget {
+  const _PremiumExportLockSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E1E30) : const Color(0xFFF0F4F8),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                isDark
+                    ? 'assets/images/premium-export-dark-bg.png'
+                    : 'assets/images/premium-export-light-bg.png',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            // Content
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Premium Export & PDF Reports',
+                    style: AppTextStyles.h2Section.copyWith(
+                      fontSize: 18,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Unlock professional reports and cloud backup permanently',
+                    style: AppTextStyles.body.copyWith(
+                      fontSize: 12,
+                      color: isDark ? Colors.white60 : Colors.black54,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: const Text(
+                        'Go Premium',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
