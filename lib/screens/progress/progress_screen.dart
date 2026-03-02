@@ -198,17 +198,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final daysToNext = nextMilestone - currentStreak;
     final milestoneLabel = _getMilestoneLabel(nextMilestone);
 
-    // 3. Weekly Activity (Selected Month Start or Today's Week)
-    final firstDayOfMonth = DateTime(
+    final startOfWeek = DateTime(
       _selectedDate.year,
       _selectedDate.month,
-      1,
-    );
-    final firstMondayOfMonth = firstDayOfMonth.subtract(
-      Duration(days: (firstDayOfMonth.weekday - 1)),
-    );
-    final startOfWeek = firstMondayOfMonth.add(
-      Duration(days: _selectedWeekIndex * 7),
+      1 + (_selectedWeekIndex * 7),
     );
 
     List<Map<String, dynamic>> weeklyActivity = [];
@@ -379,13 +372,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   style: AppTextStyles.h2Section.copyWith(
                     fontSize: 20,
                     fontFamily: 'Serif',
-                  ),
-                ),
-                Text(
-                  l10n.viewAllHistory.toUpperCase(),
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.primarySelected,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
