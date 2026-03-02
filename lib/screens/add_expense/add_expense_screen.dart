@@ -330,7 +330,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             crossAxisCount: 5,
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 8,
-                            childAspectRatio: 0.75,
+                            childAspectRatio: 0.7,
                           ),
                       itemCount: _displayCategories.length,
                       itemBuilder: (context, index) {
@@ -396,8 +396,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                             : const Color(0xFF8D99AE)),
                                 ),
                                 textAlign: TextAlign.center,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                             ],
                           ),

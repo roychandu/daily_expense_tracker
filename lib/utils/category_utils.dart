@@ -74,21 +74,50 @@ class CategoryUtils {
 
   static const List<Map<String, String>> incomeCategories = [
     {
-      'name': 'Salary',
-      'lightUnselected': 'assets/icons/add-new-icon.png',
-      'lightSelected': 'assets/icons/add-new-icon.png',
-      'darkUnselected': 'assets/icons/add-new-icon.png',
-      'darkSelected': 'assets/icons/add-new-icon.png',
+      'name': 'Salary Income',
+      'lightUnselected': 'assets/icons/salary icome light selectedicon.png',
+      'lightSelected': 'assets/icons/salary income light selectedicon.png',
+      'darkUnselected': 'assets/icons/salary icome light selectedicon.png',
+      'darkSelected': 'assets/icons/salary income light selectedicon.png',
     },
     {
-      'name': 'Gift',
-      'lightUnselected': 'assets/icons/add-new-icon.png',
-      'lightSelected': 'assets/icons/add-new-icon.png',
-      'darkUnselected': 'assets/icons/add-new-icon.png',
-      'darkSelected': 'assets/icons/add-new-icon.png',
+      'name': 'Freelance/side hustle',
+      'lightUnselected': 'assets/icons/freelance side light unselectedicon.png',
+      'lightSelected': 'assets/icons/freelance side light selectedicon.png',
+      'darkUnselected': 'assets/icons/freelance side light unselectedicon.png',
+      'darkSelected': 'assets/icons/freelance side light selectedicon.png',
     },
     {
-      'name': 'Other',
+      'name': 'Business Income',
+      'lightUnselected':
+          'assets/icons/business income light unselectedicon.png',
+      'lightSelected': 'assets/icons/business icome light selectedicon.png',
+      'darkUnselected': 'assets/icons/business income light unselectedicon.png',
+      'darkSelected': 'assets/icons/business icome light selectedicon.png',
+    },
+    {
+      'name': 'Investment return',
+      'lightUnselected': 'assets/icons/investment light unselectedicon.png',
+      'lightSelected': 'assets/icons/investment light selectedicon.png',
+      'darkUnselected': 'assets/icons/investment light unselectedicon.png',
+      'darkSelected': 'assets/icons/investment light selectedicon.png',
+    },
+    {
+      'name': 'Gif/bonus',
+      'lightUnselected': 'assets/icons/gif light unselectedicon.png',
+      'lightSelected': 'assets/icons/git light selectedicon.png',
+      'darkUnselected': 'assets/icons/gif light unselectedicon.png',
+      'darkSelected': 'assets/icons/git light selectedicon.png',
+    },
+    {
+      'name': 'Refund/cashback',
+      'lightUnselected': 'assets/icons/refund light unselected.png',
+      'lightSelected': 'assets/icons/refund light selectedicon.png',
+      'darkUnselected': 'assets/icons/refund light unselected.png',
+      'darkSelected': 'assets/icons/refund light selectedicon.png',
+    },
+    {
+      'name': 'Other', // Add new
       'lightUnselected': 'assets/icons/add-new-icon.png',
       'lightSelected': 'assets/icons/add-new-icon.png',
       'darkUnselected': 'assets/icons/add-new-icon.png',
