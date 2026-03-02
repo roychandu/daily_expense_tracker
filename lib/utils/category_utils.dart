@@ -2,84 +2,116 @@ class CategoryUtils {
   static const List<Map<String, String>> expenseCategories = [
     {
       'name': 'Transport',
-      'lightIcon': 'assets/icons/transport-light-icon.png',
-      'darkIcon': 'assets/icons/transport-dark-icon.png',
+      'lightUnselected': 'assets/icons/transport-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/transport-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/transport-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/transport-dark-selectedicon.png',
     },
     {
       'name': 'Food',
-      'lightIcon': 'assets/icons/food-light-icon.png',
-      'darkIcon': 'assets/icons/food-dark-icon.png',
+      'lightUnselected': 'assets/icons/food-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/food-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/food-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/food-dark-selectedicon.png',
     },
     {
       'name': 'Rent',
-      'lightIcon': 'assets/icons/rent-light-icon.png',
-      'darkIcon': 'assets/icons/rent-dark-icon.png',
+      'lightUnselected': 'assets/icons/rent-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/rent-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/rent-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/rent-dark-selectedicon.png',
     },
     {
       'name': 'Bills',
-      'lightIcon': 'assets/icons/bills-light-icon.png',
-      'darkIcon': 'assets/icons/bills-dark-icon.png',
+      'lightUnselected': 'assets/icons/bills-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/bills-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/bills-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/bills-dark-selectedicon.png',
     },
     {
       'name': 'Fun',
-      'lightIcon': 'assets/icons/fun-light-icon.png',
-      'darkIcon': 'assets/icons/fun-dark-icon.png',
+      'lightUnselected': 'assets/icons/fun-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/fun-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/fun-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/fun-dark-selectedicon.png',
     },
     {
       'name': 'Shopping',
-      'lightIcon': 'assets/icons/shopping-light-icon.png',
-      'darkIcon': 'assets/icons/shopping-dark-icon.png',
+      'lightUnselected': 'assets/icons/shopping-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/shopping-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/shopping-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/shopping-dark-selectedicon.png',
     },
     {
       'name': 'Dinning',
-      'lightIcon': 'assets/icons/dinning-light-icon.png',
-      'darkIcon': 'assets/icons/dinning-dark-icon.png',
+      'lightUnselected': 'assets/icons/dinning-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/dinning-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/dinning-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/dinning-dark-selectedicon.png',
     },
     {
       'name': 'Health',
-      'lightIcon': 'assets/icons/health-light-icon.png',
-      'darkIcon': 'assets/icons/health-dark-icon.png',
+      'lightUnselected': 'assets/icons/health-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/health-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/health-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/health-dark-selectedicon.png',
     },
     {
       'name': 'Grocerry',
-      'lightIcon': 'assets/icons/grocerry-light-icon.png',
-      'darkIcon': 'assets/icons/grocerry-dark-icon.png',
+      'lightUnselected': 'assets/icons/grocerry-light-unselectedicon.png',
+      'lightSelected': 'assets/icons/grocerry-light-selectedicon.png',
+      'darkUnselected': 'assets/icons/grocerry-dark-unselectedicon.png',
+      'darkSelected': 'assets/icons/grocerry-dark-selectedicon.png',
     },
     {
       'name': 'Other',
-      'lightIcon': 'assets/icons/add-new-light-icon.png',
-      'darkIcon': 'assets/icons/add-new-dark-icon.png',
+      'lightUnselected': 'assets/icons/add-new-icon.png',
+      'lightSelected': 'assets/icons/add-new-icon.png',
+      'darkUnselected': 'assets/icons/add-new-icon.png',
+      'darkSelected': 'assets/icons/add-new-icon.png',
     },
   ];
 
   static const List<Map<String, String>> incomeCategories = [
     {
       'name': 'Salary',
-      'lightIcon': 'assets/icons/add-new-light-icon.png',
-      'darkIcon': 'assets/icons/add-new-dark-icon.png',
+      'lightUnselected': 'assets/icons/add-new-icon.png',
+      'lightSelected': 'assets/icons/add-new-icon.png',
+      'darkUnselected': 'assets/icons/add-new-icon.png',
+      'darkSelected': 'assets/icons/add-new-icon.png',
     },
     {
       'name': 'Gift',
-      'lightIcon': 'assets/icons/add-new-light-icon.png',
-      'darkIcon': 'assets/icons/add-new-dark-icon.png',
+      'lightUnselected': 'assets/icons/add-new-icon.png',
+      'lightSelected': 'assets/icons/add-new-icon.png',
+      'darkUnselected': 'assets/icons/add-new-icon.png',
+      'darkSelected': 'assets/icons/add-new-icon.png',
     },
     {
       'name': 'Other',
-      'lightIcon': 'assets/icons/add-new-light-icon.png',
-      'darkIcon': 'assets/icons/add-new-dark-icon.png',
+      'lightUnselected': 'assets/icons/add-new-icon.png',
+      'lightSelected': 'assets/icons/add-new-icon.png',
+      'darkUnselected': 'assets/icons/add-new-icon.png',
+      'darkSelected': 'assets/icons/add-new-icon.png',
     },
   ];
 
-  static String getIcon(String category, {bool isDark = false}) {
+  static String getIcon(
+    String category, {
+    bool isDark = false,
+    bool isSelected = false,
+  }) {
     final allCats = [...expenseCategories, ...incomeCategories];
     for (var cat in allCats) {
       if (cat['name']!.toLowerCase() == category.toLowerCase()) {
-        return isDark ? cat['darkIcon']! : cat['lightIcon']!;
+        if (isSelected) {
+          return isDark ? cat['darkSelected']! : cat['lightSelected']!;
+        } else {
+          return isDark ? cat['darkUnselected']! : cat['lightUnselected']!;
+        }
       }
     }
     // Default fallback
-    return isDark
-        ? 'assets/icons/add-new-dark-icon.png'
-        : 'assets/icons/add-new-light-icon.png';
+    return 'assets/icons/add-new-icon.png';
   }
 }

@@ -369,7 +369,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                       : null,
                                 ),
                                 child: Image.asset(
-                                  isDark ? cat['darkIcon']! : cat['lightIcon']!,
+                                  CategoryUtils.getIcon(
+                                    cat['name']!,
+                                    isDark: isDark,
+                                    isSelected: isSelected,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 8),
