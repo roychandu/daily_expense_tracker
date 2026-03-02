@@ -6,6 +6,7 @@ import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../utils/app_layout.dart';
+import '../../controllers/settings_controller.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -15,6 +16,113 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen> {
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectMonth(BuildContext context) async {
+    int selectedYear = _selectedDate.year;
+    int selectedMonth = _selectedDate.month;
+
+    final result = await showDialog<DateTime>(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF1E1E1E)
+                  : Colors.white,
+              title: const Text(
+                'Select Month',
+                style: TextStyle(fontFamily: 'Serif'),
+              ),
+              content: SizedBox(
+                width: 300,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios, size: 16),
+                          onPressed: () => setDialogState(() => selectedYear--),
+                        ),
+                        Text(
+                          '$selectedYear',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward_ios, size: 16),
+                          onPressed: () => setDialogState(() => selectedYear++),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 1.5,
+                          ),
+                      itemCount: 12,
+                      itemBuilder: (context, index) {
+                        final month = index + 1;
+                        final isSelected = selectedMonth == month;
+                        return InkWell(
+                          onTap: () {
+                            setDialogState(() => selectedMonth = month);
+                            Navigator.pop(
+                              context,
+                              DateTime(selectedYear, selectedMonth),
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.primarySelected
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              DateFormat('MMM').format(DateTime(2022, month)),
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : (Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white70
+                                          : Colors.black87),
+                                fontWeight: isSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    if (result != null) {
+      setState(() {
+        _selectedDate = result;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -33,7 +141,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         .map((e) => DateFormat('yyyy-MM-dd').format(e.date))
         .toSet();
 
-    // Current Streak
+    // Current Streak (Overall, regardless of selected month)
     int currentStreak = 0;
     DateTime checkDate = now;
     while (loggedDates.contains(DateFormat('yyyy-MM-dd').format(checkDate))) {
@@ -41,7 +149,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
       checkDate = checkDate.subtract(const Duration(days: 1));
     }
 
-    // Longest Streak Calculation
+    // Longest Streak Calculation (Overall)
     int longestStreak = 0;
     if (loggedDates.isNotEmpty) {
       List<DateTime> sortedDates =
@@ -59,10 +167,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
       }
     }
 
-    // Total Days Logged
+    // Total Days Logged (Overall)
     int totalLoggedDays = loggedDates.length;
 
-    // Accuracy Calculation (Since first log)
+    // Accuracy Calculation (Since first log, Overall)
     double accuracy = 0;
     if (loggedDates.isNotEmpty) {
       final firstLog = loggedDates
@@ -81,9 +189,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final daysToNext = nextMilestone - currentStreak;
     final milestoneLabel = _getMilestoneLabel(nextMilestone);
 
-    // 3. Weekly Activity (Current Week - Sun to Sat for chart)
-    // But image shows MON TUE WED THU FRI SAT SUN
-    final startOfWeek = now.subtract(Duration(days: (now.weekday - 1)));
+    // 3. Weekly Activity (Selected Month Start or Today's Week)
+    final bool isCurrentMonth =
+        _selectedDate.month == now.month && _selectedDate.year == now.year;
+    final startOfWeek = isCurrentMonth
+        ? now.subtract(Duration(days: (now.weekday - 1)))
+        : DateTime(_selectedDate.year, _selectedDate.month, 1).subtract(
+            Duration(
+              days:
+                  (DateTime(
+                    _selectedDate.year,
+                    _selectedDate.month,
+                    1,
+                  ).weekday -
+                  1),
+            ),
+          );
+
     List<Map<String, dynamic>> weeklyActivity = [];
     for (int i = 0; i < 7; i++) {
       final date = startOfWeek.add(Duration(days: i));
@@ -95,21 +217,30 @@ class _ProgressScreenState extends State<ProgressScreen> {
       });
     }
 
-    // 4. Monthly Heatmap (Current Month)
-    final firstDayOfMonth = DateTime(now.year, now.month, 1);
-    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+    // 4. Monthly Heatmap (Selected Month)
+    final firstDayOfSelectedMonth = DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      1,
+    );
+    final lastDayOfSelectedMonth = DateTime(
+      _selectedDate.year,
+      _selectedDate.month + 1,
+      0,
+    );
     List<int> heatmapIntensities = []; // 0 to 4 based on count
 
     final dayStats = <String, int>{};
     for (var e in allExpenses) {
-      if (e.date.month == now.month && e.date.year == now.year) {
+      if (e.date.month == _selectedDate.month &&
+          e.date.year == _selectedDate.year) {
         final dateStr = DateFormat('yyyy-MM-dd').format(e.date);
         dayStats[dateStr] = (dayStats[dateStr] ?? 0) + 1;
       }
     }
 
-    for (int i = 0; i < lastDayOfMonth.day; i++) {
-      final date = firstDayOfMonth.add(Duration(days: i));
+    for (int i = 0; i < lastDayOfSelectedMonth.day; i++) {
+      final date = firstDayOfSelectedMonth.add(Duration(days: i));
       final count = dayStats[DateFormat('yyyy-MM-dd').format(date)] ?? 0;
       if (count == 0)
         heatmapIntensities.add(0);
@@ -136,6 +267,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
             fontFamily: 'Serif',
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: _CalendarButton(
+              isDark: isDark,
+              onTap: () => _selectMonth(context),
+            ),
+          ),
+        ],
         centerTitle: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -173,7 +313,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
             // Monthly Activity
             Text(
-              'Monthly Activity',
+              'Activity for ${DateFormat('MMMM yyyy').format(_selectedDate)}',
               style: AppTextStyles.h2Section.copyWith(
                 fontSize: 20,
                 fontFamily: 'Serif',
@@ -708,6 +848,31 @@ class _AchievementsGrid extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _CalendarButton extends StatelessWidget {
+  final bool isDark;
+  final VoidCallback onTap;
+  const _CalendarButton({required this.isDark, required this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: (AppColors.primarySelected).withValues(alpha: 0.4),
+          border: Border.all(color: AppColors.primarySelected, width: 2),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.calendar_month_outlined,
+          color: AppColors.primarySelected,
+          size: 26,
+        ),
+      ),
     );
   }
 }
