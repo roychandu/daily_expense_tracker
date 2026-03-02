@@ -6,6 +6,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
 import 'dart:ui';
 
@@ -261,11 +262,7 @@ Widget _categoryProgressBar({
       children: [
         Row(
           children: [
-            Image.asset(
-              CategoryUtils.getIcon(category, isDark: isDark),
-              width: 20,
-              height: 20,
-            ),
+            CategoryIcon(category: category, isDark: isDark, size: 20),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -302,7 +299,7 @@ Widget _categoryProgressBar({
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
+                  color: CategoryUtils.getColor(category),
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),

@@ -3,17 +3,18 @@ import '../add_expense/add_expense_screen.dart';
 import 'package:intl/intl.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
-import '../../common_widgets/custom_card.dart';
-import '../../common_widgets/custom_text_field.dart';
+import '../../common_widgets/category_icon.dart';
 import '../../models/expense.dart';
-import '../../controllers/settings_controller.dart';
-import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
-import '../../common_widgets/custom_snackbar.dart';
+import '../../controllers/expense_controller.dart';
 import 'package:provider/provider.dart';
 import '../../utils/app_layout.dart';
+import '../../controllers/settings_controller.dart';
+import '../../common_widgets/custom_card.dart';
+import '../../common_widgets/custom_snackbar.dart';
+import '../../common_widgets/custom_text_field.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
   const ExpenseHistoryScreen({super.key});
@@ -242,13 +243,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                             8,
                                           ),
                                         ),
-                                        child: Image.asset(
-                                          _getCategoryIcon(
-                                            item.category,
-                                            isDark,
-                                          ),
-                                          width: 20,
-                                          height: 20,
+                                        child: CategoryIcon(
+                                          category: item.category,
+                                          isDark: isDark,
+                                          size: 20,
                                         ),
                                       ),
                                       const SizedBox(width: 12),
@@ -463,9 +461,5 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
         );
       },
     );
-  }
-
-  String _getCategoryIcon(String category, bool isDark) {
-    return CategoryUtils.getIcon(category, isDark: isDark);
   }
 }

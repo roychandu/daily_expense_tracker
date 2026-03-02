@@ -1,4 +1,25 @@
+import 'package:flutter/material.dart';
+import '../services/database_service.dart';
+
 class CategoryUtils {
+  static final Map<String, Map<String, dynamic>> _customCache = {};
+
+  static Future<void> loadCustomCategories() async {
+    final categories = await DatabaseService.instance.readAllCategories();
+    _customCache.clear();
+    for (var cat in categories) {
+      _customCache[cat['name'] as String] = cat;
+    }
+  }
+
+  static List<Map<String, dynamic>> getSavedCategories({
+    required bool isExpense,
+  }) {
+    return _customCache.values
+        .where((cat) => (cat['isExpense'] as int) == (isExpense ? 1 : 0))
+        .toList();
+  }
+
   static const List<Map<String, String>> expenseCategories = [
     {
       'name': 'Transport',
@@ -64,7 +85,7 @@ class CategoryUtils {
       'darkSelected': 'assets/icons/grocerry-dark-selectedicon.png',
     },
     {
-      'name': 'Other',
+      'name': 'Add new',
       'lightUnselected': 'assets/icons/add-new-icon.png',
       'lightSelected': 'assets/icons/add-new-icon.png',
       'darkUnselected': 'assets/icons/add-new-icon.png',
@@ -117,7 +138,7 @@ class CategoryUtils {
       'darkSelected': 'assets/icons/refund light selectedicon.png',
     },
     {
-      'name': 'Other', // Add new
+      'name': 'Add new',
       'lightUnselected': 'assets/icons/add-new-icon.png',
       'lightSelected': 'assets/icons/add-new-icon.png',
       'darkUnselected': 'assets/icons/add-new-icon.png',
@@ -125,11 +146,30 @@ class CategoryUtils {
     },
   ];
 
-  static String getIcon(
+  static dynamic getIcon(
     String category, {
     bool isDark = false,
     bool isSelected = false,
   }) {
+    // Check custom cache first
+    if (_customCache.containsKey(category)) {
+      final info = _customCache[category]!;
+      if (info['iconKind'] == 'asset') {
+        return info['iconData'] as String;
+      } else if (info['iconKind'] == 'material') {
+        return IconData(
+          int.parse(info['iconData'] as String),
+          fontFamily: 'MaterialIcons',
+        );
+      } else if (info['iconKind'] == 'cupertino') {
+        return IconData(
+          int.parse(info['iconData'] as String),
+          fontFamily: 'CupertinoIcons',
+          fontPackage: 'cupertino_icons',
+        );
+      }
+    }
+
     final allCats = [...expenseCategories, ...incomeCategories];
     for (var cat in allCats) {
       if (cat['name']!.toLowerCase() == category.toLowerCase()) {
@@ -140,7 +180,49 @@ class CategoryUtils {
         }
       }
     }
-    // Default fallback
     return 'assets/icons/add-new-icon.png';
+  }
+
+  static Color getColor(String category) {
+    if (_customCache.containsKey(category)) {
+      final colorVal = _customCache[category]!['color'];
+      if (colorVal != null) return Color(colorVal as int);
+    }
+
+    // Fallback for standard categories
+    switch (category.toLowerCase()) {
+      case 'transport':
+        return Colors.blue;
+      case 'food':
+        return Colors.orange;
+      case 'rent':
+        return Colors.purple;
+      case 'bills':
+        return const Color(0xFFE76F51); // AppColors.softCoral
+      case 'fun':
+        return Colors.pink;
+      case 'shopping':
+        return const Color(0xFF2A9D8F); // AppColors.accentTeal
+      case 'dinning':
+        return Colors.amber;
+      case 'health':
+        return const Color(0xFF06D6A0); // AppColors.successGreen
+      case 'grocerry':
+        return Colors.lime;
+      case 'salary income':
+        return const Color(0xFF06D6A0);
+      case 'freelance/side hustle':
+        return Colors.cyan;
+      case 'business income':
+        return Colors.indigo;
+      case 'investment return':
+        return Colors.deepPurple;
+      case 'gif/bonus':
+        return Colors.yellow;
+      case 'refund/cashback':
+        return Colors.lightGreen;
+      default:
+        return const Color(0xFFF98D25); // AppColors.primarySelected
+    }
   }
 }

@@ -6,6 +6,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
 import '../history/expense_history_screen.dart';
 
@@ -325,11 +326,7 @@ Widget _categoryProgressBar({
       children: [
         Row(
           children: [
-            Image.asset(
-              CategoryUtils.getIcon(category, isDark: isDark),
-              width: 20,
-              height: 20,
-            ),
+            CategoryIcon(category: category, isDark: isDark, size: 20),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -366,7 +363,7 @@ Widget _categoryProgressBar({
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
+                  color: CategoryUtils.getColor(category),
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),
@@ -485,11 +482,7 @@ Widget _frequentCategoryCard(String category, int count, bool isDark) {
                 color: Colors.blue.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Image.asset(
-                CategoryUtils.getIcon(category, isDark: isDark),
-                width: 24,
-                height: 24,
-              ),
+              child: CategoryIcon(category: category, isDark: isDark, size: 24),
             ),
           ],
         ),

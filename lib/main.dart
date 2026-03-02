@@ -10,6 +10,7 @@ import 'controllers/expense_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'common_widgets/app_theme.dart';
 import 'screens/home_screen/home_screen.dart';
+import 'utils/category_utils.dart';
 
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,9 @@ void main() async {
 
   // Initialize Notifications
   await NotificationService().init();
+
+  // Load Custom Categories
+  await CategoryUtils.loadCustomCategories();
 
   final prefs = await SharedPreferences.getInstance();
   final settingsController = SettingsController(prefs);

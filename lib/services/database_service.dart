@@ -18,7 +18,12 @@ class DatabaseService {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _createDB,
+      onUpgrade: _onUpgrade,
+    );
   }
 
   Future _createDB(Database db, int version) async {
@@ -32,6 +37,46 @@ class DatabaseService {
         isExpense INTEGER NOT NULL
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        iconKind TEXT NOT NULL,
+        iconData TEXT NOT NULL,
+        color INTEGER,
+        isExpense INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+        CREATE TABLE categories (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL UNIQUE,
+          iconKind TEXT NOT NULL,
+          iconData TEXT NOT NULL,
+          color INTEGER,
+          isExpense INTEGER NOT NULL
+        )
+      ''');
+    }
+  }
+
+  Future<int> createCategory(Map<String, dynamic> category) async {
+    final db = await instance.database;
+    return await db.insert(
+      'categories',
+      category,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> readAllCategories() async {
+    final db = await instance.database;
+    return await db.query('categories');
   }
 
   Future<int> create(Expense expense) async {

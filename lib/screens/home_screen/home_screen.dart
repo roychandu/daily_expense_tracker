@@ -10,13 +10,12 @@ import '../history/expense_history_screen.dart';
 import '../progress/progress_screen.dart';
 import '../insights/insights_screen.dart';
 import '../../common_widgets/adaptive_banner_ad.dart';
+import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
-
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
-import '../../utils/category_utils.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/expense_controller.dart';
 
@@ -626,13 +625,10 @@ class _TodayViewState extends State<_TodayView> {
                         : AppColors.backgroundLight,
                     shape: BoxShape.circle,
                   ),
-                  child: Image.asset(
-                    _getCategoryIcon(
-                      tx.category,
-                      Theme.of(context).brightness == Brightness.dark,
-                    ),
-                    width: 24,
-                    height: 24,
+                  child: CategoryIcon(
+                    category: tx.category,
+                    isDark: Theme.of(context).brightness == Brightness.dark,
+                    size: 24,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -692,9 +688,5 @@ class _TodayViewState extends State<_TodayView> {
         );
       }).toList(),
     );
-  }
-
-  String _getCategoryIcon(String category, bool isDark) {
-    return CategoryUtils.getIcon(category, isDark: isDark);
   }
 }
