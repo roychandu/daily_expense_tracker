@@ -242,9 +242,13 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                             8,
                                           ),
                                         ),
-                                        child: Text(
-                                          _getCategoryIcon(item.category),
-                                          style: const TextStyle(fontSize: 20),
+                                        child: Image.asset(
+                                          _getCategoryIcon(
+                                            item.category,
+                                            isDark,
+                                          ),
+                                          width: 20,
+                                          height: 20,
                                         ),
                                       ),
                                       const SizedBox(width: 12),
@@ -461,7 +465,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     );
   }
 
-  String _getCategoryIcon(String category) {
-    return CategoryUtils.getIcon(category);
+  String _getCategoryIcon(String category, bool isDark) {
+    return CategoryUtils.getIcon(category, isDark: isDark);
   }
 }

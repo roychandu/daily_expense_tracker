@@ -149,33 +149,33 @@ class PrivacyScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             // Links Card
-            Container(
-              decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: [
-                  _buildLinkRow(
-                    context,
-                    'Privacy Policy',
-                    'Read the full policy in plain language.',
-                  ),
-                  _buildDivider(isDark),
-                  _buildLinkRow(
-                    context,
-                    'Terms of Service',
-                    'Usage terms and limitations.',
-                  ),
-                  _buildDivider(isDark),
-                  _buildLinkRow(
-                    context,
-                    'Contact Support',
-                    'Questions about privacy? We’re here to help. Email us',
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+            //     borderRadius: BorderRadius.circular(8),
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       _buildLinkRow(
+            //         context,
+            //         'Privacy Policy',
+            //         'Read the full policy in plain language.',
+            //       ),
+            //       _buildDivider(isDark),
+            //       _buildLinkRow(
+            //         context,
+            //         'Terms of Service',
+            //         'Usage terms and limitations.',
+            //       ),
+            //       _buildDivider(isDark),
+            //       _buildLinkRow(
+            //         context,
+            //         'Contact Support',
+            //         'Questions about privacy? We’re here to help. Email us',
+            //       ),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(height: 32),
           ],
         ),

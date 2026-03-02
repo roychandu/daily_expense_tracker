@@ -583,9 +583,13 @@ class _TodayViewState extends State<_TodayView> {
                         : AppColors.backgroundLight,
                     shape: BoxShape.circle,
                   ),
-                  child: Text(
-                    _getCategoryIcon(tx.category),
-                    style: const TextStyle(fontSize: 24),
+                  child: Image.asset(
+                    _getCategoryIcon(
+                      tx.category,
+                      Theme.of(context).brightness == Brightness.dark,
+                    ),
+                    width: 24,
+                    height: 24,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -647,7 +651,7 @@ class _TodayViewState extends State<_TodayView> {
     );
   }
 
-  String _getCategoryIcon(String category) {
-    return CategoryUtils.getIcon(category);
+  String _getCategoryIcon(String category, bool isDark) {
+    return CategoryUtils.getIcon(category, isDark: isDark);
   }
 }

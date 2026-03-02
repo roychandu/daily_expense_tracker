@@ -340,9 +340,10 @@ Widget _categoryProgressBar({
       children: [
         Row(
           children: [
-            Text(
-              CategoryUtils.getIcon(category),
-              style: const TextStyle(fontSize: 18),
+            Image.asset(
+              CategoryUtils.getIcon(category, isDark: isDark),
+              width: 20,
+              height: 20,
             ),
             const SizedBox(width: 12),
             Expanded(

@@ -8,6 +8,7 @@ import '../../controllers/settings_controller.dart';
 import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/app_layout.dart';
+import '../../utils/category_utils.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final bool isExpense;
@@ -26,58 +27,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   DateTime _selectedDate = DateTime.now();
   late bool _isExpense;
 
-  final List<Map<String, String>> _displayCategories = [
-    {
-      'name': 'Transport',
-      'darkIcon': 'assets/icons/transport-dark-icon.png',
-      'lightIcon': 'assets/icons/transport-light-icon.png',
-    },
-    {
-      'name': 'Food',
-      'darkIcon': 'assets/icons/food-dark-icon.png',
-      'lightIcon': 'assets/icons/food-light-icon.png',
-    },
-    {
-      'name': 'Rent',
-      'darkIcon': 'assets/icons/rent-dark-icon.png',
-      'lightIcon': 'assets/icons/rent-light-icon.png',
-    },
-    {
-      'name': 'Bills',
-      'darkIcon': 'assets/icons/bills-dark-icon.png',
-      'lightIcon': 'assets/icons/bills-light-icon.png',
-    },
-    {
-      'name': 'Fun',
-      'darkIcon': 'assets/icons/fun-dark-icon.png',
-      'lightIcon': 'assets/icons/fun-light-icon.png',
-    },
-    {
-      'name': 'Shopping',
-      'darkIcon': 'assets/icons/shopping-dark-icon.png',
-      'lightIcon': 'assets/icons/shopping-light-icon.png',
-    },
-    {
-      'name': 'Dinning',
-      'darkIcon': 'assets/icons/dinning-dark-icon.png',
-      'lightIcon': 'assets/icons/dinning-light-icon.png',
-    },
-    {
-      'name': 'Health',
-      'darkIcon': 'assets/icons/health-dark-icon.png',
-      'lightIcon': 'assets/icons/health-light-icon.png',
-    },
-    {
-      'name': 'Grocerry',
-      'darkIcon': 'assets/icons/grocerry-dark-icon.png',
-      'lightIcon': 'assets/icons/grocerry-light-icon.png',
-    },
-    {
-      'name': 'Add new',
-      'darkIcon': 'assets/icons/add-new-dark-icon.png',
-      'lightIcon': 'assets/icons/add-new-light-icon.png',
-    },
-  ];
+  List<Map<String, String>> get _displayCategories {
+    return _isExpense
+        ? CategoryUtils.expenseCategories
+        : CategoryUtils.incomeCategories;
+  }
 
   @override
   void initState() {
