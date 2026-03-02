@@ -177,6 +177,18 @@ class _InsightsScreenState extends State<InsightsScreen> {
       highestDate = DateTime.parse(highestDayEntry.key);
     }
 
+    // Most Frequent Category
+    final categoryFrequencies = <String, int>{};
+    for (final e in monthTransactions.where((e) => e.isExpense)) {
+      categoryFrequencies[e.category] =
+          (categoryFrequencies[e.category] ?? 0) + 1;
+    }
+    final mostFrequentCategory = categoryFrequencies.entries.isEmpty
+        ? null
+        : (categoryFrequencies.entries.toList()
+                ..sort((a, b) => b.value.compareTo(a.value)))
+              .first;
+
     // Weekly Chart Data
     DateTime chartStartDate;
     if (_selectedDate.month == DateTime.now().month &&
@@ -268,6 +280,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
             weeklyIncome,
             weeklyExpense,
             sixMonthIncomeData,
+            mostFrequentCategory,
           ),
         ),
       ),
@@ -290,6 +303,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
     List<double> weeklyIncome,
     List<double> weeklyExpense,
     List<Map<String, dynamic>> sixMonthIncomeData,
+    MapEntry<String, int>? mostFrequentCategory,
   ) {
     if (settings.isPremium) {
       return buildPremiumInsightsBody(
@@ -310,6 +324,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         weeklyIncome: weeklyIncome,
         weeklyExpense: weeklyExpense,
         sixMonthIncomeData: sixMonthIncomeData,
+        mostFrequentCategory: mostFrequentCategory,
       );
     } else if (settings.isInsightsUnlockedViaAd) {
       return buildAdsUnlockedInsightsBody(
@@ -330,6 +345,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         weeklyIncome: weeklyIncome,
         weeklyExpense: weeklyExpense,
         sixMonthIncomeData: sixMonthIncomeData,
+        mostFrequentCategory: mostFrequentCategory,
       );
     } else {
       return buildLockedInsightsBody(

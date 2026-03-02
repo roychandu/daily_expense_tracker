@@ -27,6 +27,7 @@ Widget buildAdsUnlockedInsightsBody({
   required List<double> weeklyIncome,
   required List<double> weeklyExpense,
   required List<Map<String, dynamic>> sixMonthIncomeData,
+  required MapEntry<String, int>? mostFrequentCategory,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +71,7 @@ Widget buildAdsUnlockedInsightsBody({
         settings: settings,
         totalMonthlyExpense: totalMonthlyExpense,
         isDark: isDark,
+        mostFrequentCategory: mostFrequentCategory,
       ),
       const SizedBox(height: 32),
       Padding(
@@ -385,6 +387,7 @@ Widget _smartInsightsSection({
   required SettingsController settings,
   required double totalMonthlyExpense,
   required bool isDark,
+  required MapEntry<String, int>? mostFrequentCategory,
 }) {
   final horizontalPadding = AppLayout.horizontalPadding(context);
   return Column(
@@ -417,11 +420,97 @@ Widget _smartInsightsSection({
               isDark,
             ),
             const SizedBox(width: 16),
-            _balanceInsightCard(totalMonthlyExpense / 30, settings, isDark),
+            _dailyAverageCard(totalMonthlyExpense / 30, settings, isDark),
+            if (mostFrequentCategory != null) ...[
+              const SizedBox(width: 16),
+              _frequentCategoryCard(
+                mostFrequentCategory.key,
+                mostFrequentCategory.value,
+                isDark,
+              ),
+            ],
           ],
         ),
       ),
     ],
+  );
+}
+
+Widget _frequentCategoryCard(String category, int count, bool isDark) {
+  return Container(
+    width: 280,
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Most Frequent',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    'Category this month',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: isDark ? Colors.white70 : Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.blue.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset(
+                CategoryUtils.getIcon(category, isDark: isDark),
+                width: 24,
+                height: 24,
+              ),
+            ),
+          ],
+        ),
+        const Spacer(),
+        Text(
+          category,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            fontFamily: 'Serif',
+          ),
+        ),
+        Text(
+          '$count transactions',
+          style: TextStyle(
+            fontSize: 12,
+            color: isDark ? Colors.white60 : Colors.black54,
+          ),
+        ),
+      ],
+    ),
   );
 }
 
@@ -518,7 +607,7 @@ Widget _highestSpendDayCard(
   );
 }
 
-Widget _balanceInsightCard(
+Widget _dailyAverageCard(
   double dailyAvg,
   SettingsController settings,
   bool isDark,
@@ -542,7 +631,7 @@ Widget _balanceInsightCard(
       children: [
         Text(
           AppFormatters.formatCurrency(
-            dailyAvg * 2.5,
+            dailyAvg,
             settings.currency,
             settings.locale,
           ),
@@ -553,7 +642,7 @@ Widget _balanceInsightCard(
           ),
         ),
         const Text(
-          'Daily Limit Target',
+          'Daily Average',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -561,12 +650,11 @@ Widget _balanceInsightCard(
           ),
         ),
         const Spacer(),
-        const Text(
-          'Keep up the good work!',
+        Text(
+          'Based on this month\'s activity',
           style: TextStyle(
-            fontSize: 12,
-            fontStyle: FontStyle.italic,
-            color: Colors.grey,
+            fontSize: 11,
+            color: isDark ? Colors.white30 : Colors.grey,
           ),
         ),
       ],
