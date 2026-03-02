@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
@@ -261,43 +262,47 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         IntrinsicWidth(
                           child: TextField(
                             controller: _amountController,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Serif',
-                              color: Color(0xFFCAD1E0),
+                              color: isDark
+                                  ? Colors.white70
+                                  : const Color(0xFF4A4A4A),
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: '0',
                               hintStyle: TextStyle(
-                                color: Color(0xFFCAD1E0),
+                                color: isDark
+                                    ? Colors.white70
+                                    : const Color(0xFF4A4A4A),
                                 fontSize: 48,
                                 fontFamily: 'Serif',
                                 fontWeight: FontWeight.bold,
                               ),
                               border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
                               isDense: true,
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
                         ),
-                        Container(
-                          height: 40,
-                          width: 2,
-                          color: const Color(0xFFCAD1E0).withValues(alpha: 0.5),
-                          margin: const EdgeInsets.symmetric(horizontal: 12),
-                        ),
-                        const Text(
+                        const SizedBox(width: 8),
+                        Text(
                           '.00',
                           style: TextStyle(
                             fontSize: 48,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Serif',
-                            color: Color(0xFFCAD1E0),
+                            color: isDark
+                                ? Colors.white70
+                                : const Color(0xFF4A4A4A),
                           ),
                         ),
                       ],
