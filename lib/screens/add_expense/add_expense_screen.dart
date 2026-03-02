@@ -419,33 +419,45 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF7F0),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFFFFE4CB)),
+                    TextField(
+                      controller: _noteController,
+                      maxLines: 3,
+                      style: TextStyle(
+                        color: isDark ? Colors.white : AppColors.charcoal,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextField(
-                            controller: _noteController,
-                            maxLines: 3,
-                            decoration: const InputDecoration(
-                              hintText: 'Write here..',
-                              hintStyle: TextStyle(color: Color(0xFFB0B8C1)),
-                              border: InputBorder.none,
-                            ),
+                      decoration: InputDecoration(
+                        hintText: 'Write here..',
+                        hintStyle: const TextStyle(color: Color(0xFFB0B8C1)),
+                        filled: true,
+                        fillColor: isDark
+                            ? AppColors.cardDark
+                            : const Color(0xFFFFF7F0),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : const Color(0xFFFFE4CB),
                           ),
-                          const Text(
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.primarySelected,
+                            width: 2,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(16),
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.only(right: 12, top: 24),
+                          child: Text(
                             'Optional',
                             style: TextStyle(
                               color: Color(0xFFB0B8C1),
                               fontSize: 12,
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
