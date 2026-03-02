@@ -269,19 +269,19 @@ abstract class AppLocalizations {
   /// No description provided for @recent.
   ///
   /// In en, this message translates to:
-  /// **'RECENT'**
+  /// **'Recent'**
   String get recent;
 
   /// No description provided for @noExpensesYet.
   ///
   /// In en, this message translates to:
-  /// **'No expenses yet'**
+  /// **'No expenses yet!'**
   String get noExpensesYet;
 
   /// No description provided for @noIncomeYet.
   ///
   /// In en, this message translates to:
-  /// **'No income yet'**
+  /// **'No income yet!'**
   String get noIncomeYet;
 
   /// No description provided for @viewAllHistory.

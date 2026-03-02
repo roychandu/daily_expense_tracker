@@ -270,13 +270,24 @@ class _TodayViewState extends State<_TodayView> {
                 ? Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                        widget.isExpenseSelected
-                            ? l10n.noExpensesYet
-                            : l10n.noIncomeYet,
-                        style: AppTextStyles.body.copyWith(
-                          color: AppColors.softGray,
-                        ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'assets/images/recent-empty-illustration.png',
+                            height: 120,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            widget.isExpenseSelected
+                                ? l10n.noExpensesYet
+                                : l10n.noIncomeYet,
+                            style: AppTextStyles.body.copyWith(
+                              color: AppColors.softGray,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   )

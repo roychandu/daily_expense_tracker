@@ -4,14 +4,14 @@ class AppTextStyles {
   const AppTextStyles._();
 
   static const TextStyle h1Display = TextStyle(
-    fontFamily: 'Inter',
+    fontFamily: 'Serif',
     fontWeight: FontWeight.bold,
     fontSize: 32,
     height: 40 / 32,
   );
 
   static const TextStyle h2Section = TextStyle(
-    fontFamily: 'Inter',
+    fontFamily: 'Serif',
     fontWeight: FontWeight.w600,
     fontSize: 24,
     height: 32 / 24,

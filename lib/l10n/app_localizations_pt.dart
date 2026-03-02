@@ -87,13 +87,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get income => 'Income';
 
   @override
-  String get recent => 'RECENT';
+  String get recent => 'Recent';
 
   @override
-  String get noExpensesYet => 'No expenses yet';
+  String get noExpensesYet => 'No expenses yet!';
 
   @override
-  String get noIncomeYet => 'No income yet';
+  String get noIncomeYet => 'No income yet!';
 
   @override
   String get viewAllHistory => 'View All History';
