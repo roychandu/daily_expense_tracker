@@ -9,6 +9,7 @@ import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import 'package:intl/intl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import '../../utils/app_layout.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
 
@@ -54,7 +55,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppLayout.horizontalPadding(context),
+            vertical: 16,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -10,6 +10,7 @@ import '../history/expense_history_screen.dart';
 import '../progress/progress_screen.dart';
 import '../insights/insights_screen.dart';
 import '../../common_widgets/adaptive_banner_ad.dart';
+import '../../utils/app_layout.dart';
 
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
@@ -68,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: isDark ? AppColors.backgroundDark : Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _buildNavItem(0, 'home', l10n.home),
                 _buildNavItem(1, 'insight', 'Insight'),
@@ -237,7 +239,10 @@ class _TodayViewState extends State<_TodayView> {
       ),
       extendBodyBehindAppBar: false,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+          vertical: 16,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

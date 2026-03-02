@@ -42,10 +42,7 @@ Widget buildLockedInsightsBody({
         isLocked: true,
       ),
       const SizedBox(height: 32),
-      const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: _LockedInsightsCard(),
-      ),
+      const _LockedInsightsCard(),
     ],
   );
 }
@@ -61,92 +58,89 @@ Widget _summarySection({
   required int transactionCount,
   required bool isPremium,
 }) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
-                style: AppTextStyles.caption.copyWith(
-                  letterSpacing: 1.2,
-                  color: isDark ? Colors.white60 : Colors.black54,
-                  fontSize: 11,
-                ),
-              ),
-              GestureDetector(
-                onTap: onSelectMonth,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.orange.withValues(alpha: isDark ? 0.3 : 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.calendar_month_outlined,
-                    color: Colors.orange,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              AppFormatters.formatCurrency(
-                netBalance,
-                settings.currency,
-                settings.locale,
-              ),
-              style: AppTextStyles.amountDisplay.copyWith(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Serif',
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(24),
+    decoration: BoxDecoration(
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      borderRadius: BorderRadius.circular(24),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+              style: AppTextStyles.caption.copyWith(
+                letterSpacing: 1.2,
+                color: isDark ? Colors.white60 : Colors.black54,
+                fontSize: 11,
               ),
             ),
-          ),
-          Text(
-            'Net Balance',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.successGreen,
+            GestureDetector(
+              onTap: onSelectMonth,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withValues(alpha: isDark ? 0.3 : 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.calendar_month_outlined,
+                  color: Colors.orange,
+                  size: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            AppFormatters.formatCurrency(
+              netBalance,
+              settings.currency,
+              settings.locale,
+            ),
+            style: AppTextStyles.amountDisplay.copyWith(
+              fontSize: 36,
               fontWeight: FontWeight.bold,
-              fontSize: 13,
+              fontFamily: 'Serif',
             ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              _summaryItem(
-                'Income',
-                totalMonthlyIncome,
-                AppColors.successGreen,
-                isDark,
-                settings,
-              ),
-              const SizedBox(width: 16),
-              _summaryItem(
-                'Expense',
-                totalMonthlyExpense,
-                AppColors.softCoral,
-                isDark,
-                settings,
-              ),
-            ],
+        ),
+        Text(
+          'Net Balance',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.successGreen,
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            _summaryItem(
+              'Income',
+              totalMonthlyIncome,
+              AppColors.successGreen,
+              isDark,
+              settings,
+            ),
+            const SizedBox(width: 16),
+            _summaryItem(
+              'Expense',
+              totalMonthlyExpense,
+              AppColors.softCoral,
+              isDark,
+              settings,
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }
@@ -194,49 +188,46 @@ Widget _spendingBreakdownSection({
   required bool isLocked,
 }) {
   final itemsToShow = sortedCategories.take(3).toList();
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Top Spending Breakdown',
-              style: AppTextStyles.h2Section.copyWith(
-                fontSize: 20,
-                fontFamily: 'Serif',
-              ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Top Spending Breakdown',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
             ),
-            Text(
-              'VIEW ALL',
-              style: TextStyle(
-                color: Colors.orange.withValues(alpha: 0.8),
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
+          ),
+          Text(
+            'VIEW ALL',
+            style: TextStyle(
+              color: Colors.orange.withValues(alpha: 0.8),
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
             ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        ...List.generate(itemsToShow.length, (index) {
-          final entry = itemsToShow[index];
-          final percentage = totalMonthlyExpense > 0
-              ? (entry.value / totalMonthlyExpense) * 100
-              : 0.0;
-          return _categoryProgressBar(
-            category: entry.key,
-            amount: entry.value,
-            percentage: percentage,
-            settings: settings,
-            isBlurred: isLocked && index == 2,
-            isDark: settings.themeMode == ThemeMode.dark, // Simplified
-          );
-        }),
-      ],
-    ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 16),
+      ...List.generate(itemsToShow.length, (index) {
+        final entry = itemsToShow[index];
+        final percentage = totalMonthlyExpense > 0
+            ? (entry.value / totalMonthlyExpense) * 100
+            : 0.0;
+        return _categoryProgressBar(
+          category: entry.key,
+          amount: entry.value,
+          percentage: percentage,
+          settings: settings,
+          isBlurred: isLocked && index == 2,
+          isDark: settings.themeMode == ThemeMode.dark, // Simplified
+        );
+      }),
+    ],
   );
 }
 

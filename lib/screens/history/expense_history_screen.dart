@@ -13,6 +13,7 @@ import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
+import '../../utils/app_layout.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
   const ExpenseHistoryScreen({super.key});
@@ -125,7 +126,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
         children: [
           if (expenseController.isLoading) const LinearProgressIndicator(),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppLayout.horizontalPadding(context),
+              vertical: 16,
+            ),
             child: Row(
               children: [
                 Expanded(
@@ -172,7 +176,9 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                     ),
                   )
                 : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppLayout.horizontalPadding(context),
+                    ),
                     itemCount: keys.length,
                     itemBuilder: (context, sectionIndex) {
                       final label = keys[sectionIndex];

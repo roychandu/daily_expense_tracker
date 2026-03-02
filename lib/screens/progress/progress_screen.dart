@@ -5,6 +5,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import '../../utils/app_layout.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -140,7 +141,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+          vertical: 8,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

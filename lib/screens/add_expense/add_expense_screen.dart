@@ -7,6 +7,7 @@ import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
 import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
+import '../../utils/app_layout.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final bool isExpense;
@@ -193,7 +194,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           children: [
             // Toggle
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppLayout.horizontalPadding(context),
+              ),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -260,7 +263,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppLayout.horizontalPadding(context),
+                  vertical: 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -486,7 +492,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
             // Save Button
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppLayout.horizontalPadding(context),
+                vertical: 16,
+              ),
               child: SizedBox(
                 width: double.infinity,
                 height: 56,

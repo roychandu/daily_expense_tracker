@@ -94,119 +94,123 @@ Widget _summarySection({
   final contentColor = isDark ? Colors.white : Colors.black87;
   final secondaryColor = isDark ? Colors.white70 : Colors.black54;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                isDark
-                    ? 'assets/images/premium-main-card-dark-bg.png'
-                    : 'assets/images/premium-main-card-light-bg.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
-                        style: AppTextStyles.caption.copyWith(
-                          letterSpacing: 1.2,
-                          color: secondaryColor,
-                          fontSize: 11,
-                        ),
-                      ),
-                      _CalendarButton(isDark: isDark, onTap: onSelectMonth),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      AppFormatters.formatCurrency(
-                        netBalance,
-                        settings.currency,
-                        settings.locale,
-                      ),
-                      style: AppTextStyles.amountDisplay.copyWith(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Serif',
-                        color: contentColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: (isDark ? Colors.white : Colors.black).withValues(
-                        alpha: 0.1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.description_outlined,
-                          size: 14,
-                          color: secondaryColor,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          '$transactionCount Transactions',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: contentColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      _summaryItem(
-                        'Income',
-                        totalMonthlyIncome,
-                        AppColors.successGreen,
-                        isDark,
-                        settings,
-                      ),
-                      const SizedBox(width: 16),
-                      _summaryItem(
-                        'Expense',
-                        totalMonthlyExpense,
-                        AppColors.softCoral,
-                        isDark,
-                        settings,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+  return Container(
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
         ),
+      ],
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              isDark
+                  ? 'assets/images/premium-main-card-dark-bg.png'
+                  : 'assets/images/premium-main-card-light-bg.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+                      style: AppTextStyles.caption.copyWith(
+                        letterSpacing: 1.2,
+                        color: secondaryColor,
+                        fontSize: 11,
+                      ),
+                    ),
+                    _CalendarButton(isDark: isDark, onTap: onSelectMonth),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppFormatters.formatCurrency(
+                      netBalance,
+                      settings.currency,
+                      settings.locale,
+                    ),
+                    style: AppTextStyles.amountDisplay.copyWith(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Serif',
+                      color: contentColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: (isDark ? Colors.white : Colors.black).withValues(
+                      alpha: 0.1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.description_outlined,
+                        size: 14,
+                        color: secondaryColor,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '$transactionCount Transactions',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: contentColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    _summaryItem(
+                      'Income',
+                      totalMonthlyIncome,
+                      AppColors.successGreen,
+                      isDark,
+                      settings,
+                    ),
+                    const SizedBox(width: 16),
+                    _summaryItem(
+                      'Expense',
+                      totalMonthlyExpense,
+                      AppColors.softCoral,
+                      isDark,
+                      settings,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     ),
   );
@@ -252,77 +256,74 @@ Widget _spendingBreakdownSection({
   required bool isDark,
 }) {
   final itemsToShow = sortedCategories.take(4).toList();
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Spending Breakdown',
-              style: AppTextStyles.h2Section.copyWith(
-                fontSize: 20,
-                fontFamily: 'Serif',
-              ),
-            ),
-            Text(
-              'VIEW ALL',
-              style: TextStyle(
-                color: Colors.orange.withValues(alpha: 0.8),
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        ...List.generate(itemsToShow.length, (index) {
-          final entry = itemsToShow[index];
-          final percentage = totalMonthlyExpense > 0
-              ? (entry.value / totalMonthlyExpense) * 100
-              : 0.0;
-          return _categoryProgressBar(
-            category: entry.key,
-            amount: entry.value,
-            percentage: percentage,
-            settings: settings,
-            isDark: isDark,
-          );
-        }),
-        if (sortedCategories.length > 4)
-          Center(
-            child: TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ExpenseHistoryScreen(),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'View Full Breakdown',
-                    style: TextStyle(
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 12,
-                    color: Colors.orange,
-                  ),
-                ],
-              ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Spending Breakdown',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
             ),
           ),
-      ],
-    ),
+          Text(
+            'VIEW ALL',
+            style: TextStyle(
+              color: Colors.orange.withValues(alpha: 0.8),
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 16),
+      ...List.generate(itemsToShow.length, (index) {
+        final entry = itemsToShow[index];
+        final percentage = totalMonthlyExpense > 0
+            ? (entry.value / totalMonthlyExpense) * 100
+            : 0.0;
+        return _categoryProgressBar(
+          category: entry.key,
+          amount: entry.value,
+          percentage: percentage,
+          settings: settings,
+          isDark: isDark,
+        );
+      }),
+      if (sortedCategories.length > 4)
+        Center(
+          child: TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ExpenseHistoryScreen(),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'View Full Breakdown',
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+          ),
+        ),
+    ],
   );
 }
 
@@ -403,15 +404,12 @@ Widget _smartInsightsSection({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          'Smart Insights',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+      const Text(
+        'Smart Insights',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
       ),
       const SizedBox(height: 16),
@@ -419,7 +417,6 @@ Widget _smartInsightsSection({
         height: 160,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
           children: [
             _highestSpendDayCard(
               highestDate,
@@ -457,6 +454,13 @@ Widget _highestSpendDayCard(
           ? const Color(0xFF8B5E3C).withValues(alpha: 0.8)
           : const Color(0xFFFFE5D0),
       borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -535,6 +539,13 @@ Widget _balanceInsightCard(
     decoration: BoxDecoration(
       color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -586,26 +597,33 @@ Widget _advanceInsightsSection({
   }
   if (maxVal == 0) maxVal = 1000;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Advance Insights',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Advance Insights',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
+      ),
+      const SizedBox(height: 16),
+      SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
             borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: Column(
             children: [
@@ -625,7 +643,7 @@ Widget _advanceInsightsSection({
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -641,8 +659,8 @@ Widget _advanceInsightsSection({
             ],
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -693,26 +711,33 @@ Widget _sixMonthTrendSection({
   }
   if (maxIncome == 0) maxIncome = 1000;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '6-Month Income Trend',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        '6-Month Income Trend',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
+      ),
+      const SizedBox(height: 16),
+      SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
             borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -720,6 +745,7 @@ Widget _sixMonthTrendSection({
             children: List.generate(sixMonthIncomeData.length, (index) {
               final data = sixMonthIncomeData[index];
               return Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     width: 36,
@@ -746,8 +772,8 @@ Widget _sixMonthTrendSection({
             }),
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -881,12 +907,18 @@ class _ReportSection extends StatelessWidget {
 
   Widget _reportItem(IconData icon, String label, String tag, bool isDark) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         children: [

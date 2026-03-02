@@ -88,78 +88,82 @@ Widget _summarySection({
   required int transactionCount,
   required bool isPremium,
 }) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
-                style: AppTextStyles.caption.copyWith(
-                  letterSpacing: 1.2,
-                  color: isDark ? Colors.white60 : Colors.black54,
-                  fontSize: 11,
-                ),
-              ),
-              _CalendarButton(isDark: isDark, onTap: onSelectMonth),
-            ],
-          ),
-          const SizedBox(height: 8),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              AppFormatters.formatCurrency(
-                netBalance,
-                settings.currency,
-                settings.locale,
-              ),
-              style: AppTextStyles.amountDisplay.copyWith(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Serif',
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(24),
+    decoration: BoxDecoration(
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+              style: AppTextStyles.caption.copyWith(
+                letterSpacing: 1.2,
+                color: isDark ? Colors.white60 : Colors.black54,
+                fontSize: 11,
               ),
             ),
-          ),
-          Text(
-            'Net Balance',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.successGreen,
+            _CalendarButton(isDark: isDark, onTap: onSelectMonth),
+          ],
+        ),
+        const SizedBox(height: 8),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            AppFormatters.formatCurrency(
+              netBalance,
+              settings.currency,
+              settings.locale,
+            ),
+            style: AppTextStyles.amountDisplay.copyWith(
+              fontSize: 36,
               fontWeight: FontWeight.bold,
-              fontSize: 13,
+              fontFamily: 'Serif',
             ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              _summaryItem(
-                'Income',
-                totalMonthlyIncome,
-                AppColors.successGreen,
-                isDark,
-                settings,
-              ),
-              const SizedBox(width: 16),
-              _summaryItem(
-                'Expense',
-                totalMonthlyExpense,
-                AppColors.softCoral,
-                isDark,
-                settings,
-              ),
-            ],
+        ),
+        Text(
+          'Net Balance',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.successGreen,
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            _summaryItem(
+              'Income',
+              totalMonthlyIncome,
+              AppColors.successGreen,
+              isDark,
+              settings,
+            ),
+            const SizedBox(width: 16),
+            _summaryItem(
+              'Expense',
+              totalMonthlyExpense,
+              AppColors.softCoral,
+              isDark,
+              settings,
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }
@@ -208,77 +212,74 @@ Widget _spendingBreakdownSection({
   required bool isDark,
 }) {
   final itemsToShow = sortedCategories.take(4).toList();
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Spending Breakdown',
-              style: AppTextStyles.h2Section.copyWith(
-                fontSize: 20,
-                fontFamily: 'Serif',
-              ),
-            ),
-            Text(
-              'VIEW ALL',
-              style: TextStyle(
-                color: Colors.orange.withValues(alpha: 0.8),
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        ...List.generate(itemsToShow.length, (index) {
-          final entry = itemsToShow[index];
-          final percentage = totalMonthlyExpense > 0
-              ? (entry.value / totalMonthlyExpense) * 100
-              : 0.0;
-          return _categoryProgressBar(
-            category: entry.key,
-            amount: entry.value,
-            percentage: percentage,
-            settings: settings,
-            isDark: isDark,
-          );
-        }),
-        if (sortedCategories.length > 4)
-          Center(
-            child: TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ExpenseHistoryScreen(),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'View Full Breakdown',
-                    style: TextStyle(
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 12,
-                    color: Colors.orange,
-                  ),
-                ],
-              ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Spending Breakdown',
+            style: AppTextStyles.h2Section.copyWith(
+              fontSize: 20,
+              fontFamily: 'Serif',
             ),
           ),
-      ],
-    ),
+          Text(
+            'VIEW ALL',
+            style: TextStyle(
+              color: Colors.orange.withValues(alpha: 0.8),
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 16),
+      ...List.generate(itemsToShow.length, (index) {
+        final entry = itemsToShow[index];
+        final percentage = totalMonthlyExpense > 0
+            ? (entry.value / totalMonthlyExpense) * 100
+            : 0.0;
+        return _categoryProgressBar(
+          category: entry.key,
+          amount: entry.value,
+          percentage: percentage,
+          settings: settings,
+          isDark: isDark,
+        );
+      }),
+      if (sortedCategories.length > 4)
+        Center(
+          child: TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ExpenseHistoryScreen(),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'View Full Breakdown',
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+          ),
+        ),
+    ],
   );
 }
 
@@ -359,15 +360,12 @@ Widget _smartInsightsSection({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          'Smart Insights',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+      const Text(
+        'Smart Insights',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
       ),
       const SizedBox(height: 16),
@@ -375,7 +373,6 @@ Widget _smartInsightsSection({
         height: 160,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
           children: [
             _highestSpendDayCard(
               highestDate,
@@ -413,6 +410,13 @@ Widget _highestSpendDayCard(
           ? const Color(0xFF8B5E3C).withValues(alpha: 0.8)
           : const Color(0xFFFFE5D0),
       borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -491,18 +495,17 @@ Widget _balanceInsightCard(
     decoration: BoxDecoration(
       color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, 5),
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Daily Limit',
-          style: TextStyle(
-            color: isDark ? Colors.white70 : Colors.black54,
-            fontSize: 12,
-          ),
-        ),
         Text(
           AppFormatters.formatCurrency(
             dailyAvg * 2.5,
@@ -511,17 +514,25 @@ Widget _balanceInsightCard(
           ),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 26,
             fontFamily: 'Serif',
           ),
         ),
-        const Spacer(),
-        Text(
-          'Stay within budget!',
+        const Text(
+          'Daily Limit Target',
           style: TextStyle(
             fontSize: 12,
-            color: isDark ? Colors.white60 : Colors.black54,
+            fontWeight: FontWeight.bold,
+            color: Colors.orange,
+          ),
+        ),
+        const Spacer(),
+        const Text(
+          'Keep up the good work!',
+          style: TextStyle(
+            fontSize: 12,
             fontStyle: FontStyle.italic,
+            color: Colors.grey,
           ),
         ),
       ],
@@ -542,27 +553,33 @@ Widget _advanceInsightsSection({
   }
   if (maxVal == 0) maxVal = 1000;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Advance Insights',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Advance Insights',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
+      ),
+      const SizedBox(height: 16),
+      SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: isDark ? Colors.white12 : Colors.black12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: Column(
             children: [
@@ -570,7 +587,7 @@ Widget _advanceInsightsSection({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Income vs Expense Trend',
+                    'Monthly Comparison Trend',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   Text(
@@ -578,12 +595,11 @@ Widget _advanceInsightsSection({
                     style: const TextStyle(
                       color: Colors.orange,
                       fontWeight: FontWeight.bold,
-                      fontSize: 10,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -592,15 +608,15 @@ Widget _advanceInsightsSection({
                     weeklyIncome[index],
                     weeklyExpense[index],
                     maxVal,
-                    'WEEK ${index + 1}',
+                    'WK ${index + 1}',
                   );
                 }),
               ),
             ],
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -651,26 +667,33 @@ Widget _sixMonthTrendSection({
   }
   if (maxIncome == 0) maxIncome = 1000;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '6-Month Income Trend',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        '6-Month Income Trend',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Serif',
+          fontWeight: FontWeight.bold,
         ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
+      ),
+      const SizedBox(height: 16),
+      SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
             borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -678,16 +701,19 @@ Widget _sixMonthTrendSection({
             children: List.generate(sixMonthIncomeData.length, (index) {
               final data = sixMonthIncomeData[index];
               return Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     width: 36,
-                    height: (data['income'] / maxIncome * 100).clamp(
+                    height: (data['income'] / maxIncome * 110).clamp(
                       10.0,
-                      100.0,
+                      110.0,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withValues(
-                        alpha: 0.5 + (index * 0.1),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.orange, Colors.deepOrange],
                       ),
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -702,8 +728,8 @@ Widget _sixMonthTrendSection({
             }),
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -715,7 +741,6 @@ class _PremiumExportLockSection extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E1E30) : const Color(0xFFF0F4F8),
         borderRadius: BorderRadius.circular(24),
