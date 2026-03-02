@@ -6,7 +6,6 @@ import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../utils/app_layout.dart';
-import '../../controllers/settings_controller.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -17,6 +16,7 @@ class ProgressScreen extends StatefulWidget {
 
 class _ProgressScreenState extends State<ProgressScreen> {
   DateTime _selectedDate = DateTime.now();
+  int _selectedWeekIndex = (DateTime.now().day - 1) ~/ 7;
 
   Future<void> _selectMonth(BuildContext context) async {
     int selectedYear = _selectedDate.year;
@@ -119,6 +119,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
     if (result != null) {
       setState(() {
         _selectedDate = result;
+        // Reset to first week when changing month,
+        // unless it's the current month - then current week
+        final now = DateTime.now();
+        if (_selectedDate.month == now.month &&
+            _selectedDate.year == now.year) {
+          _selectedWeekIndex = (now.day - 1) ~/ 7;
+        } else {
+          _selectedWeekIndex = 0;
+        }
       });
     }
   }
@@ -190,21 +199,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final milestoneLabel = _getMilestoneLabel(nextMilestone);
 
     // 3. Weekly Activity (Selected Month Start or Today's Week)
-    final bool isCurrentMonth =
-        _selectedDate.month == now.month && _selectedDate.year == now.year;
-    final startOfWeek = isCurrentMonth
-        ? now.subtract(Duration(days: (now.weekday - 1)))
-        : DateTime(_selectedDate.year, _selectedDate.month, 1).subtract(
-            Duration(
-              days:
-                  (DateTime(
-                    _selectedDate.year,
-                    _selectedDate.month,
-                    1,
-                  ).weekday -
-                  1),
-            ),
-          );
+    final firstDayOfMonth = DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      1,
+    );
+    final firstMondayOfMonth = firstDayOfMonth.subtract(
+      Duration(days: (firstDayOfMonth.weekday - 1)),
+    );
+    final startOfWeek = firstMondayOfMonth.add(
+      Duration(days: _selectedWeekIndex * 7),
+    );
 
     List<Map<String, dynamic>> weeklyActivity = [];
     for (int i = 0; i < 7; i++) {
@@ -298,13 +303,49 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
             const SizedBox(height: 32),
 
-            // Weekly Activity
-            Text(
-              l10n.weeklyActivity,
-              style: AppTextStyles.h2Section.copyWith(
-                fontSize: 20,
-                fontFamily: 'Serif',
-              ),
+            // Weekly Activity Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.weeklyActivity,
+                  style: AppTextStyles.h2Section.copyWith(
+                    fontSize: 20,
+                    fontFamily: 'Serif',
+                  ),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_rounded,
+                        size: 16,
+                        color: AppColors.primarySelected,
+                      ),
+                      onPressed: _selectedWeekIndex > 0
+                          ? () => setState(() => _selectedWeekIndex--)
+                          : null,
+                    ),
+                    Text(
+                      'Week ${_selectedWeekIndex + 1}',
+                      style: AppTextStyles.body.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primarySelected,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 16,
+                        color: AppColors.primarySelected,
+                      ),
+                      onPressed: _selectedWeekIndex < 4
+                          ? () => setState(() => _selectedWeekIndex++)
+                          : null,
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             _WeeklyActivityBar(activity: weeklyActivity),
