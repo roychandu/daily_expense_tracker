@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool _isExpenseSelected = true;
   int _refreshCount = 0;
+  double _plusScale = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildNavItem(0, 'home', l10n.home),
                 _buildNavItem(1, 'insight', 'Insight'),
                 GestureDetector(
+                  onTapDown: (_) => setState(() => _plusScale = 1.15),
+                  onTapUp: (_) => setState(() => _plusScale = 1.0),
+                  onTapCancel: () => setState(() => _plusScale = 1.0),
                   onTap: () async {
                     final result = await Navigator.push(
                       context,
@@ -88,17 +92,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }
                   },
-                  child: Container(
-                    width: 52,
-                    height: 52,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primarySelected,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.add_rounded,
-                      color: isDark ? Colors.white : Colors.white,
-                      size: 36,
+                  child: AnimatedScale(
+                    scale: _plusScale,
+                    duration: const Duration(milliseconds: 150),
+                    curve: Curves.easeOutBack,
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primarySelected,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.add_rounded,
+                        color: isDark ? Colors.white : Colors.white,
+                        size: 36,
+                      ),
                     ),
                   ),
                 ),
@@ -119,29 +135,35 @@ class _HomeScreenState extends State<HomeScreen> {
         ? AppColors.primarySelected
         : (isDark ? Colors.white70 : const Color(0xFF9E9E9E));
 
-    return InkWell(
+    return GestureDetector(
       onTap: () => setState(() => _currentIndex = index),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/icons/$iconName-${isSelected ? 'selected' : 'unselected'}-${isDark ? 'dark' : 'light'}-icon.png',
-              width: 26,
-              height: 26,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                fontSize: 12,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedScale(
+        scale: isSelected ? 1.12 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutBack,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/icons/$iconName-${isSelected ? 'selected' : 'unselected'}-${isDark ? 'dark' : 'light'}-icon.png',
+                width: 26,
+                height: 26,
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
