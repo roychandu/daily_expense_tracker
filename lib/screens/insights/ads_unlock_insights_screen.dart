@@ -764,20 +764,23 @@ class _PremiumExportLockSection extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     'Premium Export & PDF Reports',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: isDark ? Colors.white : AppColors.charcoal,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'Unlock professional reports and cloud\nbackground permanently',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12, color: Colors.white70),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isDark ? Colors.white70 : AppColors.softGray,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
