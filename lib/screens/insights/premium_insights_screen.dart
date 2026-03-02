@@ -10,6 +10,7 @@ import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../l10n/app_localizations.dart';
+import '../../utils/app_layout.dart';
 
 Widget buildPremiumInsightsBody({
   required BuildContext context,
@@ -33,27 +34,38 @@ Widget buildPremiumInsightsBody({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      _summarySection(
-        isDark: isDark,
-        netBalance: netBalance,
-        totalMonthlyIncome: totalMonthlyIncome,
-        totalMonthlyExpense: totalMonthlyExpense,
-        settings: settings,
-        selectedDate: selectedDate,
-        onSelectMonth: onSelectMonth,
-        transactionCount: transactionCount,
-        isPremium: true,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _summarySection(
+          isDark: isDark,
+          netBalance: netBalance,
+          totalMonthlyIncome: totalMonthlyIncome,
+          totalMonthlyExpense: totalMonthlyExpense,
+          settings: settings,
+          selectedDate: selectedDate,
+          onSelectMonth: onSelectMonth,
+          transactionCount: transactionCount,
+          isPremium: true,
+        ),
       ),
       const SizedBox(height: 32),
-      _spendingBreakdownSection(
-        context: context,
-        sortedCategories: sortedCategories,
-        totalMonthlyExpense: totalMonthlyExpense,
-        settings: settings,
-        isDark: isDark,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _spendingBreakdownSection(
+          context: context,
+          sortedCategories: sortedCategories,
+          totalMonthlyExpense: totalMonthlyExpense,
+          settings: settings,
+          isDark: isDark,
+        ),
       ),
       const SizedBox(height: 32),
       _smartInsightsSection(
+        context: context,
         highestDate: highestDate,
         highestDayEntryValue: highestDayEntryValue,
         weeklyData: weeklyData,
@@ -63,19 +75,34 @@ Widget buildPremiumInsightsBody({
         isDark: isDark,
       ),
       const SizedBox(height: 32),
-      _advanceInsightsSection(
-        weeklyIncome: weeklyIncome,
-        weeklyExpense: weeklyExpense,
-        month: DateFormat('MMM').format(selectedDate).toUpperCase(),
-        isDark: isDark,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _advanceInsightsSection(
+          weeklyIncome: weeklyIncome,
+          weeklyExpense: weeklyExpense,
+          month: DateFormat('MMM').format(selectedDate).toUpperCase(),
+          isDark: isDark,
+        ),
       ),
       const SizedBox(height: 32),
-      _sixMonthTrendSection(
-        sixMonthIncomeData: sixMonthIncomeData,
-        isDark: isDark,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _sixMonthTrendSection(
+          sixMonthIncomeData: sixMonthIncomeData,
+          isDark: isDark,
+        ),
       ),
       const SizedBox(height: 32),
-      const _ReportSection(),
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: const _ReportSection(),
+      ),
     ],
   );
 }
@@ -394,6 +421,7 @@ Widget _categoryProgressBar({
 }
 
 Widget _smartInsightsSection({
+  required BuildContext context,
   required DateTime? highestDate,
   required double highestDayEntryValue,
   required List<double> weeklyData,
@@ -402,15 +430,19 @@ Widget _smartInsightsSection({
   required double totalMonthlyExpense,
   required bool isDark,
 }) {
+  final horizontalPadding = AppLayout.horizontalPadding(context);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
-        'Smart Insights',
-        style: TextStyle(
-          fontSize: 20,
-          fontFamily: 'Serif',
-          fontWeight: FontWeight.bold,
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        child: const Text(
+          'Smart Insights',
+          style: TextStyle(
+            fontSize: 20,
+            fontFamily: 'Serif',
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       const SizedBox(height: 16),
@@ -418,6 +450,7 @@ Widget _smartInsightsSection({
         height: 160,
         child: ListView(
           scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           children: [
             _highestSpendDayCard(
               highestDate,

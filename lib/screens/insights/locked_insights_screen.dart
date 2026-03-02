@@ -6,6 +6,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
+import '../../utils/app_layout.dart';
 import 'dart:ui';
 
 Widget buildLockedInsightsBody({
@@ -23,26 +24,41 @@ Widget buildLockedInsightsBody({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      _summarySection(
-        isDark: isDark,
-        netBalance: netBalance,
-        totalMonthlyIncome: totalMonthlyIncome,
-        totalMonthlyExpense: totalMonthlyExpense,
-        settings: settings,
-        selectedDate: selectedDate,
-        onSelectMonth: onSelectMonth,
-        transactionCount: transactionCount,
-        isPremium: false,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _summarySection(
+          isDark: isDark,
+          netBalance: netBalance,
+          totalMonthlyIncome: totalMonthlyIncome,
+          totalMonthlyExpense: totalMonthlyExpense,
+          settings: settings,
+          selectedDate: selectedDate,
+          onSelectMonth: onSelectMonth,
+          transactionCount: transactionCount,
+          isPremium: false,
+        ),
       ),
       const SizedBox(height: 32),
-      _spendingBreakdownSection(
-        sortedCategories: sortedCategories,
-        totalMonthlyExpense: totalMonthlyExpense,
-        settings: settings,
-        isLocked: true,
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: _spendingBreakdownSection(
+          sortedCategories: sortedCategories,
+          totalMonthlyExpense: totalMonthlyExpense,
+          settings: settings,
+          isLocked: true,
+        ),
       ),
       const SizedBox(height: 32),
-      const _LockedInsightsCard(),
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppLayout.horizontalPadding(context),
+        ),
+        child: const _LockedInsightsCard(),
+      ),
     ],
   );
 }

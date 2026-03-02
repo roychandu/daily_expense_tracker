@@ -9,7 +9,6 @@ import '../../controllers/settings_controller.dart';
 import 'locked_insights_screen.dart';
 import 'ads_unlock_insights_screen.dart';
 import 'premium_insights_screen.dart';
-import '../../utils/app_layout.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -251,12 +250,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
       body: RefreshIndicator(
         onRefresh: () => expenseController.refreshExpenses(),
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            AppLayout.horizontalPadding(context),
-            8,
-            AppLayout.horizontalPadding(context),
-            32,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           physics: const AlwaysScrollableScrollPhysics(),
           child: _buildContent(
             context,
