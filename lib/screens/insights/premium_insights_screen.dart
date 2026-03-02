@@ -272,7 +272,7 @@ Widget _spendingBreakdownSection({
           Text(
             'VIEW ALL',
             style: TextStyle(
-              color: Colors.orange.withValues(alpha: 0.8),
+              color: AppColors.primarySelected,
               fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,

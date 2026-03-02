@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_card.dart';
-import '../../common_widgets/secondary_button.dart';
+
 import '../add_expense/add_expense_screen.dart';
 import '../settings/settings_screen.dart';
 import '../history/expense_history_screen.dart';
@@ -298,18 +298,39 @@ class _TodayViewState extends State<_TodayView> {
                   )
                 : _buildRecentTransactions(settings, recentExpenses),
 
-            const SizedBox(height: 16),
-            SecondaryButton(
-              title: l10n.viewAllHistory,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ExpenseHistoryScreen(),
+            if (recentExpenses.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ExpenseHistoryScreen(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        l10n.viewAllHistory,
+                        style: TextStyle(
+                          color: AppColors.primarySelected,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 14,
+                        color: AppColors.primarySelected,
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
 
             const SizedBox(height: 70),
           ],
