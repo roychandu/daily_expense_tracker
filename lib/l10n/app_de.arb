@@ -18,5 +18,17 @@
   "termsOfService": "Nutzungsbedingungen",
   "version": "Version",
   "selectLanguage": "Sprache auswählen",
-  "selectCurrency": "Währung auswählen"
+  "selectCurrency": "Währung auswählen",
+  "insights": "Einblicke",
+  "progress": "Fortschritt",
+  "daysStreak": "TAGE STREAK",
+  "streakProgress": "STREAK FORTSCHRITT",
+  "daysToNextMilestone": "Tage bis zum nächsten Meilenstein",
+  "awayFromBadge": "Tage von einem Silberabzeichen entfernt!",
+  "youAre": "Du bist",
+  "milestoneReached": "Meilenstein erreicht! Überprüfen Sie Ihre Belohnungen.",
+  "todayCardTitle": "TODAY",
+  "entriesToday": "Entries today",
+  "moreThanYesterday": "more than yesterday",
+  "lessThanYesterday": "less than yesterday"
 }

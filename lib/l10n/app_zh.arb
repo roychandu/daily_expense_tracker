@@ -18,5 +18,17 @@
   "termsOfService": "服务条款",
   "version": "版本",
   "selectLanguage": "选择语言",
-  "selectCurrency": "选择货币"
+  "selectCurrency": "选择货币",
+  "insights": "洞察",
+  "progress": "进展",
+  "daysStreak": "天连续",
+  "streakProgress": "连续进度",
+  "daysToNextMilestone": "距离下一个里程碑的天数",
+  "awayFromBadge": "天后即可获得银牌徽章！",
+  "youAre": "您距离",
+  "milestoneReached": "达到里程碑！查看您的奖励。",
+  "todayCardTitle": "图代",
+  "entriesToday": "恩特里斯 图代",
+  "moreThanYesterday": "摩尔 赞 耶斯特代",
+  "lessThanYesterday": "莱斯 赞 耶斯特代"
 }

@@ -59,5 +59,16 @@
   "reminderInternetRequirement": "مطلوب اتصال نشط بالإنترنت لتمكين ومزامنة ميزة التذكير اليومي. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
   "exportingCsv": "تصدير CSV...",
   "ok": "حسناً",
-  "reminderBody": "لا تنسى تسجيل مصاريفك لهذا اليوم! 📝"
+  "reminderBody": "لا تنسى تسجيل مصاريفك لهذا اليوم! 📝",
+  "progress": "التقدم",
+  "daysStreak": "أيام الستريك",
+  "streakProgress": "تقدم الستريك",
+  "daysToNextMilestone": "أيام حتى الإنجاز التالي",
+  "awayFromBadge": "أيام تفصلك عن الشارة الفضية!",
+  "youAre": "أنت",
+  "milestoneReached": "تم تحقيق الإنجاز! تحقق من مكافآتك.",
+  "todayCardTitle": "توداي",
+  "entriesToday": "إنتريز توداي",
+  "moreThanYesterday": "مور ذان يستردي",
+  "lessThanYesterday": "ليس ذان يستردي"
 }

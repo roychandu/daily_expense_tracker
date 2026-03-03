@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/database_service.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
@@ -34,7 +35,7 @@ class _DatabaseViewerScreenState extends State<DatabaseViewerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Raw Database Viewer'),
+        title: Text(AppLocalizations.of(context)!.rawDatabaseViewer),
         actions: [
           IconButton(icon: const Icon(Icons.refresh), onPressed: _fetchRawData),
         ],
@@ -42,7 +43,9 @@ class _DatabaseViewerScreenState extends State<DatabaseViewerScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _data.isEmpty
-          ? const Center(child: Text('No data found in database'))
+          ? Center(
+              child: Text(AppLocalizations.of(context)!.noDataFoundInDatabase),
+            )
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(

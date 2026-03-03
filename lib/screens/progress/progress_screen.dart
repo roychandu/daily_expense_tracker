@@ -31,8 +31,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
               backgroundColor: Theme.of(context).brightness == Brightness.dark
                   ? const Color(0xFF1E1E1E)
                   : Colors.white,
-              title: const Text(
-                'Select Month',
+              title: Text(
+                AppLocalizations.of(context)!.selectMonth,
                 style: TextStyle(fontFamily: 'Serif'),
               ),
               content: SizedBox(
@@ -258,7 +258,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
           : AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(
-          'Progress',
+          AppLocalizations.of(context)!.progress,
           style: AppTextStyles.h1Display.copyWith(
             fontWeight: FontWeight.w700,
             fontSize: 28,
@@ -469,7 +469,7 @@ class _MainStreakCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'STREAK PROGRESS',
+                  AppLocalizations.of(context)!.streakProgress,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? Colors.white38 : Colors.black38,

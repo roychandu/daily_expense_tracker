@@ -21,7 +21,7 @@
   "selectCurrency": "मुद्रा चुनें",
   "home": "होम",
   "summary": "सारांश",
-  "insights": "अन्तर्दृष्टि",
+  "insights": "इनसाइट्स",
   "today": "आज",
   "expense": "खर्च",
   "income": "आय",
@@ -42,5 +42,16 @@
   "internetRequired": "इंटरनेट आवश्यक",
   "reminderInternetRequirement": "दैनिक अनुस्मारक सुविधा को सक्षम और सिंक करने के लिए एक सक्रिय इंटरनेट कनेक्शन की आवश्यकता है। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।",
   "ok": "ठीक है",
-  "reminderBody": "आज के अपने खर्चों को दर्ज करना न भूलें! 📝"
+  "reminderBody": "आज के अपने खर्चों को दर्ज करना न भूलें! 📝",
+  "progress": "प्रोग्रेस",
+  "awayFromBadge": "दिन दूर हैं एक सिल्वर बैज से!",
+  "youAre": "आप",
+  "milestoneReached": "माइलस्टोन प्राप्त हुआ! अपने रिवॉर्ड्स चेक करें।",
+  "daysStreak": "डेज़ स्ट्रीक",
+  "streakProgress": "स्ट्रीक प्रोग्रेस",
+  "daysToNextMilestone": "नेक्स्ट माइलस्टोन तक दिन",
+  "todayCardTitle": "टुडे",
+  "entriesToday": "एंट्रीज टुडे",
+  "moreThanYesterday": "मोर दैन यस्टरडे",
+  "lessThanYesterday": "लेस दैन यस्टरडे"
 }

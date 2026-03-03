@@ -72,10 +72,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get summary => 'Summary';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Einblicke';
 
   @override
-  String get progress => 'Progress';
+  String get progress => 'Fortschritt';
 
   @override
   String get today => 'Today';
@@ -316,4 +316,185 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reminderBody => 'Don\'t forget to log your expenses for today! 📝';
+
+  @override
+  String get netBalance => 'Net Balance';
+
+  @override
+  String get spendingBreakdown => 'Spending Breakdown';
+
+  @override
+  String get topSpendingBreakdown => 'Top Spending Breakdown';
+
+  @override
+  String get viewAll => 'VIEW ALL';
+
+  @override
+  String get viewFullBreakdown => 'View Full Breakdown';
+
+  @override
+  String get smartInsights => 'Smart Insights';
+
+  @override
+  String get mostFrequent => 'Most Frequent';
+
+  @override
+  String get categoryThisMonth => 'Category this month';
+
+  @override
+  String get dailyAverage => 'Daily Average';
+
+  @override
+  String get advanceInsights => 'Advance Insights';
+
+  @override
+  String get monthlyComparisonTrend => 'Monthly Comparison Trend';
+
+  @override
+  String get sixMonthIncomeTrend => '6-Month Income Trend';
+
+  @override
+  String get premiumExportPdfReports => 'Premium Export & PDF Reports';
+
+  @override
+  String get unlockProfessionalReports =>
+      'Unlock professional reports and cloud\\nbackground permanently';
+
+  @override
+  String get goPremium => 'Go Premium';
+
+  @override
+  String get upgradeNow => 'Upgrade Now';
+
+  @override
+  String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
+
+  @override
+  String get selectMonth => 'Select Month';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get daysStreak => 'TAGE STREAK';
+
+  @override
+  String get streakProgress => 'STREAK FORTSCHRITT';
+
+  @override
+  String get usageIntensity => 'Usage Intensity';
+
+  @override
+  String get less => 'Less';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get selectCategoryTitle => 'Select Category';
+
+  @override
+  String get addNoteTitle => 'Add Note';
+
+  @override
+  String get optionalField => 'Optional';
+
+  @override
+  String get saveTransaction => 'Save Transaction';
+
+  @override
+  String get createNewCategory => 'Create New Category';
+
+  @override
+  String get chooseAnIcon => 'Choose an icon';
+
+  @override
+  String get createCategory => 'Create Category';
+
+  @override
+  String get pickAColor => 'Pick a Color';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get selectIcon => 'Select Icon';
+
+  @override
+  String get daysToNextMilestone => 'Tage bis zum nächsten Meilenstein';
+
+  @override
+  String get premiumMember => 'PREMIUM MEMBER';
+
+  @override
+  String get upgradeToGold => 'Upgrade to Gold';
+
+  @override
+  String get premiumDescription =>
+      'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.';
+
+  @override
+  String get buildConsistentHabit => 'Build a consistent tracking habit';
+
+  @override
+  String get aboutNeelStudio => 'About Neel Studio';
+
+  @override
+  String get neelStudioSlogan1 =>
+      'Neel Studio builds practical apps for real life.';
+
+  @override
+  String get neelStudioSlogan2 =>
+      'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.';
+
+  @override
+  String get productStandard => 'Our product standard is simple:';
+
+  @override
+  String get buildForRepeatValue =>
+      'We don’t build for hype. We build for repeat value.';
+
+  @override
+  String get realProblemsRealPeople => 'Real problems. Real people.';
+
+  @override
+  String get durableSolutions => 'Durable solutions.';
+
+  @override
+  String get privacyAndTrust => 'Privacy & Trust';
+
+  @override
+  String get localFirstControl => 'Local-first. You stay in control.';
+
+  @override
+  String get recordsStayOnDevice =>
+      'Your records stay on your device. No account required. Clear permissions and transparent controls.';
+
+  @override
+  String get rawDatabaseViewer => 'Raw Database Viewer';
+
+  @override
+  String get noDataFoundInDatabase => 'No data found in database';
+
+  @override
+  String get exportTransactionHistory => 'Export Transaction History';
+
+  @override
+  String get annualFinancialReport => 'Annual Financial Report';
+
+  @override
+  String get awayFromBadge => 'Tage von einem Silberabzeichen entfernt!';
+
+  @override
+  String get youAre => 'Du bist';
+
+  @override
+  String get milestoneReached =>
+      'Meilenstein erreicht! Überprüfen Sie Ihre Belohnungen.';
+
+  @override
+  String get todayCardTitle => 'TODAY';
+
+  @override
+  String get entriesToday => 'Entries today';
 }

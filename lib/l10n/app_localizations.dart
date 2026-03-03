@@ -721,6 +721,354 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t forget to log your expenses for today! 📝'**
   String get reminderBody;
+
+  /// No description provided for @netBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Balance'**
+  String get netBalance;
+
+  /// No description provided for @spendingBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Breakdown'**
+  String get spendingBreakdown;
+
+  /// No description provided for @topSpendingBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Spending Breakdown'**
+  String get topSpendingBreakdown;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'VIEW ALL'**
+  String get viewAll;
+
+  /// No description provided for @viewFullBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'View Full Breakdown'**
+  String get viewFullBreakdown;
+
+  /// No description provided for @smartInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Insights'**
+  String get smartInsights;
+
+  /// No description provided for @mostFrequent.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Frequent'**
+  String get mostFrequent;
+
+  /// No description provided for @categoryThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Category this month'**
+  String get categoryThisMonth;
+
+  /// No description provided for @dailyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Average'**
+  String get dailyAverage;
+
+  /// No description provided for @advanceInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance Insights'**
+  String get advanceInsights;
+
+  /// No description provided for @monthlyComparisonTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Comparison Trend'**
+  String get monthlyComparisonTrend;
+
+  /// No description provided for @sixMonthIncomeTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'6-Month Income Trend'**
+  String get sixMonthIncomeTrend;
+
+  /// No description provided for @premiumExportPdfReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Export & PDF Reports'**
+  String get premiumExportPdfReports;
+
+  /// No description provided for @unlockProfessionalReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock professional reports and cloud\\nbackground permanently'**
+  String get unlockProfessionalReports;
+
+  /// No description provided for @goPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Premium'**
+  String get goPremium;
+
+  /// No description provided for @upgradeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Now'**
+  String get upgradeNow;
+
+  /// No description provided for @unlockToWatchFullInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock to watch full Insights'**
+  String get unlockToWatchFullInsights;
+
+  /// No description provided for @selectMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Month'**
+  String get selectMonth;
+
+  /// No description provided for @achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievements;
+
+  /// No description provided for @daysStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'DAYS STREAK'**
+  String get daysStreak;
+
+  /// No description provided for @streakProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'STREAK PROGRESS'**
+  String get streakProgress;
+
+  /// No description provided for @usageIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Intensity'**
+  String get usageIntensity;
+
+  /// No description provided for @less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get less;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @selectCategoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Category'**
+  String get selectCategoryTitle;
+
+  /// No description provided for @addNoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Note'**
+  String get addNoteTitle;
+
+  /// No description provided for @optionalField.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optionalField;
+
+  /// No description provided for @saveTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Transaction'**
+  String get saveTransaction;
+
+  /// No description provided for @createNewCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Category'**
+  String get createNewCategory;
+
+  /// No description provided for @chooseAnIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an icon'**
+  String get chooseAnIcon;
+
+  /// No description provided for @createCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Category'**
+  String get createCategory;
+
+  /// No description provided for @pickAColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a Color'**
+  String get pickAColor;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @selectIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Icon'**
+  String get selectIcon;
+
+  /// No description provided for @daysToNextMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Days to next milestone'**
+  String get daysToNextMilestone;
+
+  /// No description provided for @premiumMember.
+  ///
+  /// In en, this message translates to:
+  /// **'PREMIUM MEMBER'**
+  String get premiumMember;
+
+  /// No description provided for @upgradeToGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Gold'**
+  String get upgradeToGold;
+
+  /// No description provided for @premiumDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.'**
+  String get premiumDescription;
+
+  /// No description provided for @buildConsistentHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Build a consistent tracking habit'**
+  String get buildConsistentHabit;
+
+  /// No description provided for @aboutNeelStudio.
+  ///
+  /// In en, this message translates to:
+  /// **'About Neel Studio'**
+  String get aboutNeelStudio;
+
+  /// No description provided for @neelStudioSlogan1.
+  ///
+  /// In en, this message translates to:
+  /// **'Neel Studio builds practical apps for real life.'**
+  String get neelStudioSlogan1;
+
+  /// No description provided for @neelStudioSlogan2.
+  ///
+  /// In en, this message translates to:
+  /// **'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.'**
+  String get neelStudioSlogan2;
+
+  /// No description provided for @productStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Our product standard is simple:'**
+  String get productStandard;
+
+  /// No description provided for @buildForRepeatValue.
+  ///
+  /// In en, this message translates to:
+  /// **'We don’t build for hype. We build for repeat value.'**
+  String get buildForRepeatValue;
+
+  /// No description provided for @realProblemsRealPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Real problems. Real people.'**
+  String get realProblemsRealPeople;
+
+  /// No description provided for @durableSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Durable solutions.'**
+  String get durableSolutions;
+
+  /// No description provided for @privacyAndTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Trust'**
+  String get privacyAndTrust;
+
+  /// No description provided for @localFirstControl.
+  ///
+  /// In en, this message translates to:
+  /// **'Local-first. You stay in control.'**
+  String get localFirstControl;
+
+  /// No description provided for @recordsStayOnDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your records stay on your device. No account required. Clear permissions and transparent controls.'**
+  String get recordsStayOnDevice;
+
+  /// No description provided for @rawDatabaseViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Raw Database Viewer'**
+  String get rawDatabaseViewer;
+
+  /// No description provided for @noDataFoundInDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'No data found in database'**
+  String get noDataFoundInDatabase;
+
+  /// No description provided for @exportTransactionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Transaction History'**
+  String get exportTransactionHistory;
+
+  /// No description provided for @annualFinancialReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual Financial Report'**
+  String get annualFinancialReport;
+
+  /// No description provided for @awayFromBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'days away from a silver badge!'**
+  String get awayFromBadge;
+
+  /// No description provided for @youAre.
+  ///
+  /// In en, this message translates to:
+  /// **'You are'**
+  String get youAre;
+
+  /// No description provided for @milestoneReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone reached! Check your rewards.'**
+  String get milestoneReached;
+
+  /// No description provided for @todayCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY'**
+  String get todayCardTitle;
+
+  /// No description provided for @entriesToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Entries today'**
+  String get entriesToday;
 }
 
 class _AppLocalizationsDelegate

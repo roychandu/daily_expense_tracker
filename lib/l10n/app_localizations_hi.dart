@@ -72,10 +72,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get summary => 'सारांश';
 
   @override
-  String get insights => 'अन्तर्दृष्टि';
+  String get insights => 'इनसाइट्स';
 
   @override
-  String get progress => 'Progress';
+  String get progress => 'प्रोग्रेस';
 
   @override
   String get today => 'आज';
@@ -218,10 +218,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get yesterday => 'कल';
 
   @override
-  String get moreThanYesterday => 'more than yesterday';
+  String get moreThanYesterday => 'मोर दैन यस्टरडे';
 
   @override
-  String get lessThanYesterday => 'less than yesterday';
+  String get lessThanYesterday => 'लेस दैन यस्टरडे';
 
   @override
   String get dateWiseLog => 'DATE-WISE LOG';
@@ -316,4 +316,185 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get reminderBody => 'आज के अपने खर्चों को दर्ज करना न भूलें! 📝';
+
+  @override
+  String get netBalance => 'Net Balance';
+
+  @override
+  String get spendingBreakdown => 'Spending Breakdown';
+
+  @override
+  String get topSpendingBreakdown => 'Top Spending Breakdown';
+
+  @override
+  String get viewAll => 'VIEW ALL';
+
+  @override
+  String get viewFullBreakdown => 'View Full Breakdown';
+
+  @override
+  String get smartInsights => 'Smart Insights';
+
+  @override
+  String get mostFrequent => 'Most Frequent';
+
+  @override
+  String get categoryThisMonth => 'Category this month';
+
+  @override
+  String get dailyAverage => 'Daily Average';
+
+  @override
+  String get advanceInsights => 'Advance Insights';
+
+  @override
+  String get monthlyComparisonTrend => 'Monthly Comparison Trend';
+
+  @override
+  String get sixMonthIncomeTrend => '6-Month Income Trend';
+
+  @override
+  String get premiumExportPdfReports => 'Premium Export & PDF Reports';
+
+  @override
+  String get unlockProfessionalReports =>
+      'Unlock professional reports and cloud\\nbackground permanently';
+
+  @override
+  String get goPremium => 'Go Premium';
+
+  @override
+  String get upgradeNow => 'Upgrade Now';
+
+  @override
+  String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
+
+  @override
+  String get selectMonth => 'Select Month';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get daysStreak => 'डेज़ स्ट्रीक';
+
+  @override
+  String get streakProgress => 'स्ट्रीक प्रोग्रेस';
+
+  @override
+  String get usageIntensity => 'Usage Intensity';
+
+  @override
+  String get less => 'Less';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get selectCategoryTitle => 'Select Category';
+
+  @override
+  String get addNoteTitle => 'Add Note';
+
+  @override
+  String get optionalField => 'Optional';
+
+  @override
+  String get saveTransaction => 'Save Transaction';
+
+  @override
+  String get createNewCategory => 'Create New Category';
+
+  @override
+  String get chooseAnIcon => 'Choose an icon';
+
+  @override
+  String get createCategory => 'Create Category';
+
+  @override
+  String get pickAColor => 'Pick a Color';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get selectIcon => 'Select Icon';
+
+  @override
+  String get daysToNextMilestone => 'नेक्स्ट माइलस्टोन तक दिन';
+
+  @override
+  String get premiumMember => 'PREMIUM MEMBER';
+
+  @override
+  String get upgradeToGold => 'Upgrade to Gold';
+
+  @override
+  String get premiumDescription =>
+      'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.';
+
+  @override
+  String get buildConsistentHabit => 'Build a consistent tracking habit';
+
+  @override
+  String get aboutNeelStudio => 'About Neel Studio';
+
+  @override
+  String get neelStudioSlogan1 =>
+      'Neel Studio builds practical apps for real life.';
+
+  @override
+  String get neelStudioSlogan2 =>
+      'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.';
+
+  @override
+  String get productStandard => 'Our product standard is simple:';
+
+  @override
+  String get buildForRepeatValue =>
+      'We don’t build for hype. We build for repeat value.';
+
+  @override
+  String get realProblemsRealPeople => 'Real problems. Real people.';
+
+  @override
+  String get durableSolutions => 'Durable solutions.';
+
+  @override
+  String get privacyAndTrust => 'Privacy & Trust';
+
+  @override
+  String get localFirstControl => 'Local-first. You stay in control.';
+
+  @override
+  String get recordsStayOnDevice =>
+      'Your records stay on your device. No account required. Clear permissions and transparent controls.';
+
+  @override
+  String get rawDatabaseViewer => 'Raw Database Viewer';
+
+  @override
+  String get noDataFoundInDatabase => 'No data found in database';
+
+  @override
+  String get exportTransactionHistory => 'Export Transaction History';
+
+  @override
+  String get annualFinancialReport => 'Annual Financial Report';
+
+  @override
+  String get awayFromBadge => 'दिन दूर हैं एक सिल्वर बैज से!';
+
+  @override
+  String get youAre => 'आप';
+
+  @override
+  String get milestoneReached =>
+      'माइलस्टोन प्राप्त हुआ! अपने रिवॉर्ड्स चेक करें।';
+
+  @override
+  String get todayCardTitle => 'टुडे';
+
+  @override
+  String get entriesToday => 'एंट्रीज टुडे';
 }

@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _buildNavItem(0, 'home', l10n.home),
-                _buildNavItem(1, 'insight', 'Insight'),
+                _buildNavItem(1, 'insight', l10n.insights),
                 GestureDetector(
                   onTapDown: (_) => setState(() => _plusScale = 1.15),
                   onTapUp: (_) => setState(() => _plusScale = 1.0),
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                _buildNavItem(2, 'progress', 'Progress'),
+                _buildNavItem(2, 'progress', l10n.progress),
                 _buildNavItem(3, 'settings', l10n.settings),
               ],
             ),
@@ -446,7 +446,7 @@ class _TodayViewState extends State<_TodayView> {
           Row(
             children: [
               Text(
-                'TODAY',
+                l10n.todayCardTitle,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.primarySelected,
                   fontWeight: FontWeight.bold,
@@ -474,7 +474,7 @@ class _TodayViewState extends State<_TodayView> {
             ),
           ),
           Text(
-            '$count Entries today',
+            '$count ${l10n.entriesToday}',
             style: AppTextStyles.caption.copyWith(
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.textSecondaryDark
@@ -512,7 +512,7 @@ class _TodayViewState extends State<_TodayView> {
                 const Text('🔥', style: TextStyle(fontSize: 48)),
                 const SizedBox(height: 8),
                 Text(
-                  '$streak DAYS STREAK',
+                  '$streak ${l10n.daysStreak}',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
@@ -539,7 +539,7 @@ class _TodayViewState extends State<_TodayView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'STREAK PROGRESS',
+                  l10n.streakProgress,
                   style: AppTextStyles.caption.copyWith(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -549,7 +549,7 @@ class _TodayViewState extends State<_TodayView> {
                   ),
                 ),
                 Text(
-                  '$streak/$milestone Days to next milestone',
+                  '$streak/$milestone ${l10n.daysToNextMilestone}',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -586,8 +586,8 @@ class _TodayViewState extends State<_TodayView> {
                 const SizedBox(height: 12),
                 Text(
                   daysTo > 0
-                      ? 'You are $daysTo days away from a silver badge!'
-                      : 'Milestone reached! Check your rewards.',
+                      ? '${l10n.youAre} $daysTo ${l10n.awayFromBadge}'
+                      : l10n.milestoneReached,
                   style: AppTextStyles.caption.copyWith(
                     color: Theme.of(context).brightness == Brightness.dark
                         ? AppColors.textSecondaryDark

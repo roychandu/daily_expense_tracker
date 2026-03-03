@@ -805,7 +805,7 @@ class _CreateCategoryBottomSheetState
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Pick a Color'),
+          title: Text(AppLocalizations.of(context)!.pickAColor),
           content: SingleChildScrollView(
             child: ColorPicker(
               pickerColor: _selectedColor,
@@ -816,7 +816,7 @@ class _CreateCategoryBottomSheetState
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Done'),
+              child: Text(AppLocalizations.of(context)!.done),
             ),
           ],
         );

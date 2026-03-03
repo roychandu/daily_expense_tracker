@@ -18,5 +18,17 @@
   "termsOfService": "Termos de Serviço",
   "version": "Versão",
   "selectLanguage": "Selecionar Idioma",
-  "selectCurrency": "Selecionar Moeda"
+  "selectCurrency": "Selecionar Moeda",
+  "insights": "Insights",
+  "progress": "Progresso",
+  "daysStreak": "DIAS DE OFENSIVA",
+  "streakProgress": "PROGRESSO DA OFENSIVA",
+  "daysToNextMilestone": "Dias para o próximo marco",
+  "awayFromBadge": "dias de um emblema de prata!",
+  "youAre": "Você está a",
+  "milestoneReached": "Marco alcançado! Verifique suas recompensas.",
+  "todayCardTitle": "TODAY",
+  "entriesToday": "Entries today",
+  "moreThanYesterday": "more than yesterday",
+  "lessThanYesterday": "less than yesterday"
 }

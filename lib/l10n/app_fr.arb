@@ -18,5 +18,17 @@
   "termsOfService": "Conditions d'Utilisation",
   "version": "Version",
   "selectLanguage": "Choisir la Langue",
-  "selectCurrency": "Choisir la Devise"
+  "selectCurrency": "Choisir la Devise",
+  "insights": "Aperçus",
+  "progress": "Progrès",
+  "daysStreak": "SÉRIE DE JOURS",
+  "streakProgress": "PROGRÈS DE LA SÉRIE",
+  "daysToNextMilestone": "Jours jusqu'au prochain palier",
+  "awayFromBadge": "jours d'un badge en argent !",
+  "youAre": "Vous êtes à",
+  "milestoneReached": "Palier atteint ! Vérifiez vos récompenses.",
+  "todayCardTitle": "TODAY",
+  "entriesToday": "Entries today",
+  "moreThanYesterday": "more than yesterday",
+  "lessThanYesterday": "less than yesterday"
 }
