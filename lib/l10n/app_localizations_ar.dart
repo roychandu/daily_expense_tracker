@@ -87,16 +87,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get income => 'دخل';
 
   @override
-  String get recent => 'الأخيرة';
+  String get recent => 'أخيرة';
 
   @override
-  String get noExpensesYet => 'لا توجد مصاريف بعد';
+  String get noExpensesYet => 'لا توجد نفقات بعد!';
 
   @override
-  String get noIncomeYet => 'لا يوجد دخل بعد';
+  String get noIncomeYet => 'لا يوجد دخل بعد!';
 
   @override
-  String get viewAllHistory => 'عرض السجل بالكامل';
+  String get viewAllHistory => 'عرض كل السجل';
 
   @override
   String get totalExpensesToday => 'إجمالي المصاريف لليوم';
@@ -370,7 +370,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
 
   @override
-  String get selectMonth => 'Select Month';
+  String get selectMonth => 'اختر الشهر';
 
   @override
   String get achievements => 'Achievements';
@@ -496,4 +496,113 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get entriesToday => 'إنتريز توداي';
+
+  @override
+  String get monthlySummaryText => 'Monthly Summary';
+
+  @override
+  String get netBalanceStr => 'Net Balance';
+
+  @override
+  String get spendBreakdownHeadline => 'Spending Breakdown';
+
+  @override
+  String get topSpendBreakdownText => 'Top Spending Breakdown';
+
+  @override
+  String get viewInfoText => 'VIEW ALL';
+
+  @override
+  String get viewFullBreakdownTxt => 'View Full Breakdown';
+
+  @override
+  String get smartInsightsHeader => 'Smart Insights';
+
+  @override
+  String get mostFrequentCardText => 'Most Frequent';
+
+  @override
+  String get categoryThisMonthCardText => 'Category this month';
+
+  @override
+  String get highestSpendDayHeader => 'Highest Spend Day';
+
+  @override
+  String get dailyAverageMetrics => 'Daily Average';
+
+  @override
+  String get advanceInsightsAnalytics => 'Advance Insights';
+
+  @override
+  String get monthlyComparisonAnalytics => 'Monthly Comparison Trend';
+
+  @override
+  String get sixMonthIncomeAnalytics => '6-Month Income Trend';
+
+  @override
+  String get premiumExportTitle => 'Premium Export & PDF Reports';
+
+  @override
+  String get unlockProfessionalDetails =>
+      'Unlock professional reports and cloud\\nbackground permanently';
+
+  @override
+  String get goPremiumBtn => 'Go Premium';
+
+  @override
+  String get unlockWatchFullInsights => 'Unlock to watch full Insights';
+
+  @override
+  String get upgradeNowBtn => 'Upgrade Now';
+
+  @override
+  String get watchAdsTxt => 'Watch Ads';
+
+  @override
+  String get highest => 'Highest';
+
+  @override
+  String get average => 'Average';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get detailedSpendingBreakdown => 'Detailed spending breakdown';
+
+  @override
+  String get smartTailoredInsights => 'Smart tailored insights';
+
+  @override
+  String get weeklyIncVsExpTrend => 'Weekly Inc vs Exp trend';
+
+  @override
+  String get monthlyTrend => 'Monthly trend';
+
+  @override
+  String get thisMonthActivity => 'Based on this month\'s activity';
+
+  @override
+  String get csv => 'CSV';
+
+  @override
+  String get pdf => 'PDF';
+
+  @override
+  String get inc => 'Inc';
+
+  @override
+  String get exp => 'Exp';
+
+  @override
+  String get fileSaved => 'File saved';
+
+  @override
+  String get errorSaving => 'Error saving';
+
+  @override
+  String get unknownError => 'Unknown error';
 }

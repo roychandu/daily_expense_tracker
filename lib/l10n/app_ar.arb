@@ -25,10 +25,10 @@
   "today": "اليوم",
   "expense": "مصروف",
   "income": "دخل",
-  "recent": "الأخيرة",
-  "noExpensesYet": "لا توجد مصاريف بعد",
-  "noIncomeYet": "لا يوجد دخل بعد",
-  "viewAllHistory": "عرض السجل بالكامل",
+  "recent": "أخيرة",
+  "noExpensesYet": "لا توجد نفقات بعد!",
+  "noIncomeYet": "لا يوجد دخل بعد!",
+  "viewAllHistory": "عرض كل السجل",
   "totalExpensesToday": "إجمالي المصاريف لليوم",
   "totalIncomeToday": "إجمالي الدخل لليوم",
   "items": "عناصر",
@@ -70,5 +70,6 @@
   "todayCardTitle": "توداي",
   "entriesToday": "إنتريز توداي",
   "moreThanYesterday": "مور ذان يستردي",
-  "lessThanYesterday": "ليس ذان يستردي"
+  "lessThanYesterday": "ليس ذان يستردي",
+  "selectMonth": "اختر الشهر"
 }

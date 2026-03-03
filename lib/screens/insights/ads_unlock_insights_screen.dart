@@ -9,6 +9,7 @@ import '../../utils/category_utils.dart';
 import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
 import '../history/expense_history_screen.dart';
+import '../../l10n/app_localizations.dart';
 
 Widget buildAdsUnlockedInsightsBody({
   required BuildContext context,
@@ -38,6 +39,7 @@ Widget buildAdsUnlockedInsightsBody({
           horizontal: AppLayout.horizontalPadding(context),
         ),
         child: _summarySection(
+          context: context,
           isDark: isDark,
           netBalance: netBalance,
           totalMonthlyIncome: totalMonthlyIncome,
@@ -80,6 +82,7 @@ Widget buildAdsUnlockedInsightsBody({
           horizontal: AppLayout.horizontalPadding(context),
         ),
         child: _advanceInsightsSection(
+          context: context,
           weeklyIncome: weeklyIncome,
           weeklyExpense: weeklyExpense,
           month: DateFormat('MMM').format(selectedDate).toUpperCase(),
@@ -92,6 +95,7 @@ Widget buildAdsUnlockedInsightsBody({
           horizontal: AppLayout.horizontalPadding(context),
         ),
         child: _sixMonthTrendSection(
+          context: context,
           sixMonthIncomeData: sixMonthIncomeData,
           isDark: isDark,
         ),
@@ -108,6 +112,7 @@ Widget buildAdsUnlockedInsightsBody({
 }
 
 Widget _summarySection({
+  required BuildContext context,
   required bool isDark,
   required double netBalance,
   required double totalMonthlyIncome,
@@ -139,7 +144,7 @@ Widget _summarySection({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
               style: AppTextStyles.caption.copyWith(
                 letterSpacing: 1.2,
                 color: isDark ? Colors.white60 : Colors.black54,
@@ -166,7 +171,7 @@ Widget _summarySection({
           ),
         ),
         Text(
-          'Net Balance',
+          AppLocalizations.of(context)!.netBalanceStr,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.successGreen,
             fontWeight: FontWeight.bold,
@@ -177,7 +182,7 @@ Widget _summarySection({
         Row(
           children: [
             _summaryItem(
-              'Income',
+              AppLocalizations.of(context)!.income,
               totalMonthlyIncome,
               AppColors.successGreen,
               isDark,
@@ -185,7 +190,7 @@ Widget _summarySection({
             ),
             const SizedBox(width: 16),
             _summaryItem(
-              'Expense',
+              AppLocalizations.of(context)!.expense,
               totalMonthlyExpense,
               AppColors.softCoral,
               isDark,
@@ -249,14 +254,14 @@ Widget _spendingBreakdownSection({
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Spending Breakdown',
+            AppLocalizations.of(context)!.spendBreakdownHeadline,
             style: AppTextStyles.h2Section.copyWith(
               fontSize: 20,
               fontFamily: 'Serif',
             ),
           ),
           Text(
-            'VIEW ALL',
+            AppLocalizations.of(context)!.viewInfoText,
             style: TextStyle(
               color: Colors.orange.withValues(alpha: 0.8),
               fontSize: 12,
@@ -292,9 +297,9 @@ Widget _spendingBreakdownSection({
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'View Full Breakdown',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.viewFullBreakdownTxt,
+                  style: const TextStyle(
                     color: Colors.orange,
                     fontWeight: FontWeight.bold,
                   ),
@@ -392,8 +397,8 @@ Widget _smartInsightsSection({
     children: [
       Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-        child: const Text(
-          'Smart Insights',
+        child: Text(
+          AppLocalizations.of(context)!.smartInsightsHeader,
           style: TextStyle(
             fontSize: 20,
             fontFamily: 'Serif',
@@ -409,6 +414,7 @@ Widget _smartInsightsSection({
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           children: [
             _highestSpendDayCard(
+              context,
               highestDate,
               highestDayEntryValue,
               settings,
@@ -417,10 +423,16 @@ Widget _smartInsightsSection({
               isDark,
             ),
             const SizedBox(width: 16),
-            _dailyAverageCard(totalMonthlyExpense / 30, settings, isDark),
+            _dailyAverageCard(
+              context,
+              totalMonthlyExpense / 30,
+              settings,
+              isDark,
+            ),
             if (mostFrequentCategory != null) ...[
               const SizedBox(width: 16),
               _frequentCategoryCard(
+                context,
                 mostFrequentCategory.key,
                 mostFrequentCategory.value,
                 isDark,
@@ -433,7 +445,12 @@ Widget _smartInsightsSection({
   );
 }
 
-Widget _frequentCategoryCard(String category, int count, bool isDark) {
+Widget _frequentCategoryCard(
+  BuildContext context,
+  String category,
+  int count,
+  bool isDark,
+) {
   return Container(
     width: 280,
     padding: const EdgeInsets.all(16),
@@ -459,7 +476,7 @@ Widget _frequentCategoryCard(String category, int count, bool isDark) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Most Frequent',
+                    AppLocalizations.of(context)!.mostFrequentCardText,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
@@ -467,7 +484,7 @@ Widget _frequentCategoryCard(String category, int count, bool isDark) {
                     ),
                   ),
                   Text(
-                    'Category this month',
+                    AppLocalizations.of(context)!.categoryThisMonthCardText,
                     style: TextStyle(
                       fontSize: 10,
                       color: isDark ? Colors.white70 : Colors.black54,
@@ -508,6 +525,7 @@ Widget _frequentCategoryCard(String category, int count, bool isDark) {
 }
 
 Widget _highestSpendDayCard(
+  BuildContext context,
   DateTime? date,
   double amount,
   SettingsController settings,
@@ -517,7 +535,7 @@ Widget _highestSpendDayCard(
 ) {
   String dayLabel = date != null
       ? DateFormat('MMM d, EEEE').format(date)
-      : 'No Data';
+      : AppLocalizations.of(context)!.noData;
   return Container(
     width: 280,
     padding: const EdgeInsets.all(16),
@@ -545,7 +563,7 @@ Widget _highestSpendDayCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Highest Spend Day',
+                    AppLocalizations.of(context)!.highestSpendDayHeader,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
@@ -601,6 +619,7 @@ Widget _highestSpendDayCard(
 }
 
 Widget _dailyAverageCard(
+  BuildContext context,
   double dailyAvg,
   SettingsController settings,
   bool isDark,
@@ -634,8 +653,8 @@ Widget _dailyAverageCard(
             fontFamily: 'Serif',
           ),
         ),
-        const Text(
-          'Daily Average',
+        Text(
+          AppLocalizations.of(context)!.dailyAverageMetrics,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -644,7 +663,7 @@ Widget _dailyAverageCard(
         ),
         const Spacer(),
         Text(
-          'Based on this month\'s activity',
+          AppLocalizations.of(context)!.thisMonthActivity,
           style: TextStyle(
             fontSize: 11,
             color: isDark ? Colors.white30 : Colors.grey,
@@ -656,6 +675,7 @@ Widget _dailyAverageCard(
 }
 
 Widget _advanceInsightsSection({
+  required BuildContext context,
   required List<double> weeklyIncome,
   required List<double> weeklyExpense,
   required String month,
@@ -671,9 +691,9 @@ Widget _advanceInsightsSection({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
-        'Advance Insights',
-        style: TextStyle(
+      Text(
+        AppLocalizations.of(context)!.advanceInsightsAnalytics,
+        style: const TextStyle(
           fontSize: 20,
           fontFamily: 'Serif',
           fontWeight: FontWeight.bold,
@@ -701,9 +721,12 @@ Widget _advanceInsightsSection({
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Monthly Comparison Trend',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  Text(
+                    AppLocalizations.of(context)!.monthlyComparisonAnalytics,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                   ),
                   Text(
                     month,
@@ -773,6 +796,7 @@ Widget _weeklyComparisonBar(
 }
 
 Widget _sixMonthTrendSection({
+  required BuildContext context,
   required List<Map<String, dynamic>> sixMonthIncomeData,
   required bool isDark,
 }) {
@@ -785,8 +809,8 @@ Widget _sixMonthTrendSection({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
-        '6-Month Income Trend',
+      Text(
+        AppLocalizations.of(context)!.sixMonthIncomeAnalytics,
         style: TextStyle(
           fontSize: 20,
           fontFamily: 'Serif',
@@ -879,7 +903,7 @@ class _PremiumExportLockSection extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Premium Export & PDF Reports',
+                    AppLocalizations.of(context)!.premiumExportTitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
@@ -889,7 +913,7 @@ class _PremiumExportLockSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Unlock professional reports and cloud\nbackground permanently',
+                    AppLocalizations.of(context)!.unlockProfessionalDetails,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12,
@@ -911,9 +935,9 @@ class _PremiumExportLockSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: const Text(
-                      'Go Premium',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Text(
+                      AppLocalizations.of(context)!.goPremiumBtn,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

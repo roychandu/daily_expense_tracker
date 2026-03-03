@@ -33,8 +33,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
               backgroundColor: Theme.of(context).brightness == Brightness.dark
                   ? const Color(0xFF1E1E1E)
                   : Colors.white,
-              title: const Text(
-                'Select Month',
+              title: Text(
+                AppLocalizations.of(context)!.selectMonth,
                 style: TextStyle(fontFamily: 'Serif'),
               ),
               content: SizedBox(

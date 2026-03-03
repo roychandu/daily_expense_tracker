@@ -9,6 +9,7 @@ import '../../utils/category_utils.dart';
 import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
 import 'dart:ui';
+import '../../l10n/app_localizations.dart';
 
 Widget buildLockedInsightsBody({
   required BuildContext context,
@@ -30,6 +31,7 @@ Widget buildLockedInsightsBody({
           horizontal: AppLayout.horizontalPadding(context),
         ),
         child: _summarySection(
+          context: context,
           isDark: isDark,
           netBalance: netBalance,
           totalMonthlyIncome: totalMonthlyIncome,
@@ -47,6 +49,7 @@ Widget buildLockedInsightsBody({
           horizontal: AppLayout.horizontalPadding(context),
         ),
         child: _spendingBreakdownSection(
+          context: context,
           sortedCategories: sortedCategories,
           totalMonthlyExpense: totalMonthlyExpense,
           settings: settings,
@@ -65,6 +68,7 @@ Widget buildLockedInsightsBody({
 }
 
 Widget _summarySection({
+  required BuildContext context,
   required bool isDark,
   required double netBalance,
   required double totalMonthlyIncome,
@@ -89,7 +93,7 @@ Widget _summarySection({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} SUMMARY',
+              '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
               style: AppTextStyles.caption.copyWith(
                 letterSpacing: 1.2,
                 color: isDark ? Colors.white60 : Colors.black54,
@@ -130,7 +134,7 @@ Widget _summarySection({
           ),
         ),
         Text(
-          'Net Balance',
+          AppLocalizations.of(context)!.netBalanceStr,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.successGreen,
             fontWeight: FontWeight.bold,
@@ -141,7 +145,7 @@ Widget _summarySection({
         Row(
           children: [
             _summaryItem(
-              'Income',
+              AppLocalizations.of(context)!.income,
               totalMonthlyIncome,
               AppColors.successGreen,
               isDark,
@@ -149,7 +153,7 @@ Widget _summarySection({
             ),
             const SizedBox(width: 16),
             _summaryItem(
-              'Expense',
+              AppLocalizations.of(context)!.expense,
               totalMonthlyExpense,
               AppColors.softCoral,
               isDark,
@@ -199,6 +203,7 @@ Widget _summaryItem(
 }
 
 Widget _spendingBreakdownSection({
+  required BuildContext context,
   required List<MapEntry<String, double>> sortedCategories,
   required double totalMonthlyExpense,
   required SettingsController settings,
@@ -212,14 +217,14 @@ Widget _spendingBreakdownSection({
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Top Spending Breakdown',
+            AppLocalizations.of(context)!.topSpendBreakdownText,
             style: AppTextStyles.h2Section.copyWith(
               fontSize: 20,
               fontFamily: 'Serif',
             ),
           ),
           Text(
-            'VIEW ALL',
+            AppLocalizations.of(context)!.viewAll,
             style: TextStyle(
               color: Colors.orange.withValues(alpha: 0.8),
               fontSize: 12,
@@ -344,10 +349,10 @@ class _LockedInsightsCard extends StatelessWidget {
             children: [
               const Icon(Icons.auto_awesome, color: Colors.orange, size: 24),
               const SizedBox(width: 8),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Unlock to watch full Insights',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.unlockWatchFullInsights,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -357,10 +362,19 @@ class _LockedInsightsCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          _bulletItem('Detailed spending breakdown'),
-          _bulletItem('Smart tailored insights'),
-          _bulletItem('Weekly Inc vs Exp trend'),
-          _bulletItem('Monthly trend'),
+          _bulletItem(
+            context,
+            AppLocalizations.of(context)!.detailedSpendingBreakdown,
+          ),
+          _bulletItem(
+            context,
+            AppLocalizations.of(context)!.smartTailoredInsights,
+          ),
+          _bulletItem(
+            context,
+            AppLocalizations.of(context)!.weeklyIncVsExpTrend,
+          ),
+          _bulletItem(context, AppLocalizations.of(context)!.monthlyTrend),
           const SizedBox(height: 32),
           Row(
             children: [
@@ -376,9 +390,9 @@ class _LockedInsightsCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Upgrade Now',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Text(
+                    AppLocalizations.of(context)!.upgradeNowBtn,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -395,9 +409,9 @@ class _LockedInsightsCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Watch Ads',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Text(
+                    AppLocalizations.of(context)!.watchAdsTxt,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -408,7 +422,7 @@ class _LockedInsightsCard extends StatelessWidget {
     );
   }
 
-  Widget _bulletItem(String text) {
+  Widget _bulletItem(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(

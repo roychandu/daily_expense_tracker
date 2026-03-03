@@ -1069,6 +1069,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Entries today'**
   String get entriesToday;
+
+  /// No description provided for @monthlySummaryText.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Summary'**
+  String get monthlySummaryText;
+
+  /// No description provided for @netBalanceStr.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Balance'**
+  String get netBalanceStr;
+
+  /// No description provided for @spendBreakdownHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Breakdown'**
+  String get spendBreakdownHeadline;
+
+  /// No description provided for @topSpendBreakdownText.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Spending Breakdown'**
+  String get topSpendBreakdownText;
+
+  /// No description provided for @viewInfoText.
+  ///
+  /// In en, this message translates to:
+  /// **'VIEW ALL'**
+  String get viewInfoText;
+
+  /// No description provided for @viewFullBreakdownTxt.
+  ///
+  /// In en, this message translates to:
+  /// **'View Full Breakdown'**
+  String get viewFullBreakdownTxt;
+
+  /// No description provided for @smartInsightsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Insights'**
+  String get smartInsightsHeader;
+
+  /// No description provided for @mostFrequentCardText.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Frequent'**
+  String get mostFrequentCardText;
+
+  /// No description provided for @categoryThisMonthCardText.
+  ///
+  /// In en, this message translates to:
+  /// **'Category this month'**
+  String get categoryThisMonthCardText;
+
+  /// No description provided for @highestSpendDayHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Spend Day'**
+  String get highestSpendDayHeader;
+
+  /// No description provided for @dailyAverageMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Average'**
+  String get dailyAverageMetrics;
+
+  /// No description provided for @advanceInsightsAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance Insights'**
+  String get advanceInsightsAnalytics;
+
+  /// No description provided for @monthlyComparisonAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Comparison Trend'**
+  String get monthlyComparisonAnalytics;
+
+  /// No description provided for @sixMonthIncomeAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'6-Month Income Trend'**
+  String get sixMonthIncomeAnalytics;
+
+  /// No description provided for @premiumExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Export & PDF Reports'**
+  String get premiumExportTitle;
+
+  /// No description provided for @unlockProfessionalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock professional reports and cloud\\nbackground permanently'**
+  String get unlockProfessionalDetails;
+
+  /// No description provided for @goPremiumBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Premium'**
+  String get goPremiumBtn;
+
+  /// No description provided for @unlockWatchFullInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock to watch full Insights'**
+  String get unlockWatchFullInsights;
+
+  /// No description provided for @upgradeNowBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Now'**
+  String get upgradeNowBtn;
+
+  /// No description provided for @watchAdsTxt.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch Ads'**
+  String get watchAdsTxt;
+
+  /// No description provided for @highest.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest'**
+  String get highest;
+
+  /// No description provided for @average.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get average;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noData;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get notAvailable;
+
+  /// No description provided for @detailedSpendingBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed spending breakdown'**
+  String get detailedSpendingBreakdown;
+
+  /// No description provided for @smartTailoredInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart tailored insights'**
+  String get smartTailoredInsights;
+
+  /// No description provided for @weeklyIncVsExpTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Inc vs Exp trend'**
+  String get weeklyIncVsExpTrend;
+
+  /// No description provided for @monthlyTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly trend'**
+  String get monthlyTrend;
+
+  /// No description provided for @thisMonthActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on this month\'s activity'**
+  String get thisMonthActivity;
+
+  /// No description provided for @csv.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV'**
+  String get csv;
+
+  /// No description provided for @pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get pdf;
+
+  /// No description provided for @inc.
+  ///
+  /// In en, this message translates to:
+  /// **'Inc'**
+  String get inc;
+
+  /// No description provided for @exp.
+  ///
+  /// In en, this message translates to:
+  /// **'Exp'**
+  String get exp;
+
+  /// No description provided for @fileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved'**
+  String get fileSaved;
+
+  /// No description provided for @errorSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving'**
+  String get errorSaving;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
 }
 
 class _AppLocalizationsDelegate

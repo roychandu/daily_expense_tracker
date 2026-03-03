@@ -30,5 +30,10 @@
   "todayCardTitle": "TODAY",
   "entriesToday": "Entries today",
   "moreThanYesterday": "more than yesterday",
-  "lessThanYesterday": "less than yesterday"
+  "lessThanYesterday": "less than yesterday",
+  "recent": "Reciente",
+  "noExpensesYet": "¡Aún no hay gastos!",
+  "noIncomeYet": "¡Aún no hay ingresos!",
+  "viewAllHistory": "Ver todo el historial",
+  "selectMonth": "Seleccionar mes"
 }

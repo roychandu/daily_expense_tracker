@@ -496,4 +496,113 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get entriesToday => 'Entries today';
+
+  @override
+  String get monthlySummaryText => 'Monthly Summary';
+
+  @override
+  String get netBalanceStr => 'Net Balance';
+
+  @override
+  String get spendBreakdownHeadline => 'Spending Breakdown';
+
+  @override
+  String get topSpendBreakdownText => 'Top Spending Breakdown';
+
+  @override
+  String get viewInfoText => 'VIEW ALL';
+
+  @override
+  String get viewFullBreakdownTxt => 'View Full Breakdown';
+
+  @override
+  String get smartInsightsHeader => 'Smart Insights';
+
+  @override
+  String get mostFrequentCardText => 'Most Frequent';
+
+  @override
+  String get categoryThisMonthCardText => 'Category this month';
+
+  @override
+  String get highestSpendDayHeader => 'Highest Spend Day';
+
+  @override
+  String get dailyAverageMetrics => 'Daily Average';
+
+  @override
+  String get advanceInsightsAnalytics => 'Advance Insights';
+
+  @override
+  String get monthlyComparisonAnalytics => 'Monthly Comparison Trend';
+
+  @override
+  String get sixMonthIncomeAnalytics => '6-Month Income Trend';
+
+  @override
+  String get premiumExportTitle => 'Premium Export & PDF Reports';
+
+  @override
+  String get unlockProfessionalDetails =>
+      'Unlock professional reports and cloud\\nbackground permanently';
+
+  @override
+  String get goPremiumBtn => 'Go Premium';
+
+  @override
+  String get unlockWatchFullInsights => 'Unlock to watch full Insights';
+
+  @override
+  String get upgradeNowBtn => 'Upgrade Now';
+
+  @override
+  String get watchAdsTxt => 'Watch Ads';
+
+  @override
+  String get highest => 'Highest';
+
+  @override
+  String get average => 'Average';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get detailedSpendingBreakdown => 'Detailed spending breakdown';
+
+  @override
+  String get smartTailoredInsights => 'Smart tailored insights';
+
+  @override
+  String get weeklyIncVsExpTrend => 'Weekly Inc vs Exp trend';
+
+  @override
+  String get monthlyTrend => 'Monthly trend';
+
+  @override
+  String get thisMonthActivity => 'Based on this month\'s activity';
+
+  @override
+  String get csv => 'CSV';
+
+  @override
+  String get pdf => 'PDF';
+
+  @override
+  String get inc => 'Inc';
+
+  @override
+  String get exp => 'Exp';
+
+  @override
+  String get fileSaved => 'File saved';
+
+  @override
+  String get errorSaving => 'Error saving';
+
+  @override
+  String get unknownError => 'Unknown error';
 }

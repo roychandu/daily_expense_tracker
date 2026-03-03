@@ -69,7 +69,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get home => 'होम';
 
   @override
-  String get summary => 'सारांश';
+  String get summary => 'समरी';
 
   @override
   String get insights => 'इनसाइट्स';
@@ -81,22 +81,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get today => 'आज';
 
   @override
-  String get expense => 'खर्च';
+  String get expense => 'एक्सपेंस';
 
   @override
-  String get income => 'आय';
+  String get income => 'इनकम';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'हाल ही का';
 
   @override
-  String get noExpensesYet => 'No expenses yet!';
+  String get noExpensesYet => 'अभी तक कोई खर्च नहीं!';
 
   @override
-  String get noIncomeYet => 'No income yet!';
+  String get noIncomeYet => 'अभी तक कोई आय नहीं!';
 
   @override
-  String get viewAllHistory => 'View All History';
+  String get viewAllHistory => 'पूरा इतिहास देखें';
 
   @override
   String get totalExpensesToday => 'Total Expenses for today';
@@ -105,7 +105,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get totalIncomeToday => 'Total Income for today';
 
   @override
-  String get items => 'items';
+  String get items => 'आइटम्स';
 
   @override
   String get expenses => 'expenses';
@@ -318,7 +318,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get reminderBody => 'आज के अपने खर्चों को दर्ज करना न भूलें! 📝';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'नेट बैलेंस';
 
   @override
   String get spendingBreakdown => 'Spending Breakdown';
@@ -327,7 +327,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get topSpendingBreakdown => 'Top Spending Breakdown';
 
   @override
-  String get viewAll => 'VIEW ALL';
+  String get viewAll => 'व्यू ऑल';
 
   @override
   String get viewFullBreakdown => 'View Full Breakdown';
@@ -370,7 +370,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
 
   @override
-  String get selectMonth => 'Select Month';
+  String get selectMonth => 'सेलेक्ट मंथ';
 
   @override
   String get achievements => 'Achievements';
@@ -477,10 +477,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noDataFoundInDatabase => 'No data found in database';
 
   @override
-  String get exportTransactionHistory => 'Export Transaction History';
+  String get exportTransactionHistory => 'एक्सपोर्ट ट्रांसेक्शन हिस्ट्री';
 
   @override
-  String get annualFinancialReport => 'Annual Financial Report';
+  String get annualFinancialReport => 'एनुअल फाइनेंशियल रिपोर्ट';
 
   @override
   String get awayFromBadge => 'दिन दूर हैं एक सिल्वर बैज से!';
@@ -497,4 +497,113 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get entriesToday => 'एंट्रीज टुडे';
+
+  @override
+  String get monthlySummaryText => 'मंथली समरी';
+
+  @override
+  String get netBalanceStr => 'नेट बैलेंस';
+
+  @override
+  String get spendBreakdownHeadline => 'स्पेंडिंग ब्रेकडाउन';
+
+  @override
+  String get topSpendBreakdownText => 'टॉप स्पेंडिंग ब्रेकडाउन';
+
+  @override
+  String get viewInfoText => 'व्यू ऑल';
+
+  @override
+  String get viewFullBreakdownTxt => 'व्यू फुल ब्रेकडाउन';
+
+  @override
+  String get smartInsightsHeader => 'स्मार्ट इनसाइट्स';
+
+  @override
+  String get mostFrequentCardText => 'मोस्ट फ्रिक्वेंट';
+
+  @override
+  String get categoryThisMonthCardText => 'कैटेगरी थिस मंथ';
+
+  @override
+  String get highestSpendDayHeader => 'हाइएस्ट स्पेंड डे';
+
+  @override
+  String get dailyAverageMetrics => 'डेली एवरेज';
+
+  @override
+  String get advanceInsightsAnalytics => 'एडवांस इनसाइट्स';
+
+  @override
+  String get monthlyComparisonAnalytics => 'मंथली कंपेरिजन ट्रेंड';
+
+  @override
+  String get sixMonthIncomeAnalytics => '6 मंथ इनकम ट्रेंड';
+
+  @override
+  String get premiumExportTitle => 'प्रीमियम एक्सपोर्ट';
+
+  @override
+  String get unlockProfessionalDetails =>
+      'प्रोफेशनल रिपोर्ट्स और क्लाउड बैकग्राउंड को स्थायी रूप से अनलॉक करें';
+
+  @override
+  String get goPremiumBtn => 'गो प्रीमियम';
+
+  @override
+  String get unlockWatchFullInsights => 'अनलॉक टू वॉच फुल इनसाइट्स';
+
+  @override
+  String get upgradeNowBtn => 'अपग्रेड नाउ';
+
+  @override
+  String get watchAdsTxt => 'वॉच एड्स';
+
+  @override
+  String get highest => 'हाइएस्ट';
+
+  @override
+  String get average => 'एवरेज';
+
+  @override
+  String get noData => 'नो डेटा';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get detailedSpendingBreakdown => 'डिटेल्ड स्पेंडिंग ब्रेकडाउन';
+
+  @override
+  String get smartTailoredInsights => 'स्मार्ट टेलर्ड इनसाइट्स';
+
+  @override
+  String get weeklyIncVsExpTrend => 'वीकली इनकम vs एक्सपेंस ट्रेंड';
+
+  @override
+  String get monthlyTrend => 'मंथली ट्रेंड';
+
+  @override
+  String get thisMonthActivity => 'थिस मंथ की एक्टिविटी';
+
+  @override
+  String get csv => 'CSV';
+
+  @override
+  String get pdf => 'PDF';
+
+  @override
+  String get inc => 'INC';
+
+  @override
+  String get exp => 'EXP';
+
+  @override
+  String get fileSaved => 'फाइल सेव हो गई';
+
+  @override
+  String get errorSaving => 'सेव करने में एरर';
+
+  @override
+  String get unknownError => 'अननोन एरर';
 }

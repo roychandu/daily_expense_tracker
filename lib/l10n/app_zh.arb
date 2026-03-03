@@ -30,5 +30,10 @@
   "todayCardTitle": "图代",
   "entriesToday": "恩特里斯 图代",
   "moreThanYesterday": "摩尔 赞 耶斯特代",
-  "lessThanYesterday": "莱斯 赞 耶斯特代"
+  "lessThanYesterday": "莱斯 赞 耶斯特代",
+  "recent": "最近的",
+  "noExpensesYet": "暂无支出！",
+  "noIncomeYet": "暂无收入！",
+  "viewAllHistory": "查看所有历史记录",
+  "selectMonth": "选择月份"
 }
