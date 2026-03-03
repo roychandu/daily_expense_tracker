@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -91,10 +90,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         );
       },
     );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+    if (picked != null) {
+      if (!context.mounted) return;
+      if (picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+        });
+      }
     }
   }
 
@@ -126,13 +128,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       await controller.addExpense(expense);
     }
 
-    if (mounted) {
-      showCustomSnackBar(
-        context,
-        _isExpense ? l10n.expenseSaved : l10n.incomeSaved,
-      );
-      Navigator.pop(context, true);
-    }
+    if (!mounted) return;
+    showCustomSnackBar(
+      context,
+      _isExpense ? l10n.expenseSaved : l10n.incomeSaved,
+    );
+    Navigator.pop(context, true);
   }
 
   String _getLocalizedCategoryName(String name, AppLocalizations l10n) {
@@ -873,7 +874,7 @@ class _CreateCategoryBottomSheetState
   void _showIconPicker(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final List<String> assetIcons = [
+    final assetIcons = {
       ...CategoryUtils.expenseCategories
           .map((e) => e['lightUnselected']!)
           .where((e) => e.isNotEmpty),
@@ -881,7 +882,7 @@ class _CreateCategoryBottomSheetState
           .map((e) => e['lightUnselected']!)
           .where((e) => e.isNotEmpty),
       'assets/icons/add-new-icon.png',
-    ].toSet().toList();
+    }.toList();
 
     final List<IconData> commonMaterial = CategoryUtils.commonMaterialIcons;
     final List<IconData> commonCupertino = CategoryUtils.commonCupertinoIcons;

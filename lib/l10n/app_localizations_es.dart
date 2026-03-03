@@ -75,9 +75,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get insights => 'Insights';
 
   @override
-  String get progress => 'Progress';
-
-  @override
   String get today => 'Today';
 
   @override
@@ -85,6 +82,94 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get income => 'Income';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get addExpense => 'Agregar gastos';
+
+  @override
+  String get addIncome => 'Agregar ingresos';
+
+  @override
+  String get saveExpense => 'Ahorrar gastos';
+
+  @override
+  String get saveIncome => 'Ahorre ingresos';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get editExpense => 'Editar gastos';
+
+  @override
+  String get editIncome => 'Editar ingresos';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get internetRequired => 'Se requiere Internet';
+
+  @override
+  String get reminderInternetRequirement =>
+      'Daily reminder has been set successfully.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get reminderBody => '¡No olvides registrar tus gastos de hoy! 📝';
+
+  @override
+  String get progress => 'Progress';
+
+  @override
+  String get awayFromBadge => 'días para una insignia de plata!';
+
+  @override
+  String get youAre => 'Estás a';
+
+  @override
+  String get milestoneReached => '¡Hito alcanzado! Revisa tus recompensas.';
+
+  @override
+  String get daysStreak => 'RACHA DE DÍAS';
+
+  @override
+  String get streakProgress => 'PROGRESO DE RACHA';
+
+  @override
+  String get daysToNextMilestone => 'Días para el siguiente hito';
+
+  @override
+  String get todayCardTitle => 'Today';
+
+  @override
+  String get entriesToday => 'Entries Today';
+
+  @override
+  String get moreThanYesterday => 'More than Yesterday';
+
+  @override
+  String get lessThanYesterday => 'Less than Yesterday';
 
   @override
   String get recent => 'Recent';
@@ -99,329 +184,277 @@ class AppLocalizationsEs extends AppLocalizations {
   String get viewAllHistory => 'View All History';
 
   @override
-  String get totalExpensesToday => 'Total Expenses for today';
+  String get monthlySummaryText => 'Monthly Summary';
 
   @override
-  String get totalIncomeToday => 'Total Income for today';
+  String get netBalanceStr => 'Saldo Neto';
 
   @override
-  String get items => 'items';
+  String get spendBreakdownHeadline => 'Desglose del gasto';
 
   @override
-  String get expenses => 'expenses';
+  String get topSpendBreakdownText => 'Desglose del gasto principal';
 
   @override
-  String get logged => 'Logged';
+  String get viewInfoText => 'VER TODO';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get viewFullBreakdownTxt => 'Ver desglose completo';
 
   @override
-  String get addIncome => 'Add Income';
+  String get smartInsightsHeader => 'Información inteligente';
 
   @override
-  String get category => 'Category';
+  String get mostFrequentCardText => 'Más frecuente';
 
   @override
-  String get addNoteOptional => 'Add note (optional)';
+  String get categoryThisMonthCardText => 'Categoría este mes';
 
   @override
-  String get saveExpense => 'Save Expense';
+  String get highestSpendDayHeader => 'Día de mayor gasto';
 
   @override
-  String get saveIncome => 'Save Income';
+  String get dailyAverageMetrics => 'Promedio diario';
 
   @override
-  String get pleaseEnterValidAmount => 'Please enter a valid amount';
+  String get advanceInsightsAnalytics => 'Información avanzada';
 
   @override
-  String get pleaseSelectCategory => 'Please select a category';
+  String get monthlyComparisonAnalytics => 'Tendencia de comparación mensual';
 
   @override
-  String get expenseSaved => 'Expense saved ✓';
+  String get sixMonthIncomeAnalytics => 'Tendencia de ingresos de 6 meses';
 
   @override
-  String get incomeSaved => 'Income saved ✓';
+  String get premiumExportTitle => 'Exportación premium e informes en PDF';
 
   @override
-  String get loggingStreak => 'LOGGING STREAK';
+  String get unlockProfessionalDetails =>
+      'Desbloquee informes profesionales y antecedentes en la nube de forma permanente';
 
   @override
-  String get day => 'Day';
+  String get goPremiumBtn => 'Ir Premium';
 
   @override
-  String get days => 'Days';
+  String get unlockWatchFullInsights =>
+      'Desbloquee para ver Insights completos';
 
   @override
-  String get keepItGoing => 'Keep it going!';
+  String get upgradeNowBtn => 'Actualiza ahora';
 
   @override
-  String get startLoggingToday => 'Start logging today!';
+  String get watchAdsTxt => 'Ver anuncios';
 
   @override
-  String get weeklyActivity => 'Weekly Activity';
+  String get highest => 'más alto';
 
   @override
-  String get daysLogged => 'of 7 days logged';
+  String get average => 'Promedio';
 
   @override
-  String get consistentInsight =>
-      'You\'ve been consistent! Keep tracking to see more trends.';
+  String get noData => 'Sin datos';
 
   @override
-  String get startInsight =>
-      'Log more frequently to unlock personal spending insights.';
-
-  @override
-  String get monthlyTotal => 'MONTHLY TOTAL';
-
-  @override
-  String get topCategory => 'Top category';
-
-  @override
-  String get details => 'DETAILS';
-
-  @override
-  String get unlockFullBreakdown => 'Unlock Full Breakdown';
-
-  @override
-  String get categoryBreakdown => 'Category breakdown';
-
-  @override
-  String get dailyAverageSpend => 'Daily average spend';
-
-  @override
-  String get highestSpendDay => 'Highest spend day';
-
-  @override
-  String get or => 'or';
-
-  @override
-  String get categoryBreakdownTitle => 'CATEGORY BREAKDOWN';
-
-  @override
-  String get dailyAvg => 'Daily Avg';
-
-  @override
-  String get totalItems => 'Total Items';
-
-  @override
-  String get history => 'History';
-
-  @override
-  String get searchExpenses => 'Search expenses...';
-
-  @override
-  String get noHistoryFound => 'No history found';
-
-  @override
-  String get yesterday => 'Yesterday';
-
-  @override
-  String get moreThanYesterday => 'More than Yesterday';
-
-  @override
-  String get lessThanYesterday => 'Less than Yesterday';
-
-  @override
-  String get dateWiseLog => 'DATE-WISE LOG';
-
-  @override
-  String get editExpense => 'Edit Expense';
-
-  @override
-  String get editIncome => 'Edit Income';
-
-  @override
-  String get update => 'Update';
-
-  @override
-  String get other => 'Other';
-
-  @override
-  String get all => 'All';
-
-  @override
-  String get filters => 'Filters';
-
-  @override
-  String get type => 'Type';
-
-  @override
-  String get categories => 'Categories';
-
-  @override
-  String get reset => 'Reset';
-
-  @override
-  String get apply => 'Apply';
-
-  @override
-  String get reportID => 'ID';
-
-  @override
-  String get reportDate => 'Date';
-
-  @override
-  String get reportCategory => 'Category';
-
-  @override
-  String get reportAmount => 'Amount';
-
-  @override
-  String get reportType => 'Type';
-
-  @override
-  String get reportNote => 'Note';
-
-  @override
-  String get expenseReport => 'Expense Report';
-
-  @override
-  String get totalExpenses => 'Total Expenses';
-
-  @override
-  String get totalIncome => 'Total Income';
-
-  @override
-  String get fileSavedTo => 'File saved to';
-
-  @override
-  String get error => 'Error';
-
-  @override
-  String get couldNotFindExportDir => 'Could not find export directory';
-
-  @override
-  String get generatingCsv => 'Generating CSV...';
-
-  @override
-  String get generatingPdf => 'Generating PDF...';
-
-  @override
-  String get noDataFound => 'No data found for selected range';
-
-  @override
-  String get internetRequired => 'Internet Required';
-
-  @override
-  String get reminderInternetRequirement =>
-      'Daily reminder has been set successfully.';
-
-  @override
-  String get exportingCsv => 'Exporting CSV...';
-
-  @override
-  String get ok => 'OK';
-
-  @override
-  String get reminderBody => 'Don\'t forget to log your expenses for today! 📝';
-
-  @override
-  String get netBalance => 'Net Balance';
-
-  @override
-  String get spendingBreakdown => 'Spending Breakdown';
-
-  @override
-  String get topSpendingBreakdown => 'Top Spending Breakdown';
-
-  @override
-  String get viewAll => 'VIEW ALL';
-
-  @override
-  String get viewFullBreakdown => 'View Full Breakdown';
-
-  @override
-  String get smartInsights => 'Smart Insights';
-
-  @override
-  String get mostFrequent => 'Most Frequent';
-
-  @override
-  String get categoryThisMonth => 'Category this month';
-
-  @override
-  String get dailyAverage => 'Daily Average';
-
-  @override
-  String get advanceInsights => 'Advance Insights';
-
-  @override
-  String get monthlyComparisonTrend => 'Monthly Comparison Trend';
-
-  @override
-  String get sixMonthIncomeTrend => '6-Month Income Trend';
-
-  @override
-  String get premiumExportPdfReports => 'Premium Export & PDF Reports';
-
-  @override
-  String get unlockProfessionalReports =>
-      'Unlock professional reports and cloud\\nbackground permanently';
-
-  @override
-  String get goPremium => 'Go Premium';
-
-  @override
-  String get upgradeNow => 'Upgrade Now';
-
-  @override
-  String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
+  String get notAvailable => 'N / A';
 
   @override
   String get selectMonth => 'Seleccionar mes';
 
   @override
+  String get detailedSpendingBreakdown => 'Desglose detallado del gasto';
+
+  @override
+  String get smartTailoredInsights => 'Información inteligente y personalizada';
+
+  @override
+  String get weeklyIncVsExpTrend => 'Tendencia semanal Inc vs Exp';
+
+  @override
+  String get monthlyTrend => 'Tendencia mensual';
+
+  @override
+  String get netBalance => 'Net Balance';
+
+  @override
+  String get items => 'elementos';
+
+  @override
+  String get transactions => 'Actas';
+
+  @override
+  String get month => 'Mes';
+
+  @override
+  String get thisMonthActivity => 'Basado en la actividad de este mes.';
+
+  @override
+  String get viewAll => 'VER TODO';
+
+  @override
+  String get exportTransactionHistory =>
+      'Historial de transacciones de exportación';
+
+  @override
+  String get annualFinancialReport => 'Informe financiero anual';
+
+  @override
+  String get csv => 'CSV';
+
+  @override
+  String get pdf => 'PDF';
+
+  @override
+  String get inc => 'Cª';
+
+  @override
+  String get exp => 'Exp.';
+
+  @override
+  String get fileSaved => 'Archivo guardado';
+
+  @override
+  String get errorSaving => 'Error al guardar';
+
+  @override
+  String get unknownError => 'Error desconocido';
+
+  @override
+  String get week => 'Semana';
+
+  @override
+  String get activityFor => 'Actividad para';
+
+  @override
+  String get stoneBadge => 'insignia de piedra';
+
+  @override
+  String get ironBadge => 'insignia de hierro';
+
+  @override
+  String get bronzeBadge => 'insignia de bronce';
+
+  @override
+  String get silverBadge => 'insignia de plata';
+
+  @override
+  String get goldBadge => 'insignia de oro';
+
+  @override
+  String get platinumBadge => 'insignia de platino';
+
+  @override
+  String get titaniumBadge => 'insignia de titanio';
+
+  @override
+  String get diamondBadge => 'insignia de diamante';
+
+  @override
+  String get nextMilestoneLabel => 'próximo hito';
+
+  @override
+  String get longestStreak => 'LA RACHA MÁS LARGA';
+
+  @override
+  String get total => 'TOTAL';
+
+  @override
+  String get accuracy => 'EXACTITUD';
+
+  @override
+  String get milestoneReachedStayAhead =>
+      '¡Hito alcanzado! Regístrese mañana para mantenerse a la vanguardia.';
+
+  @override
+  String get awayFromGeneric => 'días lejos de un';
+
+  @override
+  String get stoneTitle => 'PIEDRA';
+
+  @override
+  String get ironTitle => 'HIERRO';
+
+  @override
+  String get bronzeTitle => 'BRONCE';
+
+  @override
+  String get silverTitle => 'PLATA';
+
+  @override
+  String get goldTitle => 'ORO';
+
+  @override
+  String get platinumTitle => 'PLATINO';
+
+  @override
+  String get titaniumTitle => 'TITANIO';
+
+  @override
+  String get diamondTitle => 'DIAMANTE';
+
+  @override
+  String get days => 'Días';
+
+  @override
+  String get usageIntensity => 'Intensidad de uso';
+
+  @override
+  String get less => 'Menos';
+
+  @override
+  String get more => 'Más';
+
+  @override
+  String get mon => 'LUN';
+
+  @override
+  String get tue => 'MAR';
+
+  @override
+  String get wed => 'CASARSE';
+
+  @override
+  String get thu => 'JUE';
+
+  @override
+  String get fri => 'VIE';
+
+  @override
+  String get sat => 'SE SENTÓ';
+
+  @override
+  String get sun => 'SOL';
+
+  @override
+  String get weeklyActivity => 'Weekly Activity';
+
+  @override
   String get achievements => 'Achievements';
 
   @override
-  String get daysStreak => 'RACHA DE DÍAS';
+  String get preferencesSection => 'Preferencias';
 
   @override
-  String get streakProgress => 'PROGRESO DE RACHA';
+  String get dataManagementSection => 'Gestión de datos';
 
   @override
-  String get usageIntensity => 'Usage Intensity';
+  String get notificationsSection => 'Notificaciones';
 
   @override
-  String get less => 'Less';
+  String get aboutUs => 'Sobre nosotros';
 
   @override
-  String get more => 'More';
+  String get premiumUnlocked => '¡Funciones premium desbloqueadas!';
 
   @override
-  String get selectCategoryTitle => 'Select Category';
+  String get switchedToFree => 'Cambiado a la versión gratuita';
 
   @override
-  String get addNoteTitle => 'Add Note';
+  String get premiumDescription =>
+      'Elimine todos los anuncios, desbloquee análisis detallados y obtenga información profesional para controlar sus finanzas.';
 
   @override
-  String get optionalField => 'Optional';
-
-  @override
-  String get saveTransaction => 'Save Transaction';
-
-  @override
-  String get createNewCategory => 'Create New Category';
-
-  @override
-  String get chooseAnIcon => 'Choose an icon';
-
-  @override
-  String get createCategory => 'Create Category';
-
-  @override
-  String get pickAColor => 'Pick a Color';
-
-  @override
-  String get done => 'Done';
-
-  @override
-  String get selectIcon => 'Select Icon';
-
-  @override
-  String get daysToNextMilestone => 'Días para el siguiente hito';
+  String get buildConsistentHabit =>
+      'Desarrolle un hábito de seguimiento constante';
 
   @override
   String get premiumMember => 'Premium Member';
@@ -430,11 +463,106 @@ class AppLocalizationsEs extends AppLocalizations {
   String get upgradeToGold => 'Upgrade to Gold';
 
   @override
-  String get premiumDescription =>
-      'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.';
+  String get loading => 'Loading...';
 
   @override
-  String get buildConsistentHabit => 'Build a consistent tracking habit';
+  String get selectCategoryTitle => 'Seleccionar categoría';
+
+  @override
+  String get addNoteTitle => 'Agregar nota';
+
+  @override
+  String get optionalField => 'Opcional';
+
+  @override
+  String get saveTransaction => 'Save Transaction';
+
+  @override
+  String get createNewCategory => 'Create New Category';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get enterName => 'Enter Name';
+
+  @override
+  String get selectIcon => 'Seleccionar icono';
+
+  @override
+  String get chooseAnIcon => 'Elige un icono';
+
+  @override
+  String get selectColor => 'Select Color';
+
+  @override
+  String get createCategory => 'Crear categoría';
+
+  @override
+  String get pickAColor => 'Elige un color';
+
+  @override
+  String get done => 'Hecho';
+
+  @override
+  String get appAssets => 'Activos de la aplicación';
+
+  @override
+  String get materialIcons => 'Iconos de materiales';
+
+  @override
+  String get cupertinoIcons => 'Iconos de Cupertino';
+
+  @override
+  String get writeHere => 'Escribe aquí..';
+
+  @override
+  String get transport => 'Transporte';
+
+  @override
+  String get food => 'Alimento';
+
+  @override
+  String get rent => 'Alquilar';
+
+  @override
+  String get bills => 'Facturas';
+
+  @override
+  String get fun => 'Divertido';
+
+  @override
+  String get shopping => 'Compras';
+
+  @override
+  String get dinning => 'Comedor';
+
+  @override
+  String get health => 'Salud';
+
+  @override
+  String get grocerry => 'comestibles';
+
+  @override
+  String get addNew => 'Agregar nuevo';
+
+  @override
+  String get salaryIncome => 'Ingreso salarial';
+
+  @override
+  String get freelanceSideHustle => 'Freelance/trabajo secundario';
+
+  @override
+  String get businessIncome => 'Ingresos comerciales';
+
+  @override
+  String get investmentReturn => 'Retorno de la inversión';
+
+  @override
+  String get gifBonus => 'Gif/bonus';
+
+  @override
+  String get refundCashback => 'Reembolso/reembolso';
 
   @override
   String get aboutNeelStudio => 'About Neel Studio';
@@ -449,6 +577,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get productStandard => 'Our product standard is simple:';
+
+  @override
+  String get fastActions => 'Fast actions';
+
+  @override
+  String get clearOutcomes => 'Clear outcomes';
+
+  @override
+  String get calmDesign => 'Calm design';
+
+  @override
+  String get respectForTime => 'Respect for your time';
+
+  @override
+  String get continuousImprovement =>
+      'Continuous improvement based on real feedback';
 
   @override
   String get buildForRepeatValue =>
@@ -469,339 +613,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recordsStayOnDevice =>
       'Your records stay on your device. No account required. Clear permissions and transparent controls.';
-
-  @override
-  String get rawDatabaseViewer => 'Raw Database Viewer';
-
-  @override
-  String get noDataFoundInDatabase => 'No data found in database';
-
-  @override
-  String get exportTransactionHistory => 'Export Transaction History';
-
-  @override
-  String get annualFinancialReport => 'Annual Financial Report';
-
-  @override
-  String get awayFromBadge => 'días para una insignia de plata!';
-
-  @override
-  String get youAre => 'Estás a';
-
-  @override
-  String get milestoneReached => '¡Hito alcanzado! Revisa tus recompensas.';
-
-  @override
-  String get todayCardTitle => 'Today';
-
-  @override
-  String get entriesToday => 'Entries Today';
-
-  @override
-  String get monthlySummaryText => 'Monthly Summary';
-
-  @override
-  String get netBalanceStr => 'Net Balance';
-
-  @override
-  String get spendBreakdownHeadline => 'Spending Breakdown';
-
-  @override
-  String get topSpendBreakdownText => 'Top Spending Breakdown';
-
-  @override
-  String get viewInfoText => 'VIEW ALL';
-
-  @override
-  String get viewFullBreakdownTxt => 'View Full Breakdown';
-
-  @override
-  String get smartInsightsHeader => 'Smart Insights';
-
-  @override
-  String get mostFrequentCardText => 'Most Frequent';
-
-  @override
-  String get categoryThisMonthCardText => 'Category this month';
-
-  @override
-  String get highestSpendDayHeader => 'Highest Spend Day';
-
-  @override
-  String get dailyAverageMetrics => 'Daily Average';
-
-  @override
-  String get advanceInsightsAnalytics => 'Advance Insights';
-
-  @override
-  String get monthlyComparisonAnalytics => 'Monthly Comparison Trend';
-
-  @override
-  String get sixMonthIncomeAnalytics => '6-Month Income Trend';
-
-  @override
-  String get premiumExportTitle => 'Premium Export & PDF Reports';
-
-  @override
-  String get unlockProfessionalDetails =>
-      'Unlock professional reports and cloud\\nbackground permanently';
-
-  @override
-  String get goPremiumBtn => 'Go Premium';
-
-  @override
-  String get unlockWatchFullInsights => 'Unlock to watch full Insights';
-
-  @override
-  String get upgradeNowBtn => 'Upgrade Now';
-
-  @override
-  String get watchAdsTxt => 'Watch Ads';
-
-  @override
-  String get highest => 'Highest';
-
-  @override
-  String get average => 'Average';
-
-  @override
-  String get noData => 'No data';
-
-  @override
-  String get notAvailable => 'N/A';
-
-  @override
-  String get detailedSpendingBreakdown => 'Detailed spending breakdown';
-
-  @override
-  String get smartTailoredInsights => 'Smart tailored insights';
-
-  @override
-  String get weeklyIncVsExpTrend => 'Weekly Inc vs Exp trend';
-
-  @override
-  String get monthlyTrend => 'Monthly trend';
-
-  @override
-  String get thisMonthActivity => 'Based on this month\'s activity';
-
-  @override
-  String get csv => 'CSV';
-
-  @override
-  String get pdf => 'PDF';
-
-  @override
-  String get inc => 'Inc';
-
-  @override
-  String get exp => 'Exp';
-
-  @override
-  String get fileSaved => 'File saved';
-
-  @override
-  String get errorSaving => 'Error saving';
-
-  @override
-  String get unknownError => 'Unknown error';
-
-  @override
-  String get week => 'Week';
-
-  @override
-  String get activityFor => 'Activity for';
-
-  @override
-  String get stoneBadge => 'stone badge';
-
-  @override
-  String get ironBadge => 'iron badge';
-
-  @override
-  String get bronzeBadge => 'bronze badge';
-
-  @override
-  String get silverBadge => 'silver badge';
-
-  @override
-  String get goldBadge => 'gold badge';
-
-  @override
-  String get platinumBadge => 'platinum badge';
-
-  @override
-  String get titaniumBadge => 'titanium badge';
-
-  @override
-  String get diamondBadge => 'diamond badge';
-
-  @override
-  String get nextMilestoneLabel => 'next milestone';
-
-  @override
-  String get longestStreak => 'LONGEST STREAK';
-
-  @override
-  String get total => 'TOTAL';
-
-  @override
-  String get accuracy => 'ACCURACY';
-
-  @override
-  String get milestoneReachedStayAhead =>
-      'Milestone reached! Log tomorrow to stay ahead.';
-
-  @override
-  String get awayFromGeneric => 'days away from a';
-
-  @override
-  String get stoneTitle => 'STONE';
-
-  @override
-  String get ironTitle => 'IRON';
-
-  @override
-  String get bronzeTitle => 'BRONZE';
-
-  @override
-  String get silverTitle => 'SILVER';
-
-  @override
-  String get goldTitle => 'GOLD';
-
-  @override
-  String get platinumTitle => 'PLATINUM';
-
-  @override
-  String get titaniumTitle => 'TITANIUM';
-
-  @override
-  String get diamondTitle => 'DIAMOND';
-
-  @override
-  String get mon => 'MON';
-
-  @override
-  String get tue => 'TUE';
-
-  @override
-  String get wed => 'WED';
-
-  @override
-  String get thu => 'THU';
-
-  @override
-  String get fri => 'FRI';
-
-  @override
-  String get sat => 'SAT';
-
-  @override
-  String get sun => 'SUN';
-
-  @override
-  String get preferencesSection => 'Preferences';
-
-  @override
-  String get dataManagementSection => 'Data Management';
-
-  @override
-  String get notificationsSection => 'Notifications';
-
-  @override
-  String get aboutUs => 'About Us';
-
-  @override
-  String get premiumUnlocked => 'Premium Features Unlocked!';
-
-  @override
-  String get switchedToFree => 'Switched to Free Version';
-
-  @override
-  String get categoryName => 'Category Name';
-
-  @override
-  String get enterName => 'Enter Name';
-
-  @override
-  String get selectColor => 'Select Color';
-
-  @override
-  String get appAssets => 'App Assets';
-
-  @override
-  String get materialIcons => 'Material Icons';
-
-  @override
-  String get cupertinoIcons => 'Cupertino Icons';
-
-  @override
-  String get writeHere => 'Write here..';
-
-  @override
-  String get transport => 'Transport';
-
-  @override
-  String get food => 'Food';
-
-  @override
-  String get rent => 'Rent';
-
-  @override
-  String get bills => 'Bills';
-
-  @override
-  String get fun => 'Fun';
-
-  @override
-  String get shopping => 'Shopping';
-
-  @override
-  String get dinning => 'Dinning';
-
-  @override
-  String get health => 'Health';
-
-  @override
-  String get grocerry => 'Grocerry';
-
-  @override
-  String get addNew => 'Add new';
-
-  @override
-  String get salaryIncome => 'Salary Income';
-
-  @override
-  String get freelanceSideHustle => 'Freelance/side hustle';
-
-  @override
-  String get businessIncome => 'Business Income';
-
-  @override
-  String get investmentReturn => 'Investment return';
-
-  @override
-  String get gifBonus => 'Gif/bonus';
-
-  @override
-  String get refundCashback => 'Refund/cashback';
-
-  @override
-  String get fastActions => 'Fast actions';
-
-  @override
-  String get clearOutcomes => 'Clear outcomes';
-
-  @override
-  String get calmDesign => 'Calm design';
-
-  @override
-  String get respectForTime => 'Respect for your time';
-
-  @override
-  String get continuousImprovement =>
-      'Continuous improvement based on real feedback';
 
   @override
   String get onDeviceStorage => 'On-Device Storage';
@@ -843,4 +654,79 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get deleteMyDataDesc =>
       'Permanently delete all records from this device.';
+
+  @override
+  String get pleaseEnterValidAmount => 'Please enter a valid amount';
+
+  @override
+  String get pleaseSelectCategory => 'Please select a category';
+
+  @override
+  String get expenseSaved => 'Expense saved successfully';
+
+  @override
+  String get incomeSaved => 'Income saved successfully';
+
+  @override
+  String get searchExpenses => 'Search expenses...';
+
+  @override
+  String get noHistoryFound => 'No history found';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get generatingCsv => 'Generating CSV...';
+
+  @override
+  String get generatingPdf => 'Generating PDF...';
+
+  @override
+  String get noDataFound => 'No data found for selected range';
+
+  @override
+  String get reportID => 'ID';
+
+  @override
+  String get reportDate => 'Date';
+
+  @override
+  String get reportCategory => 'Category';
+
+  @override
+  String get reportAmount => 'Amount';
+
+  @override
+  String get reportType => 'Type';
+
+  @override
+  String get reportNote => 'Note';
+
+  @override
+  String get fileSavedTo => 'File saved to:';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get couldNotFindExportDir => 'Could not find export directory';
+
+  @override
+  String get expenseReport => 'Expense Report';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get rawDatabaseViewer => 'Raw Database Viewer';
+
+  @override
+  String get noDataFoundInDatabase => 'No records found in database';
 }

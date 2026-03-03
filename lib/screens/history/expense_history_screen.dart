@@ -26,7 +26,7 @@ class ExpenseHistoryScreen extends StatefulWidget {
 class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _selectedType = 'All';
-  List<String> _selectedCategories = [];
+  final List<String> _selectedCategories = [];
   Map<String, List<Expense>> _groupedExpenses = {};
 
   @override

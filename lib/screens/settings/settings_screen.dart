@@ -253,7 +253,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Switch.adaptive(
                 value: switchValue,
                 onChanged: onSwitchChanged,
-                activeColor: AppColors.primarySelected,
+                activeTrackColor: AppColors.primarySelected.withValues(
+                  alpha: 0.5,
+                ),
+                activeThumbColor: AppColors.primarySelected,
               )
             else if (hasBadge)
               Container(
@@ -480,7 +483,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Switch.adaptive(
                   value: settings.isDailyReminderEnabled,
                   onChanged: (val) => _handleReminderToggle(val, settings),
-                  activeColor: AppColors.primarySelected,
+                  activeTrackColor: AppColors.primarySelected.withValues(
+                    alpha: 0.5,
+                  ),
+                  activeThumbColor: AppColors.primarySelected,
                 ),
               ],
             ),
@@ -562,6 +568,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     BuildContext context,
     SettingsController settings,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(settings.reminderTime),
@@ -577,8 +584,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
       await settings.updateReminderTime(
         newDateTime,
-        title: AppLocalizations.of(context)!.appTitle,
-        body: AppLocalizations.of(context)!.reminderBody,
+        title: l10n.appTitle,
+        body: l10n.reminderBody,
       );
     }
   }
@@ -606,13 +613,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       )
                     : null,
                 onTap: () async {
+                  final l10n = AppLocalizations.of(context)!;
                   await settings.updateLocale(Locale(lang['code']!));
                   if (!mounted) return;
-                  final newL10n = AppLocalizations.of(context)!;
                   await settings.rescheduleReminder(
-                    title: newL10n.appTitle,
-                    body: newL10n.reminderBody,
+                    title: l10n.appTitle,
+                    body: l10n.reminderBody,
                   );
+                  if (!mounted) return;
                   Navigator.pop(context);
                 },
               );
