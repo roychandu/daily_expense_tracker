@@ -786,4 +786,61 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get refundCashback => 'Refund/cashback';
+
+  @override
+  String get fastActions => 'Fast actions';
+
+  @override
+  String get clearOutcomes => 'Clear outcomes';
+
+  @override
+  String get calmDesign => 'Calm design';
+
+  @override
+  String get respectForTime => 'Respect for your time';
+
+  @override
+  String get continuousImprovement =>
+      'Continuous improvement based on real feedback';
+
+  @override
+  String get onDeviceStorage => 'On-Device Storage';
+
+  @override
+  String get onDeviceStorageDesc =>
+      'All records are saved on your device. We don’t upload your transactions to our servers.';
+
+  @override
+  String get noAccountNeeded => 'No Account Needed';
+
+  @override
+  String get noAccountNeededDesc =>
+      'You can use the app without signing up or sharing personal details.';
+
+  @override
+  String get notificationsPrivacy => 'Notifications';
+
+  @override
+  String get notificationsPrivacyDesc =>
+      'Used only for reminders you enable. You can turn them off anytime.';
+
+  @override
+  String get adsAndPremium => 'Ads & Premium';
+
+  @override
+  String get adsAndPremiumDesc =>
+      'Free version may show ads. Premium removes ads and unlocks advanced features.';
+
+  @override
+  String get exportMyData => 'Export My Data';
+
+  @override
+  String get exportMyDataDesc => 'Export your records anytime (CSV/PDF).';
+
+  @override
+  String get deleteMyData => 'Delete My Data';
+
+  @override
+  String get deleteMyDataDesc =>
+      'Permanently delete all records from this device.';
 }

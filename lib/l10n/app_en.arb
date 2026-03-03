@@ -258,5 +258,22 @@
   "businessIncome": "Business Income",
   "investmentReturn": "Investment return",
   "gifBonus": "Gif/bonus",
-  "refundCashback": "Refund/cashback"
+  "refundCashback": "Refund/cashback",
+  "fastActions": "Fast actions",
+  "clearOutcomes": "Clear outcomes",
+  "calmDesign": "Calm design",
+  "respectForTime": "Respect for your time",
+  "continuousImprovement": "Continuous improvement based on real feedback",
+  "onDeviceStorage": "On-Device Storage",
+  "onDeviceStorageDesc": "All records are saved on your device. We don’t upload your transactions to our servers.",
+  "noAccountNeeded": "No Account Needed",
+  "noAccountNeededDesc": "You can use the app without signing up or sharing personal details.",
+  "notificationsPrivacy": "Notifications",
+  "notificationsPrivacyDesc": "Used only for reminders you enable. You can turn them off anytime.",
+  "adsAndPremium": "Ads & Premium",
+  "adsAndPremiumDesc": "Free version may show ads. Premium removes ads and unlocks advanced features.",
+  "exportMyData": "Export My Data",
+  "exportMyDataDesc": "Export your records anytime (CSV/PDF).",
+  "deleteMyData": "Delete My Data",
+  "deleteMyDataDesc": "Permanently delete all records from this device."
 }

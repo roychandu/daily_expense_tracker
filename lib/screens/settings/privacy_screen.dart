@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
+import '../../l10n/app_localizations.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -8,15 +9,16 @@ class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: isDark
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text(
-          'Privacy & Trust',
-          style: TextStyle(
+        title: Text(
+          l10n.privacyAndTrust,
+          style: const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 24,
             fontFamily: 'Serif',
@@ -61,7 +63,7 @@ class PrivacyScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Local-first. You stay in control.',
+                          l10n.localFirstControl,
                           style: AppTextStyles.h2Section.copyWith(
                             fontSize: 18,
                             fontFamily: 'Serif',
@@ -73,7 +75,7 @@ class PrivacyScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Your records stay on your device. No account required. Clear permissions and transparent controls.',
+                    l10n.recordsStayOnDevice,
                     style: AppTextStyles.body.copyWith(
                       fontSize: 14,
                       height: 1.5,
@@ -103,43 +105,43 @@ class PrivacyScreen extends StatelessWidget {
                   children: [
                     _buildPrivacyRow(
                       context,
-                      'On-Device Storage',
-                      'All records are saved on your device. We don’t upload your transactions to our servers.',
+                      l10n.onDeviceStorage,
+                      l10n.onDeviceStorageDesc,
                       Icons.storage_rounded,
                     ),
                     _buildDivider(isDark),
                     _buildPrivacyRow(
                       context,
-                      'No Account Needed',
-                      'You can use the app without signing up or sharing personal details.',
+                      l10n.noAccountNeeded,
+                      l10n.noAccountNeededDesc,
                       Icons.no_accounts_rounded,
                     ),
                     _buildDivider(isDark),
                     _buildPrivacyRow(
                       context,
-                      'Notifications',
-                      'Used only for reminders you enable. You can turn them off anytime.',
+                      l10n.notificationsPrivacy,
+                      l10n.notificationsPrivacyDesc,
                       Icons.notifications_none_rounded,
                     ),
                     _buildDivider(isDark),
                     _buildPrivacyRow(
                       context,
-                      'Ads & Premium',
-                      'Free version may show ads. Premium removes ads and unlocks advanced features.',
+                      l10n.adsAndPremium,
+                      l10n.adsAndPremiumDesc,
                       Icons.workspace_premium_outlined,
                     ),
                     _buildDivider(isDark),
                     _buildPrivacyRow(
                       context,
-                      'Export My Data',
-                      'Export your records anytime (CSV/PDF).',
+                      l10n.exportMyData,
+                      l10n.exportMyDataDesc,
                       Icons.ios_share_rounded,
                     ),
                     _buildDivider(isDark),
                     _buildPrivacyRow(
                       context,
-                      'Delete My Data',
-                      'Permanently delete all records from this device.',
+                      l10n.deleteMyData,
+                      l10n.deleteMyDataDesc,
                       Icons.delete_outline_rounded,
                       isDestructive: true,
                     ),
@@ -147,35 +149,6 @@ class PrivacyScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            // Links Card
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-            //     borderRadius: BorderRadius.circular(8),
-            //   ),
-            //   child: Column(
-            //     children: [
-            //       _buildLinkRow(
-            //         context,
-            //         'Privacy Policy',
-            //         'Read the full policy in plain language.',
-            //       ),
-            //       _buildDivider(isDark),
-            //       _buildLinkRow(
-            //         context,
-            //         'Terms of Service',
-            //         'Usage terms and limitations.',
-            //       ),
-            //       _buildDivider(isDark),
-            //       _buildLinkRow(
-            //         context,
-            //         'Contact Support',
-            //         'Questions about privacy? We’re here to help. Email us',
-            //       ),
-            //     ],
-            //   ),
-            // ),
             const SizedBox(height: 32),
           ],
         ),
@@ -229,46 +202,6 @@ class PrivacyScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildLinkRow(BuildContext context, String title, String subtitle) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.body.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: AppTextStyles.caption.copyWith(
-                      fontSize: 12,
-                      color: isDark ? Colors.white30 : Colors.black38,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: isDark ? Colors.white10 : Colors.black12,
-            ),
-          ],
-        ),
       ),
     );
   }

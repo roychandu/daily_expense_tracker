@@ -1645,6 +1645,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refund/cashback'**
   String get refundCashback;
+
+  /// No description provided for @fastActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast actions'**
+  String get fastActions;
+
+  /// No description provided for @clearOutcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear outcomes'**
+  String get clearOutcomes;
+
+  /// No description provided for @calmDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'Calm design'**
+  String get calmDesign;
+
+  /// No description provided for @respectForTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Respect for your time'**
+  String get respectForTime;
+
+  /// No description provided for @continuousImprovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous improvement based on real feedback'**
+  String get continuousImprovement;
+
+  /// No description provided for @onDeviceStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'On-Device Storage'**
+  String get onDeviceStorage;
+
+  /// No description provided for @onDeviceStorageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'All records are saved on your device. We don’t upload your transactions to our servers.'**
+  String get onDeviceStorageDesc;
+
+  /// No description provided for @noAccountNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'No Account Needed'**
+  String get noAccountNeeded;
+
+  /// No description provided for @noAccountNeededDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You can use the app without signing up or sharing personal details.'**
+  String get noAccountNeededDesc;
+
+  /// No description provided for @notificationsPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsPrivacy;
+
+  /// No description provided for @notificationsPrivacyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Used only for reminders you enable. You can turn them off anytime.'**
+  String get notificationsPrivacyDesc;
+
+  /// No description provided for @adsAndPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads & Premium'**
+  String get adsAndPremium;
+
+  /// No description provided for @adsAndPremiumDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Free version may show ads. Premium removes ads and unlocks advanced features.'**
+  String get adsAndPremiumDesc;
+
+  /// No description provided for @exportMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export My Data'**
+  String get exportMyData;
+
+  /// No description provided for @exportMyDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your records anytime (CSV/PDF).'**
+  String get exportMyDataDesc;
+
+  /// No description provided for @deleteMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Data'**
+  String get deleteMyData;
+
+  /// No description provided for @deleteMyDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete all records from this device.'**
+  String get deleteMyDataDesc;
 }
 
 class _AppLocalizationsDelegate

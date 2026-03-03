@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
+import '../../l10n/app_localizations.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -8,15 +9,16 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: isDark
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text(
-          'About Neel Studio',
-          style: TextStyle(
+        title: Text(
+          l10n.aboutNeelStudio,
+          style: const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 24,
             fontFamily: 'Serif',
@@ -33,7 +35,7 @@ class AboutScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Neel Studio builds practical apps for real life.',
+              l10n.neelStudioSlogan1,
               style: AppTextStyles.h2Section.copyWith(
                 fontSize: 22,
                 fontFamily: 'Serif',
@@ -42,7 +44,7 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.',
+              l10n.neelStudioSlogan2,
               style: AppTextStyles.body.copyWith(
                 fontSize: 16,
                 height: 1.6,
@@ -51,24 +53,21 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             Text(
-              'Our product standard is simple:',
+              l10n.productStandard,
               style: AppTextStyles.body.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
             ),
             const SizedBox(height: 16),
-            _buildBulletPoint('Fast actions', isDark),
-            _buildBulletPoint('Clear outcomes', isDark),
-            _buildBulletPoint('Calm design', isDark),
-            _buildBulletPoint('Respect for your time', isDark),
-            _buildBulletPoint(
-              'Continuous improvement based on real feedback',
-              isDark,
-            ),
+            _buildBulletPoint(l10n.fastActions, isDark),
+            _buildBulletPoint(l10n.clearOutcomes, isDark),
+            _buildBulletPoint(l10n.calmDesign, isDark),
+            _buildBulletPoint(l10n.respectForTime, isDark),
+            _buildBulletPoint(l10n.continuousImprovement, isDark),
             const SizedBox(height: 32),
             Text(
-              'We don’t build for hype. We build for repeat value.',
+              l10n.buildForRepeatValue,
               style: AppTextStyles.body.copyWith(
                 fontSize: 16,
                 fontStyle: FontStyle.italic,
@@ -80,7 +79,7 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Real problems. Real people.',
+                    l10n.realProblemsRealPeople,
                     style: AppTextStyles.caption.copyWith(
                       fontSize: 14,
                       letterSpacing: 1.2,
@@ -88,7 +87,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Durable solutions.',
+                    l10n.durableSolutions,
                     style: AppTextStyles.h2Section.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w900,

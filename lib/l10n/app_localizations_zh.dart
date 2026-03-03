@@ -436,38 +436,36 @@ class AppLocalizationsZh extends AppLocalizations {
   String get buildConsistentHabit => 'Build a consistent tracking habit';
 
   @override
-  String get aboutNeelStudio => 'About Neel Studio';
+  String get aboutNeelStudio => '阿包特 尼尔 斯图迪奥';
 
   @override
-  String get neelStudioSlogan1 =>
-      'Neel Studio builds practical apps for real life.';
+  String get neelStudioSlogan1 => '尼尔 斯图迪奥 奎艾特 普拉提克 艾普斯 佛 瑞尔 莱夫.';
 
   @override
   String get neelStudioSlogan2 =>
-      'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.';
+      '威 佛克斯 昂 图尔斯 赞特 希尔普 毕波 斯得 欧得奈兹得, 麦克 贝特 底里 迪西君斯, 安得 奎诶特 肯希斯腾希 -- 威道 康普雷克希提 欧 迪斯卷克申.';
 
   @override
-  String get productStandard => 'Our product standard is simple:';
+  String get productStandard => '欧尔 普罗达克特 斯坦德尔德 以子 辛普尔:';
 
   @override
-  String get buildForRepeatValue =>
-      'We don’t build for hype. We build for repeat value.';
+  String get buildForRepeatValue => '威 冬特 奎诶特 佛 海普, 威 奎诶特 佛 瑞比特 范柳.';
 
   @override
-  String get realProblemsRealPeople => 'Real problems. Real people.';
+  String get realProblemsRealPeople => '瑞尔 普罗布伦斯, 瑞尔 毕波.';
 
   @override
-  String get durableSolutions => 'Durable solutions.';
+  String get durableSolutions => '丢雷伯 索鲁申斯.';
 
   @override
-  String get privacyAndTrust => 'Privacy & Trust';
+  String get privacyAndTrust => '普瑞维斯 安得 卷斯特';
 
   @override
-  String get localFirstControl => 'Local-first. You stay in control.';
+  String get localFirstControl => '洛扣 佛斯特, 尤 斯嘚 应 康卷罗.';
 
   @override
   String get recordsStayOnDevice =>
-      'Your records stay on your device. No account required. Clear permissions and transparent controls.';
+      '尤尔 瑞考兹 斯嘚 昂 尤尔 迪外丝, 诺 阿康特 瑞奎尔德. 奎而后 普尔米申斯 安得 卷斯培瑞特 康卷罗斯.';
 
   @override
   String get rawDatabaseViewer => 'Raw Database Viewer';
@@ -785,4 +783,58 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get refundCashback => 'Refund/cashback';
+
+  @override
+  String get fastActions => '法斯特 艾克申斯';
+
+  @override
+  String get clearOutcomes => '奎而 欧康姆兹';
+
+  @override
+  String get calmDesign => '坎母 迪赛恩';
+
+  @override
+  String get respectForTime => '瑞斯派克特 佛 尤尔 泰姆';
+
+  @override
+  String get continuousImprovement => '肯特纽斯 印普鲁夫门特 贝斯特 昂 瑞尔 费德拜克';
+
+  @override
+  String get onDeviceStorage => '昂 迪外丝 斯拖卷';
+
+  @override
+  String get onDeviceStorageDesc =>
+      '欧尔 瑞考兹 阿 塞福得 昂 尤尔 迪外丝. 威 冬特 阿普洛得 尤尔 卷赛克申斯 图 欧尔 色佛斯.';
+
+  @override
+  String get noAccountNeeded => '诺 阿康特 尼德';
+
+  @override
+  String get noAccountNeededDesc => '尤 康 尤子 嘚 艾普 威道 塞应 阿普 欧 歇应 普色诺 迪泰欧斯.';
+
+  @override
+  String get notificationsPrivacy => '诺提非克申斯';
+
+  @override
+  String get notificationsPrivacyDesc =>
+      '尤子得 欧里 佛 瑞曼德斯 尤 应内伯. 尤 康 腾 德姆 欧夫 艾尼 泰姆.';
+
+  @override
+  String get adsAndPremium => '艾德斯 安得 普瑞米姆';
+
+  @override
+  String get adsAndPremiumDesc =>
+      '福利 勿真 没 秀 艾德斯. 普瑞米姆 瑞慕福斯 艾德斯 安得 安洛克斯 艾德凡斯特 费彻斯.';
+
+  @override
+  String get exportMyData => '埃克斯波特 麦 德塔';
+
+  @override
+  String get exportMyDataDesc => '埃克斯波特 尤尔 瑞考兹 艾尼 泰姆 (CSV/PDF).';
+
+  @override
+  String get deleteMyData => '底里特 麦 德塔';
+
+  @override
+  String get deleteMyDataDesc => '坡马农特利 底里特 欧尔 瑞考兹 佛朗姆 迪斯 迪外丝.';
 }

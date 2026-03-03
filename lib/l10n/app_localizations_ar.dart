@@ -437,38 +437,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get buildConsistentHabit => 'Build a consistent tracking habit';
 
   @override
-  String get aboutNeelStudio => 'About Neel Studio';
+  String get aboutNeelStudio => 'أباوت نيل ستوديو';
 
   @override
   String get neelStudioSlogan1 =>
-      'Neel Studio builds practical apps for real life.';
+      'نيل ستوديو بيلدز براكتيكال أبس فور ريال لايف.';
 
   @override
   String get neelStudioSlogan2 =>
-      'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.';
+      'وي فوكس أون تولز ذات هيلب بيبول ستاي أورجنايزد، ميك بيتر ديلي ديسيجنز، أند بيلد كونسيستنسي — ويث آوت كومبلكسيتي أور ديستراكشن.';
 
   @override
-  String get productStandard => 'Our product standard is simple:';
+  String get productStandard => 'أور برودكت ستاندرد إز سيمبل:';
 
   @override
   String get buildForRepeatValue =>
-      'We don’t build for hype. We build for repeat value.';
+      'وي دونت بيلد فور هايب. وي بيلد فور ربيت فاليو.';
 
   @override
-  String get realProblemsRealPeople => 'Real problems. Real people.';
+  String get realProblemsRealPeople => 'ريال بروبلمز. ريال بيبول.';
 
   @override
-  String get durableSolutions => 'Durable solutions.';
+  String get durableSolutions => 'ديورابل سولوشنز.';
 
   @override
-  String get privacyAndTrust => 'Privacy & Trust';
+  String get privacyAndTrust => 'برايفسي أند تراست';
 
   @override
-  String get localFirstControl => 'Local-first. You stay in control.';
+  String get localFirstControl => 'لوكال-فيرست. يو ستاي إن كنترول.';
 
   @override
   String get recordsStayOnDevice =>
-      'Your records stay on your device. No account required. Clear permissions and transparent controls.';
+      'يور ريكوردز ستاي أون يور ديفايس. نو أكونت ريكوايرد. كلير بيرميشنز أند ترانسبيرنت كنترولز.';
 
   @override
   String get rawDatabaseViewer => 'Raw Database Viewer';
@@ -786,4 +786,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get refundCashback => 'Refund/cashback';
+
+  @override
+  String get fastActions => 'فاست أكشنز';
+
+  @override
+  String get clearOutcomes => 'كلير أوتكامز';
+
+  @override
+  String get calmDesign => 'كالم ديزاين';
+
+  @override
+  String get respectForTime => 'رسبكت فور يور تايم';
+
+  @override
+  String get continuousImprovement =>
+      'كونتينيوس إمبروفمنت بيست أون ريال فيدباك';
+
+  @override
+  String get onDeviceStorage => 'أون-ديفايس ستورج';
+
+  @override
+  String get onDeviceStorageDesc =>
+      'أول ريكوردز آر سيفد أون يور ديفايس. وي دونت أبلود يور ترانزاكشنز تو أور سيرفرز.';
+
+  @override
+  String get noAccountNeeded => 'نو أكونت نيدد';
+
+  @override
+  String get noAccountNeededDesc =>
+      'يو كان يوز ذا أب ويثآوت ساينينغ أب أور شيرينغ بيرسونال ديتيلز.';
+
+  @override
+  String get notificationsPrivacy => 'نوتيفيكيشنز';
+
+  @override
+  String get notificationsPrivacyDesc =>
+      'يوزد أونلي فور ريمايندرز يو إنيبل. يو كان تيرن ذيم أوف أني تايم.';
+
+  @override
+  String get adsAndPremium => 'أدز أند بريميوم';
+
+  @override
+  String get adsAndPremiumDesc =>
+      'فري فيرجن مي شو أدز. بريميوم ريموفز أدز أند أنلوكس أدفانست فيتشرز.';
+
+  @override
+  String get exportMyData => 'إكسبورت ماي داتا';
+
+  @override
+  String get exportMyDataDesc => 'إكسبورت يور ريكوردز أني تايم (CSV/PDF).';
+
+  @override
+  String get deleteMyData => 'ديليت ماي داتا';
+
+  @override
+  String get deleteMyDataDesc =>
+      'بيرماننتلي ديليت أول ريكوردز فروم ذيس ديفايس.';
 }

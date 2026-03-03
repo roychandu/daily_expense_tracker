@@ -437,38 +437,38 @@ class AppLocalizationsHi extends AppLocalizations {
   String get buildConsistentHabit => 'कंसिस्टेंट ट्रैकिंग हैबिट बिल्ड करें';
 
   @override
-  String get aboutNeelStudio => 'About Neel Studio';
+  String get aboutNeelStudio => 'अबाउट नील स्टूडियो';
 
   @override
   String get neelStudioSlogan1 =>
-      'Neel Studio builds practical apps for real life.';
+      'नील स्टूडियो बिल्ड्स प्रैक्टिकल एप्स फॉर रियल लाइफ।';
 
   @override
   String get neelStudioSlogan2 =>
-      'We focus on tools that help people stay organized, make better daily decisions, and build consistency — without complexity or distraction.';
+      'वी फोकस ऑन टूल्स दैट हेल्प पीपल स्टे ऑर्गनाइज़्ड, मेक बेटर डेली डिसीजन्स, एंड बिल्ड कंसिस्टेंसी — विदाउट कॉम्प्लेक्सिटी और डिस्ट्रैक्शन।';
 
   @override
-  String get productStandard => 'Our product standard is simple:';
+  String get productStandard => 'आवर प्रोडक्ट स्टैंडर्ड इज सिंपल:';
 
   @override
   String get buildForRepeatValue =>
-      'We don’t build for hype. We build for repeat value.';
+      'वी डोंट बिल्ड फॉर हाइप। वी बिल्ड फॉर रिपीट वैल्यू।';
 
   @override
-  String get realProblemsRealPeople => 'Real problems. Real people.';
+  String get realProblemsRealPeople => 'रियल प्रॉब्लम्स। रियल पीपल।';
 
   @override
-  String get durableSolutions => 'Durable solutions.';
+  String get durableSolutions => 'ड्यूरेबल सोल्यूशन्स।';
 
   @override
-  String get privacyAndTrust => 'Privacy & Trust';
+  String get privacyAndTrust => 'प्राइवेसी एंड ट्रस्ट';
 
   @override
-  String get localFirstControl => 'Local-first. You stay in control.';
+  String get localFirstControl => 'लोकल-फर्स्ट। यू स्टे इन कंट्रोल।';
 
   @override
   String get recordsStayOnDevice =>
-      'Your records stay on your device. No account required. Clear permissions and transparent controls.';
+      'योर रिकॉर्ड्स स्टे ऑन योर डिवाइस। नो अकाउंट रिक्वायर्ड। क्लियर परमिशन्स एंड ट्रांसपेरेंट कंट्रोल्स।';
 
   @override
   String get rawDatabaseViewer => 'Raw Database Viewer';
@@ -785,4 +785,61 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get refundCashback => 'रिफंड/कैशबैक';
+
+  @override
+  String get fastActions => 'फास्ट एक्शन्स';
+
+  @override
+  String get clearOutcomes => 'क्लियर आउटकम्स';
+
+  @override
+  String get calmDesign => 'काम डिज़ाइन';
+
+  @override
+  String get respectForTime => 'रेस्पेक्ट फॉर योर टाइम';
+
+  @override
+  String get continuousImprovement =>
+      'कंटीन्यूअस इम्प्रूवमेंट बेस्ड ऑन रियल फीडबैक';
+
+  @override
+  String get onDeviceStorage => 'ऑन-डिवाइस स्टोरेज';
+
+  @override
+  String get onDeviceStorageDesc =>
+      'ऑल रिकॉर्ड्स आर सेव्ड ऑन योर डिवाइस। वी डोंट अपलोड योर ट्रांसेक्शन्स टू आवर सर्वर्स।';
+
+  @override
+  String get noAccountNeeded => 'नो अकाउंट नीडेड';
+
+  @override
+  String get noAccountNeededDesc =>
+      'यू कैन यूज़ द ऐप विदाउट साइनिंग अप और शेयरिंग पर्सनल डिटेल्स।';
+
+  @override
+  String get notificationsPrivacy => 'नोटिफिकेशन्स';
+
+  @override
+  String get notificationsPrivacyDesc =>
+      'यूज़्ड ओनली फॉर रिमाइंडर्स यू इनेबल। यू कैन टर्न देम ऑफ एनीटाइम।';
+
+  @override
+  String get adsAndPremium => 'एड्स एंड प्रीमियम';
+
+  @override
+  String get adsAndPremiumDesc =>
+      'फ्री वर्जन में शो एड्स। प्रीमियम रिमूव्स एड्स एंड अनलॉक्स एडवांस फीचर्स।';
+
+  @override
+  String get exportMyData => 'एक्सपोर्ट माय डेटा';
+
+  @override
+  String get exportMyDataDesc => 'एक्सपोर्ट योर रिकॉर्ड्स एनीटाइम (CSV/PDF)।';
+
+  @override
+  String get deleteMyData => 'डिलीट माय डेटा';
+
+  @override
+  String get deleteMyDataDesc =>
+      'पर्मानेंटली डिलीट ऑल रिकॉर्ड्स फ्रॉम थिस डिवाइस।';
 }
