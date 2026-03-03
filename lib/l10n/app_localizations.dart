@@ -1285,6 +1285,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown error'**
   String get unknownError;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @activityFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity for'**
+  String get activityFor;
+
+  /// No description provided for @stoneBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'stone badge'**
+  String get stoneBadge;
+
+  /// No description provided for @ironBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'iron badge'**
+  String get ironBadge;
+
+  /// No description provided for @bronzeBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'bronze badge'**
+  String get bronzeBadge;
+
+  /// No description provided for @silverBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'silver badge'**
+  String get silverBadge;
+
+  /// No description provided for @goldBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'gold badge'**
+  String get goldBadge;
+
+  /// No description provided for @platinumBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'platinum badge'**
+  String get platinumBadge;
+
+  /// No description provided for @titaniumBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'titanium badge'**
+  String get titaniumBadge;
+
+  /// No description provided for @diamondBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'diamond badge'**
+  String get diamondBadge;
+
+  /// No description provided for @nextMilestoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'next milestone'**
+  String get nextMilestoneLabel;
+
+  /// No description provided for @longestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'LONGEST STREAK'**
+  String get longestStreak;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL'**
+  String get total;
+
+  /// No description provided for @accuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'ACCURACY'**
+  String get accuracy;
+
+  /// No description provided for @milestoneReachedStayAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone reached! Log tomorrow to stay ahead.'**
+  String get milestoneReachedStayAhead;
+
+  /// No description provided for @awayFromGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'days away from a'**
+  String get awayFromGeneric;
+
+  /// No description provided for @stoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'STONE'**
+  String get stoneTitle;
+
+  /// No description provided for @ironTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'IRON'**
+  String get ironTitle;
+
+  /// No description provided for @bronzeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BRONZE'**
+  String get bronzeTitle;
+
+  /// No description provided for @silverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SILVER'**
+  String get silverTitle;
+
+  /// No description provided for @goldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'GOLD'**
+  String get goldTitle;
+
+  /// No description provided for @platinumTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PLATINUM'**
+  String get platinumTitle;
+
+  /// No description provided for @titaniumTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TITANIUM'**
+  String get titaniumTitle;
+
+  /// No description provided for @diamondTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'DIAMOND'**
+  String get diamondTitle;
+
+  /// No description provided for @mon.
+  ///
+  /// In en, this message translates to:
+  /// **'MON'**
+  String get mon;
+
+  /// No description provided for @tue.
+  ///
+  /// In en, this message translates to:
+  /// **'TUE'**
+  String get tue;
+
+  /// No description provided for @wed.
+  ///
+  /// In en, this message translates to:
+  /// **'WED'**
+  String get wed;
+
+  /// No description provided for @thu.
+  ///
+  /// In en, this message translates to:
+  /// **'THU'**
+  String get thu;
+
+  /// No description provided for @fri.
+  ///
+  /// In en, this message translates to:
+  /// **'FRI'**
+  String get fri;
+
+  /// No description provided for @sat.
+  ///
+  /// In en, this message translates to:
+  /// **'SAT'**
+  String get sat;
+
+  /// No description provided for @sun.
+  ///
+  /// In en, this message translates to:
+  /// **'SUN'**
+  String get sun;
 }
 
 class _AppLocalizationsDelegate

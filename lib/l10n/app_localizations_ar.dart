@@ -605,4 +605,98 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unknownError => 'Unknown error';
+
+  @override
+  String get week => 'Week';
+
+  @override
+  String get activityFor => 'Activity for';
+
+  @override
+  String get stoneBadge => 'stone badge';
+
+  @override
+  String get ironBadge => 'iron badge';
+
+  @override
+  String get bronzeBadge => 'bronze badge';
+
+  @override
+  String get silverBadge => 'silver badge';
+
+  @override
+  String get goldBadge => 'gold badge';
+
+  @override
+  String get platinumBadge => 'platinum badge';
+
+  @override
+  String get titaniumBadge => 'titanium badge';
+
+  @override
+  String get diamondBadge => 'diamond badge';
+
+  @override
+  String get nextMilestoneLabel => 'next milestone';
+
+  @override
+  String get longestStreak => 'LONGEST STREAK';
+
+  @override
+  String get total => 'TOTAL';
+
+  @override
+  String get accuracy => 'ACCURACY';
+
+  @override
+  String get milestoneReachedStayAhead =>
+      'Milestone reached! Log tomorrow to stay ahead.';
+
+  @override
+  String get awayFromGeneric => 'days away from a';
+
+  @override
+  String get stoneTitle => 'STONE';
+
+  @override
+  String get ironTitle => 'IRON';
+
+  @override
+  String get bronzeTitle => 'BRONZE';
+
+  @override
+  String get silverTitle => 'SILVER';
+
+  @override
+  String get goldTitle => 'GOLD';
+
+  @override
+  String get platinumTitle => 'PLATINUM';
+
+  @override
+  String get titaniumTitle => 'TITANIUM';
+
+  @override
+  String get diamondTitle => 'DIAMOND';
+
+  @override
+  String get mon => 'MON';
+
+  @override
+  String get tue => 'TUE';
+
+  @override
+  String get wed => 'WED';
+
+  @override
+  String get thu => 'THU';
+
+  @override
+  String get fri => 'FRI';
+
+  @override
+  String get sat => 'SAT';
+
+  @override
+  String get sun => 'SUN';
 }

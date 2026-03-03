@@ -9,61 +9,61 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
-  String get appTitle => 'दैनिक व्यय ट्रैकर';
+  String get appTitle => 'डेली एक्सपेंस ट्रैकर';
 
   @override
   String get settings => 'सेटिंग्स';
 
   @override
-  String get preferences => 'वरीयताएँ';
+  String get preferences => 'प्रेफरेंसेस';
 
   @override
-  String get language => 'भाषा';
+  String get language => 'लैंग्वेज';
 
   @override
-  String get currency => 'मुद्रा';
+  String get currency => 'करेंसी';
 
   @override
   String get darkMode => 'डार्क मोड';
 
   @override
-  String get dailyReminder => 'दैनिक अनुस्मारक';
+  String get dailyReminder => 'डेली रिमाइंडर';
 
   @override
   String get data => 'डेटा';
 
   @override
-  String get exportCsv => 'CSV निर्यात करें';
+  String get exportCsv => 'CSV एक्सपोर्ट';
 
   @override
-  String get exportPdf => 'PDF निर्यात करें';
+  String get exportPdf => 'PDF एक्सपोर्ट';
 
   @override
-  String get watchAd => 'विज्ञापन देखें';
+  String get watchAd => 'वॉच एड';
 
   @override
   String get premium => 'प्रीमियम';
 
   @override
-  String get removeAds => 'विज्ञापन हटाएं - \$3.99';
+  String get removeAds => 'रिमूव एड्स';
 
   @override
-  String get about => 'के बारे में';
+  String get about => 'अबाउट';
 
   @override
-  String get privacyPolicy => 'गोपनीयता नीति';
+  String get privacyPolicy => 'प्राइवेसी पॉलिसी';
 
   @override
-  String get termsOfService => 'सेवा की शर्तें';
+  String get termsOfService => 'टर्म्स ऑफ सर्विस';
 
   @override
-  String get version => 'संस्करण';
+  String get version => 'वर्जन';
 
   @override
-  String get selectLanguage => 'भाषा चुनें';
+  String get selectLanguage => 'लैंग्वेज सेलेक्ट';
 
   @override
-  String get selectCurrency => 'मुद्रा चुनें';
+  String get selectCurrency => 'करेंसी सेलेक्ट';
 
   @override
   String get home => 'होम';
@@ -78,7 +78,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get progress => 'प्रोग्रेस';
 
   @override
-  String get today => 'आज';
+  String get today => 'टुडे';
 
   @override
   String get expense => 'एक्सपेंस';
@@ -87,16 +87,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get income => 'इनकम';
 
   @override
-  String get recent => 'हाल ही का';
+  String get recent => 'रिसेंट';
 
   @override
-  String get noExpensesYet => 'अभी तक कोई खर्च नहीं!';
+  String get noExpensesYet => 'नो एक्सपेंस येक';
 
   @override
-  String get noIncomeYet => 'अभी तक कोई आय नहीं!';
+  String get noIncomeYet => 'नो इनकम येक';
 
   @override
-  String get viewAllHistory => 'पूरा इतिहास देखें';
+  String get viewAllHistory => 'व्यू ऑल हिस्ट्री';
 
   @override
   String get totalExpensesToday => 'Total Expenses for today';
@@ -114,10 +114,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get logged => 'Logged';
 
   @override
-  String get addExpense => 'खर्च जोड़ें';
+  String get addExpense => 'ऐड एक्सपेंस';
 
   @override
-  String get addIncome => 'आय जोड़ें';
+  String get addIncome => 'ऐड इनकम';
 
   @override
   String get category => 'Category';
@@ -126,10 +126,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get addNoteOptional => 'Add note (optional)';
 
   @override
-  String get saveExpense => 'खर्च सहेजें';
+  String get saveExpense => 'सेव एक्सपेंस';
 
   @override
-  String get saveIncome => 'आय सहेजें';
+  String get saveIncome => 'सेव इनकम';
 
   @override
   String get pleaseEnterValidAmount => 'Please enter a valid amount';
@@ -150,7 +150,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get day => 'Day';
 
   @override
-  String get days => 'Days';
+  String get days => 'डेज़';
 
   @override
   String get keepItGoing => 'Keep it going!';
@@ -159,7 +159,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get startLoggingToday => 'Start logging today!';
 
   @override
-  String get weeklyActivity => 'WEEKLY ACTIVITY';
+  String get weeklyActivity => 'वीकली एक्टिविटी';
 
   @override
   String get daysLogged => 'of 7 days logged';
@@ -206,7 +206,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get totalItems => 'Total Items';
 
   @override
-  String get history => 'इतिहास';
+  String get history => 'हिस्ट्री';
 
   @override
   String get searchExpenses => 'Search expenses...';
@@ -215,7 +215,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noHistoryFound => 'No history found';
 
   @override
-  String get yesterday => 'कल';
+  String get yesterday => 'यस्टरडे';
 
   @override
   String get moreThanYesterday => 'मोर दैन यस्टरडे';
@@ -227,19 +227,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dateWiseLog => 'DATE-WISE LOG';
 
   @override
-  String get editExpense => 'खर्च संपादित करें';
+  String get editExpense => 'एडिट एक्सपेंस';
 
   @override
-  String get editIncome => 'आय संपादित करें';
+  String get editIncome => 'एडिट इनकम';
 
   @override
-  String get update => 'अपडेट करें';
+  String get update => 'अपडेट';
 
   @override
-  String get other => 'अन्य';
+  String get other => 'अदर';
 
   @override
-  String get all => 'सभी';
+  String get all => 'ऑल';
 
   @override
   String get filters => 'फ़िल्टर';
@@ -251,10 +251,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get categories => 'Categories';
 
   @override
-  String get reset => 'रीसेट करें';
+  String get reset => 'रीसेट';
 
   @override
-  String get apply => 'लागू करें';
+  String get apply => 'अप्लाई';
 
   @override
   String get reportID => 'ID';
@@ -302,20 +302,20 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noDataFound => 'No data found for selected range';
 
   @override
-  String get internetRequired => 'इंटरनेट आवश्यक';
+  String get internetRequired => 'इंटरनेट रिक्वायर्ड';
 
   @override
   String get reminderInternetRequirement =>
-      'दैनिक अनुस्मारक सुविधा को सक्षम और सिंक करने के लिए एक सक्रिय इंटरनेट कनेक्शन की आवश्यकता है। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।';
+      'दैनिक अनुस्मार (डेली रिमाइंडर) को सक्षम करने के लिए इंटरनेट की आवश्यकता है। कृपया कनेक्शन चेक करें।';
 
   @override
   String get exportingCsv => 'Exporting CSV...';
 
   @override
-  String get ok => 'ठीक है';
+  String get ok => 'ओके';
 
   @override
-  String get reminderBody => 'आज के अपने खर्चों को दर्ज करना न भूलें! 📝';
+  String get reminderBody => 'आज का एक्सपेंस दर्ज करना न भूलें! 📝';
 
   @override
   String get netBalance => 'नेट बैलेंस';
@@ -373,7 +373,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectMonth => 'सेलेक्ट मंथ';
 
   @override
-  String get achievements => 'Achievements';
+  String get achievements => 'अचीवमेंट्स';
 
   @override
   String get daysStreak => 'डेज़ स्ट्रीक';
@@ -382,13 +382,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get streakProgress => 'स्ट्रीक प्रोग्रेस';
 
   @override
-  String get usageIntensity => 'Usage Intensity';
+  String get usageIntensity => 'यूसेज इंटेंसिटी';
 
   @override
-  String get less => 'Less';
+  String get less => 'लेस';
 
   @override
-  String get more => 'More';
+  String get more => 'मोर';
 
   @override
   String get selectCategoryTitle => 'Select Category';
@@ -421,7 +421,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectIcon => 'Select Icon';
 
   @override
-  String get daysToNextMilestone => 'नेक्स्ट माइलस्टोन तक दिन';
+  String get daysToNextMilestone => 'डेज़ टू नेक्स्ट माइलस्टोन';
 
   @override
   String get premiumMember => 'PREMIUM MEMBER';
@@ -483,20 +483,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get annualFinancialReport => 'एनुअल फाइनेंशियल रिपोर्ट';
 
   @override
-  String get awayFromBadge => 'दिन दूर हैं एक सिल्वर बैज से!';
+  String get awayFromBadge => 'डेज़ अवे फ्रॉम अ बैज';
 
   @override
-  String get youAre => 'आप';
+  String get youAre => 'यू';
 
   @override
-  String get milestoneReached =>
-      'माइलस्टोन प्राप्त हुआ! अपने रिवॉर्ड्स चेक करें।';
+  String get milestoneReached => 'माइलस्टोन रीच्ड';
 
   @override
   String get todayCardTitle => 'टुडे';
 
   @override
-  String get entriesToday => 'एंट्रीज टुडे';
+  String get entriesToday => 'एंट्रीज़ टुडे';
 
   @override
   String get monthlySummaryText => 'मंथली समरी';
@@ -544,8 +543,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get premiumExportTitle => 'प्रीमियम एक्सपोर्ट';
 
   @override
-  String get unlockProfessionalDetails =>
-      'प्रोफेशनल रिपोर्ट्स और क्लाउड बैकग्राउंड को स्थायी रूप से अनलॉक करें';
+  String get unlockProfessionalDetails => 'अनलॉक प्रोफेशनल डिटेल्स';
 
   @override
   String get goPremiumBtn => 'गो प्रीमियम';
@@ -606,4 +604,98 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get unknownError => 'अननोन एरर';
+
+  @override
+  String get week => 'वीक';
+
+  @override
+  String get activityFor => 'एक्टिविटी फॉर';
+
+  @override
+  String get stoneBadge => 'स्टोन बैज';
+
+  @override
+  String get ironBadge => 'आयरन बैज';
+
+  @override
+  String get bronzeBadge => 'ब्रोंज बैज';
+
+  @override
+  String get silverBadge => 'सिल्वर बैज';
+
+  @override
+  String get goldBadge => 'गोल्ड बैज';
+
+  @override
+  String get platinumBadge => 'प्लेटिनम बैज';
+
+  @override
+  String get titaniumBadge => 'टाइटेनियम बैज';
+
+  @override
+  String get diamondBadge => 'डायमंड बैज';
+
+  @override
+  String get nextMilestoneLabel => 'नेक्स्ट माइलस्टोन';
+
+  @override
+  String get longestStreak => 'लॉन्गेस्ट स्ट्रीक';
+
+  @override
+  String get total => 'टोटल';
+
+  @override
+  String get accuracy => 'एक्यूरेसी';
+
+  @override
+  String get milestoneReachedStayAhead =>
+      'माइलस्टोन रीच्ड! लॉग टुमारो टू स्टे अहेड';
+
+  @override
+  String get awayFromGeneric => 'डेज़ अवे फ्रॉम अ';
+
+  @override
+  String get stoneTitle => 'स्टोन';
+
+  @override
+  String get ironTitle => 'आयरन';
+
+  @override
+  String get bronzeTitle => 'ब्रोंज';
+
+  @override
+  String get silverTitle => 'सिल्वर';
+
+  @override
+  String get goldTitle => 'गोल्ड';
+
+  @override
+  String get platinumTitle => 'प्लेटिनम';
+
+  @override
+  String get titaniumTitle => 'टाइटेनियम';
+
+  @override
+  String get diamondTitle => 'डायमंड';
+
+  @override
+  String get mon => 'मों';
+
+  @override
+  String get tue => 'ट्यू';
+
+  @override
+  String get wed => 'वेड';
+
+  @override
+  String get thu => 'थर्';
+
+  @override
+  String get fri => 'फ्राई';
+
+  @override
+  String get sat => 'सैट';
+
+  @override
+  String get sun => 'सन';
 }

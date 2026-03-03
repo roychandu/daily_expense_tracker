@@ -90,7 +90,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              DateFormat('MMM').format(DateTime(2022, month)),
+                              DateFormat(
+                                'MMM',
+                                AppLocalizations.of(context)!.localeName,
+                              ).format(DateTime(2022, month)),
                               style: TextStyle(
                                 color: isSelected
                                     ? Colors.white
@@ -204,12 +207,22 @@ class _ProgressScreenState extends State<ProgressScreen> {
       1 + (_selectedWeekIndex * 7),
     );
 
+    final dayKeys = [
+      l10n.sun,
+      l10n.mon,
+      l10n.tue,
+      l10n.wed,
+      l10n.thu,
+      l10n.fri,
+      l10n.sat,
+    ];
+
     List<Map<String, dynamic>> weeklyActivity = [];
     for (int i = 0; i < 7; i++) {
       final date = startOfWeek.add(Duration(days: i));
       final dateStr = DateFormat('yyyy-MM-dd').format(date);
       weeklyActivity.add({
-        'day': DateFormat('E').format(date).toUpperCase(),
+        'day': dayKeys[date.weekday % 7],
         'isLogged': loggedDates.contains(dateStr),
         'isToday': dateStr == DateFormat('yyyy-MM-dd').format(now),
       });
@@ -320,7 +333,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           : null,
                     ),
                     Text(
-                      'Week ${_selectedWeekIndex + 1}',
+                      '${l10n.week} ${_selectedWeekIndex + 1}',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.primarySelected,
@@ -347,7 +360,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
             // Monthly Activity
             Text(
-              'Activity for ${DateFormat('MMMM yyyy').format(_selectedDate)}',
+              '${l10n.activityFor} ${DateFormat('MMMM yyyy', l10n.localeName).format(_selectedDate)}',
               style: AppTextStyles.h2Section.copyWith(
                 fontSize: 20,
                 fontFamily: 'Serif',
@@ -368,7 +381,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Achievements',
+                  l10n.achievements,
                   style: AppTextStyles.h2Section.copyWith(
                     fontSize: 20,
                     fontFamily: 'Serif',
@@ -389,23 +402,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
   String _getMilestoneLabel(int threshold) {
     switch (threshold) {
       case 3:
-        return 'stone badge';
+        return AppLocalizations.of(context)!.stoneBadge;
       case 7:
-        return 'iron badge';
+        return AppLocalizations.of(context)!.ironBadge;
       case 15:
-        return 'bronze badge';
+        return AppLocalizations.of(context)!.bronzeBadge;
       case 30:
-        return 'silver badge';
+        return AppLocalizations.of(context)!.silverBadge;
       case 60:
-        return 'gold badge';
+        return AppLocalizations.of(context)!.goldBadge;
       case 90:
-        return 'platinum badge';
+        return AppLocalizations.of(context)!.platinumBadge;
       case 180:
-        return 'titanium badge';
+        return AppLocalizations.of(context)!.titaniumBadge;
       case 365:
-        return 'diamond badge';
+        return AppLocalizations.of(context)!.diamondBadge;
       default:
-        return 'next milestone';
+        return AppLocalizations.of(context)!.nextMilestoneLabel;
     }
   }
 }
@@ -449,7 +462,7 @@ class _MainStreakCard extends StatelessWidget {
           Image.asset('assets/progress-icons/$currentBadgeAsset', height: 100),
           const SizedBox(height: 16),
           Text(
-            '$currentStreak DAYS STREAK',
+            '$currentStreak ${AppLocalizations.of(context)!.daysStreak}',
             style: AppTextStyles.h2Section.copyWith(
               fontSize: 22,
               letterSpacing: 1.5,
@@ -478,7 +491,7 @@ class _MainStreakCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${currentStreak % nextMilestone}/${nextMilestone} Days to next milestone',
+                  '${currentStreak % nextMilestone}/${nextMilestone} ${AppLocalizations.of(context)!.daysToNextMilestone}',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
@@ -513,8 +526,8 @@ class _MainStreakCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   daysToNext > 0
-                      ? 'You are $daysToNext days away from a $milestoneLabel!'
-                      : 'Milestone reached! Log tomorrow to stay ahead.',
+                      ? '${AppLocalizations.of(context)!.youAre} $daysToNext ${AppLocalizations.of(context)!.awayFromGeneric} $milestoneLabel!'
+                      : AppLocalizations.of(context)!.milestoneReachedStayAhead,
                   style: AppTextStyles.caption.copyWith(
                     color: isDark ? Colors.white60 : Colors.black54,
                     fontWeight: FontWeight.w500,
@@ -682,14 +695,14 @@ class _MonthlyHeatmap extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Usage Intensity',
+                AppLocalizations.of(context)!.usageIntensity,
                 style: AppTextStyles.caption.copyWith(
                   color: isDark ? Colors.white38 : Colors.black38,
                 ),
               ),
               const Spacer(),
               Text(
-                'Less ',
+                '${AppLocalizations.of(context)!.less} ',
                 style: AppTextStyles.caption.copyWith(
                   fontSize: 10,
                   color: isDark ? Colors.white24 : Colors.black26,
@@ -708,7 +721,7 @@ class _MonthlyHeatmap extends StatelessWidget {
                 ),
               ),
               Text(
-                ' More',
+                ' ${AppLocalizations.of(context)!.more}',
                 style: AppTextStyles.caption.copyWith(
                   fontSize: 10,
                   color: isDark ? Colors.white24 : Colors.black26,
@@ -768,9 +781,18 @@ class _StatsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _StatItem(label: 'LONGEST STREAK', value: '$longestStreak Days'),
-        _StatItem(label: 'TOTAL', value: '$totalDays Days'),
-        _StatItem(label: 'ACCURACY', value: '${accuracy.toStringAsFixed(0)}%'),
+        _StatItem(
+          label: AppLocalizations.of(context)!.longestStreak,
+          value: '$longestStreak ${AppLocalizations.of(context)!.daysStreak}',
+        ),
+        _StatItem(
+          label: AppLocalizations.of(context)!.total,
+          value: '$totalDays ${AppLocalizations.of(context)!.daysStreak}',
+        ),
+        _StatItem(
+          label: AppLocalizations.of(context)!.accuracy,
+          value: '${accuracy.toStringAsFixed(0)}%',
+        ),
       ],
     );
   }
@@ -818,15 +840,16 @@ class _AchievementsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final achievements = [
-      {'name': 'STONE', 'days': 3, 'asset': 'stone.png'},
-      {'name': 'IRON', 'days': 7, 'asset': 'iron.png'},
-      {'name': 'BRONZE', 'days': 15, 'asset': 'bronze.png'},
-      {'name': 'SILVER', 'days': 30, 'asset': 'silver.png'},
-      {'name': 'GOLD', 'days': 60, 'asset': 'gold.png'},
-      {'name': 'PLATINUM', 'days': 90, 'asset': 'platinum.png'},
-      {'name': 'TITANIUM', 'days': 180, 'asset': 'titanium.png'},
-      {'name': 'DIAMOND', 'days': 365, 'asset': 'diamond.png'},
+      {'name': l10n.stoneTitle, 'days': 3, 'asset': 'stone.png'},
+      {'name': l10n.ironTitle, 'days': 7, 'asset': 'iron.png'},
+      {'name': l10n.bronzeTitle, 'days': 15, 'asset': 'bronze.png'},
+      {'name': l10n.silverTitle, 'days': 30, 'asset': 'silver.png'},
+      {'name': l10n.goldTitle, 'days': 60, 'asset': 'gold.png'},
+      {'name': l10n.platinumTitle, 'days': 90, 'asset': 'platinum.png'},
+      {'name': l10n.titaniumTitle, 'days': 180, 'asset': 'titanium.png'},
+      {'name': l10n.diamondTitle, 'days': 365, 'asset': 'diamond.png'},
     ];
 
     return GridView.builder(
@@ -864,7 +887,7 @@ class _AchievementsGrid extends StatelessWidget {
               ),
             ),
             Text(
-              '${ach['days']} DAYS',
+              '${ach['days']} ${l10n.days.toUpperCase()}',
               style: AppTextStyles.caption.copyWith(
                 fontSize: 7,
                 color: isEarned
