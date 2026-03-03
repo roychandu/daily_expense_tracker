@@ -229,5 +229,11 @@
   "thu": "THU",
   "fri": "FRI",
   "sat": "SAT",
-  "sun": "SUN"
+  "sun": "SUN",
+  "preferencesSection": "Preferences",
+  "dataManagementSection": "Data Management",
+  "notificationsSection": "Notifications",
+  "aboutUs": "About Us",
+  "premiumUnlocked": "Premium Features Unlocked!",
+  "switchedToFree": "Switched to Free Version"
 }

@@ -242,7 +242,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get all => 'ऑल';
 
   @override
-  String get filters => 'फ़िल्टर';
+  String get filters => 'फ़िल्टर्स';
 
   @override
   String get type => 'Type';
@@ -306,7 +306,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get reminderInternetRequirement =>
-      'दैनिक अनुस्मार (डेली रिमाइंडर) को सक्षम करने के लिए इंटरनेट की आवश्यकता है। कृपया कनेक्शन चेक करें।';
+      'डेली रिमाइंडर इनेबल करने के लिए इंटरनेट कनेक्शन रिक्वायर्ड है। प्लीज चेक करें और फिर से ट्राई करें।';
 
   @override
   String get exportingCsv => 'Exporting CSV...';
@@ -315,7 +315,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get ok => 'ओके';
 
   @override
-  String get reminderBody => 'आज का एक्सपेंस दर्ज करना न भूलें! 📝';
+  String get reminderBody => 'आज का अपना एक्सपेंस लॉग करना मत भूलें! 📝';
 
   @override
   String get netBalance => 'नेट बैलेंस';
@@ -424,17 +424,17 @@ class AppLocalizationsHi extends AppLocalizations {
   String get daysToNextMilestone => 'डेज़ टू नेक्स्ट माइलस्टोन';
 
   @override
-  String get premiumMember => 'PREMIUM MEMBER';
+  String get premiumMember => 'प्रीमियम मेंबर';
 
   @override
-  String get upgradeToGold => 'Upgrade to Gold';
+  String get upgradeToGold => 'अपग्रेड टू गोल्ड';
 
   @override
   String get premiumDescription =>
-      'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.';
+      'एड्स रिमूव करें, डिटेल्ड एनालिटिक्स अनलॉक करें और अपनी फाइनेंस को मास्टर करने के लिए प्रो इनसाइट्स प्राप्त करें।';
 
   @override
-  String get buildConsistentHabit => 'Build a consistent tracking habit';
+  String get buildConsistentHabit => 'कंसिस्टेंट ट्रैकिंग हैबिट बिल्ड करें';
 
   @override
   String get aboutNeelStudio => 'About Neel Studio';
@@ -597,10 +597,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get exp => 'EXP';
 
   @override
-  String get fileSaved => 'फाइल सेव हो गई';
+  String get fileSaved => 'फाइल सेव्ड';
 
   @override
-  String get errorSaving => 'सेव करने में एरर';
+  String get errorSaving => 'सेविंग एरर';
 
   @override
   String get unknownError => 'अननोन एरर';
@@ -698,4 +698,22 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get sun => 'सन';
+
+  @override
+  String get preferencesSection => 'प्रेफरेंसेस';
+
+  @override
+  String get dataManagementSection => 'डेटा मैनेजमेंट';
+
+  @override
+  String get notificationsSection => 'नोटिफिकेशन्स';
+
+  @override
+  String get aboutUs => 'अबाउट अस';
+
+  @override
+  String get premiumUnlocked => 'प्रीमियम फीचर्स अनलॉक्ड!';
+
+  @override
+  String get switchedToFree => 'फ्री वर्जन पर स्विच किया';
 }

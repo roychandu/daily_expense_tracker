@@ -1471,6 +1471,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SUN'**
   String get sun;
+
+  /// No description provided for @preferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferencesSection;
+
+  /// No description provided for @dataManagementSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Management'**
+  String get dataManagementSection;
+
+  /// No description provided for @notificationsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsSection;
+
+  /// No description provided for @aboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Us'**
+  String get aboutUs;
+
+  /// No description provided for @premiumUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Features Unlocked!'**
+  String get premiumUnlocked;
+
+  /// No description provided for @switchedToFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to Free Version'**
+  String get switchedToFree;
 }
 
 class _AppLocalizationsDelegate

@@ -63,12 +63,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Premium Card - Re-designed with a Banner approach
-              _buildPremiumCard(context, settings),
+              _buildPremiumCard(context, settings, l10n),
 
               const SizedBox(height: 32),
 
               // Preferences Section
-              _buildSectionHeader('Preferences'),
+              _buildSectionHeader(l10n.preferencesSection),
               _buildSectionCard([
                 _buildSettingsRow(
                   icon: Icons.public,
@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _buildSettingsRow(
                   icon: Icons.language_rounded,
                   iconColor: Colors.purpleAccent,
-                  title: 'Privacy policy',
+                  title: l10n.privacyPolicy,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -111,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _buildSettingsRow(
                   icon: Icons.layers_rounded,
                   iconColor: Colors.greenAccent,
-                  title: 'About Us',
+                  title: l10n.aboutUs,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -124,12 +124,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 32),
 
               // Data Management Section
-              _buildSectionHeader('Data Management'),
+              _buildSectionHeader(l10n.dataManagementSection),
               _buildSectionCard([
                 _buildSettingsRow(
                   icon: Icons.file_download,
                   iconColor: Colors.blueAccent,
-                  title: 'Export Transaction History',
+                  title: l10n.exportTransactionHistory,
                   hasBadge: true,
                   badgeText: 'CSV',
                   badgeColor: AppColors.accentTeal,
@@ -138,7 +138,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _buildSettingsRow(
                   icon: Icons.picture_as_pdf,
                   iconColor: Colors.orangeAccent,
-                  title: 'Annual Financial Report',
+                  title: l10n.annualFinancialReport,
                   hasBadge: true,
                   badgeText: 'PDF',
                   badgeColor: AppColors.softCoral,
@@ -149,13 +149,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 32),
 
               // Notifications Section
-              _buildSectionHeader('Notifications'),
+              _buildSectionHeader(l10n.notificationsSection),
               _buildNotificationsCard(context, settings, l10n),
 
               const SizedBox(height: 48),
               Center(
                 child: Text(
-                  'Version 1.0.0',
+                  '${l10n.version} 1.0.0',
                   style: AppTextStyles.caption.copyWith(
                     color: isDark ? Colors.white24 : Colors.black26,
                   ),
@@ -293,7 +293,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildPremiumCard(BuildContext context, SettingsController settings) {
+  Widget _buildPremiumCard(
+    BuildContext context,
+    SettingsController settings,
+    AppLocalizations l10n,
+  ) {
     return Container(
       width: double.infinity,
       constraints: const BoxConstraints(minHeight: 200),
@@ -335,7 +339,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'PREMIUM MEMBER',
+                            l10n.premiumMember,
                             style: AppTextStyles.caption.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
@@ -347,7 +351,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Upgrade to Gold',
+                        l10n.upgradeToGold,
                         style: AppTextStyles.h1Display.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -358,7 +362,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 8),
                       SizedBox(
                         child: Text(
-                          'Remove all ads, unlock detailed analytics, and get pro insights to master your finances.',
+                          l10n.premiumDescription,
                           style: AppTextStyles.body.copyWith(
                             color: Colors.white.withValues(alpha: 0.9),
                             fontSize: 13,
@@ -375,8 +379,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             showCustomSnackBar(
                               context,
                               settings.isPremium
-                                  ? 'Premium Features Unlocked!'
-                                  : 'Switched to Free Version',
+                                  ? l10n.premiumUnlocked
+                                  : l10n.switchedToFree,
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -388,9 +392,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
-                          child: const Text(
-                            'Upgrade Now',
-                            style: TextStyle(
+                          child: Text(
+                            l10n.upgradeNowBtn,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 14,
                               letterSpacing: 0.5,
@@ -464,7 +468,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       Text(
-                        'Build a consistent tracking habit',
+                        l10n.buildConsistentHabit,
                         style: AppTextStyles.caption.copyWith(
                           color: isDark ? Colors.white38 : Colors.black38,
                           fontSize: 12,
@@ -776,8 +780,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           reportTitle: l10n.expenseReport,
           totalExpenseLabel: l10n.totalExpenses,
           totalIncomeLabel: l10n.totalIncome,
-          expLabelShort: 'Exp',
-          incLabelShort: 'Inc',
+          expLabelShort: l10n.exp,
+          incLabelShort: l10n.inc,
           fileSavedLabel: l10n.fileSavedTo,
           errorLabel: l10n.error,
           noDirLabel: l10n.couldNotFindExportDir,

@@ -700,4 +700,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sun => 'SUN';
+
+  @override
+  String get preferencesSection => 'Preferences';
+
+  @override
+  String get dataManagementSection => 'Data Management';
+
+  @override
+  String get notificationsSection => 'Notifications';
+
+  @override
+  String get aboutUs => 'About Us';
+
+  @override
+  String get premiumUnlocked => 'Premium Features Unlocked!';
+
+  @override
+  String get switchedToFree => 'Switched to Free Version';
 }
