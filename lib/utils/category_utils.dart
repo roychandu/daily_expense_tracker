@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../services/database_service.dart';
 
 class CategoryUtils {
@@ -146,6 +147,126 @@ class CategoryUtils {
     },
   ];
 
+  static const List<IconData> commonMaterialIcons = [
+    Icons.shopping_cart,
+    Icons.restaurant,
+    Icons.directions_car,
+    Icons.home,
+    Icons.work,
+    Icons.school,
+    Icons.fitness_center,
+    Icons.movie,
+    Icons.pets,
+    Icons.local_gas_station,
+    Icons.flight,
+    Icons.hotel,
+    Icons.card_giftcard,
+    Icons.receipt_long,
+    Icons.sports_esports,
+    Icons.medical_services,
+    Icons.laptop,
+    Icons.coffee,
+    Icons.shopping_bag,
+    Icons.account_balance,
+    Icons.attach_money,
+    Icons.brush,
+    Icons.build,
+    Icons.camera_alt,
+    Icons.child_friendly,
+    Icons.cleaning_services,
+    Icons.computer,
+    Icons.devices,
+    Icons.edit,
+    Icons.event,
+    Icons.fastfood,
+    Icons.favorite,
+    Icons.flash_on,
+    Icons.headset,
+    Icons.lightbulb,
+    Icons.local_hospital,
+    Icons.music_note,
+    Icons.phone,
+    Icons.print,
+    Icons.security,
+    Icons.star,
+    Icons.tablet,
+    Icons.videogame_asset,
+    Icons.vpn_key,
+    Icons.wallet,
+    Icons.watch,
+    Icons.wifi,
+  ];
+
+  static const List<IconData> commonCupertinoIcons = [
+    CupertinoIcons.cart,
+    CupertinoIcons.bag,
+    CupertinoIcons.house,
+    CupertinoIcons.lightbulb,
+    CupertinoIcons.music_note,
+    CupertinoIcons.paw,
+    CupertinoIcons.person,
+    CupertinoIcons.phone,
+    CupertinoIcons.settings,
+    CupertinoIcons.star,
+    CupertinoIcons.tag,
+    CupertinoIcons.trash,
+    CupertinoIcons.wrench,
+    CupertinoIcons.airplane,
+    CupertinoIcons.alarm,
+    CupertinoIcons.ant,
+    CupertinoIcons.bandage,
+    CupertinoIcons.barcode,
+    CupertinoIcons.bell,
+    CupertinoIcons.briefcase,
+    CupertinoIcons.bus,
+    CupertinoIcons.camera,
+    CupertinoIcons.car,
+    CupertinoIcons.clock,
+    CupertinoIcons.cloud,
+    CupertinoIcons.creditcard,
+    CupertinoIcons.device_laptop,
+    CupertinoIcons.device_phone_landscape,
+    CupertinoIcons.device_phone_portrait,
+    CupertinoIcons.flame,
+    CupertinoIcons.gamecontroller,
+    CupertinoIcons.gift,
+    CupertinoIcons.hammer,
+    CupertinoIcons.heart,
+    CupertinoIcons.infinite,
+    CupertinoIcons.info,
+    CupertinoIcons.keyboard,
+    CupertinoIcons.link,
+    CupertinoIcons.lock,
+    CupertinoIcons.mail,
+    CupertinoIcons.map,
+    CupertinoIcons.mic,
+    CupertinoIcons.moon,
+    CupertinoIcons.paintbrush,
+    CupertinoIcons.pencil,
+    CupertinoIcons.printer,
+    CupertinoIcons.scissors,
+    CupertinoIcons.search,
+    CupertinoIcons.smiley,
+    CupertinoIcons.snow,
+    CupertinoIcons.speaker,
+    CupertinoIcons.sun_max,
+    CupertinoIcons.ticket,
+    CupertinoIcons.timer,
+    CupertinoIcons.train_style_one,
+    CupertinoIcons.tv,
+    CupertinoIcons.umbrella,
+    CupertinoIcons.video_camera,
+    CupertinoIcons.waveform,
+  ];
+
+  static final Map<int, IconData> materialIconMap = {
+    for (var icon in commonMaterialIcons) icon.codePoint: icon,
+  };
+
+  static final Map<int, IconData> cupertinoIconMap = {
+    for (var icon in commonCupertinoIcons) icon.codePoint: icon,
+  };
+
   static dynamic getIcon(
     String category, {
     bool isDark = false,
@@ -157,16 +278,11 @@ class CategoryUtils {
       if (info['iconKind'] == 'asset') {
         return info['iconData'] as String;
       } else if (info['iconKind'] == 'material') {
-        return IconData(
-          int.parse(info['iconData'] as String),
-          fontFamily: 'MaterialIcons',
-        );
+        final code = int.parse(info['iconData'] as String);
+        return materialIconMap[code] ?? Icons.category;
       } else if (info['iconKind'] == 'cupertino') {
-        return IconData(
-          int.parse(info['iconData'] as String),
-          fontFamily: 'CupertinoIcons',
-          fontPackage: 'cupertino_icons',
-        );
+        final code = int.parse(info['iconData'] as String);
+        return cupertinoIconMap[code] ?? CupertinoIcons.square_grid_2x2;
       }
     }
 
