@@ -129,6 +129,11 @@ class SettingsController extends ChangeNotifier {
         title: title,
         body: body,
       );
+      // Give immediate feedback to verify it works
+      await NotificationService().showInstantNotification(
+        title: title ?? "Notification Test",
+        body: "Daily reminders enabled successfully! 🔔",
+      );
     } else {
       await NotificationService().cancelAllNotifications();
     }

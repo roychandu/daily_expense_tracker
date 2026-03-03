@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest_all.dart' as tz_data;
+import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:flutter_timezone/flutter_timezone.dart';
 
 class NotificationService {
@@ -30,9 +30,22 @@ class NotificationService {
 
       if (timeZoneName != null) {
         tz.setLocalLocation(tz.getLocation(timeZoneName));
+      } else {
+        tz.setLocalLocation(tz.getLocation('UTC'));
       }
     } catch (e) {
-      tz.setLocalLocation(tz.getLocation('UTC'));
+      try {
+        final now = DateTime.now();
+        final offset = now.timeZoneOffset.inHours;
+        // Simple fallback for common offsets if name lookup fails
+        if (offset == 5.5) {
+          tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+        } else {
+          tz.setLocalLocation(tz.getLocation('UTC'));
+        }
+      } catch (_) {
+        tz.setLocalLocation(tz.getLocation('UTC'));
+      }
     }
 
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -52,6 +65,31 @@ class NotificationService {
         );
 
     await _notificationsPlugin.initialize(initializationSettings);
+    await requestPermissions();
+  }
+
+  Future<void> requestPermissions() async {
+    if (await _notificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >()
+            ?.requestNotificationsPermission() ??
+        false) {
+      // Permission granted
+    }
+
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >()
+        ?.requestPermissions(alert: true, badge: true, sound: true);
+
+    // For Exact Alarms on Android 13+
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestExactAlarmsPermission();
   }
 
   Future<void> scheduleDailyReminder({
@@ -72,7 +110,11 @@ class NotificationService {
 
     const notificationDetails = NotificationDetails(
       android: androidDetails,
-      iOS: DarwinNotificationDetails(),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
     );
 
     await _notificationsPlugin.zonedSchedule(
@@ -85,6 +127,31 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
+  Future<void> showInstantNotification({String? title, String? body}) async {
+    const androidDetails = AndroidNotificationDetails(
+      'instant_notification_channel',
+      'Instant Notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    await _notificationsPlugin.show(
+      999,
+      title ?? 'Notification Test',
+      body ?? 'Local notifications are working! 🔔',
+      notificationDetails,
     );
   }
 

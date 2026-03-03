@@ -8,7 +8,7 @@ import '../../common_widgets/custom_snackbar.dart';
 import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import 'package:intl/intl.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 import '../../utils/app_layout.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
@@ -663,42 +663,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     SettingsController settings,
   ) async {
     final l10n = AppLocalizations.of(context)!;
-    if (enabled) {
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.none)) {
-        if (mounted) {
-          _showNoInternetDialog(context, l10n);
-        }
-        return;
-      }
-    }
     await settings.updateDailyReminder(
       enabled,
       title: l10n.appTitle,
       body: l10n.reminderBody,
-    );
-  }
-
-  void _showNoInternetDialog(BuildContext context, AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            const Icon(Icons.wifi_off, color: Colors.orange),
-            const SizedBox(width: 8),
-            Text(l10n.internetRequired),
-          ],
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: Text(l10n.reminderInternetRequirement),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.ok),
-          ),
-        ],
-      ),
     );
   }
 

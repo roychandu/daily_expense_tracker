@@ -63,5 +63,6 @@
   "upgradeNow": "Upgrade Now",
   "achievements": "Achievements",
   "weeklyActivity": "Weekly Activity",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "reminderInternetRequirement": "Daily reminder has been set successfully."
 }

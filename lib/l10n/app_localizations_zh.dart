@@ -305,8 +305,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get internetRequired => 'Internet Required';
 
   @override
-  String get reminderInternetRequirement =>
-      'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.';
+  String get reminderInternetRequirement => '底里 瑞曼德 塞特 成功';
 
   @override
   String get exportingCsv => 'Exporting CSV...';

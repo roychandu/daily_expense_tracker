@@ -306,7 +306,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderInternetRequirement =>
-      'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.';
+      'Daily reminder has been set successfully.';
 
   @override
   String get exportingCsv => 'Exporting CSV...';

@@ -101,7 +101,7 @@
   "generatingPdf": "Generating PDF...",
   "noDataFound": "No data found for selected range",
   "internetRequired": "Internet Required",
-  "reminderInternetRequirement": "An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.",
+  "reminderInternetRequirement": "Daily reminder has been set successfully.",
   "exportingCsv": "Exporting CSV...",
   "ok": "OK",
   "reminderBody": "Don't forget to log your expenses for today! 📝",

@@ -306,7 +306,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get reminderInternetRequirement =>
-      'डेली रिमाइंडर इनेबल करने के लिए इंटरनेट कनेक्शन रिक्वायर्ड है। प्लीज चेक करें और फिर से ट्राई करें।';
+      'डेली रिमाइंडर सक्सेसफुली सेट हो गया है।';
 
   @override
   String get exportingCsv => 'Exporting CSV...';

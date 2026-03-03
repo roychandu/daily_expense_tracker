@@ -701,7 +701,7 @@ abstract class AppLocalizations {
   /// No description provided for @reminderInternetRequirement.
   ///
   /// In en, this message translates to:
-  /// **'An active internet connection is required to enable and sync the daily reminder feature. Please check your connection and try again.'**
+  /// **'Daily reminder has been set successfully.'**
   String get reminderInternetRequirement;
 
   /// No description provided for @exportingCsv.

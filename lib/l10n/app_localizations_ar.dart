@@ -306,7 +306,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reminderInternetRequirement =>
-      'مطلوب اتصال نشط بالإنترنت لتمكين ومزامنة ميزة التذكير اليومي. يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+      'ديلي ريمايندر هاز بين سيت سكسيسفولي.';
 
   @override
   String get exportingCsv => 'تصدير CSV...';
@@ -315,7 +315,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ok => 'أوكي';
 
   @override
-  String get reminderBody => 'لا تنسى تسجيل مصاريفك لهذا اليوم! 📝';
+  String get reminderBody => 'دونت فورغيت تو لوغ يور إكسبينسيز توداي! 📝';
 
   @override
   String get netBalance => 'نيت بالانس';
