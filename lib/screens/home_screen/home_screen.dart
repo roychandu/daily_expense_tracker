@@ -18,6 +18,7 @@ import '../../l10n/app_localizations.dart';
 import '../../utils/formatters.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/expense_controller.dart';
+import '../../utils/streak_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -197,18 +198,18 @@ class _TodayViewState extends State<_TodayView> {
 
     final allExpenses = expenseController.expenses;
     final now = DateTime.now();
-    final todayStr = DateFormat('yyyy-MM-dd').format(now);
-    final yesterdayStr = DateFormat(
-      'yyyy-MM-dd',
-    ).format(now.subtract(const Duration(days: 1)));
+    final todayStr = StreakUtils.getStreakKey(now);
+    final yesterdayStr = StreakUtils.getStreakKey(
+      now.subtract(StreakUtils.getStep()),
+    );
 
     final todayExpenses = allExpenses.where((e) {
-      return DateFormat('yyyy-MM-dd').format(e.date) == todayStr &&
+      return StreakUtils.getStreakKey(e.date) == todayStr &&
           e.isExpense == widget.isExpenseSelected;
     }).toList();
 
     final yesterdayExpenses = allExpenses.where((e) {
-      return DateFormat('yyyy-MM-dd').format(e.date) == yesterdayStr &&
+      return StreakUtils.getStreakKey(e.date) == yesterdayStr &&
           e.isExpense == widget.isExpenseSelected;
     }).toList();
 
@@ -224,21 +225,10 @@ class _TodayViewState extends State<_TodayView> {
 
     final recentExpenses = todayExpenses.take(5).toList();
 
-    // Dynamic Streak Calculation
-    int currentStreak = 0;
-    DateTime checkDate = now;
-    while (true) {
-      final dateStr = DateFormat('yyyy-MM-dd').format(checkDate);
-      final hasEntry = allExpenses.any(
-        (e) => DateFormat('yyyy-MM-dd').format(e.date) == dateStr,
-      );
-      if (hasEntry) {
-        currentStreak++;
-        checkDate = checkDate.subtract(const Duration(days: 1));
-      } else {
-        break;
-      }
-    }
+    // Dynamic Streak Calculation using centralized logic
+    final currentStreak = StreakUtils.calculateCurrentStreak(
+      allExpenses.map((e) => e.date).toList(),
+    );
 
     final milestone = 30; // Target milestone
 

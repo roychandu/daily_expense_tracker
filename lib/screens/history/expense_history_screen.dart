@@ -11,6 +11,7 @@ import '../../utils/category_utils.dart';
 import '../../controllers/expense_controller.dart';
 import 'package:provider/provider.dart';
 import '../../utils/app_layout.dart';
+import '../../utils/streak_utils.dart';
 import '../../controllers/settings_controller.dart';
 import '../../common_widgets/custom_card.dart';
 import '../../common_widgets/custom_text_field.dart';
@@ -68,18 +69,18 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     // Grouping
     final Map<String, List<Expense>> groups = {};
     final now = DateTime.now();
-    final todayStr = DateFormat('yyyy-MM-dd').format(now);
-    final yesterdayStr = DateFormat(
-      'yyyy-MM-dd',
-    ).format(now.subtract(const Duration(days: 1)));
+    final todayStr = StreakUtils.getStreakKey(now);
+    final yesterdayStr = StreakUtils.getStreakKey(
+      now.subtract(StreakUtils.getStep()),
+    );
 
     for (var e in filtered) {
-      final dateStr = DateFormat('yyyy-MM-dd').format(e.date);
+      final dateStr = StreakUtils.getStreakKey(e.date);
       String label;
       if (dateStr == todayStr) {
         label = l10n.today.toUpperCase();
       } else if (dateStr == yesterdayStr) {
-        label = l10n.yesterday;
+        label = l10n.yesterday.toUpperCase();
       } else {
         label = DateFormat(
           'MMMM dd, yyyy',

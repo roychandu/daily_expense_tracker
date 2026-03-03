@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps, curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
@@ -6,6 +8,7 @@ import '../../controllers/expense_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../utils/app_layout.dart';
+import '../../utils/streak_utils.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -148,34 +151,44 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final allExpenses = expenseController.expenses;
     final now = DateTime.now();
 
-    // 1. Calculate Streaks and Logged Dates
+    // 1. Calculate Streaks and Logged Dates (using intervals for testing)
     final Set<String> loggedDates = allExpenses
-        .map((e) => DateFormat('yyyy-MM-dd').format(e.date))
+        .map((e) => StreakUtils.getStreakKey(e.date))
         .toSet();
 
-    // Current Streak (Overall, regardless of selected month)
-    int currentStreak = 0;
-    DateTime checkDate = now;
-    while (loggedDates.contains(DateFormat('yyyy-MM-dd').format(checkDate))) {
-      currentStreak++;
-      checkDate = checkDate.subtract(const Duration(days: 1));
-    }
+    // Current Streak (using centralized logic)
+    final currentStreak = StreakUtils.calculateCurrentStreak(
+      allExpenses.map((e) => e.date).toList(),
+    );
 
     // Longest Streak Calculation (Overall)
     int longestStreak = 0;
     if (loggedDates.isNotEmpty) {
-      List<DateTime> sortedDates =
-          loggedDates.map((d) => DateTime.parse(d)).toList()..sort();
+      // Sort original expense dates
+      List<DateTime> sortedExpenses = allExpenses.map((e) => e.date).toList()
+        ..sort();
 
       int tempStreak = 1;
       longestStreak = 1;
-      for (int i = 0; i < sortedDates.length - 1; i++) {
-        if (sortedDates[i + 1].difference(sortedDates[i]).inDays == 1) {
-          tempStreak++;
-          if (tempStreak > longestStreak) longestStreak = tempStreak;
-        } else {
-          tempStreak = 1;
+
+      // Track intervals to avoid double counting same interval
+      Set<String> processedIntervals = {};
+      DateTime? prevDate;
+
+      for (var date in sortedExpenses) {
+        final key = StreakUtils.getStreakKey(date);
+        if (processedIntervals.contains(key)) continue;
+
+        if (prevDate != null) {
+          if (StreakUtils.getDifference(date, prevDate) == 1) {
+            tempStreak++;
+            if (tempStreak > longestStreak) longestStreak = tempStreak;
+          } else {
+            tempStreak = 1;
+          }
         }
+        processedIntervals.add(key);
+        prevDate = date;
       }
     }
 
@@ -185,11 +198,11 @@ class _ProgressScreenState extends State<ProgressScreen> {
     // Accuracy Calculation (Since first log, Overall)
     double accuracy = 0;
     if (loggedDates.isNotEmpty) {
-      final firstLog = loggedDates
-          .map((d) => DateTime.parse(d))
+      final firstLog = allExpenses
+          .map((e) => e.date)
           .reduce((a, b) => a.isBefore(b) ? a : b);
-      final daysSinceStart = now.difference(firstLog).inDays + 1;
-      accuracy = (totalLoggedDays / daysSinceStart) * 100;
+      final intervalsSinceStart = StreakUtils.getDifference(now, firstLog) + 1;
+      accuracy = (totalLoggedDays / intervalsSinceStart) * 100;
     }
 
     // 2. Next Milestone Logic
@@ -220,11 +233,11 @@ class _ProgressScreenState extends State<ProgressScreen> {
     List<Map<String, dynamic>> weeklyActivity = [];
     for (int i = 0; i < 7; i++) {
       final date = startOfWeek.add(Duration(days: i));
-      final dateStr = DateFormat('yyyy-MM-dd').format(date);
+      final dateStr = StreakUtils.getStreakKey(date);
       weeklyActivity.add({
         'day': dayKeys[date.weekday % 7],
         'isLogged': loggedDates.contains(dateStr),
-        'isToday': dateStr == DateFormat('yyyy-MM-dd').format(now),
+        'isToday': dateStr == StreakUtils.getStreakKey(now),
       });
     }
 
@@ -245,14 +258,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
     for (var e in allExpenses) {
       if (e.date.month == _selectedDate.month &&
           e.date.year == _selectedDate.year) {
-        final dateStr = DateFormat('yyyy-MM-dd').format(e.date);
+        final dateStr = StreakUtils.getStreakKey(e.date);
         dayStats[dateStr] = (dayStats[dateStr] ?? 0) + 1;
       }
     }
 
-    for (int i = 0; i < lastDayOfSelectedMonth.day; i++) {
+    final heatmapCount = lastDayOfSelectedMonth.day;
+    for (int i = 0; i < heatmapCount; i++) {
       final date = firstDayOfSelectedMonth.add(Duration(days: i));
-      final count = dayStats[DateFormat('yyyy-MM-dd').format(date)] ?? 0;
+      final count = dayStats[StreakUtils.getStreakKey(date)] ?? 0;
       if (count == 0)
         heatmapIntensities.add(0);
       else if (count < 3)
@@ -783,11 +797,11 @@ class _StatsRow extends StatelessWidget {
       children: [
         _StatItem(
           label: AppLocalizations.of(context)!.longestStreak,
-          value: '$longestStreak ${AppLocalizations.of(context)!.daysStreak}',
+          value: '$longestStreak ${AppLocalizations.of(context)!.days}',
         ),
         _StatItem(
           label: AppLocalizations.of(context)!.total,
-          value: '$totalDays ${AppLocalizations.of(context)!.daysStreak}',
+          value: '$totalDays ${AppLocalizations.of(context)!.days}',
         ),
         _StatItem(
           label: AppLocalizations.of(context)!.accuracy,
