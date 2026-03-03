@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 import '../../utils/app_layout.dart';
 import '../../controllers/settings_controller.dart';
 import '../../common_widgets/custom_card.dart';
-import '../../common_widgets/custom_snackbar.dart';
 import '../../common_widgets/custom_text_field.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
@@ -113,15 +112,15 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.history),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () {
-              showCustomSnackBar(context, l10n.exportingCsv);
-            },
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: false,
+        title: Text(
+          l10n.history,
+          style: AppTextStyles.h1Display.copyWith(
+            color: isDark ? AppColors.textDark : AppColors.charcoal,
           ),
-        ],
+        ),
       ),
       body: Column(
         children: [
@@ -144,22 +143,24 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: isDark ? AppColors.cardDark : Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.softGray),
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.tune,
-                      color: isDark
-                          ? AppColors.primarySelected
-                          : AppColors.primarySelected,
+                GestureDetector(
+                  onTap: () => _showFilterBottomSheet(context),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: (AppColors.primarySelected).withValues(alpha: 0.4),
+                      border: Border.all(
+                        color: AppColors.primarySelected,
+                        width: 2,
+                      ),
+                      shape: BoxShape.circle,
                     ),
-                    onPressed: () => _showFilterBottomSheet(context),
+                    child: const Icon(
+                      Icons.tune,
+                      color: AppColors.primarySelected,
+                      size: 24,
+                    ),
                   ),
                 ),
               ],
