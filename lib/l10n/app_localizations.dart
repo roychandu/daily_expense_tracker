@@ -1507,6 +1507,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switched to Free Version'**
   String get switchedToFree;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get categoryName;
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Name'**
+  String get enterName;
+
+  /// No description provided for @selectColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Color'**
+  String get selectColor;
+
+  /// No description provided for @appAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'App Assets'**
+  String get appAssets;
+
+  /// No description provided for @materialIcons.
+  ///
+  /// In en, this message translates to:
+  /// **'Material Icons'**
+  String get materialIcons;
+
+  /// No description provided for @cupertinoIcons.
+  ///
+  /// In en, this message translates to:
+  /// **'Cupertino Icons'**
+  String get cupertinoIcons;
+
+  /// No description provided for @writeHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Write here..'**
+  String get writeHere;
+
+  /// No description provided for @transport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get transport;
+
+  /// No description provided for @food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get food;
+
+  /// No description provided for @rent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get rent;
+
+  /// No description provided for @bills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get bills;
+
+  /// No description provided for @fun.
+  ///
+  /// In en, this message translates to:
+  /// **'Fun'**
+  String get fun;
+
+  /// No description provided for @shopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get shopping;
+
+  /// No description provided for @dinning.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinning'**
+  String get dinning;
+
+  /// No description provided for @health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get health;
+
+  /// No description provided for @grocerry.
+  ///
+  /// In en, this message translates to:
+  /// **'Grocerry'**
+  String get grocerry;
+
+  /// No description provided for @addNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new'**
+  String get addNew;
+
+  /// No description provided for @salaryIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary Income'**
+  String get salaryIncome;
+
+  /// No description provided for @freelanceSideHustle.
+  ///
+  /// In en, this message translates to:
+  /// **'Freelance/side hustle'**
+  String get freelanceSideHustle;
+
+  /// No description provided for @businessIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Income'**
+  String get businessIncome;
+
+  /// No description provided for @investmentReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Investment return'**
+  String get investmentReturn;
+
+  /// No description provided for @gifBonus.
+  ///
+  /// In en, this message translates to:
+  /// **'Gif/bonus'**
+  String get gifBonus;
+
+  /// No description provided for @refundCashback.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund/cashback'**
+  String get refundCashback;
 }
 
 class _AppLocalizationsDelegate

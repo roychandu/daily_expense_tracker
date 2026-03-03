@@ -391,34 +391,34 @@ class AppLocalizationsHi extends AppLocalizations {
   String get more => 'मोर';
 
   @override
-  String get selectCategoryTitle => 'Select Category';
+  String get selectCategoryTitle => 'सेलेक्ट कैटेगरी';
 
   @override
-  String get addNoteTitle => 'Add Note';
+  String get addNoteTitle => 'ऐड नोट';
 
   @override
-  String get optionalField => 'Optional';
+  String get optionalField => 'ऑप्शनल';
 
   @override
-  String get saveTransaction => 'Save Transaction';
+  String get saveTransaction => 'सेव ट्रांसेक्शन';
 
   @override
-  String get createNewCategory => 'Create New Category';
+  String get createNewCategory => 'क्रिएट न्यू कैटेगरी';
 
   @override
-  String get chooseAnIcon => 'Choose an icon';
+  String get chooseAnIcon => 'आइकॉन चूज़ करें';
 
   @override
-  String get createCategory => 'Create Category';
+  String get createCategory => 'क्रिएट कैटेगरी';
 
   @override
-  String get pickAColor => 'Pick a Color';
+  String get pickAColor => 'कलर पिक करें';
 
   @override
-  String get done => 'Done';
+  String get done => 'डन';
 
   @override
-  String get selectIcon => 'Select Icon';
+  String get selectIcon => 'सेलेक्ट आइकॉन';
 
   @override
   String get daysToNextMilestone => 'डेज़ टू नेक्स्ट माइलस्टोन';
@@ -716,4 +716,73 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get switchedToFree => 'फ्री वर्जन पर स्विच किया';
+
+  @override
+  String get categoryName => 'कैटेगरी नेम';
+
+  @override
+  String get enterName => 'नेम एंटर करें';
+
+  @override
+  String get selectColor => 'सेलेक्ट कलर';
+
+  @override
+  String get appAssets => 'ऐप एसेट्स';
+
+  @override
+  String get materialIcons => 'मटेरियल आइकॉन';
+
+  @override
+  String get cupertinoIcons => 'कूपरटीनो आइकॉन';
+
+  @override
+  String get writeHere => 'यहाँ लिखें..';
+
+  @override
+  String get transport => 'ट्रांसपोर्ट';
+
+  @override
+  String get food => 'फूड';
+
+  @override
+  String get rent => 'रेंट';
+
+  @override
+  String get bills => 'बिल्स';
+
+  @override
+  String get fun => 'फन';
+
+  @override
+  String get shopping => 'शॉपिंग';
+
+  @override
+  String get dinning => 'डाइनिंग';
+
+  @override
+  String get health => 'हेल्थ';
+
+  @override
+  String get grocerry => 'ग्रॉसरी';
+
+  @override
+  String get addNew => 'ऐड न्यू';
+
+  @override
+  String get salaryIncome => 'सैलरी इनकम';
+
+  @override
+  String get freelanceSideHustle => 'फ्रीलांस/साइड हसल';
+
+  @override
+  String get businessIncome => 'बिजनेस इनकम';
+
+  @override
+  String get investmentReturn => 'इन्वेस्टमेंट रिटर्न';
+
+  @override
+  String get gifBonus => 'गिफ्ट/बोनस';
+
+  @override
+  String get refundCashback => 'रिफंड/कैशबैक';
 }

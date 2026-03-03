@@ -12,52 +12,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTitle => 'مقتفي المصاريف اليومية';
 
   @override
-  String get settings => 'الإعدادات';
+  String get settings => 'سيتينغز';
 
   @override
-  String get preferences => 'التفضيلات';
+  String get preferences => 'بريفيرنسيز';
 
   @override
-  String get language => 'اللغة';
+  String get language => 'لانغويج';
 
   @override
-  String get currency => 'العملة';
+  String get currency => 'كيرنسي';
 
   @override
-  String get darkMode => 'الوضع الداكن';
+  String get darkMode => 'دارك مود';
 
   @override
-  String get dailyReminder => 'تذكير يومي';
+  String get dailyReminder => 'ديلي ريمايندر';
 
   @override
-  String get data => 'البيانات';
+  String get data => 'داتا';
 
   @override
-  String get exportCsv => 'تصدير CSV';
+  String get exportCsv => 'CSV إكسبورت';
 
   @override
-  String get exportPdf => 'تصدير PDF';
+  String get exportPdf => 'PDF إكسبورت';
 
   @override
-  String get watchAd => 'شاهد إعلان';
+  String get watchAd => 'واتش أد';
 
   @override
   String get premium => 'بريميوم';
 
   @override
-  String get removeAds => 'إزالة الإعلانات - \$3.99';
+  String get removeAds => 'ريموف أدز';
 
   @override
-  String get about => 'حول';
+  String get about => 'أباوت';
 
   @override
-  String get privacyPolicy => 'سياسة الخصوصية';
+  String get privacyPolicy => 'برايفسي بوليسي';
 
   @override
-  String get termsOfService => 'شروط الخدمة';
+  String get termsOfService => 'تيرمز أوف سيرفيس';
 
   @override
-  String get version => 'الإصدار';
+  String get version => 'فيرجين';
 
   @override
   String get selectLanguage => 'اختر اللغة';
@@ -66,37 +66,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectCurrency => 'اختر العملة';
 
   @override
-  String get home => 'الرئيسية';
+  String get home => 'هوم';
 
   @override
-  String get summary => 'الملخص';
+  String get summary => 'سمري';
 
   @override
-  String get insights => 'الرؤى';
+  String get insights => 'إنسايتس';
 
   @override
-  String get progress => 'التقدم';
+  String get progress => 'بروغريس';
 
   @override
-  String get today => 'اليوم';
+  String get today => 'توداي';
 
   @override
-  String get expense => 'مصروف';
+  String get expense => 'إكسبينس';
 
   @override
-  String get income => 'دخل';
+  String get income => 'إنكوم';
 
   @override
-  String get recent => 'أخيرة';
+  String get recent => 'ريسنت';
 
   @override
-  String get noExpensesYet => 'لا توجد نفقات بعد!';
+  String get noExpensesYet => 'نو إكسبينسيز يت!';
 
   @override
-  String get noIncomeYet => 'لا يوجد دخل بعد!';
+  String get noIncomeYet => 'نو إنكوم يت!';
 
   @override
-  String get viewAllHistory => 'عرض كل السجل';
+  String get viewAllHistory => 'فيو أول هيستوري';
 
   @override
   String get totalExpensesToday => 'إجمالي المصاريف لليوم';
@@ -114,10 +114,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get logged => 'تم التسجيل';
 
   @override
-  String get addExpense => 'إضافة مصروف';
+  String get addExpense => 'أد إكسبينس';
 
   @override
-  String get addIncome => 'إضافة دخل';
+  String get addIncome => 'أد إنكوم';
 
   @override
   String get category => 'الفئة';
@@ -126,10 +126,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addNoteOptional => 'إضافة ملاحظة (اختياري)';
 
   @override
-  String get saveExpense => 'حفظ المصروف';
+  String get saveExpense => 'سيف إكسبينس';
 
   @override
-  String get saveIncome => 'حفظ الدخل';
+  String get saveIncome => 'سيف إنكوم';
 
   @override
   String get pleaseEnterValidAmount => 'Please enter a valid amount';
@@ -159,7 +159,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get startLoggingToday => 'Start logging today!';
 
   @override
-  String get weeklyActivity => 'WEEKLY ACTIVITY';
+  String get weeklyActivity => 'ويكلي أكتيفيتي';
 
   @override
   String get daysLogged => 'of 7 days logged';
@@ -206,7 +206,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalItems => 'Total Items';
 
   @override
-  String get history => 'السجل';
+  String get history => 'هيستوري';
 
   @override
   String get searchExpenses => 'البحث عن مصاريف...';
@@ -215,34 +215,34 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noHistoryFound => 'لم يتم العثور على سجل';
 
   @override
-  String get yesterday => 'أمس';
+  String get yesterday => 'يسترداي';
 
   @override
-  String get moreThanYesterday => 'مور ذان يستردي';
+  String get moreThanYesterday => 'مور ذان يسترداي';
 
   @override
-  String get lessThanYesterday => 'ليس ذان يستردي';
+  String get lessThanYesterday => 'ليس ذان يسترداي';
 
   @override
   String get dateWiseLog => 'سجل التواريخ';
 
   @override
-  String get editExpense => 'تعديل المصروف';
+  String get editExpense => 'إيديت إكسبينس';
 
   @override
-  String get editIncome => 'تعديل الدخل';
+  String get editIncome => 'إيديت إنكوم';
 
   @override
-  String get update => 'تحديث';
+  String get update => 'أبديت';
 
   @override
-  String get other => 'أخرى';
+  String get other => 'أوذر';
 
   @override
-  String get all => 'الكل';
+  String get all => 'أول';
 
   @override
-  String get filters => 'تصفية';
+  String get filters => 'فلترز';
 
   @override
   String get type => 'النوع';
@@ -251,10 +251,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get categories => 'الفئات';
 
   @override
-  String get reset => 'إعادة تعيين';
+  String get reset => 'ريست';
 
   @override
-  String get apply => 'تطبيق';
+  String get apply => 'أبلاي';
 
   @override
   String get reportID => 'ID';
@@ -312,13 +312,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exportingCsv => 'تصدير CSV...';
 
   @override
-  String get ok => 'حسناً';
+  String get ok => 'أوكي';
 
   @override
   String get reminderBody => 'لا تنسى تسجيل مصاريفك لهذا اليوم! 📝';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'نيت بالانس';
 
   @override
   String get spendingBreakdown => 'Spending Breakdown';
@@ -333,7 +333,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get viewFullBreakdown => 'View Full Breakdown';
 
   @override
-  String get smartInsights => 'Smart Insights';
+  String get smartInsights => 'سمارت إنسايتس';
 
   @override
   String get mostFrequent => 'Most Frequent';
@@ -364,7 +364,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get goPremium => 'Go Premium';
 
   @override
-  String get upgradeNow => 'Upgrade Now';
+  String get upgradeNow => 'أبغريد ناو';
 
   @override
   String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
@@ -373,7 +373,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectMonth => 'اختر الشهر';
 
   @override
-  String get achievements => 'Achievements';
+  String get achievements => 'أتشيفمنتس';
 
   @override
   String get daysStreak => 'أيام الستريك';
@@ -400,10 +400,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get optionalField => 'Optional';
 
   @override
-  String get saveTransaction => 'Save Transaction';
+  String get saveTransaction => 'سيف ترانزاكشن';
 
   @override
-  String get createNewCategory => 'Create New Category';
+  String get createNewCategory => 'كرييت نيو كاتيغوري';
 
   @override
   String get chooseAnIcon => 'Choose an icon';
@@ -424,10 +424,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get daysToNextMilestone => 'أيام حتى الإنجاز التالي';
 
   @override
-  String get premiumMember => 'PREMIUM MEMBER';
+  String get premiumMember => 'بريميوم ميمبر';
 
   @override
-  String get upgradeToGold => 'Upgrade to Gold';
+  String get upgradeToGold => 'أبغريد تو قولد';
 
   @override
   String get premiumDescription =>
@@ -498,7 +498,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get entriesToday => 'إنتريز توداي';
 
   @override
-  String get monthlySummaryText => 'Monthly Summary';
+  String get monthlySummaryText => 'منثلي سمري';
 
   @override
   String get netBalanceStr => 'Net Balance';
@@ -717,4 +717,73 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get switchedToFree => 'Switched to Free Version';
+
+  @override
+  String get categoryName => 'كاتيغوري نيم';
+
+  @override
+  String get enterName => 'إنتر نيم';
+
+  @override
+  String get selectColor => 'سيلكت كولور';
+
+  @override
+  String get appAssets => 'App Assets';
+
+  @override
+  String get materialIcons => 'Material Icons';
+
+  @override
+  String get cupertinoIcons => 'Cupertino Icons';
+
+  @override
+  String get writeHere => 'Write here..';
+
+  @override
+  String get transport => 'Transport';
+
+  @override
+  String get food => 'Food';
+
+  @override
+  String get rent => 'Rent';
+
+  @override
+  String get bills => 'Bills';
+
+  @override
+  String get fun => 'Fun';
+
+  @override
+  String get shopping => 'Shopping';
+
+  @override
+  String get dinning => 'Dinning';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get grocerry => 'Grocerry';
+
+  @override
+  String get addNew => 'Add new';
+
+  @override
+  String get salaryIncome => 'Salary Income';
+
+  @override
+  String get freelanceSideHustle => 'Freelance/side hustle';
+
+  @override
+  String get businessIncome => 'Business Income';
+
+  @override
+  String get investmentReturn => 'Investment return';
+
+  @override
+  String get gifBonus => 'Gif/bonus';
+
+  @override
+  String get refundCashback => 'Refund/cashback';
 }

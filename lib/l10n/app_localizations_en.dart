@@ -717,4 +717,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get switchedToFree => 'Switched to Free Version';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get enterName => 'Enter Name';
+
+  @override
+  String get selectColor => 'Select Color';
+
+  @override
+  String get appAssets => 'App Assets';
+
+  @override
+  String get materialIcons => 'Material Icons';
+
+  @override
+  String get cupertinoIcons => 'Cupertino Icons';
+
+  @override
+  String get writeHere => 'Write here..';
+
+  @override
+  String get transport => 'Transport';
+
+  @override
+  String get food => 'Food';
+
+  @override
+  String get rent => 'Rent';
+
+  @override
+  String get bills => 'Bills';
+
+  @override
+  String get fun => 'Fun';
+
+  @override
+  String get shopping => 'Shopping';
+
+  @override
+  String get dinning => 'Dinning';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get grocerry => 'Grocerry';
+
+  @override
+  String get addNew => 'Add new';
+
+  @override
+  String get salaryIncome => 'Salary Income';
+
+  @override
+  String get freelanceSideHustle => 'Freelance/side hustle';
+
+  @override
+  String get businessIncome => 'Business Income';
+
+  @override
+  String get investmentReturn => 'Investment return';
+
+  @override
+  String get gifBonus => 'Gif/bonus';
+
+  @override
+  String get refundCashback => 'Refund/cashback';
 }

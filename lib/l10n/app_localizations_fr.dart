@@ -12,25 +12,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'Suivi des Dépenses Quotidiennes';
 
   @override
-  String get settings => 'Paramètres';
+  String get settings => 'Settings';
 
   @override
-  String get preferences => 'PRÉFÉRENCES';
+  String get preferences => 'Preferences';
 
   @override
-  String get language => 'Langue';
+  String get language => 'Language';
 
   @override
-  String get currency => 'Devise';
+  String get currency => 'Currency';
 
   @override
-  String get darkMode => 'Mode Sombre';
+  String get darkMode => 'Dark Mode';
 
   @override
-  String get dailyReminder => 'Rappel Quotidien';
+  String get dailyReminder => 'Daily Reminder';
 
   @override
-  String get data => 'DONNÉES';
+  String get data => 'Data';
 
   @override
   String get exportCsv => 'Exporter CSV';
@@ -42,13 +42,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get watchAd => 'Voir l\'annonce';
 
   @override
-  String get premium => 'PREMIUM';
+  String get premium => 'Premium';
 
   @override
   String get removeAds => 'Supprimer les publicités - 3,99 \$';
 
   @override
-  String get about => 'À PROPOS';
+  String get about => 'About';
 
   @override
   String get privacyPolicy => 'Politique de Confidentialité';
@@ -72,10 +72,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get summary => 'Summary';
 
   @override
-  String get insights => 'Aperçus';
+  String get insights => 'Insights';
 
   @override
-  String get progress => 'Progrès';
+  String get progress => 'Progress';
 
   @override
   String get today => 'Today';
@@ -87,16 +87,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get income => 'Income';
 
   @override
-  String get recent => 'Récent';
+  String get recent => 'Recent';
 
   @override
-  String get noExpensesYet => 'Aucun dépense pour l\'instant !';
+  String get noExpensesYet => 'No Expenses Yet!';
 
   @override
-  String get noIncomeYet => 'Aucun revenu pour l\'instant !';
+  String get noIncomeYet => 'No Income Yet!';
 
   @override
-  String get viewAllHistory => 'Voir tout l\'historique';
+  String get viewAllHistory => 'View All History';
 
   @override
   String get totalExpensesToday => 'Total Expenses for today';
@@ -159,7 +159,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get startLoggingToday => 'Start logging today!';
 
   @override
-  String get weeklyActivity => 'WEEKLY ACTIVITY';
+  String get weeklyActivity => 'Weekly Activity';
 
   @override
   String get daysLogged => 'of 7 days logged';
@@ -215,13 +215,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noHistoryFound => 'No history found';
 
   @override
-  String get yesterday => 'YESTERDAY';
+  String get yesterday => 'Yesterday';
 
   @override
-  String get moreThanYesterday => 'more than yesterday';
+  String get moreThanYesterday => 'More than Yesterday';
 
   @override
-  String get lessThanYesterday => 'less than yesterday';
+  String get lessThanYesterday => 'Less than Yesterday';
 
   @override
   String get dateWiseLog => 'DATE-WISE LOG';
@@ -424,7 +424,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get daysToNextMilestone => 'Jours jusqu\'au prochain palier';
 
   @override
-  String get premiumMember => 'PREMIUM MEMBER';
+  String get premiumMember => 'Premium Member';
 
   @override
   String get upgradeToGold => 'Upgrade to Gold';
@@ -492,10 +492,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get milestoneReached => 'Palier atteint ! Vérifiez vos récompenses.';
 
   @override
-  String get todayCardTitle => 'TODAY';
+  String get todayCardTitle => 'Today';
 
   @override
-  String get entriesToday => 'Entries today';
+  String get entriesToday => 'Entries Today';
 
   @override
   String get monthlySummaryText => 'Monthly Summary';
@@ -717,4 +717,73 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get switchedToFree => 'Switched to Free Version';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get enterName => 'Enter Name';
+
+  @override
+  String get selectColor => 'Select Color';
+
+  @override
+  String get appAssets => 'App Assets';
+
+  @override
+  String get materialIcons => 'Material Icons';
+
+  @override
+  String get cupertinoIcons => 'Cupertino Icons';
+
+  @override
+  String get writeHere => 'Write here..';
+
+  @override
+  String get transport => 'Transport';
+
+  @override
+  String get food => 'Food';
+
+  @override
+  String get rent => 'Rent';
+
+  @override
+  String get bills => 'Bills';
+
+  @override
+  String get fun => 'Fun';
+
+  @override
+  String get shopping => 'Shopping';
+
+  @override
+  String get dinning => 'Dinning';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get grocerry => 'Grocerry';
+
+  @override
+  String get addNew => 'Add new';
+
+  @override
+  String get salaryIncome => 'Salary Income';
+
+  @override
+  String get freelanceSideHustle => 'Freelance/side hustle';
+
+  @override
+  String get businessIncome => 'Business Income';
+
+  @override
+  String get investmentReturn => 'Investment return';
+
+  @override
+  String get gifBonus => 'Gif/bonus';
+
+  @override
+  String get refundCashback => 'Refund/cashback';
 }

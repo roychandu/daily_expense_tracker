@@ -135,6 +135,45 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     }
   }
 
+  String _getLocalizedCategoryName(String name, AppLocalizations l10n) {
+    switch (name.toLowerCase()) {
+      case 'transport':
+        return l10n.transport;
+      case 'food':
+        return l10n.food;
+      case 'rent':
+        return l10n.rent;
+      case 'bills':
+        return l10n.bills;
+      case 'fun':
+        return l10n.fun;
+      case 'shopping':
+        return l10n.shopping;
+      case 'dinning':
+        return l10n.dinning;
+      case 'health':
+        return l10n.health;
+      case 'grocerry':
+        return l10n.grocerry;
+      case 'add new':
+        return l10n.addNew;
+      case 'salary income':
+        return l10n.salaryIncome;
+      case 'freelance/side hustle':
+        return l10n.freelanceSideHustle;
+      case 'business income':
+        return l10n.businessIncome;
+      case 'investment return':
+        return l10n.investmentReturn;
+      case 'gif/bonus':
+        return l10n.gifBonus;
+      case 'refund/cashback':
+        return l10n.refundCashback;
+      default:
+        return name;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -245,8 +284,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     GestureDetector(
                       onTap: () => _selectDate(context),
                       child: Text(
-                        DateFormat(
-                          'MMM dd, yyyy',
+                        DateFormat.yMMMd(
+                          Localizations.localeOf(context).toString(),
                         ).format(_selectedDate).toUpperCase(),
                         style: const TextStyle(
                           color: AppColors.primarySelected,
@@ -329,7 +368,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Select Category',
+                        l10n.selectCategoryTitle,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -404,7 +443,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                cat['name']!,
+                                _getLocalizedCategoryName(cat['name']!, l10n),
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: isSelected
@@ -430,7 +469,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Add Note',
+                        l10n.addNoteTitle,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -446,7 +485,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         color: isDark ? Colors.white : AppColors.charcoal,
                       ),
                       decoration: InputDecoration(
-                        hintText: 'Write here..',
+                        hintText: l10n.writeHere,
                         hintStyle: const TextStyle(color: Color(0xFFB0B8C1)),
                         filled: true,
                         fillColor: isDark
@@ -468,11 +507,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           ),
                         ),
                         contentPadding: const EdgeInsets.all(16),
-                        suffixIcon: const Padding(
-                          padding: EdgeInsets.only(right: 12, top: 24),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 12, top: 24),
                           child: Text(
-                            'Optional',
-                            style: TextStyle(
+                            l10n.optionalField,
+                            style: const TextStyle(
                               color: Color(0xFFB0B8C1),
                               fontSize: 12,
                             ),
@@ -507,9 +546,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       alpha: 0.5,
                     ),
                   ),
-                  child: const Text(
-                    'Save Transaction',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  child: Text(
+                    l10n.saveTransaction,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -586,6 +628,7 @@ class _CreateCategoryBottomSheetState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       padding: EdgeInsets.only(
@@ -624,7 +667,7 @@ class _CreateCategoryBottomSheetState
           const SizedBox(height: 24),
           Center(
             child: Text(
-              'Create New Category',
+              l10n.createNewCategory,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -634,11 +677,11 @@ class _CreateCategoryBottomSheetState
             ),
           ),
           const SizedBox(height: 32),
-          _buildLabel('Category Name', isDark),
+          _buildLabel(l10n.categoryName, isDark),
           const SizedBox(height: 12),
-          _buildTextField(_nameController, 'Enter Name', isDark),
+          _buildTextField(_nameController, l10n.enterName, isDark),
           const SizedBox(height: 24),
-          _buildLabel('Select Icon', isDark),
+          _buildLabel(l10n.selectIcon, isDark),
           const SizedBox(height: 12),
           GestureDetector(
             onTap: () => _showIconPicker(context),
@@ -675,7 +718,7 @@ class _CreateCategoryBottomSheetState
                         ),
                   const SizedBox(width: 12),
                   Text(
-                    'Choose an icon',
+                    l10n.chooseAnIcon,
                     style: TextStyle(
                       color: isDark ? Colors.white70 : const Color(0xFF4A4A4A),
                     ),
@@ -690,7 +733,7 @@ class _CreateCategoryBottomSheetState
             ),
           ),
           const SizedBox(height: 24),
-          _buildLabel('Select Color', isDark),
+          _buildLabel(l10n.selectColor, isDark),
           const SizedBox(height: 16),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -789,9 +832,12 @@ class _CreateCategoryBottomSheetState
                 elevation: 4,
                 shadowColor: AppColors.primarySelected.withValues(alpha: 0.4),
               ),
-              child: const Text(
-                'Create Category',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              child: Text(
+                l10n.createCategory,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -826,6 +872,7 @@ class _CreateCategoryBottomSheetState
 
   void _showIconPicker(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final List<String> assetIcons = [
       ...CategoryUtils.expenseCategories
           .map((e) => e['lightUnselected']!)
@@ -976,7 +1023,7 @@ class _CreateCategoryBottomSheetState
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Select Icon',
+                    l10n.selectIcon,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -988,11 +1035,11 @@ class _CreateCategoryBottomSheetState
                     child: ListView(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       children: [
-                        _sectionTitle('App Assets'),
+                        _sectionTitle(l10n.appAssets),
                         _iconGrid(assetIcons, true, setModalState),
-                        _sectionTitle('Material Icons'),
+                        _sectionTitle(l10n.materialIcons),
                         _iconGrid(commonMaterial, false, setModalState),
-                        _sectionTitle('Cupertino Icons'),
+                        _sectionTitle(l10n.cupertinoIcons),
                         _iconGrid(commonCupertino, false, setModalState),
                         const SizedBox(height: 24),
                       ],

@@ -12,52 +12,52 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => '日常开支追踪器';
 
   @override
-  String get settings => '设置';
+  String get settings => '塞廷斯';
 
   @override
-  String get preferences => '偏好';
+  String get preferences => '普瑞弗伦斯';
 
   @override
-  String get language => '语言';
+  String get language => '兰格维奇';
 
   @override
-  String get currency => '货币';
+  String get currency => '科伦西';
 
   @override
-  String get darkMode => '深色模式';
+  String get darkMode => '达克 模式';
 
   @override
-  String get dailyReminder => '每日提醒';
+  String get dailyReminder => '底里 瑞曼德';
 
   @override
-  String get data => '数据';
+  String get data => '德塔';
 
   @override
-  String get exportCsv => '导出 CSV';
+  String get exportCsv => 'CSV 出口';
 
   @override
-  String get exportPdf => '导出 PDF';
+  String get exportPdf => 'PDF 出口';
 
   @override
-  String get watchAd => '观看广告';
+  String get watchAd => '沃驰 艾德';
 
   @override
-  String get premium => '高级版';
+  String get premium => '普瑞米姆';
 
   @override
-  String get removeAds => '移除广告 - \$3.99';
+  String get removeAds => '瑞姆福 艾德';
 
   @override
-  String get about => '关于';
+  String get about => '阿包特';
 
   @override
-  String get privacyPolicy => '隐私政策';
+  String get privacyPolicy => '普瑞维斯 策略';
 
   @override
-  String get termsOfService => '服务条款';
+  String get termsOfService => '特姆恩 瑟维斯';
 
   @override
-  String get version => '版本';
+  String get version => '勿真';
 
   @override
   String get selectLanguage => '选择语言';
@@ -66,37 +66,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectCurrency => '选择货币';
 
   @override
-  String get home => 'Home';
+  String get home => '红姆';
 
   @override
-  String get summary => 'Summary';
+  String get summary => '萨默里';
 
   @override
-  String get insights => '洞察';
+  String get insights => '因赛特';
 
   @override
-  String get progress => '进展';
+  String get progress => '普罗格瑞斯';
 
   @override
-  String get today => 'Today';
+  String get today => '图嘚';
 
   @override
-  String get expense => 'Expense';
+  String get expense => '艾克斯潘斯';
 
   @override
-  String get income => 'Income';
+  String get income => '因康姆';
 
   @override
-  String get recent => '最近的';
+  String get recent => '瑞森特';
 
   @override
-  String get noExpensesYet => '暂无支出！';
+  String get noExpensesYet => '诺 艾克斯潘斯 耶特!';
 
   @override
-  String get noIncomeYet => '暂无收入！';
+  String get noIncomeYet => '诺 因康姆 耶特!';
 
   @override
-  String get viewAllHistory => '查看所有历史记录';
+  String get viewAllHistory => '唯欧 欧尔 希斯特里';
 
   @override
   String get totalExpensesToday => 'Total Expenses for today';
@@ -114,10 +114,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logged => 'Logged';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => '艾得 艾克斯潘斯';
 
   @override
-  String get addIncome => 'Add Income';
+  String get addIncome => '艾得 因康姆';
 
   @override
   String get category => 'Category';
@@ -126,10 +126,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get addNoteOptional => 'Add note (optional)';
 
   @override
-  String get saveExpense => 'Save Expense';
+  String get saveExpense => '赛福 艾克斯潘斯';
 
   @override
-  String get saveIncome => 'Save Income';
+  String get saveIncome => '赛福 因康姆';
 
   @override
   String get pleaseEnterValidAmount => 'Please enter a valid amount';
@@ -159,7 +159,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get startLoggingToday => 'Start logging today!';
 
   @override
-  String get weeklyActivity => 'WEEKLY ACTIVITY';
+  String get weeklyActivity => '维克里 艾克提维提';
 
   @override
   String get daysLogged => 'of 7 days logged';
@@ -206,7 +206,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get totalItems => 'Total Items';
 
   @override
-  String get history => 'History';
+  String get history => '希斯特里';
 
   @override
   String get searchExpenses => 'Search expenses...';
@@ -215,34 +215,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noHistoryFound => 'No history found';
 
   @override
-  String get yesterday => 'YESTERDAY';
+  String get yesterday => '耶斯特嘚';
 
   @override
-  String get moreThanYesterday => '摩尔 赞 耶斯特代';
+  String get moreThanYesterday => '摩 赞 耶斯特嘚';
 
   @override
-  String get lessThanYesterday => '莱斯 赞 耶斯特代';
+  String get lessThanYesterday => '莱斯 赞 耶斯特嘚';
 
   @override
   String get dateWiseLog => 'DATE-WISE LOG';
 
   @override
-  String get editExpense => 'Edit Expense';
+  String get editExpense => '艾迪特 艾克斯潘斯';
 
   @override
-  String get editIncome => 'Edit Income';
+  String get editIncome => '艾迪特 因康姆';
 
   @override
-  String get update => 'Update';
+  String get update => '阿普迪特';
 
   @override
-  String get other => 'Other';
+  String get other => '阿德';
 
   @override
-  String get all => 'All';
+  String get all => '欧尔';
 
   @override
-  String get filters => 'Filters';
+  String get filters => '费尔特斯';
 
   @override
   String get type => 'Type';
@@ -251,10 +251,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get categories => 'Categories';
 
   @override
-  String get reset => 'Reset';
+  String get reset => '瑞赛特';
 
   @override
-  String get apply => 'Apply';
+  String get apply => '阿普莱';
 
   @override
   String get reportID => 'ID';
@@ -312,13 +312,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exportingCsv => 'Exporting CSV...';
 
   @override
-  String get ok => 'OK';
+  String get ok => '欧克';
 
   @override
   String get reminderBody => 'Don\'t forget to log your expenses for today! 📝';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => '内特 班兰斯';
 
   @override
   String get spendingBreakdown => 'Spending Breakdown';
@@ -333,7 +333,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get viewFullBreakdown => 'View Full Breakdown';
 
   @override
-  String get smartInsights => 'Smart Insights';
+  String get smartInsights => '斯马特 因赛特';
 
   @override
   String get mostFrequent => 'Most Frequent';
@@ -364,7 +364,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goPremium => 'Go Premium';
 
   @override
-  String get upgradeNow => 'Upgrade Now';
+  String get upgradeNow => '阿普格瑞得 闹';
 
   @override
   String get unlockToWatchFullInsights => 'Unlock to watch full Insights';
@@ -373,7 +373,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectMonth => '选择月份';
 
   @override
-  String get achievements => 'Achievements';
+  String get achievements => '阿其福门特';
 
   @override
   String get daysStreak => '天连续';
@@ -400,10 +400,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get optionalField => 'Optional';
 
   @override
-  String get saveTransaction => 'Save Transaction';
+  String get saveTransaction => '赛福 特兰赛克申';
 
   @override
-  String get createNewCategory => 'Create New Category';
+  String get createNewCategory => '奎艾特 纽 卡特郭瑞';
 
   @override
   String get chooseAnIcon => 'Choose an icon';
@@ -424,10 +424,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get daysToNextMilestone => '距离下一个里程碑的天数';
 
   @override
-  String get premiumMember => 'PREMIUM MEMBER';
+  String get premiumMember => '普瑞米姆 明博';
 
   @override
-  String get upgradeToGold => 'Upgrade to Gold';
+  String get upgradeToGold => '阿普格瑞得 图 郭德';
 
   @override
   String get premiumDescription =>
@@ -492,13 +492,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get milestoneReached => '达到里程碑！查看您的奖励。';
 
   @override
-  String get todayCardTitle => '图代';
+  String get todayCardTitle => '图嘚';
 
   @override
-  String get entriesToday => '恩特里斯 图代';
+  String get entriesToday => '恩得利斯 图嘚';
 
   @override
-  String get monthlySummaryText => 'Monthly Summary';
+  String get monthlySummaryText => '曼思里 萨默里';
 
   @override
   String get netBalanceStr => 'Net Balance';
@@ -717,4 +717,73 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get switchedToFree => 'Switched to Free Version';
+
+  @override
+  String get categoryName => '卡特郭瑞 尼姆';
+
+  @override
+  String get enterName => '恩特 尼姆';
+
+  @override
+  String get selectColor => '赛莱科特 考乐';
+
+  @override
+  String get appAssets => 'App Assets';
+
+  @override
+  String get materialIcons => 'Material Icons';
+
+  @override
+  String get cupertinoIcons => 'Cupertino Icons';
+
+  @override
+  String get writeHere => 'Write here..';
+
+  @override
+  String get transport => 'Transport';
+
+  @override
+  String get food => 'Food';
+
+  @override
+  String get rent => 'Rent';
+
+  @override
+  String get bills => 'Bills';
+
+  @override
+  String get fun => 'Fun';
+
+  @override
+  String get shopping => 'Shopping';
+
+  @override
+  String get dinning => 'Dinning';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get grocerry => 'Grocerry';
+
+  @override
+  String get addNew => 'Add new';
+
+  @override
+  String get salaryIncome => 'Salary Income';
+
+  @override
+  String get freelanceSideHustle => 'Freelance/side hustle';
+
+  @override
+  String get businessIncome => 'Business Income';
+
+  @override
+  String get investmentReturn => 'Investment return';
+
+  @override
+  String get gifBonus => 'Gif/bonus';
+
+  @override
+  String get refundCashback => 'Refund/cashback';
 }
