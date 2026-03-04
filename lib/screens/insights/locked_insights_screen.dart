@@ -101,12 +101,11 @@ Widget _summarySection({
           children: [
             Text(
               '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.labelSmall.copyWith(
                 letterSpacing: 1.2,
                 color: isDark
                     ? AppColors.whiteOpacity60
                     : AppColors.blackOpacity54,
-                fontSize: 11,
               ),
             ),
             GestureDetector(
@@ -139,17 +138,15 @@ Widget _summarySection({
             ),
             style: AppTextStyles.amountDisplay.copyWith(
               fontSize: 36,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Serif',
+              color: isDark ? AppColors.white : AppColors.charcoal,
             ),
           ),
         ),
         Text(
           AppLocalizations.of(context)!.netBalanceStr,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.label.copyWith(
             color: AppColors.successGreen,
             fontWeight: FontWeight.bold,
-            fontSize: 13,
           ),
         ),
         const SizedBox(height: 20),
@@ -190,9 +187,8 @@ Widget _summaryItem(
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: AppTextStyles.label.copyWith(
             color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
-            fontSize: 12,
           ),
         ),
         Text(
@@ -201,10 +197,8 @@ Widget _summaryItem(
             settings.currency,
             settings.locale,
           ),
-          style: TextStyle(
+          style: AppTextStyles.amountSmall.copyWith(
             color: color,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
             fontFamily: 'Serif',
           ),
         ),
@@ -236,9 +230,8 @@ Widget _spendingBreakdownSection({
           ),
           Text(
             AppLocalizations.of(context)!.viewAll,
-            style: TextStyle(
+            style: AppTextStyles.label.copyWith(
               color: AppColors.accentOrange.withValues(alpha: 0.8),
-              fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
             ),
@@ -283,7 +276,7 @@ Widget _categoryProgressBar({
             Expanded(
               child: Text(
                 category,
-                style: TextStyle(
+                style: AppTextStyles.bodySmall.copyWith(
                   color: isDark
                       ? AppColors.whiteOpacity70
                       : AppColors.blackOpacity54,
@@ -297,7 +290,9 @@ Widget _categoryProgressBar({
                 settings.locale,
                 decimalDigits: 0,
               ),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: AppTextStyles.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -378,9 +373,8 @@ class _LockedInsightsCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   AppLocalizations.of(context)!.unlockWatchFullInsights,
-                  style: const TextStyle(
+                  style: AppTextStyles.bodyLarge.copyWith(
                     color: AppColors.white,
-                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -418,7 +412,9 @@ class _LockedInsightsCard extends StatelessWidget {
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.upgradeNowBtn,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -437,7 +433,9 @@ class _LockedInsightsCard extends StatelessWidget {
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.watchAdsTxt,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -457,9 +455,8 @@ class _LockedInsightsCard extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             text,
-            style: const TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.whiteOpacity70,
-              fontSize: 14,
             ),
           ),
         ],

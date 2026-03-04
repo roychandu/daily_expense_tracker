@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../../services/database_service.dart';
 import '../../common_widgets/app_colors.dart';
+import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../models/expense.dart';
 import '../../controllers/settings_controller.dart';
@@ -230,12 +231,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             l10n.addIncome,
-                            style: TextStyle(
+                            style: AppTextStyles.body.copyWith(
                               color: !_isExpense
                                   ? Colors.white
                                   : AppColors.charcoal,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
                             ),
                           ),
                         ),
@@ -255,12 +255,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             l10n.addExpense,
-                            style: TextStyle(
+                            style: AppTextStyles.body.copyWith(
                               color: _isExpense
                                   ? Colors.white
                                   : AppColors.charcoal,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
                             ),
                           ),
                         ),
@@ -288,11 +287,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         DateFormat.yMMMd(
                           Localizations.localeOf(context).toString(),
                         ).format(_selectedDate).toUpperCase(),
-                        style: const TextStyle(
+                        style: AppTextStyles.bodyLarge.copyWith(
                           color: AppColors.primarySelected,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 2.0,
-                          fontSize: 18,
                         ),
                       ),
                     ),
@@ -305,10 +303,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       children: [
                         Text(
                           '$currencySymbol',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Serif',
+                          style: AppTextStyles.h1Display.copyWith(
                             color: isDark
                                 ? AppColors.whiteOpacity70
                                 : AppColors.textPrimaryLight,
@@ -323,23 +318,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: AppTextStyles.h1Display.copyWith(
                               fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Serif',
                               color: isDark
                                   ? AppColors.whiteOpacity70
                                   : AppColors.textPrimaryLight,
                             ),
                             decoration: InputDecoration(
                               hintText: '0',
-                              hintStyle: TextStyle(
+                              hintStyle: AppTextStyles.h1Display.copyWith(
                                 color: isDark
                                     ? AppColors.whiteOpacity70
                                     : AppColors.textPrimaryLight,
                                 fontSize: 48,
-                                fontFamily: 'Serif',
-                                fontWeight: FontWeight.bold,
                               ),
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
@@ -352,10 +343,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         const SizedBox(width: 8),
                         Text(
                           '.00',
-                          style: TextStyle(
+                          style: AppTextStyles.h1Display.copyWith(
                             fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Serif',
                             color: isDark
                                 ? AppColors.whiteOpacity70
                                 : AppColors.textPrimaryLight,
@@ -370,8 +359,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         l10n.selectCategoryTitle,
-                        style: TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.bodyLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark ? AppColors.white : AppColors.black,
                         ),
@@ -445,16 +433,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                               const SizedBox(height: 8),
                               Text(
                                 _getLocalizedCategoryName(cat['name']!, l10n),
-                                style: TextStyle(
-                                  fontSize: 11,
+                                style: AppTextStyles.labelSmall.copyWith(
                                   fontWeight: isSelected
                                       ? FontWeight.bold
                                       : FontWeight.w500,
                                   color: isSelected
                                       ? AppColors.primarySelected
                                       : (isDark
-                                            ? Colors.white54
-                                            : const Color(0xFF8D99AE)),
+                                            ? AppColors.whiteOpacity60
+                                            : AppColors.softGray),
                                 ),
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
@@ -471,10 +458,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         l10n.addNoteTitle,
-                        style: TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.bodyLarge.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: isDark ? AppColors.white : AppColors.charcoal,
                         ),
                       ),
                     ),
@@ -482,12 +468,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     TextField(
                       controller: _noteController,
                       maxLines: 3,
-                      style: TextStyle(
-                        color: isDark ? Colors.white : AppColors.charcoal,
+                      style: AppTextStyles.body.copyWith(
+                        color: isDark ? AppColors.white : AppColors.charcoal,
                       ),
                       decoration: InputDecoration(
                         hintText: l10n.writeHere,
-                        hintStyle: const TextStyle(color: AppColors.textHint),
+                        hintStyle: AppTextStyles.body.copyWith(
+                          color: AppColors.textHint,
+                        ),
                         filled: true,
                         fillColor: isDark
                             ? AppColors.cardDark
@@ -512,10 +500,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           padding: const EdgeInsets.only(right: 12, top: 24),
                           child: Text(
                             l10n.optionalField,
-                            style: const TextStyle(
-                              color: AppColors.textHint,
-                              fontSize: 12,
-                            ),
+                            style: AppTextStyles.label,
                           ),
                         ),
                       ),
@@ -549,8 +534,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   ),
                   child: Text(
                     l10n.saveTransaction,
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -669,10 +653,7 @@ class _CreateCategoryBottomSheetState
           Center(
             child: Text(
               l10n.createNewCategory,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Serif',
+              style: AppTextStyles.h2Section.copyWith(
                 color: isDark ? AppColors.white : AppColors.charcoal,
               ),
             ),
@@ -720,7 +701,7 @@ class _CreateCategoryBottomSheetState
                   const SizedBox(width: 12),
                   Text(
                     l10n.chooseAnIcon,
-                    style: TextStyle(
+                    style: AppTextStyles.body.copyWith(
                       color: isDark
                           ? AppColors.whiteOpacity70
                           : AppColors.textPrimaryLight,
@@ -839,8 +820,7 @@ class _CreateCategoryBottomSheetState
               ),
               child: Text(
                 l10n.createCategory,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -920,9 +900,7 @@ class _CreateCategoryBottomSheetState
                   const SizedBox(height: 16),
                   Text(
                     l10n.selectIcon,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                    style: AppTextStyles.h3Title.copyWith(
                       color: isDark ? AppColors.white : AppColors.charcoal,
                     ),
                   ),
@@ -955,7 +933,7 @@ class _CreateCategoryBottomSheetState
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Text(
         title,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        style: AppTextStyles.body.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -1010,10 +988,9 @@ class _CreateCategoryBottomSheetState
   Widget _buildLabel(String text, bool isDark) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: 18,
+      style: AppTextStyles.bodyLarge.copyWith(
         fontWeight: FontWeight.w600,
-        color: isDark ? Colors.white70 : const Color(0xFF4A4A4A),
+        color: isDark ? AppColors.whiteOpacity70 : const Color(0xFF4A4A4A),
       ),
     );
   }
@@ -1040,10 +1017,12 @@ class _CreateCategoryBottomSheetState
       ),
       child: TextField(
         controller: controller,
-        style: TextStyle(color: isDark ? AppColors.white : AppColors.charcoal),
+        style: AppTextStyles.body.copyWith(
+          color: isDark ? AppColors.white : AppColors.charcoal,
+        ),
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: TextStyle(
+          hintStyle: AppTextStyles.body.copyWith(
             color: isDark ? AppColors.whiteOpacity24 : const Color(0xFF9E9E9E),
           ),
           contentPadding: const EdgeInsets.symmetric(

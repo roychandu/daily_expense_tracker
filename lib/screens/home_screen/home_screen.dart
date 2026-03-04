@@ -156,10 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 4),
               Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.label.copyWith(
                   color: color,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                  fontSize: 12,
                 ),
               ),
             ],
@@ -274,8 +273,8 @@ class _TodayViewState extends State<_TodayView> {
 
             Text(
               l10n.recent,
-              style: AppTextStyles.h2Section.copyWith(
-                fontSize: 18,
+              style: AppTextStyles.bodyLarge.copyWith(
+                fontWeight: FontWeight.bold,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? AppColors.textDark
                     : AppColors.charcoal,
@@ -326,7 +325,7 @@ class _TodayViewState extends State<_TodayView> {
                     children: [
                       Text(
                         l10n.viewAllHistory,
-                        style: TextStyle(
+                        style: AppTextStyles.body.copyWith(
                           color: AppColors.primarySelected,
                           fontWeight: FontWeight.bold,
                         ),
@@ -457,7 +456,7 @@ class _TodayViewState extends State<_TodayView> {
               settings.locale,
             ),
             style: AppTextStyles.amountDisplay.copyWith(
-              fontSize: 36,
+              fontSize: 36, // This is a special large display for the main card
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.textDark
                   : AppColors.charcoal,
@@ -474,10 +473,9 @@ class _TodayViewState extends State<_TodayView> {
           const SizedBox(height: 12),
           Text(
             '${AppFormatters.formatCurrency(absDiff, settings.currency, settings.locale)} ${isMore ? l10n.moreThanYesterday : l10n.lessThanYesterday}',
-            style: AppTextStyles.body.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.successGreen,
               fontWeight: FontWeight.bold,
-              fontSize: 14,
             ),
           ),
         ],
@@ -499,7 +497,7 @@ class _TodayViewState extends State<_TodayView> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                const Text('🔥', style: TextStyle(fontSize: 48)),
+                const Text('🔥', style: AppTextStyles.h1Display),
                 const SizedBox(height: 8),
                 Text(
                   '$streak ${l10n.daysStreak}',
@@ -530,8 +528,7 @@ class _TodayViewState extends State<_TodayView> {
               children: [
                 Text(
                   l10n.streakProgress,
-                  style: AppTextStyles.caption.copyWith(
-                    fontSize: 10,
+                  style: AppTextStyles.micro.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).brightness == Brightness.dark
                         ? AppColors.textSecondaryDark
@@ -540,9 +537,8 @@ class _TodayViewState extends State<_TodayView> {
                 ),
                 Text(
                   '$streak/$milestone ${l10n.daysToNextMilestone}',
-                  style: AppTextStyles.body.copyWith(
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
                     color: Theme.of(context).brightness == Brightness.dark
                         ? AppColors.textDark
                         : AppColors.charcoal,
@@ -637,11 +633,10 @@ class _TodayViewState extends State<_TodayView> {
                       ),
                       Text(
                         '${DateFormat('dd MMM').format(tx.date)} • ${DateFormat('h:mm a').format(tx.date)}',
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.label.copyWith(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? AppColors.textSecondaryDark
                               : AppColors.softGray,
-                          fontSize: 12,
                         ),
                       ),
                       if (tx.note.isNotEmpty)

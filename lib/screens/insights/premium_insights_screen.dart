@@ -22,6 +22,8 @@ Widget buildPremiumInsightsBody({
   required SettingsController settings,
   required DateTime selectedDate,
   required VoidCallback onSelectMonth,
+  required VoidCallback onPreviousMonth,
+  required VoidCallback onNextMonth,
   required int transactionCount,
   required List<MapEntry<String, double>> sortedCategories,
   required DateTime? highestDate,
@@ -87,8 +89,10 @@ Widget buildPremiumInsightsBody({
           context: context,
           weeklyIncome: weeklyIncome,
           weeklyExpense: weeklyExpense,
-          month: DateFormat('MMM').format(selectedDate).toUpperCase(),
+          month: DateFormat('MMMM yyyy').format(selectedDate).toUpperCase(),
           isDark: isDark,
+          onPreviousMonth: onPreviousMonth,
+          onNextMonth: onNextMonth,
         ),
       ),
       const SizedBox(height: 32),
@@ -165,10 +169,9 @@ Widget _summarySection({
                   children: [
                     Text(
                       '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.labelSmall.copyWith(
                         letterSpacing: 1.2,
                         color: secondaryColor,
-                        fontSize: 11,
                       ),
                     ),
                     _CalendarButton(isDark: isDark, onTap: onSelectMonth),
@@ -185,8 +188,6 @@ Widget _summarySection({
                     ),
                     style: AppTextStyles.amountDisplay.copyWith(
                       fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Serif',
                       color: contentColor,
                     ),
                   ),
@@ -213,8 +214,7 @@ Widget _summarySection({
                       const SizedBox(width: 6),
                       Text(
                         '$transactionCount ${AppLocalizations.of(context)!.history}',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.label.copyWith(
                           color: contentColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -266,17 +266,15 @@ Widget _summaryItem(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: secondaryColor, fontSize: 12)),
+        Text(label, style: AppTextStyles.label.copyWith(color: secondaryColor)),
         Text(
           AppFormatters.formatCurrency(
             amount,
             settings.currency,
             settings.locale,
           ),
-          style: TextStyle(
+          style: AppTextStyles.amountMedium.copyWith(
             color: color,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
             fontFamily: 'Serif',
           ),
         ),
@@ -308,9 +306,8 @@ Widget _spendingBreakdownSection({
           ),
           Text(
             AppLocalizations.of(context)!.viewInfoText,
-            style: TextStyle(
+            style: AppTextStyles.label.copyWith(
               color: AppColors.primarySelected,
-              fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
             ),
@@ -345,7 +342,7 @@ Widget _spendingBreakdownSection({
               children: [
                 Text(
                   AppLocalizations.of(context)!.viewFullBreakdownTxt,
-                  style: const TextStyle(
+                  style: AppTextStyles.label.copyWith(
                     color: Colors.orange,
                     fontWeight: FontWeight.bold,
                   ),
@@ -382,8 +379,10 @@ Widget _categoryProgressBar({
             Expanded(
               child: Text(
                 category,
-                style: TextStyle(
-                  color: isDark ? Colors.white70 : Colors.black87,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: isDark
+                      ? AppColors.whiteOpacity70
+                      : AppColors.blackOpacity87,
                 ),
               ),
             ),
@@ -394,7 +393,9 @@ Widget _categoryProgressBar({
                 settings.locale,
                 decimalDigits: 0,
               ),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: AppTextStyles.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -445,11 +446,7 @@ Widget _smartInsightsSection({
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: Text(
           AppLocalizations.of(context)!.smartInsightsHeader,
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Serif',
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTextStyles.h3Title,
         ),
       ),
       const SizedBox(height: 16),
@@ -527,17 +524,19 @@ Widget _frequentCategoryCard(
                 children: [
                   Text(
                     AppLocalizations.of(context)!.mostFrequentCardText,
-                    style: TextStyle(
+                    style: AppTextStyles.label.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: isDark
+                          ? AppColors.white
+                          : AppColors.blackOpacity87,
                     ),
                   ),
                   Text(
                     AppLocalizations.of(context)!.categoryThisMonthCardText,
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: isDark ? Colors.white70 : Colors.black54,
+                    style: AppTextStyles.micro.copyWith(
+                      color: isDark
+                          ? AppColors.whiteOpacity70
+                          : AppColors.blackOpacity54,
                     ),
                   ),
                 ],
@@ -554,19 +553,11 @@ Widget _frequentCategoryCard(
           ],
         ),
         const Spacer(),
-        Text(
-          category,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            fontFamily: 'Serif',
-          ),
-        ),
+        Text(category, style: AppTextStyles.h3Title.copyWith(fontSize: 18)),
         Text(
           '$count transactions',
-          style: TextStyle(
-            fontSize: 12,
-            color: isDark ? Colors.white60 : Colors.black54,
+          style: AppTextStyles.label.copyWith(
+            color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
           ),
         ),
       ],
@@ -614,17 +605,19 @@ Widget _highestSpendDayCard(
                 children: [
                   Text(
                     AppLocalizations.of(context)!.highestSpendDayHeader,
-                    style: TextStyle(
+                    style: AppTextStyles.label.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: isDark
+                          ? AppColors.white
+                          : AppColors.blackOpacity87,
                     ),
                   ),
                   Text(
                     dayLabel,
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: isDark ? Colors.white70 : Colors.black54,
+                    style: AppTextStyles.micro.copyWith(
+                      color: isDark
+                          ? AppColors.whiteOpacity70
+                          : AppColors.blackOpacity54,
                     ),
                   ),
                 ],
@@ -636,11 +629,7 @@ Widget _highestSpendDayCard(
                 settings.currency,
                 settings.locale,
               ),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                fontFamily: 'Serif',
-              ),
+              style: AppTextStyles.h3Title.copyWith(fontSize: 18),
             ),
           ],
         ),
@@ -697,16 +686,14 @@ Widget _dailyAverageCard(
             settings.currency,
             settings.locale,
           ),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+          style: AppTextStyles.amountDisplay.copyWith(
             fontSize: 26,
-            fontFamily: 'Serif',
+            color: isDark ? AppColors.white : AppColors.charcoal,
           ),
         ),
         Text(
           AppLocalizations.of(context)!.dailyAverageMetrics,
-          style: const TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.label.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.orange,
           ),
@@ -714,9 +701,8 @@ Widget _dailyAverageCard(
         const Spacer(),
         Text(
           AppLocalizations.of(context)!.thisMonthActivity,
-          style: TextStyle(
-            fontSize: 11,
-            color: isDark ? Colors.white30 : Colors.grey,
+          style: AppTextStyles.labelSmall.copyWith(
+            color: isDark ? AppColors.whiteOpacity24 : Colors.grey,
           ),
         ),
       ],
@@ -730,6 +716,8 @@ Widget _advanceInsightsSection({
   required List<double> weeklyExpense,
   required String month,
   required bool isDark,
+  required VoidCallback onPreviousMonth,
+  required VoidCallback onNextMonth,
 }) {
   double maxVal = 0;
   for (int i = 0; i < 4; i++) {
@@ -772,14 +760,38 @@ Widget _advanceInsightsSection({
                 children: [
                   Text(
                     AppLocalizations.of(context)!.monthlyComparisonAnalytics,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  Text(
-                    month,
-                    style: const TextStyle(
-                      color: Colors.orange,
+                    style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: onPreviousMonth,
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 16,
+                          color: isDark ? Colors.white70 : Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        month,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: onNextMonth,
+                        child: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 16,
+                          color: isDark ? Colors.white70 : Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -836,7 +848,13 @@ Widget _weeklyComparisonBar(
         ],
       ),
       const SizedBox(height: 8),
-      Text(label, style: const TextStyle(fontSize: 8, color: Colors.grey)),
+      Text(
+        label,
+        style: AppTextStyles.bodySmall.copyWith(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     ],
   );
 }
@@ -857,11 +875,7 @@ Widget _sixMonthTrendSection({
     children: [
       Text(
         AppLocalizations.of(context)!.sixMonthIncomeAnalytics,
-        style: TextStyle(
-          fontSize: 20,
-          fontFamily: 'Serif',
-          fontWeight: FontWeight.bold,
-        ),
+        style: AppTextStyles.h3Title,
       ),
       const SizedBox(height: 16),
       SizedBox(
@@ -906,7 +920,10 @@ Widget _sixMonthTrendSection({
                   const SizedBox(height: 8),
                   Text(
                     data['month'].toString().toUpperCase(),
-                    style: const TextStyle(fontSize: 8, color: Colors.grey),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               );
@@ -1069,7 +1086,9 @@ class _ReportSection extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: AppTextStyles.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Container(
@@ -1080,10 +1099,9 @@ class _ReportSection extends StatelessWidget {
             ),
             child: Text(
               tag,
-              style: const TextStyle(
+              style: AppTextStyles.micro.copyWith(
                 color: Colors.orange,
                 fontWeight: FontWeight.bold,
-                fontSize: 10,
               ),
             ),
           ),

@@ -373,10 +373,12 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                   }
                                 },
                                 selectedColor: AppColors.primarySelected,
-                                labelStyle: TextStyle(
+                                labelStyle: AppTextStyles.bodySmall.copyWith(
                                   color: isSelected
-                                      ? Colors.white
-                                      : (isDark ? Colors.white : Colors.black),
+                                      ? AppColors.white
+                                      : (isDark
+                                            ? AppColors.white
+                                            : AppColors.black),
                                 ),
                               ),
                             );
@@ -411,10 +413,12 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                 setState(() {});
                               },
                               selectedColor: AppColors.primarySelected,
-                              labelStyle: TextStyle(
+                              labelStyle: AppTextStyles.bodySmall.copyWith(
                                 color: isSelected
-                                    ? Colors.white
-                                    : (isDark ? Colors.white : Colors.black),
+                                    ? AppColors.white
+                                    : (isDark
+                                          ? AppColors.white
+                                          : AppColors.black),
                               ),
                             );
                           }).toList(),

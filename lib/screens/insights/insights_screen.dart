@@ -35,7 +35,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                   : Colors.white,
               title: Text(
                 AppLocalizations.of(context)!.selectMonth,
-                style: TextStyle(fontFamily: 'Serif'),
+                style: AppTextStyles.h3Title,
               ),
               content: SizedBox(
                 width: 300,
@@ -51,9 +51,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
                         ),
                         Text(
                           '$selectedYear',
-                          style: const TextStyle(
+                          style: AppTextStyles.bodyLarge.copyWith(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
                           ),
                         ),
                         IconButton(
@@ -93,13 +92,13 @@ class _InsightsScreenState extends State<InsightsScreen> {
                             ),
                             child: Text(
                               DateFormat('MMM').format(DateTime(2022, month)),
-                              style: TextStyle(
+                              style: AppTextStyles.bodySmall.copyWith(
                                 color: isSelected
-                                    ? Colors.white
+                                    ? AppColors.white
                                     : (Theme.of(context).brightness ==
                                               Brightness.dark
-                                          ? Colors.white70
-                                          : Colors.black87),
+                                          ? AppColors.whiteOpacity70
+                                          : AppColors.blackOpacity87),
                                 fontWeight: isSelected
                                     ? FontWeight.bold
                                     : FontWeight.normal,
@@ -316,6 +315,18 @@ class _InsightsScreenState extends State<InsightsScreen> {
         settings: settings,
         selectedDate: _selectedDate,
         onSelectMonth: () => _selectMonth(context),
+        onPreviousMonth: () => setState(
+          () => _selectedDate = DateTime(
+            _selectedDate.year,
+            _selectedDate.month - 1,
+          ),
+        ),
+        onNextMonth: () => setState(
+          () => _selectedDate = DateTime(
+            _selectedDate.year,
+            _selectedDate.month + 1,
+          ),
+        ),
         transactionCount: transactionCount,
         sortedCategories: sortedCategories,
         highestDate: highestDate,
@@ -337,6 +348,18 @@ class _InsightsScreenState extends State<InsightsScreen> {
         settings: settings,
         selectedDate: _selectedDate,
         onSelectMonth: () => _selectMonth(context),
+        onPreviousMonth: () => setState(
+          () => _selectedDate = DateTime(
+            _selectedDate.year,
+            _selectedDate.month - 1,
+          ),
+        ),
+        onNextMonth: () => setState(
+          () => _selectedDate = DateTime(
+            _selectedDate.year,
+            _selectedDate.month + 1,
+          ),
+        ),
         transactionCount: transactionCount,
         sortedCategories: sortedCategories,
         highestDate: highestDate,

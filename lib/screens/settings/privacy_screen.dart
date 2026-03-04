@@ -18,10 +18,9 @@ class PrivacyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           l10n.privacyAndTrust,
-          style: const TextStyle(
+          style: AppTextStyles.h2Section.copyWith(
             fontWeight: FontWeight.w700,
             fontSize: 24,
-            fontFamily: 'Serif',
           ),
         ),
         titleSpacing: 0,

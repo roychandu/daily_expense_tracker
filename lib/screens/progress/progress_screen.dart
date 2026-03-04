@@ -36,7 +36,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   : AppColors.white,
               title: Text(
                 AppLocalizations.of(context)!.selectMonth,
-                style: TextStyle(fontFamily: 'Serif'),
+                style: AppTextStyles.h3Title,
               ),
               content: SizedBox(
                 width: 300,
@@ -52,9 +52,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                         ),
                         Text(
                           '$selectedYear',
-                          style: const TextStyle(
+                          style: AppTextStyles.bodyLarge.copyWith(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
                           ),
                         ),
                         IconButton(
@@ -97,13 +96,13 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                 'MMM',
                                 AppLocalizations.of(context)!.localeName,
                               ).format(DateTime(2022, month)),
-                              style: TextStyle(
+                              style: AppTextStyles.bodySmall.copyWith(
                                 color: isSelected
-                                    ? Colors.white
+                                    ? AppColors.white
                                     : (Theme.of(context).brightness ==
                                               Brightness.dark
-                                          ? Colors.white70
-                                          : Colors.black87),
+                                          ? AppColors.whiteOpacity70
+                                          : AppColors.blackOpacity87),
                                 fontWeight: isSelected
                                     ? FontWeight.bold
                                     : FontWeight.normal,

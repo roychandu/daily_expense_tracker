@@ -269,9 +269,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Text(
                   badgeText ?? '',
-                  style: TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: badgeColor ?? Colors.grey,
-                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -397,9 +396,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           child: Text(
                             l10n.upgradeNowBtn,
-                            style: const TextStyle(
+                            style: AppTextStyles.bodySmall.copyWith(
                               fontWeight: FontWeight.w800,
-                              fontSize: 14,
                               letterSpacing: 0.5,
                             ),
                           ),
@@ -507,14 +505,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _buildTimeDigit(
                       DateFormat('HH').format(settings.reminderTime),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         ':',
-                        style: TextStyle(
+                        style: AppTextStyles.h1Display.copyWith(
                           color: Colors.orange,
                           fontSize: 32,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -535,10 +532,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         DateFormat(
                           'a',
                         ).format(settings.reminderTime).toUpperCase(),
-                        style: const TextStyle(
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: Colors.orange,
                           fontWeight: FontWeight.w900,
-                          fontSize: 14,
                         ),
                       ),
                     ),
