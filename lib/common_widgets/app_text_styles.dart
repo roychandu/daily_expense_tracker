@@ -80,6 +80,13 @@ class AppTextStyles {
     height: 1.25,
   );
 
+  static const TextStyle amountLarge = TextStyle(
+    fontFamily: 'Roboto Mono',
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+    height: 1.2,
+  );
+
   static const TextStyle amountMedium = TextStyle(
     fontFamily: 'Roboto Mono',
     fontWeight: FontWeight.w600,

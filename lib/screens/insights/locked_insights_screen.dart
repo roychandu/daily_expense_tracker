@@ -187,7 +187,7 @@ Widget _summaryItem(
       children: [
         Text(
           label,
-          style: AppTextStyles.label.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
           ),
         ),
@@ -197,7 +197,7 @@ Widget _summaryItem(
             settings.currency,
             settings.locale,
           ),
-          style: AppTextStyles.amountSmall.copyWith(
+          style: AppTextStyles.amountLarge.copyWith(
             color: color,
             fontFamily: 'Serif',
           ),

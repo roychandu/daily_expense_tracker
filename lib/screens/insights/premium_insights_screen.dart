@@ -269,14 +269,14 @@ Widget _summaryItem(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTextStyles.label.copyWith(color: secondaryColor)),
+        Text(label, style: AppTextStyles.body.copyWith(color: secondaryColor)),
         Text(
           AppFormatters.formatCurrency(
             amount,
             settings.currency,
             settings.locale,
           ),
-          style: AppTextStyles.amountMedium.copyWith(
+          style: AppTextStyles.amountLarge.copyWith(
             color: color,
             fontFamily: 'Serif',
           ),
