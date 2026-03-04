@@ -15,9 +15,9 @@ class AppTheme {
         error: AppColors.softCoral,
         surface: AppColors.cardLight,
         // background is deprecated in ColorScheme from seed but still used here safely
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onError: Colors.white,
+        onPrimary: AppColors.white,
+        onSecondary: AppColors.white,
+        onError: AppColors.white,
         onSurface: AppColors.charcoal,
       ),
       appBarTheme: const AppBarTheme(
@@ -28,7 +28,7 @@ class AppTheme {
       textTheme: _textThemeLight,
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.transparent,
+        fillColor: AppColors.transparent,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 12,
@@ -76,9 +76,9 @@ class AppTheme {
         secondary: AppColors.primarySelected,
         error: AppColors.softCoral,
         surface: AppColors.cardDark,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onError: Colors.white,
+        onPrimary: AppColors.white,
+        onSecondary: AppColors.white,
+        onError: AppColors.white,
         onSurface: AppColors.textDark,
       ),
       appBarTheme: const AppBarTheme(
@@ -90,7 +90,7 @@ class AppTheme {
       textTheme: _textThemeDark,
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.transparent,
+        fillColor: AppColors.transparent,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 12,
@@ -159,7 +159,7 @@ class AppTheme {
         fontFamily: 'Inter',
         fontWeight: FontWeight.w600,
         fontSize: 16,
-        color: Colors.white,
+        color: AppColors.white,
       ),
       bodySmall: AppTextStyles.caption.copyWith(
         color: AppColors.textSecondaryDark,

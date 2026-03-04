@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../services/database_service.dart';
+import '../common_widgets/app_colors.dart';
 
 class CategoryUtils {
   static final Map<String, Map<String, dynamic>> _customCache = {};
@@ -308,37 +309,37 @@ class CategoryUtils {
     // Fallback for standard categories
     switch (category.toLowerCase()) {
       case 'transport':
-        return Colors.blue;
+        return AppColors.categoryBlue;
       case 'food':
-        return Colors.orange;
+        return AppColors.accentOrange;
       case 'rent':
-        return Colors.purple;
+        return AppColors.categoryPurple;
       case 'bills':
-        return const Color(0xFFE76F51); // AppColors.softCoral
+        return AppColors.softCoral;
       case 'fun':
-        return Colors.pink;
+        return AppColors.categoryPink;
       case 'shopping':
-        return const Color(0xFF2A9D8F); // AppColors.accentTeal
+        return AppColors.accentTeal;
       case 'dinning':
-        return Colors.amber;
+        return AppColors.categoryAmber;
       case 'health':
-        return const Color(0xFF06D6A0); // AppColors.successGreen
+        return AppColors.successGreen;
       case 'grocerry':
-        return Colors.lime;
+        return AppColors.categoryLime;
       case 'salary income':
-        return const Color(0xFF06D6A0);
+        return AppColors.successGreen;
       case 'freelance/side hustle':
-        return Colors.cyan;
+        return AppColors.categoryCyanAccent;
       case 'business income':
-        return Colors.indigo;
+        return AppColors.categoryIndigo;
       case 'investment return':
-        return Colors.deepPurple;
+        return AppColors.categoryDeepPurple;
       case 'gif/bonus':
-        return Colors.yellow;
+        return AppColors.categoryYellow;
       case 'refund/cashback':
-        return Colors.lightGreen;
+        return AppColors.categoryLightGreen;
       default:
-        return const Color(0xFFF98D25); // AppColors.primarySelected
+        return AppColors.primarySelected;
     }
   }
 }

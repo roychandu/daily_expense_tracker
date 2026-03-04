@@ -32,8 +32,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
           builder: (context, setDialogState) {
             return AlertDialog(
               backgroundColor: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF1E1E1E)
-                  : Colors.white,
+                  ? AppColors.cardDark
+                  : AppColors.white,
               title: Text(
                 AppLocalizations.of(context)!.selectMonth,
                 style: TextStyle(fontFamily: 'Serif'),
@@ -89,7 +89,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? AppColors.primarySelected
-                                  : Colors.transparent,
+                                  : AppColors.transparent,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -281,7 +281,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
     return Scaffold(
       backgroundColor: isDark
-          ? const Color(0xFF121212)
+          ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(
@@ -302,7 +302,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
           ),
         ],
         centerTitle: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -487,7 +487,9 @@ class _MainStreakCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF3D2C1E) : const Color(0xFFFFF5ED),
+              color: isDark
+                  ? AppColors.accentDarkSecondary
+                  : AppColors.streakProgressBackground,
               borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(8),
               ),
@@ -499,7 +501,9 @@ class _MainStreakCard extends StatelessWidget {
                   AppLocalizations.of(context)!.streakProgress,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white38 : Colors.black38,
+                    color: isDark
+                        ? AppColors.whiteOpacity38
+                        : AppColors.blackOpacity38,
                     letterSpacing: 1.1,
                   ),
                 ),
@@ -518,7 +522,9 @@ class _MainStreakCard extends StatelessWidget {
                       height: 8,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.white10 : Colors.black12,
+                        color: isDark
+                            ? AppColors.whiteOpacity10
+                            : AppColors.blackOpacity12,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -543,7 +549,9 @@ class _MainStreakCard extends StatelessWidget {
                       ? '${AppLocalizations.of(context)!.youAre} $daysToNext ${AppLocalizations.of(context)!.awayFromGeneric} $milestoneLabel!'
                       : AppLocalizations.of(context)!.milestoneReachedStayAhead,
                   style: AppTextStyles.caption.copyWith(
-                    color: isDark ? Colors.white60 : Colors.black54,
+                    color: isDark
+                        ? AppColors.whiteOpacity60
+                        : AppColors.blackOpacity54,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -616,7 +624,7 @@ class _WeeklyActivityBar extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: day['isLogged']
                       ? AppColors.primarySelected
-                      : Colors.transparent,
+                      : AppColors.transparent,
                   border: day['isLogged']
                       ? null
                       : Border.all(color: borderColor),
@@ -634,7 +642,11 @@ class _WeeklyActivityBar extends StatelessWidget {
                 ),
                 child: Center(
                   child: day['isLogged']
-                      ? const Icon(Icons.check, color: Colors.white, size: 20)
+                      ? const Icon(
+                          Icons.check,
+                          color: AppColors.white,
+                          size: 20,
+                        )
                       : null,
                 ),
               ),

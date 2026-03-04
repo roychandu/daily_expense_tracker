@@ -147,7 +147,9 @@ Widget _summarySection({
               '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
               style: AppTextStyles.caption.copyWith(
                 letterSpacing: 1.2,
-                color: isDark ? Colors.white60 : Colors.black54,
+                color: isDark
+                    ? AppColors.whiteOpacity60
+                    : AppColors.blackOpacity54,
                 fontSize: 11,
               ),
             ),
@@ -217,7 +219,7 @@ Widget _summaryItem(
         Text(
           label,
           style: TextStyle(
-            color: isDark ? Colors.white60 : Colors.black54,
+            color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
             fontSize: 12,
           ),
         ),
@@ -263,7 +265,7 @@ Widget _spendingBreakdownSection({
           Text(
             AppLocalizations.of(context)!.viewInfoText,
             style: TextStyle(
-              color: Colors.orange.withValues(alpha: 0.8),
+              color: AppColors.accentOrange.withValues(alpha: 0.8),
               fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
@@ -337,7 +339,9 @@ Widget _categoryProgressBar({
               child: Text(
                 category,
                 style: TextStyle(
-                  color: isDark ? Colors.white70 : Colors.black87,
+                  color: isDark
+                      ? AppColors.whiteOpacity70
+                      : AppColors.blackOpacity54,
                 ),
               ),
             ),
@@ -359,7 +363,9 @@ Widget _categoryProgressBar({
               height: 6,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isDark ? Colors.white10 : Colors.black12,
+                color: isDark
+                    ? AppColors.whiteOpacity10
+                    : AppColors.blackOpacity12,
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -496,7 +502,7 @@ Widget _frequentCategoryCard(
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: 0.1),
+                color: AppColors.categoryBlue.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: CategoryIcon(category: category, isDark: isDark, size: 24),
@@ -541,8 +547,8 @@ Widget _highestSpendDayCard(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
       color: isDark
-          ? const Color(0xFF8B5E3C).withValues(alpha: 0.8)
-          : const Color(0xFFFFE5D0),
+          ? AppColors.primaryUnselected.withValues(alpha: 0.8)
+          : AppColors.noteBorder,
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
@@ -606,8 +612,8 @@ Widget _highestSpendDayCard(
               height: barHeight.clamp(4.0, 30.0),
               decoration: BoxDecoration(
                 color: val == amount && amount > 0
-                    ? Colors.orange
-                    : (isDark ? Colors.white24 : Colors.white),
+                    ? AppColors.accentOrange
+                    : (isDark ? AppColors.whiteOpacity24 : AppColors.white),
                 borderRadius: BorderRadius.circular(2),
               ),
             );
@@ -666,7 +672,7 @@ Widget _dailyAverageCard(
           AppLocalizations.of(context)!.thisMonthActivity,
           style: TextStyle(
             fontSize: 11,
-            color: isDark ? Colors.white30 : Colors.grey,
+            color: isDark ? AppColors.whiteOpacity24 : Colors.grey,
           ),
         ),
       ],
@@ -731,7 +737,7 @@ Widget _advanceInsightsSection({
                   Text(
                     month,
                     style: const TextStyle(
-                      color: Colors.orange,
+                      color: AppColors.accentOrange,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -790,7 +796,10 @@ Widget _weeklyComparisonBar(
         ],
       ),
       const SizedBox(height: 8),
-      Text(label, style: const TextStyle(fontSize: 8, color: Colors.grey)),
+      Text(
+        label,
+        style: const TextStyle(fontSize: 8, color: AppColors.softGray),
+      ),
     ],
   );
 }

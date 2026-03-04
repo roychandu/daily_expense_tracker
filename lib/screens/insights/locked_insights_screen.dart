@@ -83,7 +83,7 @@ Widget _summarySection({
     width: double.infinity,
     padding: const EdgeInsets.all(24),
     decoration: BoxDecoration(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      color: isDark ? AppColors.cardDark : AppColors.white,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Column(
@@ -96,7 +96,9 @@ Widget _summarySection({
               '${DateFormat('MMMM').format(selectedDate).toUpperCase()} ${AppLocalizations.of(context)!.summary.toUpperCase()}',
               style: AppTextStyles.caption.copyWith(
                 letterSpacing: 1.2,
-                color: isDark ? Colors.white60 : Colors.black54,
+                color: isDark
+                    ? AppColors.whiteOpacity60
+                    : AppColors.blackOpacity54,
                 fontSize: 11,
               ),
             ),
@@ -105,12 +107,14 @@ Widget _summarySection({
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: isDark ? 0.3 : 0.1),
+                  color: AppColors.accentOrange.withValues(
+                    alpha: isDark ? 0.3 : 0.1,
+                  ),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.calendar_month_outlined,
-                  color: Colors.orange,
+                  color: AppColors.accentOrange,
                   size: 20,
                 ),
               ),
@@ -180,7 +184,7 @@ Widget _summaryItem(
         Text(
           label,
           style: TextStyle(
-            color: isDark ? Colors.white60 : Colors.black54,
+            color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
             fontSize: 12,
           ),
         ),
@@ -226,7 +230,7 @@ Widget _spendingBreakdownSection({
           Text(
             AppLocalizations.of(context)!.viewAll,
             style: TextStyle(
-              color: Colors.orange.withValues(alpha: 0.8),
+              color: AppColors.accentOrange.withValues(alpha: 0.8),
               fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
@@ -273,7 +277,9 @@ Widget _categoryProgressBar({
               child: Text(
                 category,
                 style: TextStyle(
-                  color: isDark ? Colors.white70 : Colors.black87,
+                  color: isDark
+                      ? AppColors.whiteOpacity70
+                      : AppColors.blackOpacity54,
                 ),
               ),
             ),
@@ -295,7 +301,9 @@ Widget _categoryProgressBar({
               height: 6,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isDark ? Colors.white10 : Colors.black12,
+                color: isDark
+                    ? AppColors.whiteOpacity10
+                    : AppColors.blackOpacity12,
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -335,7 +343,7 @@ class _LockedInsightsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D1B2A),
+        color: AppColors.deepBlue,
         borderRadius: BorderRadius.circular(24),
         image: const DecorationImage(
           image: AssetImage('assets/images/locked-card-bg.png'),
@@ -347,13 +355,17 @@ class _LockedInsightsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.auto_awesome, color: Colors.orange, size: 24),
+              const Icon(
+                Icons.auto_awesome,
+                color: AppColors.accentOrange,
+                size: 24,
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   AppLocalizations.of(context)!.unlockWatchFullInsights,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -383,8 +395,8 @@ class _LockedInsightsCard extends StatelessWidget {
                   onPressed: () =>
                       context.read<SettingsController>().updatePremium(true),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.accentOrange,
+                    foregroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -402,8 +414,8 @@ class _LockedInsightsCard extends StatelessWidget {
                   onPressed: () =>
                       context.read<SettingsController>().unlockInsightsViaAd(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.orange,
+                    backgroundColor: AppColors.white,
+                    foregroundColor: AppColors.accentOrange,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -427,11 +439,14 @@ class _LockedInsightsCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         children: [
-          const Icon(Icons.circle, size: 6, color: Colors.white70),
+          const Icon(Icons.circle, size: 6, color: AppColors.whiteOpacity70),
           const SizedBox(width: 12),
           Text(
             text,
-            style: const TextStyle(color: Colors.white70, fontSize: 14),
+            style: const TextStyle(
+              color: AppColors.whiteOpacity70,
+              fontSize: 14,
+            ),
           ),
         ],
       ),

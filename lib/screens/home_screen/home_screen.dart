@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 8,
             padding: EdgeInsets.zero,
             height: 72,
-            color: isDark ? AppColors.backgroundDark : Colors.white,
+            color: isDark ? AppColors.backgroundDark : AppColors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black26,
+                            color: AppColors.blackOpacity26,
                             blurRadius: 10,
                             offset: Offset(0, 4),
                           ),
@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Icon(
                         Icons.add_rounded,
-                        color: isDark ? Colors.white : Colors.white,
+                        color: AppColors.white,
                         size: 36,
                       ),
                     ),
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isSelected
         ? AppColors.primarySelected
-        : (isDark ? Colors.white70 : const Color(0xFF9E9E9E));
+        : (isDark ? AppColors.whiteOpacity70 : AppColors.textSecondaryLight);
 
     return GestureDetector(
       onTap: () => setState(() => _currentIndex = index),
@@ -236,7 +236,7 @@ class _TodayViewState extends State<_TodayView> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
         centerTitle: false,
         title: Text(
@@ -556,8 +556,8 @@ class _TodayViewState extends State<_TodayView> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white.withValues(alpha: 0.1)
-                            : Colors.white,
+                            ? AppColors.whiteOpacity10
+                            : AppColors.white,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -611,7 +611,7 @@ class _TodayViewState extends State<_TodayView> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white.withValues(alpha: 0.05)
+                        ? AppColors.whiteOpacity10
                         : AppColors.backgroundLight,
                     shape: BoxShape.circle,
                   ),

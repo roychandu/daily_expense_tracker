@@ -125,17 +125,19 @@ Widget _summarySection({
   required int transactionCount,
   required bool isPremium,
 }) {
-  final contentColor = isDark ? Colors.white : Colors.black87;
-  final secondaryColor = isDark ? Colors.white70 : Colors.black54;
+  final contentColor = isDark ? AppColors.white : AppColors.blackOpacity87;
+  final secondaryColor = isDark
+      ? AppColors.whiteOpacity70
+      : AppColors.blackOpacity54;
 
   return Container(
     width: double.infinity,
     decoration: BoxDecoration(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      color: isDark ? AppColors.cardDark : AppColors.white,
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+          color: AppColors.black.withValues(alpha: isDark ? 0.3 : 0.08),
           blurRadius: 20,
           offset: const Offset(0, 10),
         ),
@@ -196,9 +198,8 @@ Widget _summarySection({
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: (isDark ? Colors.white : Colors.black).withValues(
-                      alpha: 0.1,
-                    ),
+                    color: (isDark ? AppColors.white : AppColors.black)
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -257,7 +258,9 @@ Widget _summaryItem(
   bool isDark,
   SettingsController settings,
 ) {
-  final secondaryColor = isDark ? Colors.white70 : Colors.black54;
+  final secondaryColor = isDark
+      ? AppColors.whiteOpacity70
+      : AppColors.blackOpacity54;
 
   return Expanded(
     child: Column(

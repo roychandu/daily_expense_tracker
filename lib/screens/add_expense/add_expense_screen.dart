@@ -80,7 +80,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
               primary: AppColors.primarySelected,
-              onPrimary: Colors.white,
+              onPrimary: AppColors.white,
               onSurface: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.textDark
                   : AppColors.charcoal,
@@ -188,14 +188,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     return Scaffold(
       backgroundColor: isDark
           ? AppColors.backgroundDark
-          : const Color(0xFFF8F9FA),
+          : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: isDark ? Colors.white : Colors.black,
+            color: isDark ? AppColors.white : AppColors.black,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -310,8 +310,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Serif',
                             color: isDark
-                                ? Colors.white70
-                                : const Color(0xFF4A4A4A),
+                                ? AppColors.whiteOpacity70
+                                : AppColors.textPrimaryLight,
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -328,15 +328,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Serif',
                               color: isDark
-                                  ? Colors.white70
-                                  : const Color(0xFF4A4A4A),
+                                  ? AppColors.whiteOpacity70
+                                  : AppColors.textPrimaryLight,
                             ),
                             decoration: InputDecoration(
                               hintText: '0',
                               hintStyle: TextStyle(
                                 color: isDark
-                                    ? Colors.white70
-                                    : const Color(0xFF4A4A4A),
+                                    ? AppColors.whiteOpacity70
+                                    : AppColors.textPrimaryLight,
                                 fontSize: 48,
                                 fontFamily: 'Serif',
                                 fontWeight: FontWeight.bold,
@@ -357,8 +357,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Serif',
                             color: isDark
-                                ? Colors.white70
-                                : const Color(0xFF4A4A4A),
+                                ? AppColors.whiteOpacity70
+                                : AppColors.textPrimaryLight,
                           ),
                         ),
                       ],
@@ -373,7 +373,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: isDark ? AppColors.white : AppColors.black,
                         ),
                       ),
                     ),
@@ -410,11 +410,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 decoration: BoxDecoration(
                                   color: isDark
                                       ? AppColors.cardDark
-                                      : Colors.white,
+                                      : AppColors.white,
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(
+                                      color: AppColors.black.withValues(
                                         alpha: 0.05,
                                       ),
                                       blurRadius: 10,
@@ -487,17 +487,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       ),
                       decoration: InputDecoration(
                         hintText: l10n.writeHere,
-                        hintStyle: const TextStyle(color: Color(0xFFB0B8C1)),
+                        hintStyle: const TextStyle(color: AppColors.textHint),
                         filled: true,
                         fillColor: isDark
                             ? AppColors.cardDark
-                            : const Color(0xFFFFF7F0),
+                            : AppColors.noteBackground,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(
                             color: isDark
-                                ? Colors.white.withValues(alpha: 0.1)
-                                : const Color(0xFFFFE4CB),
+                                ? AppColors.whiteOpacity10
+                                : AppColors.noteBorder,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -513,7 +513,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           child: Text(
                             l10n.optionalField,
                             style: const TextStyle(
-                              color: Color(0xFFB0B8C1),
+                              color: AppColors.textHint,
                               fontSize: 12,
                             ),
                           ),
@@ -538,7 +538,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   onPressed: () => _handleSave(l10n),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primarySelected,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -615,15 +615,15 @@ class _CreateCategoryBottomSheetState
     extends State<_CreateCategoryBottomSheet> {
   final TextEditingController _nameController = TextEditingController();
   dynamic _selectedIcon = 'assets/icons/add-new-icon.png';
-  Color _selectedColor = const Color(0xFFF98D25);
+  Color _selectedColor = AppColors.primarySelected;
 
   final List<Color> _colors = [
-    const Color(0xFFE57373),
-    const Color(0xFFFFF176),
-    const Color(0xFF81C784),
-    const Color(0xFF4DD0E1),
-    const Color(0xFF5C6BC0),
-    const Color(0xFFCE93D8),
+    AppColors.categoryRed,
+    AppColors.categoryYellow,
+    AppColors.categoryGreen,
+    AppColors.categoryCyan,
+    AppColors.categoryIndigo,
+    AppColors.categoryPurple,
   ];
 
   @override
@@ -643,7 +643,7 @@ class _CreateCategoryBottomSheetState
         borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: AppColors.blackShadow,
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -659,8 +659,8 @@ class _CreateCategoryBottomSheetState
               height: 5,
               decoration: BoxDecoration(
                 color: isDark
-                    ? Colors.white.withValues(alpha: 0.2)
-                    : Colors.black.withValues(alpha: 0.1),
+                    ? AppColors.whiteOpacity20
+                    : AppColors.blackShadow,
                 borderRadius: BorderRadius.circular(2.5),
               ),
             ),
@@ -673,7 +673,7 @@ class _CreateCategoryBottomSheetState
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Serif',
-                color: isDark ? Colors.white : AppColors.charcoal,
+                color: isDark ? AppColors.white : AppColors.charcoal,
               ),
             ),
           ),
@@ -689,16 +689,16 @@ class _CreateCategoryBottomSheetState
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.cardDark : Colors.white,
+                color: isDark ? AppColors.cardDark : AppColors.white,
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : const Color(0xFFD1D1D1),
+                      ? AppColors.whiteOpacity10
+                      : AppColors.borderLight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: AppColors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -721,13 +721,17 @@ class _CreateCategoryBottomSheetState
                   Text(
                     l10n.chooseAnIcon,
                     style: TextStyle(
-                      color: isDark ? Colors.white70 : const Color(0xFF4A4A4A),
+                      color: isDark
+                          ? AppColors.whiteOpacity70
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                   const Spacer(),
                   Icon(
                     Icons.arrow_drop_down,
-                    color: isDark ? Colors.white38 : Colors.grey,
+                    color: isDark
+                        ? AppColors.whiteOpacity38
+                        : AppColors.softGray,
                   ),
                 ],
               ),
@@ -792,16 +796,16 @@ class _CreateCategoryBottomSheetState
                       ),
                       border: Border.all(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : Colors.black.withValues(alpha: 0.1),
+                            ? AppColors.whiteOpacity20
+                            : AppColors.blackShadow,
                         width: 1,
                       ),
                     ),
                     child: Icon(
                       Icons.add,
-                      color: isDark ? Colors.white : Colors.white,
+                      color: AppColors.white,
                       shadows: const [
-                        Shadow(color: Colors.black26, blurRadius: 4),
+                        Shadow(color: AppColors.black26, blurRadius: 4),
                       ],
                     ),
                   ),
@@ -826,7 +830,7 @@ class _CreateCategoryBottomSheetState
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primarySelected,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -890,14 +894,14 @@ class _CreateCategoryBottomSheetState
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setModalState) {
             return Container(
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.cardDark : Colors.white,
+                color: isDark ? AppColors.cardDark : AppColors.white,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(32),
                 ),
@@ -919,7 +923,7 @@ class _CreateCategoryBottomSheetState
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : AppColors.charcoal,
+                      color: isDark ? AppColors.white : AppColors.charcoal,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -979,7 +983,7 @@ class _CreateCategoryBottomSheetState
             decoration: BoxDecoration(
               color: isSelected
                   ? AppColors.primarySelected.withValues(alpha: 0.1)
-                  : Colors.transparent,
+                  : AppColors.transparent,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: isSelected
@@ -1021,16 +1025,14 @@ class _CreateCategoryBottomSheetState
   ) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : Colors.white,
+        color: isDark ? AppColors.cardDark : AppColors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : const Color(0xFFD1D1D1),
+          color: isDark ? AppColors.whiteOpacity10 : AppColors.borderLight,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -1038,11 +1040,11 @@ class _CreateCategoryBottomSheetState
       ),
       child: TextField(
         controller: controller,
-        style: TextStyle(color: isDark ? Colors.white : AppColors.charcoal),
+        style: TextStyle(color: isDark ? AppColors.white : AppColors.charcoal),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(
-            color: isDark ? Colors.white24 : const Color(0xFF9E9E9E),
+            color: isDark ? AppColors.whiteOpacity24 : const Color(0xFF9E9E9E),
           ),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 20,
