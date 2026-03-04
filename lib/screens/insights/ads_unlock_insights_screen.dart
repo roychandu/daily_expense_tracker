@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
+import '../../models/expense.dart';
 import '../../utils/formatters.dart';
 import '../../utils/category_utils.dart';
 import '../../common_widgets/category_icon.dart';
@@ -32,6 +33,7 @@ Widget buildAdsUnlockedInsightsBody({
   required List<double> weeklyExpense,
   required List<Map<String, dynamic>> sixMonthIncomeData,
   required MapEntry<String, int>? mostFrequentCategory,
+  required List<Expense> monthTransactions,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +79,7 @@ Widget buildAdsUnlockedInsightsBody({
         totalMonthlyExpense: totalMonthlyExpense,
         isDark: isDark,
         mostFrequentCategory: mostFrequentCategory,
+        monthTransactions: monthTransactions,
       ),
       const SizedBox(height: 32),
       Padding(
@@ -395,6 +398,7 @@ Widget _smartInsightsSection({
   required double totalMonthlyExpense,
   required bool isDark,
   required MapEntry<String, int>? mostFrequentCategory,
+  required List<Expense> monthTransactions,
 }) {
   final horizontalPadding = AppLayout.horizontalPadding(context);
   return Column(
@@ -433,6 +437,7 @@ Widget _smartInsightsSection({
               totalMonthlyExpense / 30,
               settings,
               isDark,
+              monthTransactions,
             ),
             if (mostFrequentCategory != null) ...[
               const SizedBox(width: 24),
@@ -441,6 +446,8 @@ Widget _smartInsightsSection({
                 mostFrequentCategory.key,
                 mostFrequentCategory.value,
                 isDark,
+                settings,
+                monthTransactions,
               ),
             ],
           ],
@@ -455,6 +462,8 @@ Widget _frequentCategoryCard(
   String category,
   int count,
   bool isDark,
+  SettingsController settings,
+  List<Expense> monthTransactions,
 ) {
   return Container(
     width: 280,
@@ -510,12 +519,25 @@ Widget _frequentCategoryCard(
             ),
           ],
         ),
-        const Spacer(),
+        const SizedBox(height: 12),
         Text(category, style: AppTextStyles.h3Title.copyWith(fontSize: 18)),
         Text(
           '$count transactions',
           style: AppTextStyles.label.copyWith(
             color: isDark ? AppColors.whiteOpacity60 : AppColors.blackOpacity54,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          _getFrequentCategoryInsight(
+            category,
+            count,
+            monthTransactions,
+            settings,
+          ),
+          style: AppTextStyles.micro.copyWith(
+            color: isDark ? AppColors.whiteOpacity70 : AppColors.softGray,
+            fontStyle: FontStyle.italic,
           ),
         ),
       ],
@@ -620,6 +642,7 @@ Widget _dailyAverageCard(
   double dailyAvg,
   SettingsController settings,
   bool isDark,
+  List<Expense> monthTransactions,
 ) {
   return Container(
     width: 280,
@@ -656,11 +679,19 @@ Widget _dailyAverageCard(
             color: Colors.orange,
           ),
         ),
-        const Spacer(),
+        const SizedBox(height: 12),
         Text(
           AppLocalizations.of(context)!.thisMonthActivity,
           style: AppTextStyles.labelSmall.copyWith(
             color: isDark ? AppColors.whiteOpacity24 : Colors.grey,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          _getDailyAverageInsight(dailyAvg, monthTransactions, settings),
+          style: AppTextStyles.micro.copyWith(
+            color: isDark ? AppColors.whiteOpacity70 : AppColors.softGray,
+            fontStyle: FontStyle.italic,
           ),
         ),
       ],
@@ -999,4 +1030,71 @@ class _CalendarButton extends StatelessWidget {
       ),
     );
   }
+}
+
+String _getFrequentCategoryInsight(
+  String category,
+  int count,
+  List<Expense> monthTransactions,
+  SettingsController settings,
+) {
+  final categoryExpenses = monthTransactions
+      .where((e) => e.isExpense && e.category == category)
+      .toList();
+  final totalCatAmount = categoryExpenses.fold(0.0, (sum, e) => sum + e.amount);
+
+  final nameTotals = <String, double>{};
+  for (final e in categoryExpenses) {
+    final name = e.note.isNotEmpty ? e.note : e.category;
+    nameTotals[name] = (nameTotals[name] ?? 0.0) + e.amount;
+  }
+
+  final sortedNames = nameTotals.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+  final top3Names = sortedNames.take(3).map((e) => e.key).join(', ');
+
+  final formattedAmount = AppFormatters.formatCurrency(
+    totalCatAmount,
+    settings.currency,
+    settings.locale,
+  );
+  return "Like you spent total of $formattedAmount on this category with top spending from: $top3Names";
+}
+
+String _getDailyAverageInsight(
+  double dailyAvg,
+  List<Expense> monthTransactions,
+  SettingsController settings,
+) {
+  final expenses = monthTransactions.where((e) => e.isExpense).toList();
+  final totalMonth = expenses.fold(0.0, (sum, e) => sum + e.amount);
+
+  final dayTotals = <String, double>{};
+  for (final e in expenses) {
+    final dayKey = DateFormat('yyyy-MM-dd').format(e.date);
+    dayTotals[dayKey] = (dayTotals[dayKey] ?? 0.0) + e.amount;
+  }
+
+  final highestDayEntry = dayTotals.entries.isEmpty
+      ? null
+      : (dayTotals.entries.toList()..sort((a, b) => b.value.compareTo(a.value)))
+            .first;
+  final formattedTotal = AppFormatters.formatCurrency(
+    totalMonth,
+    settings.currency,
+    settings.locale,
+  );
+
+  if (highestDayEntry != null) {
+    final formattedHighest = AppFormatters.formatCurrency(
+      highestDayEntry.value,
+      settings.currency,
+      settings.locale,
+    );
+    final dayLabel = DateFormat(
+      'MMM d',
+    ).format(DateTime.parse(highestDayEntry.key));
+    return "You've spent a total of $formattedTotal this month. Highest daily spend was $formattedHighest on $dayLabel.";
+  }
+  return "You haven't recorded any expenses yet to calculate a daily average.";
 }

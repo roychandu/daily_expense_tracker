@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/expense_controller.dart';
+import '../../models/expense.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/settings_controller.dart';
@@ -281,6 +282,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
             weeklyExpense,
             sixMonthIncomeData,
             mostFrequentCategory,
+            monthTransactions,
           ),
         ),
       ),
@@ -304,6 +306,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
     List<double> weeklyExpense,
     List<Map<String, dynamic>> sixMonthIncomeData,
     MapEntry<String, int>? mostFrequentCategory,
+    List<Expense> monthTransactions,
   ) {
     if (settings.isPremium) {
       return buildPremiumInsightsBody(
@@ -337,6 +340,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         weeklyExpense: weeklyExpense,
         sixMonthIncomeData: sixMonthIncomeData,
         mostFrequentCategory: mostFrequentCategory,
+        monthTransactions: monthTransactions,
       );
     } else if (settings.isInsightsUnlockedViaAd) {
       return buildAdsUnlockedInsightsBody(
@@ -370,6 +374,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         weeklyExpense: weeklyExpense,
         sixMonthIncomeData: sixMonthIncomeData,
         mostFrequentCategory: mostFrequentCategory,
+        monthTransactions: monthTransactions,
       );
     } else {
       return buildLockedInsightsBody(
