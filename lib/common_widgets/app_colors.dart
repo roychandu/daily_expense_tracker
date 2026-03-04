@@ -9,7 +9,7 @@ class AppColors {
   static const Color softCoral = Color(0xFFE76F51);
   static const Color charcoal = Color(0xFF333333);
   static const Color softGray = Color(0xFF555555);
-  static const Color successGreen = Color(0xFF06D6A0);
+  static const Color successGreen = Color(0xFF28851C);
 
   // Dark Mode Variants
   static const Color backgroundDark = Color(0xFF121212);
