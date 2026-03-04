@@ -85,6 +85,13 @@ Widget _summarySection({
     decoration: BoxDecoration(
       color: isDark ? AppColors.cardDark : AppColors.white,
       borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.black.withValues(alpha: isDark ? 0.3 : 0.1),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,6 +352,13 @@ class _LockedInsightsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.deepBlue,
         borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.4),
+            blurRadius: 25,
+            offset: const Offset(0, 12),
+          ),
+        ],
         image: const DecorationImage(
           image: AssetImage('assets/images/locked-card-bg.png'),
           fit: BoxFit.cover,

@@ -137,9 +137,9 @@ Widget _summarySection({
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: AppColors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
+          color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.15),
+          blurRadius: 25,
+          offset: const Offset(0, 12),
         ),
       ],
     ),
@@ -454,10 +454,14 @@ Widget _smartInsightsSection({
       ),
       const SizedBox(height: 16),
       SizedBox(
-        height: 160,
+        height: 200,
         child: ListView(
+          clipBehavior: Clip.none,
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+            vertical: 20,
+          ),
           children: [
             _highestSpendDayCard(
               context,
@@ -468,7 +472,7 @@ Widget _smartInsightsSection({
               maxWeekly,
               isDark,
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 24),
             _dailyAverageCard(
               context,
               totalMonthlyExpense / 30,
@@ -476,7 +480,7 @@ Widget _smartInsightsSection({
               isDark,
             ),
             if (mostFrequentCategory != null) ...[
-              const SizedBox(width: 16),
+              const SizedBox(width: 24),
               _frequentCategoryCard(
                 context,
                 mostFrequentCategory.key,
@@ -501,13 +505,13 @@ Widget _frequentCategoryCard(
     width: 280,
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      color: isDark ? AppColors.cardDark : AppColors.white,
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-          blurRadius: 15,
-          offset: const Offset(0, 5),
+          color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.12),
+          blurRadius: 20,
+          offset: const Offset(0, 8),
         ),
       ],
     ),
@@ -592,9 +596,9 @@ Widget _highestSpendDayCard(
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-          blurRadius: 15,
-          offset: const Offset(0, 5),
+          color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.12),
+          blurRadius: 20,
+          offset: const Offset(0, 8),
         ),
       ],
     ),
@@ -674,13 +678,13 @@ Widget _dailyAverageCard(
     width: 280,
     padding: const EdgeInsets.all(20),
     decoration: BoxDecoration(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      color: isDark ? AppColors.cardDark : AppColors.white,
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-          blurRadius: 15,
-          offset: const Offset(0, 5),
+          color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.12),
+          blurRadius: 20,
+          offset: const Offset(0, 8),
         ),
       ],
     ),
@@ -751,13 +755,13 @@ Widget _advanceInsightsSection({
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+            color: isDark ? AppColors.cardDark : AppColors.white,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-                blurRadius: 15,
-                offset: const Offset(0, 5),
+                color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.12),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
@@ -866,13 +870,13 @@ Widget _sixMonthTrendSection({
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+            color: isDark ? AppColors.cardDark : AppColors.white,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-                blurRadius: 15,
-                offset: const Offset(0, 5),
+                color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.12),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
@@ -1052,9 +1056,9 @@ class _ReportSection extends StatelessWidget {
         border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: AppColors.black.withValues(alpha: isDark ? 0.35 : 0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
