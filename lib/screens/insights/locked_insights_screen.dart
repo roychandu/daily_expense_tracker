@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
+import '../../common_widgets/category_progress_bar.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
-import '../../utils/category_utils.dart';
-import '../../common_widgets/category_icon.dart';
 import '../../utils/app_layout.dart';
 import 'dart:ui';
 import '../../l10n/app_localizations.dart';
+import 'insights_breakdown_screen.dart';
 
 Widget buildLockedInsightsBody({
   required BuildContext context,
@@ -228,14 +228,6 @@ Widget _spendingBreakdownSection({
               fontFamily: 'Serif',
             ),
           ),
-          Text(
-            AppLocalizations.of(context)!.viewAll,
-            style: AppTextStyles.label.copyWith(
-              color: AppColors.accentOrange.withValues(alpha: 0.8),
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
-            ),
-          ),
         ],
       ),
       const SizedBox(height: 16),
@@ -244,7 +236,7 @@ Widget _spendingBreakdownSection({
         final percentage = totalMonthlyExpense > 0
             ? (entry.value / totalMonthlyExpense) * 100
             : 0.0;
-        return _categoryProgressBar(
+        return CategoryProgressBar(
           category: entry.key,
           amount: entry.value,
           percentage: percentage,
@@ -253,87 +245,42 @@ Widget _spendingBreakdownSection({
           isDark: settings.themeMode == ThemeMode.dark, // Simplified
         );
       }),
+      if (sortedCategories.length > 3 && !isLocked)
+        Center(
+          child: TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InsightsBreakdownScreen(
+                  sortedCategories: sortedCategories,
+                  totalMonthlyExpense: totalMonthlyExpense,
+                  settings: settings,
+                  isDark: settings.themeMode == ThemeMode.dark,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.viewFullBreakdownTxt,
+                  style: AppTextStyles.label.copyWith(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+          ),
+        ),
     ],
   );
-}
-
-Widget _categoryProgressBar({
-  required String category,
-  required double amount,
-  required double percentage,
-  required SettingsController settings,
-  required bool isBlurred,
-  required bool isDark,
-}) {
-  Widget content = Padding(
-    padding: const EdgeInsets.only(bottom: 20.0),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            CategoryIcon(category: category, isDark: isDark, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                category,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark
-                      ? AppColors.whiteOpacity70
-                      : AppColors.blackOpacity54,
-                ),
-              ),
-            ),
-            Text(
-              AppFormatters.formatCurrency(
-                amount,
-                settings.currency,
-                settings.locale,
-                decimalDigits: 0,
-              ),
-              style: AppTextStyles.bodySmall.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Stack(
-          children: [
-            Container(
-              height: 6,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.whiteOpacity10
-                    : AppColors.blackOpacity12,
-                borderRadius: BorderRadius.circular(3),
-              ),
-            ),
-            FractionallySizedBox(
-              widthFactor: (percentage / 100).clamp(0.01, 1.0),
-              child: Container(
-                height: 6,
-                decoration: BoxDecoration(
-                  color: CategoryUtils.getColor(category),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-
-  if (isBlurred) {
-    return ClipRect(
-      child: ImageFiltered(
-        imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: content,
-      ),
-    );
-  }
-  return content;
 }
 
 class _LockedInsightsCard extends StatelessWidget {

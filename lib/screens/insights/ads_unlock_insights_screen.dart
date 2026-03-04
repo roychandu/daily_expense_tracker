@@ -6,11 +6,11 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../models/expense.dart';
 import '../../utils/formatters.dart';
-import '../../utils/category_utils.dart';
 import '../../common_widgets/category_icon.dart';
-import '../../utils/app_layout.dart';
-import '../history/expense_history_screen.dart';
 import '../../l10n/app_localizations.dart';
+import '../../utils/app_layout.dart';
+import 'insights_breakdown_screen.dart';
+import '../../common_widgets/category_progress_bar.dart';
 
 Widget buildAdsUnlockedInsightsBody({
   required BuildContext context,
@@ -263,14 +263,6 @@ Widget _spendingBreakdownSection({
               fontFamily: 'Serif',
             ),
           ),
-          Text(
-            AppLocalizations.of(context)!.viewInfoText,
-            style: AppTextStyles.label.copyWith(
-              color: AppColors.accentOrange.withValues(alpha: 0.8),
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
-            ),
-          ),
         ],
       ),
       const SizedBox(height: 16),
@@ -279,7 +271,7 @@ Widget _spendingBreakdownSection({
         final percentage = totalMonthlyExpense > 0
             ? (entry.value / totalMonthlyExpense) * 100
             : 0.0;
-        return _categoryProgressBar(
+        return CategoryProgressBar(
           category: entry.key,
           amount: entry.value,
           percentage: percentage,
@@ -293,7 +285,12 @@ Widget _spendingBreakdownSection({
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ExpenseHistoryScreen(),
+                builder: (context) => InsightsBreakdownScreen(
+                  sortedCategories: sortedCategories,
+                  totalMonthlyExpense: totalMonthlyExpense,
+                  settings: settings,
+                  isDark: isDark,
+                ),
               ),
             ),
             child: Row(
@@ -317,74 +314,6 @@ Widget _spendingBreakdownSection({
           ),
         ),
     ],
-  );
-}
-
-Widget _categoryProgressBar({
-  required String category,
-  required double amount,
-  required double percentage,
-  required SettingsController settings,
-  required bool isDark,
-}) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 20.0),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            CategoryIcon(category: category, isDark: isDark, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                category,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark
-                      ? AppColors.whiteOpacity70
-                      : AppColors.blackOpacity54,
-                ),
-              ),
-            ),
-            Text(
-              AppFormatters.formatCurrency(
-                amount,
-                settings.currency,
-                settings.locale,
-                decimalDigits: 0,
-              ),
-              style: AppTextStyles.bodySmall.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Stack(
-          children: [
-            Container(
-              height: 6,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.whiteOpacity10
-                    : AppColors.blackOpacity12,
-                borderRadius: BorderRadius.circular(3),
-              ),
-            ),
-            FractionallySizedBox(
-              widthFactor: (percentage / 100).clamp(0.01, 1.0),
-              child: Container(
-                height: 6,
-                decoration: BoxDecoration(
-                  color: CategoryUtils.getColor(category),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
   );
 }
 
