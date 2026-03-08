@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
@@ -11,6 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../../utils/app_layout.dart';
 import 'insights_breakdown_screen.dart';
 import '../../common_widgets/category_progress_bar.dart';
+import '../premium/unlock_premium_screen.dart';
 
 Widget buildAdsUnlockedInsightsBody({
   required BuildContext context,
@@ -907,8 +907,12 @@ class _PremiumExportLockSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () =>
-                        context.read<SettingsController>().updatePremium(true),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UnlockPremiumScreen(),
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
                       foregroundColor: Colors.white,

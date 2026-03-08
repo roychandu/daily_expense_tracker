@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import '../../utils/app_layout.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
+import '../premium/unlock_premium_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -377,12 +378,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: cardWidth * 0.4,
                         child: ElevatedButton(
                           onPressed: () {
-                            settings.updatePremium(!settings.isPremium);
-                            showCustomSnackBar(
+                            Navigator.push(
                               context,
-                              settings.isPremium
-                                  ? l10n.premiumUnlocked
-                                  : l10n.switchedToFree,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const UnlockPremiumScreen(),
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(

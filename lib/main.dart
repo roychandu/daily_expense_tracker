@@ -15,11 +15,13 @@ import 'utils/category_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'services/notification_service.dart';
+import 'services/ad_service.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  AdService().loadRewardedAd();
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
     sqfliteFfiInit();

@@ -10,6 +10,9 @@ import '../../utils/app_layout.dart';
 import 'dart:ui';
 import '../../l10n/app_localizations.dart';
 import 'insights_breakdown_screen.dart';
+import '../premium/unlock_premium_screen.dart';
+import '../../common_widgets/custom_snackbar.dart';
+import '../../services/ad_service.dart';
 
 Widget buildLockedInsightsBody({
   required BuildContext context,
@@ -347,8 +350,12 @@ class _LockedInsightsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () =>
-                      context.read<SettingsController>().updatePremium(true),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UnlockPremiumScreen(),
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accentOrange,
                     foregroundColor: AppColors.white,
@@ -368,8 +375,21 @@ class _LockedInsightsCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () =>
-                      context.read<SettingsController>().unlockInsightsViaAd(),
+                  onPressed: () {
+                    AdService().showRewardedAd(
+                      onRewardEarned: () async {
+                        await context
+                            .read<SettingsController>()
+                            .unlockInsightsViaAd();
+                        if (context.mounted) {
+                          showCustomSnackBar(
+                            context,
+                            'Insights unlocked for 2 minutes! 🔓',
+                          );
+                        }
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.white,
                     foregroundColor: AppColors.accentOrange,

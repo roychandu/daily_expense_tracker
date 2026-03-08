@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_service.dart';
+import '../services/app_config_service.dart';
 
 class SettingsController extends ChangeNotifier {
   SettingsController(this._prefs) {
+    _configService = AppConfigService(_prefs);
     _loadSettings();
   }
 
   final SharedPreferences _prefs;
+  late final AppConfigService _configService;
 
   ThemeMode _themeMode = ThemeMode.system;
   Locale _locale = const Locale('en');
@@ -55,11 +58,11 @@ class SettingsController extends ChangeNotifier {
     {'code': 'TRY', 'symbol': '₺', 'name': 'Turkish Lira'},
   ];
 
-  bool _isPremium = false;
-  bool get isPremium => _isPremium;
+  bool get isPremium => _configService.isPremium;
 
-  bool _isInsightsUnlockedViaAd = false;
-  bool get isInsightsUnlockedViaAd => _isInsightsUnlockedViaAd;
+  bool get isInsightsUnlockedViaAd => _configService.isAdAccessActive;
+
+  int get remainingAdAccessSeconds => _configService.remainingAdAccessSeconds;
 
   void _loadSettings() {
     final themeIndex = _prefs.getInt('themeMode') ?? 0;
@@ -70,7 +73,6 @@ class SettingsController extends ChangeNotifier {
 
     _currency = _prefs.getString('currency') ?? 'USD';
     _isDailyReminderEnabled = _prefs.getBool('isDailyReminderEnabled') ?? true;
-    _isPremium = _prefs.getBool('isPremium') ?? false;
 
     final timeStr = _prefs.getString('reminderTime') ?? "20:00";
     final parts = timeStr.split(':');
@@ -176,13 +178,12 @@ class SettingsController extends ChangeNotifier {
   }
 
   Future<void> updatePremium(bool isPremium) async {
-    _isPremium = isPremium;
+    await _configService.setPremium(isPremium);
     notifyListeners();
-    await _prefs.setBool('isPremium', isPremium);
   }
 
-  void unlockInsightsViaAd() {
-    _isInsightsUnlockedViaAd = true;
+  Future<void> unlockInsightsViaAd() async {
+    await _configService.activateAdAccess();
     notifyListeners();
   }
 }

@@ -22,8 +22,9 @@ class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
   }
 
   Future<void> _loadAd() async {
-    // Only load if not premium
-    if (context.read<SettingsController>().isPremium) return;
+    // Only load if not premium and no active ad-unlock
+    final settings = context.read<SettingsController>();
+    if (settings.isPremium || settings.isInsightsUnlockedViaAd) return;
 
     final AdSize? adSize =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
@@ -61,9 +62,11 @@ class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
 
   @override
   Widget build(BuildContext context) {
-    final isPremium = context.watch<SettingsController>().isPremium;
+    final settings = context.watch<SettingsController>();
+    final isPremium = settings.isPremium;
+    final isAdUnlocked = settings.isInsightsUnlockedViaAd;
 
-    if (isPremium || !_isLoaded || _bannerAd == null) {
+    if (isPremium || isAdUnlocked || !_isLoaded || _bannerAd == null) {
       return const SizedBox.shrink();
     }
 

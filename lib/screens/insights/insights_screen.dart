@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
@@ -20,6 +21,33 @@ class InsightsScreen extends StatefulWidget {
 
 class _InsightsScreenState extends State<InsightsScreen> {
   DateTime _selectedDate = DateTime.now();
+  Timer? _adCountdownTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimerIfNeeded();
+  }
+
+  @override
+  void dispose() {
+    _adCountdownTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startTimerIfNeeded() {
+    final settings = context.read<SettingsController>();
+    if (settings.isInsightsUnlockedViaAd && !settings.isPremium) {
+      _adCountdownTimer?.cancel();
+      _adCountdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (!mounted) return;
+        if (!settings.isInsightsUnlockedViaAd) {
+          timer.cancel();
+        }
+        setState(() {});
+      });
+    }
+  }
 
   Future<void> _selectMonth(BuildContext context) async {
     int selectedYear = _selectedDate.year;
@@ -247,13 +275,49 @@ class _InsightsScreenState extends State<InsightsScreen> {
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: Text(
-          l10n.insights,
-          style: AppTextStyles.h1Display.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 28,
-            fontFamily: 'Serif',
-          ),
+        title: Row(
+          children: [
+            Text(
+              l10n.insights,
+              style: AppTextStyles.h1Display.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 28,
+                fontFamily: 'Serif',
+              ),
+            ),
+            if (settings.isInsightsUnlockedViaAd && !settings.isPremium) ...[
+              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.orange.withOpacity(0.5)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.timer_outlined,
+                      size: 14,
+                      color: Colors.orange,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${settings.remainingAdAccessSeconds}s',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
         ),
         centerTitle: false,
         backgroundColor: Colors.transparent,
@@ -308,6 +372,17 @@ class _InsightsScreenState extends State<InsightsScreen> {
     MapEntry<String, int>? mostFrequentCategory,
     List<Expense> monthTransactions,
   ) {
+    if (settings.isInsightsUnlockedViaAd && !settings.isPremium) {
+      if (_adCountdownTimer == null || !_adCountdownTimer!.isActive) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _startTimerIfNeeded(),
+        );
+      }
+    } else {
+      _adCountdownTimer?.cancel();
+      _adCountdownTimer = null;
+    }
+
     if (settings.isPremium) {
       return buildPremiumInsightsBody(
         context: context,
