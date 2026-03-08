@@ -1,9 +1,41 @@
 import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
+import '../../common_widgets/custom_app_bar.dart';
 
-class PremiumUnlockedScreen extends StatelessWidget {
+class PremiumUnlockedScreen extends StatefulWidget {
   const PremiumUnlockedScreen({super.key});
+
+  @override
+  State<PremiumUnlockedScreen> createState() => _PremiumUnlockedScreenState();
+}
+
+class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
+  final ScrollController _scrollController = ScrollController();
+  double _appBarOpacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final offset = _scrollController.offset;
+    final newOpacity = (offset / 50).clamp(0.0, 1.0);
+    if (newOpacity != _appBarOpacity) {
+      if (!mounted) return;
+      setState(() {
+        _appBarOpacity = newOpacity;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,25 +45,12 @@ class PremiumUnlockedScreen extends StatelessWidget {
       backgroundColor: isDark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: isDark ? AppColors.textDark : AppColors.charcoal,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Premium Unlocked',
-          style: AppTextStyles.h2Section.copyWith(
-            color: isDark ? AppColors.textDark : AppColors.charcoal,
-          ),
-        ),
-        centerTitle: false,
+      appBar: CustomAppBar(
+        title: 'Premium Unlocked',
+        scrollOpacity: _appBarOpacity,
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
           child: Column(

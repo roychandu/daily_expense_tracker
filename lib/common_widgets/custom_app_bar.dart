@@ -34,20 +34,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final shouldShowBack =
         showBackButton && !isRootRoute && Navigator.canPop(context);
 
-    // On scroll: blend in a soft premium-orange tint.
-    // Dark mode  → warm dark base tinted with very subtle orange
-    // Light mode → white/cream tinted with soft orange glow
-    final bgColor = isDark
-        ? Color.lerp(
-            Colors.transparent,
-            AppColors.primarySelected.withValues(alpha: 0.18),
-            scrollOpacity,
-          )!
-        : Color.lerp(
-            Colors.transparent,
-            AppColors.primarySelected.withValues(alpha: 0.10),
-            scrollOpacity,
-          )!;
+    // Always use the scaffold's background as base so content never bleeds behind the AppBar.
+    // Then overlay a premium-orange tint that fades in as user scrolls.
+    final baseColor = isDark
+        ? const Color(0xFF121212) // same as scaffolds' backgroundDark
+        : const Color(0xFFF8F9FA); // same as AppColors.backgroundLight
+
+    final tintColor = isDark
+        ? AppColors.primarySelected.withValues(alpha: 0.18 * scrollOpacity)
+        : AppColors.primarySelected.withValues(alpha: 0.10 * scrollOpacity);
+
+    final bgColor = Color.alphaBlend(tintColor, baseColor);
 
     return AppBar(
       title:

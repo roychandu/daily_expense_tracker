@@ -11,6 +11,7 @@ import '../../controllers/settings_controller.dart';
 import 'locked_insights_screen.dart';
 import 'ads_unlock_insights_screen.dart';
 import 'premium_insights_screen.dart';
+import '../../common_widgets/custom_app_bar.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -22,16 +23,31 @@ class InsightsScreen extends StatefulWidget {
 class _InsightsScreenState extends State<InsightsScreen> {
   DateTime _selectedDate = DateTime.now();
   Timer? _adCountdownTimer;
+  final ScrollController _scrollController = ScrollController();
+  double _appBarOpacity = 0.0;
 
   @override
   void initState() {
     super.initState();
     _startTimerIfNeeded();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final offset = _scrollController.offset;
+    final newOpacity = (offset / 50).clamp(0.0, 1.0);
+    if (newOpacity != _appBarOpacity) {
+      if (!mounted) return;
+      setState(() {
+        _appBarOpacity = newOpacity;
+      });
+    }
   }
 
   @override
   void dispose() {
     _adCountdownTimer?.cancel();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -274,8 +290,10 @@ class _InsightsScreenState extends State<InsightsScreen> {
       backgroundColor: isDark
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Row(
+      appBar: CustomAppBar(
+        scrollOpacity: _appBarOpacity,
+        titleWidget: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               l10n.insights,
@@ -319,13 +337,11 @@ class _InsightsScreenState extends State<InsightsScreen> {
             ],
           ],
         ),
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
       body: RefreshIndicator(
         onRefresh: () => expenseController.refreshExpenses(),
         child: SingleChildScrollView(
+          controller: _scrollController,
           padding: const EdgeInsets.symmetric(vertical: 24),
           clipBehavior: Clip.none,
           physics: const AlwaysScrollableScrollPhysics(),

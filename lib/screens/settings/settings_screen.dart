@@ -5,6 +5,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../../common_widgets/custom_snackbar.dart';
+import '../../common_widgets/custom_app_bar.dart';
 import '../../services/export_service.dart';
 import '../../services/database_service.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,32 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final ScrollController _scrollController = ScrollController();
+  double _appBarOpacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final offset = _scrollController.offset;
+    final newOpacity = (offset / 50).clamp(0.0, 1.0);
+    if (newOpacity != _appBarOpacity) {
+      if (!mounted) return;
+      setState(() {
+        _appBarOpacity = newOpacity;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -40,21 +67,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: isDark
           ? const Color(0xFF121212)
           : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(
-          l10n.settings,
-          style: AppTextStyles.h1Display.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 28,
-            fontFamily: 'Serif',
-          ),
-        ),
-        titleSpacing: 10,
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(title: l10n.settings, scrollOpacity: _appBarOpacity),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppLayout.horizontalPadding(context),

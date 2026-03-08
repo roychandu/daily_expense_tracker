@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isSelected
         ? AppColors.primarySelected
-        : (isDark ? AppColors.whiteOpacity70 : AppColors.textSecondaryLight);
+        : (isDark ? AppColors.whiteOpacity70 : AppColors.black);
 
     return GestureDetector(
       onTap: () => setState(() => _currentIndex = index),
