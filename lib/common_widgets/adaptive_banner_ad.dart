@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import '../controllers/settings_controller.dart';
+import '../services/ad_service.dart';
 
 class AdaptiveBannerAd extends StatefulWidget {
   const AdaptiveBannerAd({super.key});
@@ -14,6 +14,8 @@ class AdaptiveBannerAd extends StatefulWidget {
 class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
+  bool _isLoading = false;
+  int? _lastWidth;
 
   @override
   void didChangeDependencies() {
@@ -26,29 +28,50 @@ class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
     final settings = context.read<SettingsController>();
     if (settings.isPremium || settings.isInsightsUnlockedViaAd) return;
 
-    final AdSize? adSize =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-          MediaQuery.sizeOf(context).width.toInt(),
-        );
+    final width = MediaQuery.sizeOf(context).width.toInt();
 
-    if (adSize == null) return;
+    // Prevent multiple loads or reloading if width hasn't changed
+    if (_isLoading || (_isLoaded && _lastWidth == width)) return;
+
+    _isLoading = true;
+    _lastWidth = width;
+
+    final AdSize? adSize =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
+
+    if (adSize == null) {
+      _isLoading = false;
+      return;
+    }
+
+    // Dispose old ad before creating new one
+    _bannerAd?.dispose();
 
     _bannerAd = BannerAd(
-      adUnitId: Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/9214589741'
-          : 'ca-app-pub-3940256099942544/2934735716', // iOS test ID
+      adUnitId: AdService().bannerAdUnitId,
       size: adSize,
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
           setState(() {
             _bannerAd = ad as BannerAd;
             _isLoaded = true;
+            _isLoading = false;
           });
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          debugPrint('Ad failed to load: $error');
+          debugPrint('AdService: Banner failed to load: $error');
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+              _isLoaded = false;
+            });
+          }
         },
       ),
     )..load();
@@ -62,12 +85,27 @@ class _AdaptiveBannerAdState extends State<AdaptiveBannerAd> {
 
   @override
   Widget build(BuildContext context) {
+    // We watch settings to know when to show/hide based on premium/ad-unlock status
     final settings = context.watch<SettingsController>();
     final isPremium = settings.isPremium;
     final isAdUnlocked = settings.isInsightsUnlockedViaAd;
 
-    if (isPremium || isAdUnlocked || !_isLoaded || _bannerAd == null) {
+    // Premium or Ad-unlocked users should see nothing
+    if (isPremium || isAdUnlocked) {
       return const SizedBox.shrink();
+    }
+
+    // If ad is not loaded yet, show a placeholder to reserve space and look immediate
+    if (!_isLoaded || _bannerAd == null) {
+      return Container(
+        height: 60, // Standard approximate banner height
+        alignment: Alignment.center,
+        child: const SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.grey),
+        ),
+      );
     }
 
     return Container(

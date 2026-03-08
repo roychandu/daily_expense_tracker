@@ -377,6 +377,9 @@ class _LockedInsightsCard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     AdService().showRewardedAd(
+                      onAdFailed: (message) {
+                        showCustomSnackBar(context, message);
+                      },
                       onRewardEarned: () async {
                         await context
                             .read<SettingsController>()
