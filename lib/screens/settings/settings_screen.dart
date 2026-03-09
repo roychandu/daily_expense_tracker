@@ -192,6 +192,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               _buildSectionHeader(l10n.notificationsSection),
               _buildNotificationsCard(context, settings, l10n),
 
+              const SizedBox(height: 32),
+
+              // Share Section
+              _buildShareSection(context),
+
               const SizedBox(height: 48),
               Center(
                 child: Text(
@@ -853,5 +858,72 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showCustomSnackBar(context, result ?? 'Unknown error', isError: true);
       }
     }
+  }
+
+  Widget _buildShareSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardWidth = MediaQuery.of(context).size.width - 40;
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/share-bg.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Share & get Rewarded',
+              style: AppTextStyles.h2Section.copyWith(
+                color: Colors.white,
+                fontSize: 24,
+                fontFamily: 'Serif',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Invite a friend to download, both will get 15 days premium access',
+              style: AppTextStyles.body.copyWith(
+                color: Colors.white,
+                fontSize: 13,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: cardWidth * 0.5,
+              child: ElevatedButton(
+                onPressed: () {
+                  // TODO: Implement share logic
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: isDark
+                      ? const Color(0xFFF2994A)
+                      : AppColors.charcoal,
+                  elevation: 4,
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                child: Text(
+                  'Share now',
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
