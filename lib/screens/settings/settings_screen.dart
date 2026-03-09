@@ -17,6 +17,7 @@ import '../../common_widgets/premium_export_lock_section.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
 import '../premium/unlock_premium_screen.dart';
+import 'invite_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -902,7 +903,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               width: cardWidth * 0.5,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement share logic
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InviteScreen(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,

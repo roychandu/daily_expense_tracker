@@ -186,4 +186,49 @@ class SettingsController extends ChangeNotifier {
     await _configService.activateAdAccess();
     notifyListeners();
   }
+
+  // Referral / Invite System
+  int get invitedFriendsCount => _configService.invitedFriendsCount;
+  int get earnedPremiumDays => _configService.earnedPremiumDays;
+  String get referralExpiryDate => _configService.referralExpiryDate ?? 'None';
+
+  Future<void> simulateFriendJoined() async {
+    final count = invitedFriendsCount + 1;
+    await _configService.setInvitedFriendsCount(count);
+
+    // Each friend adds 15 days
+    final additionalDays = 15;
+    await _configService.setEarnedPremiumDays(
+      earnedPremiumDays + additionalDays,
+    );
+
+    // Update expiry date (mock: 30 days from now)
+    final expiry = DateTime.now().add(const Duration(days: 30));
+    await _configService.setReferralExpiryDate(
+      "${expiry.day} ${_getMonthName(expiry.month)} ${expiry.year}",
+    );
+
+    // Unlock premium if not already
+    await updatePremium(true);
+
+    notifyListeners();
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return months[month - 1];
+  }
 }

@@ -3,6 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppConfigService {
   static const String _isPremiumKey = 'isPremium';
   static const String _adUnlockTimeKey = 'adUnlockTime';
+  static const String _invitedFriendsKey = 'invitedFriendsCount';
+  static const String _earnedDaysKey = 'earnedPremiumDays';
+  static const String _expiryDateKey = 'referralExpiryDate';
 
   final SharedPreferences _prefs;
 
@@ -40,5 +43,21 @@ class AppConfigService {
     } catch (e) {
       return 0;
     }
+  }
+
+  int get invitedFriendsCount => _prefs.getInt(_invitedFriendsKey) ?? 0;
+  int get earnedPremiumDays => _prefs.getInt(_earnedDaysKey) ?? 0;
+  String? get referralExpiryDate => _prefs.getString(_expiryDateKey);
+
+  Future<void> setInvitedFriendsCount(int value) async {
+    await _prefs.setInt(_invitedFriendsKey, value);
+  }
+
+  Future<void> setEarnedPremiumDays(int value) async {
+    await _prefs.setInt(_earnedDaysKey, value);
+  }
+
+  Future<void> setReferralExpiryDate(String value) async {
+    await _prefs.setString(_expiryDateKey, value);
   }
 }
