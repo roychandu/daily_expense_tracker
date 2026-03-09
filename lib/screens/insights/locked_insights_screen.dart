@@ -295,7 +295,6 @@ class _LockedInsightsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.deepBlue,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -306,7 +305,7 @@ class _LockedInsightsCard extends StatelessWidget {
         ],
         image: const DecorationImage(
           image: AssetImage('assets/images/locked-card-bg.png'),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
       child: Column(
@@ -411,6 +410,7 @@ class _LockedInsightsCard extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

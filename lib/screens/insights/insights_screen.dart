@@ -342,7 +342,10 @@ class _InsightsScreenState extends State<InsightsScreen> {
         onRefresh: () => expenseController.refreshExpenses(),
         child: SingleChildScrollView(
           controller: _scrollController,
-          padding: const EdgeInsets.symmetric(vertical: 24),
+          padding: EdgeInsets.only(
+            top: 24,
+            bottom: MediaQuery.of(context).padding.bottom + 24,
+          ),
           clipBehavior: Clip.none,
           physics: const AlwaysScrollableScrollPhysics(),
           child: _buildContent(

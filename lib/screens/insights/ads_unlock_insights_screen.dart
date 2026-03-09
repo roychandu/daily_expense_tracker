@@ -858,8 +858,8 @@ class _PremiumExportLockSection extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E30) : const Color(0xFFF0F4F8),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -868,74 +868,59 @@ class _PremiumExportLockSection extends StatelessWidget {
             offset: const Offset(0, 12),
           ),
         ],
+        image: DecorationImage(
+          image: AssetImage(
+            isDark
+                ? 'assets/images/premium-export-dark-bg.png'
+                : 'assets/images/premium-export-light-bg.png',
+          ),
+          fit: BoxFit.fill,
+        ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-              isDark
-                  ? 'assets/images/premium-export-dark-bg.png'
-                  : 'assets/images/premium-export-light-bg.png',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 180,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.premiumExportTitle,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.h3Title.copyWith(
+              fontSize: 18,
+              color: isDark ? AppColors.white : AppColors.charcoal,
             ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.premiumExportTitle,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.h3Title.copyWith(
-                      fontSize: 18,
-                      color: isDark ? AppColors.white : AppColors.charcoal,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    AppLocalizations.of(context)!.unlockProfessionalDetails,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.label.copyWith(
-                      color: isDark
-                          ? AppColors.whiteOpacity70
-                          : AppColors.softGray,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const UnlockPremiumScreen(),
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.goPremiumBtn,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            AppLocalizations.of(context)!.unlockProfessionalDetails,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.label.copyWith(
+              color: isDark ? AppColors.whiteOpacity70 : AppColors.softGray,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UnlockPremiumScreen(),
               ),
             ),
-          ],
-        ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            child: Text(
+              AppLocalizations.of(context)!.goPremiumBtn,
+              style: AppTextStyles.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
