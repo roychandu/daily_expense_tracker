@@ -10,7 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../../utils/app_layout.dart';
 import 'insights_breakdown_screen.dart';
 import '../../common_widgets/category_progress_bar.dart';
-import '../premium/unlock_premium_screen.dart';
+import '../../common_widgets/premium_export_lock_section.dart';
 
 Widget buildAdsUnlockedInsightsBody({
   required BuildContext context,
@@ -112,7 +112,7 @@ Widget buildAdsUnlockedInsightsBody({
         padding: EdgeInsets.symmetric(
           horizontal: AppLayout.horizontalPadding(context),
         ),
-        child: const _PremiumExportLockSection(),
+        child: const PremiumExportLockSection(),
       ),
     ],
   );
@@ -848,82 +848,6 @@ Widget _sixMonthTrendSection({
       ),
     ],
   );
-}
-
-class _PremiumExportLockSection extends StatelessWidget {
-  const _PremiumExportLockSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: isDark ? 0.4 : 0.15),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
-          ),
-        ],
-        image: DecorationImage(
-          image: AssetImage(
-            isDark
-                ? 'assets/images/premium-export-dark-bg.png'
-                : 'assets/images/premium-export-light-bg.png',
-          ),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.premiumExportTitle,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.h3Title.copyWith(
-              fontSize: 18,
-              color: isDark ? AppColors.white : AppColors.charcoal,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            AppLocalizations.of(context)!.unlockProfessionalDetails,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.label.copyWith(
-              color: isDark ? AppColors.whiteOpacity70 : AppColors.softGray,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const UnlockPremiumScreen(),
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-            child: Text(
-              AppLocalizations.of(context)!.goPremiumBtn,
-              style: AppTextStyles.bodySmall.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-        ],
-      ),
-    );
-  }
 }
 
 class _CalendarButton extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
@@ -8,9 +9,11 @@ import '../../common_widgets/custom_snackbar.dart';
 import '../../common_widgets/custom_app_bar.dart';
 import '../../services/export_service.dart';
 import '../../services/database_service.dart';
+import '../../services/ad_service.dart';
 import 'package:intl/intl.dart';
 
 import '../../utils/app_layout.dart';
+import '../../common_widgets/premium_export_lock_section.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
 import '../premium/unlock_premium_screen.dart';
@@ -25,11 +28,13 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final ScrollController _scrollController = ScrollController();
   double _appBarOpacity = 0.0;
+  Timer? _adCountdownTimer;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _startTimerIfNeeded();
   }
 
   void _onScroll() {
@@ -45,8 +50,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void dispose() {
+    _adCountdownTimer?.cancel();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _startTimerIfNeeded() {
+    final settings = context.read<SettingsController>();
+    if (settings.isInsightsUnlockedViaAd && !settings.isPremium) {
+      _adCountdownTimer?.cancel();
+      _adCountdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (!mounted) return;
+        if (!settings.isInsightsUnlockedViaAd) {
+          timer.cancel();
+          _adCountdownTimer = null;
+        }
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -141,26 +162,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Data Management Section
               _buildSectionHeader(l10n.dataManagementSection),
-              _buildSectionCard([
-                _buildSettingsRow(
-                  icon: Icons.file_download,
-                  iconColor: Colors.blueAccent,
-                  title: l10n.exportTransactionHistory,
-                  hasBadge: true,
-                  badgeText: 'CSV',
-                  badgeColor: AppColors.accentTeal,
-                  onTap: () => _handleExport(context, true),
-                ),
-                _buildSettingsRow(
-                  icon: Icons.picture_as_pdf,
-                  iconColor: Colors.orangeAccent,
-                  title: l10n.annualFinancialReport,
-                  hasBadge: true,
-                  badgeText: 'PDF',
-                  badgeColor: AppColors.softCoral,
-                  onTap: () => _handleExport(context, false),
-                ),
-              ]),
+              if (settings.isPremium || settings.isInsightsUnlockedViaAd)
+                _buildSectionCard([
+                  _buildSettingsRow(
+                    icon: Icons.file_download,
+                    iconColor: Colors.blueAccent,
+                    title: l10n.exportTransactionHistory,
+                    hasBadge: true,
+                    badgeText: 'CSV',
+                    badgeColor: AppColors.accentTeal,
+                    onTap: () => _handleExport(context, true),
+                  ),
+                  _buildSettingsRow(
+                    icon: Icons.picture_as_pdf,
+                    iconColor: Colors.orangeAccent,
+                    title: l10n.annualFinancialReport,
+                    hasBadge: true,
+                    badgeText: 'PDF',
+                    badgeColor: AppColors.softCoral,
+                    onTap: () => _handleExport(context, false),
+                  ),
+                ])
+              else
+                const PremiumExportLockSection(),
 
               const SizedBox(height: 32),
 
@@ -389,35 +413,81 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      SizedBox(
-                        width: cardWidth * 0.4,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const UnlockPremiumScreen(),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: cardWidth * 0.4,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const UnlockPremiumScreen(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFF2994A),
+                                foregroundColor: Colors.white,
+                                elevation: 4,
+                                shape: const StadiumBorder(),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: const Color(0xFFF2994A),
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: Text(
-                            l10n.upgradeNowBtn,
-                            style: AppTextStyles.bodySmall.copyWith(
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.5,
+                              child: Text(
+                                l10n.upgradeNowBtn,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          if (!settings.isPremium) ...[
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: settings.isInsightsUnlockedViaAd
+                                    ? null
+                                    : () {
+                                        AdService().showRewardedAd(
+                                          onRewardEarned: () async {
+                                            await settings
+                                                .unlockInsightsViaAd();
+                                            _startTimerIfNeeded();
+                                            if (context.mounted) {
+                                              showCustomSnackBar(
+                                                context,
+                                                'Features unlocked! 🔓',
+                                              );
+                                            }
+                                          },
+                                        );
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: const Color(0xFFF2994A),
+                                  elevation: 4,
+                                  shape: const StadiumBorder(),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                  ),
+                                ),
+                                child: Text(
+                                  settings.isInsightsUnlockedViaAd
+                                      ? '${settings.remainingAdAccessSeconds}s'
+                                      : l10n.watchAdsTxt,
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                     ],
                   ),
