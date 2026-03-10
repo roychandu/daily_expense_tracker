@@ -114,7 +114,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.softCoral, width: 2),
         ),
-        hintStyle: AppTextStyles.caption.copyWith(color: AppColors.softGray),
+        hintStyle: AppTextStyles.caption.copyWith(color: AppColors.whiteOpacity38),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

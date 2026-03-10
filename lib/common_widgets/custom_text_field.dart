@@ -26,6 +26,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       constraints: const BoxConstraints(minHeight: 48),
       child: TextField(
@@ -33,10 +35,14 @@ class CustomTextField extends StatelessWidget {
         obscureText: obscureText,
         onChanged: onChanged,
         keyboardType: keyboardType,
-        style: AppTextStyles.body,
+        style: AppTextStyles.body.copyWith(
+          color: isDark ? AppColors.textDark : AppColors.charcoal,
+        ),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: AppTextStyles.caption.copyWith(color: AppColors.softGray),
+          hintStyle: AppTextStyles.caption.copyWith(
+            color: isDark ? AppColors.whiteOpacity38 : AppColors.softGray,
+          ),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           errorText: errorText,
