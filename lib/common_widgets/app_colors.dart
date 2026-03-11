@@ -5,6 +5,7 @@ class AppColors {
 
   static const Color primarySelected = Color(0xFFF98D25);
   static const Color primaryUnselected = Color(0xFFFEE4CB);
+  static const Color onboardingBackground = Color(0xFFFBF5E9);
   static const Color accentTeal = Color(0xFF2A9D8F);
   static const Color softCoral = Color(0xFFE76F51);
   static const Color charcoal = Color(0xFF333333);

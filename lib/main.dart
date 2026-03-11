@@ -9,8 +9,9 @@ import 'controllers/settings_controller.dart';
 import 'controllers/expense_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'common_widgets/app_theme.dart';
-import 'screens/home_screen/home_screen.dart';
 import 'utils/category_utils.dart';
+import 'services/app_flow_service.dart';
+import 'screens/splash_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final settingsController = SettingsController(prefs);
   final expenseController = ExpenseController();
+  final appFlowService = AppFlowService(prefs);
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
@@ -42,6 +44,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: settingsController),
         ChangeNotifierProvider.value(value: expenseController),
+        Provider.value(value: appFlowService),
       ],
       child: const MyApp(),
     ),
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
-          home: const HomeScreen(),
+          home: const SplashScreen(),
         );
       },
     );
