@@ -1519,6 +1519,672 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No records found in database'**
   String get noDataFoundInDatabase;
+
+  /// No description provided for @cloudBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Backup'**
+  String get cloudBackup;
+
+  /// No description provided for @chooseBackupMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Backup Method'**
+  String get chooseBackupMethod;
+
+  /// No description provided for @signInWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get signInWithGoogle;
+
+  /// No description provided for @recommendedForAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended for Android'**
+  String get recommendedForAndroid;
+
+  /// No description provided for @signInWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get signInWithApple;
+
+  /// No description provided for @recommendedForIos.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended for iOS'**
+  String get recommendedForIos;
+
+  /// No description provided for @signInWithEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Email'**
+  String get signInWithEmail;
+
+  /// No description provided for @privacyGuarantee.
+  ///
+  /// In en, this message translates to:
+  /// **'PRIVACY GUARANTEE'**
+  String get privacyGuarantee;
+
+  /// No description provided for @endToEndEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end encryption'**
+  String get endToEndEncryption;
+
+  /// No description provided for @weNeverSeeData.
+  ///
+  /// In en, this message translates to:
+  /// **'We never see your expense data'**
+  String get weNeverSeeData;
+
+  /// No description provided for @deleteCloudDataAnytime.
+  ///
+  /// In en, this message translates to:
+  /// **'You can delete cloud data anytime'**
+  String get deleteCloudDataAnytime;
+
+  /// No description provided for @gdprCompliant.
+  ///
+  /// In en, this message translates to:
+  /// **'GDPR & privacy compliant'**
+  String get gdprCompliant;
+
+  /// No description provided for @readPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our Privacy Policy'**
+  String get readPrivacyPolicy;
+
+  /// No description provided for @setUpLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Up Later'**
+  String get setUpLater;
+
+  /// No description provided for @enableBackupAnytime.
+  ///
+  /// In en, this message translates to:
+  /// **'You can enable backup anytime from\n'**
+  String get enableBackupAnytime;
+
+  /// No description provided for @settingsCloudBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings → Cloud Backup'**
+  String get settingsCloudBackup;
+
+  /// No description provided for @protectFinancialData.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect Your\nFinancial Data'**
+  String get protectFinancialData;
+
+  /// No description provided for @cloudBackupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your expenses are safely stored\non your device. Add cloud\nbackup for extra peace of mind.'**
+  String get cloudBackupDescription;
+
+  /// No description provided for @whyCloudBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Why Cloud Backup?'**
+  String get whyCloudBackup;
+
+  /// No description provided for @switchPhonesEasily.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch Phones Easily'**
+  String get switchPhonesEasily;
+
+  /// No description provided for @switchPhonesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to a new device without losing any data'**
+  String get switchPhonesDesc;
+
+  /// No description provided for @automaticSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic Sync'**
+  String get automaticSync;
+
+  /// No description provided for @automaticSyncDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Data backed up daily, no manual exports needed'**
+  String get automaticSyncDesc;
+
+  /// No description provided for @enableCloudBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Cloud Backup'**
+  String get enableCloudBackup;
+
+  /// No description provided for @partOfPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'PART OF PREMIUM (\$3.99 ONE-TIME)'**
+  String get partOfPremium;
+
+  /// No description provided for @currentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Status'**
+  String get currentStatus;
+
+  /// No description provided for @localStorageActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Local storage: Active'**
+  String get localStorageActive;
+
+  /// No description provided for @dataSafeOnDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Data safe on your device'**
+  String get dataSafeOnDevice;
+
+  /// No description provided for @expensesLogged24x7.
+  ///
+  /// In en, this message translates to:
+  /// **'24x7  expenses logged'**
+  String get expensesLogged24x7;
+
+  /// No description provided for @notEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'NOT ENABLED'**
+  String get notEnabled;
+
+  /// No description provided for @dataSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Sync'**
+  String get dataSync;
+
+  /// No description provided for @activeAndSyncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Active & syncing'**
+  String get activeAndSyncing;
+
+  /// No description provided for @lastBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup: {time}'**
+  String lastBackup(String time);
+
+  /// No description provided for @accountEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Account: {email}'**
+  String accountEmail(String email);
+
+  /// No description provided for @storageUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage used: {size}'**
+  String storageUsed(String size);
+
+  /// No description provided for @manageBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Backup >'**
+  String get manageBackup;
+
+  /// No description provided for @options.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get options;
+
+  /// No description provided for @syncFrequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync frequency'**
+  String get syncFrequency;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @downloadAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Download all data'**
+  String get downloadAllData;
+
+  /// No description provided for @disconnectDeleteCloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect & delete cloud data'**
+  String get disconnectDeleteCloud;
+
+  /// No description provided for @cloudSecureDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your financial data is encrypted and secure in your personal cloud storage.'**
+  String get cloudSecureDesc;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password'**
+  String get forgotPassword;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Doesn\'t have an account? '**
+  String get dontHaveAccount;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @continueAsGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as Guest'**
+  String get continueAsGuest;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
+
+  /// No description provided for @signUpWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up with Google'**
+  String get signUpWithGoogle;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @logInSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'log in'**
+  String get logInSmall;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address you used to sign up to reset your password'**
+  String get forgotPasswordDesc;
+
+  /// No description provided for @sendEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send email'**
+  String get sendEmail;
+
+  /// No description provided for @weWillSendResetEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send you a password reset email.'**
+  String get weWillSendResetEmail;
+
+  /// No description provided for @repeatPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat Password'**
+  String get repeatPassword;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @woohoo.
+  ///
+  /// In en, this message translates to:
+  /// **'Woohoo!'**
+  String get woohoo;
+
+  /// No description provided for @friendJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend joined!'**
+  String get friendJoined;
+
+  /// No description provided for @referralSuccessDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} downloaded the app using\nyour link. You both just earned 15\ndays of premium access!'**
+  String referralSuccessDesc(String name);
+
+  /// No description provided for @premiumActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium activated'**
+  String get premiumActivated;
+
+  /// No description provided for @validFor15Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for 15 days'**
+  String get validFor15Days;
+
+  /// No description provided for @allFeaturesUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'All features unlocked'**
+  String get allFeaturesUnlocked;
+
+  /// No description provided for @explorePremiumFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore premium features'**
+  String get explorePremiumFeatures;
+
+  /// No description provided for @inviteMoreFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite More Friends'**
+  String get inviteMoreFriends;
+
+  /// No description provided for @invitesStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} INVITES USED • {remaining} INVITE REMAINING'**
+  String invitesStatus(int used, int remaining);
+
+  /// No description provided for @welcomeToPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to\nPremium'**
+  String get welcomeToPremium;
+
+  /// No description provided for @upgradeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Your upgrade is now active'**
+  String get upgradeActive;
+
+  /// No description provided for @allAdsRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'All ads Removed'**
+  String get allAdsRemoved;
+
+  /// No description provided for @allInsightsUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'All insights unlocked'**
+  String get allInsightsUnlocked;
+
+  /// No description provided for @unlimitedExportsActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited exports activated'**
+  String get unlimitedExportsActivated;
+
+  /// No description provided for @premiumFeaturesReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium features ready'**
+  String get premiumFeaturesReady;
+
+  /// No description provided for @byPurchasingAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'By purchasing, you agree to our '**
+  String get byPurchasingAgree;
+
+  /// No description provided for @unlockPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium'**
+  String get unlockPremium;
+
+  /// No description provided for @oneTimePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'One-time payment • Lifetime access'**
+  String get oneTimePayment;
+
+  /// No description provided for @noSubscriptionEver.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription ever'**
+  String get noSubscriptionEver;
+
+  /// No description provided for @removeAdsForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove all ads forever'**
+  String get removeAdsForever;
+
+  /// No description provided for @unlockAllInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock all insights'**
+  String get unlockAllInsights;
+
+  /// No description provided for @unlimitedExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited exports'**
+  String get unlimitedExports;
+
+  /// No description provided for @advancedAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced analytics'**
+  String get advancedAnalytics;
+
+  /// No description provided for @unlockPremiumPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium \$3.99'**
+  String get unlockPremiumPrice;
+
+  /// No description provided for @watchAd24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch Ad for 24h Access'**
+  String get watchAd24h;
+
+  /// No description provided for @insightsUnlockedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights unlocked for 2 minutes! 🔓'**
+  String get insightsUnlockedSnackbar;
+
+  /// No description provided for @inviteEarnPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite & Earn Premium'**
+  String get inviteEarnPremium;
+
+  /// No description provided for @shareLoveEarnPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the love, Earn Premium'**
+  String get shareLoveEarnPremium;
+
+  /// No description provided for @helpFriendTrackBetter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help friend track expense better and both get rewarded'**
+  String get helpFriendTrackBetter;
+
+  /// No description provided for @howItWorks.
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get howItWorks;
+
+  /// No description provided for @shareYourLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Your Link'**
+  String get shareYourLink;
+
+  /// No description provided for @sendToFriendsViaApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to friends via any app'**
+  String get sendToFriendsViaApp;
+
+  /// No description provided for @friendDownloadsOpens.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Downloads & Opens'**
+  String get friendDownloadsOpens;
+
+  /// No description provided for @installFromStore.
+  ///
+  /// In en, this message translates to:
+  /// **'They install from Play/App Store'**
+  String get installFromStore;
+
+  /// No description provided for @bothGet15Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Both Get 15 Days Premium'**
+  String get bothGet15Days;
+
+  /// No description provided for @unlockedInstantly.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked instantly, no catch!'**
+  String get unlockedInstantly;
+
+  /// No description provided for @statusHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'STATUS'**
+  String get statusHeader;
+
+  /// No description provided for @daysEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days earned'**
+  String daysEarned(int days);
+
+  /// No description provided for @expires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires: {date}'**
+  String expires(String date);
+
+  /// No description provided for @friendsInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends invited: {count} / {max}'**
+  String friendsInvited(int count, int max);
+
+  /// No description provided for @maxInvitesReached.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the maximum invites!'**
+  String get maxInvitesReached;
+
+  /// No description provided for @inviteMoreToMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite {count} more friend{s} to max out!'**
+  String inviteMoreToMax(int count, String s);
+
+  /// No description provided for @yourReferralLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Referral Link'**
+  String get yourReferralLink;
+
+  /// No description provided for @copyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Link'**
+  String get copyLink;
+
+  /// No description provided for @shareVia.
+  ///
+  /// In en, this message translates to:
+  /// **'Share via...'**
+  String get shareVia;
+
+  /// No description provided for @programTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Program Terms'**
+  String get programTerms;
+
+  /// No description provided for @termNewUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Each friend must be a new user who hasn\'t installed the app before.'**
+  String get termNewUser;
+
+  /// No description provided for @termMaxInvites.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum of 3 successful invites allowed per user.'**
+  String get termMaxInvites;
+
+  /// No description provided for @termInstantActivation.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium rewards are activated immediately after the friend opens the app using your link.'**
+  String get termInstantActivation;
+
+  /// No description provided for @termReserveRight.
+  ///
+  /// In en, this message translates to:
+  /// **'We reserve the right to cancel rewards for suspicious activity.'**
+  String get termReserveRight;
 }
 
 class _AppLocalizationsDelegate

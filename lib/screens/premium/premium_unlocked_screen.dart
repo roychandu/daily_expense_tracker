@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class PremiumUnlockedScreen extends StatefulWidget {
   const PremiumUnlockedScreen({super.key});
@@ -46,7 +47,7 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: CustomAppBar(
-        title: 'Premium Unlocked',
+        title: AppLocalizations.of(context)!.premiumUnlocked,
         scrollOpacity: _appBarOpacity,
       ),
       body: SingleChildScrollView(
@@ -69,7 +70,7 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
               const SizedBox(height: 32),
               // Welcome Text
               Text(
-                'Welcome to\nPremium',
+                AppLocalizations.of(context)!.welcomeToPremium,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.h1Display.copyWith(
                   fontSize: 40,
@@ -80,7 +81,7 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Your upgrade is now active',
+                AppLocalizations.of(context)!.upgradeActive,
                 style: AppTextStyles.bodyLarge.copyWith(
                   color: Colors.orange[800],
                   fontWeight: FontWeight.bold,
@@ -105,10 +106,10 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
                 ),
                 child: Column(
                   children: [
-                    _buildFeatureItem('All ads Removed', isDark),
-                    _buildFeatureItem('All insights unlocked', isDark),
-                    _buildFeatureItem('Unlimited exports activated', isDark),
-                    _buildFeatureItem('Premium features ready', isDark),
+                    _buildFeatureItem(AppLocalizations.of(context)!.allAdsRemoved, isDark),
+                    _buildFeatureItem(AppLocalizations.of(context)!.allInsightsUnlocked, isDark),
+                    _buildFeatureItem(AppLocalizations.of(context)!.unlimitedExportsActivated, isDark),
+                    _buildFeatureItem(AppLocalizations.of(context)!.premiumFeaturesReady, isDark),
                   ],
                 ),
               ),
@@ -126,9 +127,9 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
                   minimumSize: const Size.fromHeight(60),
                   elevation: 4,
                 ),
-                child: const Text(
-                  'Explore premium features',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                child: Text(
+                  AppLocalizations.of(context)!.explorePremiumFeatures,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
               const SizedBox(height: 32),
@@ -188,17 +189,17 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
                     : AppColors.textSecondaryLight,
               ),
               children: [
-                const TextSpan(text: 'By purchasing, you agree to our '),
+                TextSpan(text: AppLocalizations.of(context)!.byPurchasingAgree),
                 TextSpan(
-                  text: 'Terms of Service',
+                  text: AppLocalizations.of(context)!.termsOfService,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: isDark ? AppColors.textDark : AppColors.charcoal,
                   ),
                 ),
-                const TextSpan(text: ' and '),
+                TextSpan(text: ' ${AppLocalizations.of(context)!.or} '),
                 TextSpan(
-                  text: 'Privacy Policy',
+                  text: AppLocalizations.of(context)!.privacyPolicy,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: isDark ? AppColors.textDark : AppColors.charcoal,

@@ -8,6 +8,7 @@ import '../../common_widgets/custom_snackbar.dart';
 import '../../services/ad_service.dart';
 import '../settings/privacy_screen.dart';
 import 'premium_unlocked_screen.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class UnlockPremiumScreen extends StatelessWidget {
   const UnlockPremiumScreen({super.key});
@@ -36,7 +37,7 @@ class UnlockPremiumScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Unlock Premium',
+          AppLocalizations.of(context)!.unlockPremium,
           style: AppTextStyles.h2Section.copyWith(
             color: isDark ? AppColors.textDark : AppColors.charcoal,
           ),
@@ -70,7 +71,7 @@ class UnlockPremiumScreen extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -89,7 +90,7 @@ class UnlockPremiumScreen extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'PREMIUM',
+                AppLocalizations.of(context)!.premium,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
@@ -108,24 +109,24 @@ class UnlockPremiumScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'One-time payment • Lifetime access',
+            AppLocalizations.of(context)!.oneTimePayment,
             style: AppTextStyles.bodySmall.copyWith(
               color: isDark ? AppColors.textSecondaryDark : AppColors.charcoal,
               fontWeight: FontWeight.w500,
             ),
           ),
           Text(
-            'No subscription ever',
+            AppLocalizations.of(context)!.noSubscriptionEver,
             style: AppTextStyles.bodySmall.copyWith(
               color: isDark ? AppColors.textSecondaryDark : AppColors.charcoal,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 32),
-          _buildFeatureRow('Remove all ads forever', isDark),
-          _buildFeatureRow('Unlock all insights', isDark),
-          _buildFeatureRow('Unlimited exports', isDark),
-          _buildFeatureRow('Advanced analytics', isDark),
+          _buildFeatureRow(AppLocalizations.of(context)!.removeAdsForever, isDark),
+          _buildFeatureRow(AppLocalizations.of(context)!.unlockAllInsights, isDark),
+          _buildFeatureRow(AppLocalizations.of(context)!.unlimitedExports, isDark),
+          _buildFeatureRow(AppLocalizations.of(context)!.advancedAnalytics, isDark),
           const SizedBox(height: 32),
           ElevatedButton(
             onPressed: () async {
@@ -148,10 +149,10 @@ class UnlockPremiumScreen extends StatelessWidget {
               ),
               elevation: 4,
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                'Unlock Premium \$3.99',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                AppLocalizations.of(context)!.unlockPremiumPrice,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -166,7 +167,7 @@ class UnlockPremiumScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'or',
+                  AppLocalizations.of(context)!.or,
                   style: AppTextStyles.body.copyWith(
                     color: isDark
                         ? AppColors.textSecondaryDark
@@ -192,7 +193,7 @@ class UnlockPremiumScreen extends StatelessWidget {
                   if (context.mounted) {
                     showCustomSnackBar(
                       context,
-                      'Insights unlocked for 2 minutes! 🔓',
+                      AppLocalizations.of(context)!.insightsUnlockedSnackbar,
                     );
                     Navigator.pop(context);
                   }
@@ -211,9 +212,9 @@ class UnlockPremiumScreen extends StatelessWidget {
               ),
               minimumSize: const Size.fromHeight(56),
             ),
-            child: const Text(
-              'Watch Ad for 24h Access',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            child: Text(
+              AppLocalizations.of(context)!.watchAd24h,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -267,9 +268,9 @@ class UnlockPremiumScreen extends StatelessWidget {
                     : AppColors.textSecondaryLight,
               ),
               children: [
-                const TextSpan(text: 'By purchasing, you agree to our '),
+                TextSpan(text: AppLocalizations.of(context)!.byPurchasingAgree),
                 TextSpan(
-                  text: 'Terms of Service',
+                  text: AppLocalizations.of(context)!.termsOfService,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -284,9 +285,9 @@ class UnlockPremiumScreen extends StatelessWidget {
                       );
                     },
                 ),
-                const TextSpan(text: ' and '),
+                TextSpan(text: ' ${AppLocalizations.of(context)!.or} '),
                 TextSpan(
-                  text: 'Privacy Policy',
+                  text: AppLocalizations.of(context)!.privacyPolicy,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: isDark ? AppColors.textDark : AppColors.charcoal,

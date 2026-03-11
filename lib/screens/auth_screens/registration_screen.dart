@@ -5,6 +5,7 @@ import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/secondary_button.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -34,8 +35,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: const CustomAppBar(
-        title: 'Register',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.register,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -46,13 +47,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 40),
               CustomTextField(
                 controller: _emailController,
-                hintText: 'Email',
+                hintText: AppLocalizations.of(context)!.email,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context)!.password,
                 obscureText: !_isPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -65,7 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _confirmPasswordController,
-                hintText: 'Confirm Password',
+                hintText: AppLocalizations.of(context)!.confirmPassword,
                 obscureText: !_isConfirmPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -77,7 +78,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 40),
               PrimaryButton(
-                title: 'Register',
+                title: AppLocalizations.of(context)!.register,
                 onPressed: () {
                   // TODO: Implement registration logic
                 },
@@ -87,7 +88,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Already have an account? ',
+                    AppLocalizations.of(context)!.alreadyHaveAccount,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: isDark ? AppColors.textSecondaryDark : AppColors.softGray,
                     ),
@@ -97,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'log in',
+                      AppLocalizations.of(context)!.logInSmall,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.primarySelected,
                         fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 60),
               SecondaryButton(
-                title: 'Continue as Guest',
+                title: AppLocalizations.of(context)!.continueAsGuest,
                 borderColor: AppColors.primarySelected,
                 textColor: AppColors.primarySelected,
                 onPressed: () {
@@ -122,7 +123,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      'or',
+                      AppLocalizations.of(context)!.or,
                       style: AppTextStyles.labelSmall.copyWith(
                         color: isDark ? AppColors.textSecondaryDark : AppColors.softGray,
                       ),
@@ -133,7 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 24),
               SecondaryButton(
-                title: 'Sign up with Google',
+                title: AppLocalizations.of(context)!.signUpWithGoogle,
                 icon: Image.asset('assets/icons/google-icon.png'),
                 onPressed: () {
                   // TODO: Implement Google sign up

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class CloudBackupMethodScreen extends StatelessWidget {
   const CloudBackupMethodScreen({super.key});
@@ -12,8 +13,8 @@ class CloudBackupMethodScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: const CustomAppBar(
-        title: 'Cloud Backup',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.cloudBackup,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -22,7 +23,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Choose Backup Method',
+                AppLocalizations.of(context)!.chooseBackupMethod,
                 style: AppTextStyles.h3Title.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -33,24 +34,24 @@ class CloudBackupMethodScreen extends StatelessWidget {
               // Backup Methods
               _buildMethodCard(
                 icon: Icons.g_mobiledata, // Will use a generic Google icon or letter if asset not specified, but usually it's better to use something close or keep it simple. User didn't provide icons for these specifically but the image shows them.
-                title: 'Sign in with Google',
-                subtitle: 'Recommended for Android',
+                title: AppLocalizations.of(context)!.signInWithGoogle,
+                subtitle: AppLocalizations.of(context)!.recommendedForAndroid,
                 onTap: () {},
                 isDark: isDark,
               ),
               const SizedBox(height: 12),
               _buildMethodCard(
                 icon: Icons.apple,
-                title: 'Sign in with Apple',
-                subtitle: 'Recommended for iOS',
+                title: AppLocalizations.of(context)!.signInWithApple,
+                subtitle: AppLocalizations.of(context)!.recommendedForIos,
                 onTap: () {},
                 isDark: isDark,
               ),
               const SizedBox(height: 12),
               _buildMethodCard(
                 icon: Icons.mail_outline,
-                title: 'Sign in with Email',
-                subtitle: 'Recommended for iOS',
+                title: AppLocalizations.of(context)!.signInWithEmail,
+                subtitle: AppLocalizations.of(context)!.recommendedForIos,
                 onTap: () {},
                 isDark: isDark,
               ),
@@ -65,7 +66,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
                   color: isDark ? const Color(0xFF1E2827) : const Color(0xFFE8F3F1),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF238477).withOpacity(0.3) : const Color(0xFF238477).withOpacity(0.1),
+                    color: isDark ? const Color(0xFF238477).withValues(alpha: 0.3) : const Color(0xFF238477).withValues(alpha: 0.1),
                     width: 1,
                   ),
                 ),
@@ -81,7 +82,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Text(
-                          'PRIVACY GUARANTEE',
+                          AppLocalizations.of(context)!.privacyGuarantee,
                           style: AppTextStyles.label.copyWith(
                             fontWeight: FontWeight.bold,
                             color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -91,13 +92,13 @@ class CloudBackupMethodScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    _buildPrivacyItem('End-to-end encryption', isDark),
+                    _buildPrivacyItem(AppLocalizations.of(context)!.endToEndEncryption, isDark),
                     const SizedBox(height: 12),
-                    _buildPrivacyItem('We never see your expense data', isDark),
+                    _buildPrivacyItem(AppLocalizations.of(context)!.weNeverSeeData, isDark),
                     const SizedBox(height: 12),
-                    _buildPrivacyItem('You can delete cloud data anytime', isDark),
+                    _buildPrivacyItem(AppLocalizations.of(context)!.deleteCloudDataAnytime, isDark),
                     const SizedBox(height: 12),
-                    _buildPrivacyItem('GDPR & privacy compliant', isDark),
+                    _buildPrivacyItem(AppLocalizations.of(context)!.gdprCompliant, isDark),
                     const SizedBox(height: 24),
                     InkWell(
                       onTap: () {},
@@ -105,7 +106,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Read our Privacy Policy',
+                            AppLocalizations.of(context)!.readPrivacyPolicy,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.primarySelected,
                               fontWeight: FontWeight.bold,
@@ -133,7 +134,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text(
-                        'Set Up Later',
+                        AppLocalizations.of(context)!.setUpLater,
                         style: AppTextStyles.h3Title.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -151,9 +152,9 @@ class CloudBackupMethodScreen extends StatelessWidget {
                             height: 1.4,
                           ),
                           children: [
-                            const TextSpan(text: 'You can enable backup anytime from\n'),
+                            TextSpan(text: AppLocalizations.of(context)!.enableBackupAnytime),
                             TextSpan(
-                              text: 'Settings → Cloud Backup',
+                              text: AppLocalizations.of(context)!.settingsCloudBackup,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -192,7 +193,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
           boxShadow: [
             if (!isDark)
               BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color: Colors.black.withValues(alpha: 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -203,7 +204,7 @@ class CloudBackupMethodScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.02),
+                color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.02),
                 shape: BoxShape.circle,
               ),
               child: Icon(

@@ -725,4 +725,364 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get noDataFoundInDatabase => 'डेटाबेस में कोई रिकॉर्ड नहीं मिला';
+
+  @override
+  String get cloudBackup => 'क्लाउड बैकअप';
+
+  @override
+  String get chooseBackupMethod => 'बैकअप विधि चुनें';
+
+  @override
+  String get signInWithGoogle => 'गूगल के साथ साइन इन करें';
+
+  @override
+  String get recommendedForAndroid => 'एंड्रॉइड के लिए अनुशंसित';
+
+  @override
+  String get signInWithApple => 'एप्पल के साथ साइन इन करें';
+
+  @override
+  String get recommendedForIos => 'आईओएस के लिए अनुशंसित';
+
+  @override
+  String get signInWithEmail => 'ईमेल के साथ साइन इन करें';
+
+  @override
+  String get privacyGuarantee => 'प्राइवेसी गारंटी';
+
+  @override
+  String get endToEndEncryption => 'एंड-टू-एंड एन्क्रिप्शन';
+
+  @override
+  String get weNeverSeeData => 'हम आपके खर्च का डेटा कभी नहीं देखते';
+
+  @override
+  String get deleteCloudDataAnytime => 'आप कभी भी क्लाउड डेटा हटा सकते हैं';
+
+  @override
+  String get gdprCompliant => 'GDPR और प्राइवेसी के अनुरूप';
+
+  @override
+  String get readPrivacyPolicy => 'हमारी प्राइवेसी पॉलिसी पढ़ें';
+
+  @override
+  String get setUpLater => 'बाद में सेटअप करें';
+
+  @override
+  String get enableBackupAnytime => 'आप कभी भी बैकअप इनेबल कर सकते हैं\n';
+
+  @override
+  String get settingsCloudBackup => 'सेटिंग्स → क्लाउड बैकअप';
+
+  @override
+  String get protectFinancialData => 'अपने वित्तीय डेटा को\nसुरक्षित रखें';
+
+  @override
+  String get cloudBackupDescription =>
+      'आपके खर्च आपके डिवाइस पर सुरक्षित रूप से संग्रहीत हैं। अतिरिक्त मन की शांति के लिए क्लाउड बैकअप जोड़ें।';
+
+  @override
+  String get whyCloudBackup => 'क्लाउड बैकअप क्यों?';
+
+  @override
+  String get switchPhonesEasily => 'आसानी से फोन बदलें';
+
+  @override
+  String get switchPhonesDesc => 'बिना कोई डेटा खोए नए डिवाइस पर जाएँ';
+
+  @override
+  String get automaticSync => 'ऑटोमैटिक सिंक';
+
+  @override
+  String get automaticSyncDesc =>
+      'डेटा का प्रतिदिन बैकअप लिया जाता है, किसी मैनुअल एक्सपोर्ट की आवश्यकता नहीं है';
+
+  @override
+  String get enableCloudBackup => 'क्लाउड बैकअप इनेबल करें';
+
+  @override
+  String get partOfPremium => 'प्रीमियम का हिस्सा (\$3.99 एक बार)';
+
+  @override
+  String get currentStatus => 'वर्तमान स्थिति';
+
+  @override
+  String get localStorageActive => 'लोकल स्टोरेज: सक्रिय';
+
+  @override
+  String get dataSafeOnDevice => 'डेटा आपके डिवाइस पर सुरक्षित है';
+
+  @override
+  String get expensesLogged24x7 => '24x7 खर्च लॉग किए गए';
+
+  @override
+  String get notEnabled => 'इनेबल नहीं है';
+
+  @override
+  String get dataSync => 'डेटा सिंक';
+
+  @override
+  String get activeAndSyncing => 'सक्रिय और सिंक हो रहा है';
+
+  @override
+  String lastBackup(String time) {
+    return 'अंतिम बैकअप: $time';
+  }
+
+  @override
+  String accountEmail(String email) {
+    return 'अकाउंट: $email';
+  }
+
+  @override
+  String storageUsed(String size) {
+    return 'उपयोग किया गया स्टोरेज: $size';
+  }
+
+  @override
+  String get manageBackup => 'बैकअप प्रबंधित करें >';
+
+  @override
+  String get options => 'विकल्प';
+
+  @override
+  String get syncFrequency => 'सिंक फ्रीक्वेंसी';
+
+  @override
+  String get daily => 'दैनिक';
+
+  @override
+  String get downloadAllData => 'सभी डेटा डाउनलोड करें';
+
+  @override
+  String get disconnectDeleteCloud => 'डिस्कनेक्ट करें और क्लाउड डेटा हटा दें';
+
+  @override
+  String get cloudSecureDesc =>
+      'आपका वित्तीय डेटा आपके व्यक्तिगत क्लाउड स्टोरेज में एन्क्रिप्टेड और सुरक्षित है।';
+
+  @override
+  String get login => 'लॉगिन';
+
+  @override
+  String get email => 'ईमेल';
+
+  @override
+  String get password => 'पासवर्ड';
+
+  @override
+  String get forgotPassword => 'पासवर्ड भूल गए';
+
+  @override
+  String get dontHaveAccount => 'अकाउंट नहीं है? ';
+
+  @override
+  String get register => 'रजिस्टर';
+
+  @override
+  String get continueAsGuest => 'अतिथि के रूप में जारी रखें';
+
+  @override
+  String get or => 'या';
+
+  @override
+  String get signUpWithGoogle => 'गूगल के साथ साइन अप करें';
+
+  @override
+  String get confirmPassword => 'पासवर्ड की पुष्टि करें';
+
+  @override
+  String get alreadyHaveAccount => 'पहले से ही एक अकाउंट है? ';
+
+  @override
+  String get logInSmall => 'लॉग इन करें';
+
+  @override
+  String get forgotPasswordTitle => 'पासवर्ड भूल गए';
+
+  @override
+  String get forgotPasswordDesc =>
+      'अपना पासवर्ड रीसेट करने के लिए वह ईमेल पता दर्ज करें जिसका उपयोग आपने साइन अप करने के लिए किया था';
+
+  @override
+  String get sendEmail => 'ईमेल भेजें';
+
+  @override
+  String get weWillSendResetEmail => 'हम आपको पासवर्ड रीसेट ईमेल भेजेंगे।';
+
+  @override
+  String get repeatPassword => 'पासवर्ड दोहराएं';
+
+  @override
+  String get resetPassword => 'पासवर्ड रीसेट करें';
+
+  @override
+  String get close => 'बंद करें';
+
+  @override
+  String get woohoo => 'वाह!';
+
+  @override
+  String get friendJoined => 'मित्र शामिल हुआ!';
+
+  @override
+  String referralSuccessDesc(String name) {
+    return '$name ने आपके लिंक का उपयोग करके ऐप डाउनलोड किया। आप दोनों ने अभी 15 दिनों का प्रीमियम एक्सेस अर्जित किया है!';
+  }
+
+  @override
+  String get premiumActivated => 'प्रीमियम सक्रिय';
+
+  @override
+  String get validFor15Days => '15 दिनों के लिए वैध';
+
+  @override
+  String get allFeaturesUnlocked => 'सभी फीचर्स अनलॉक्ड';
+
+  @override
+  String get explorePremiumFeatures => 'प्रीमियम फीचर्स देखें';
+
+  @override
+  String get inviteMoreFriends => 'अधिक मित्रों को आमंत्रित करें';
+
+  @override
+  String invitesStatus(int used, int remaining) {
+    return '$used आमंत्रण उपयोग किए गए • $remaining आमंत्रण शेष';
+  }
+
+  @override
+  String get welcomeToPremium => 'प्रीमियम में आपका स्वागत है';
+
+  @override
+  String get upgradeActive => 'आपका अपग्रेड अब सक्रिय है';
+
+  @override
+  String get allAdsRemoved => 'सभी एड्स हटा दिए गए';
+
+  @override
+  String get allInsightsUnlocked => 'सभी इनसाइट्स अनलॉक्ड';
+
+  @override
+  String get unlimitedExportsActivated => 'अनलिमिटेड एक्सपोर्ट सक्रिय';
+
+  @override
+  String get premiumFeaturesReady => 'प्रीमियम फीचर्स तैयार हैं';
+
+  @override
+  String get byPurchasingAgree => 'खरीदकर, आप हमारी शर्तों से सहमत होते हैं';
+
+  @override
+  String get unlockPremium => 'प्रीमियम अनलॉक करें';
+
+  @override
+  String get oneTimePayment => 'एक बार का भुगतान • आजीवन एक्सेस';
+
+  @override
+  String get noSubscriptionEver => 'कोई सब्सक्रिप्शन नहीं';
+
+  @override
+  String get removeAdsForever => 'हमेशा के लिए सभी एड्स हटाएँ';
+
+  @override
+  String get unlockAllInsights => 'सभी इनसाइट्स अनलॉक करें';
+
+  @override
+  String get unlimitedExports => 'अनलिमिटेड एक्सपोर्ट';
+
+  @override
+  String get advancedAnalytics => 'उन्नत एनालिटिक्स';
+
+  @override
+  String get unlockPremiumPrice => 'प्रीमियम अनलॉक करें \$3.99';
+
+  @override
+  String get watchAd24h => '24 घंटे एक्सेस के लिए विज्ञापन देखें';
+
+  @override
+  String get insightsUnlockedSnackbar => 'इनसाइट्स 2 मिनट के लिए अनलॉक्ड! 🔓';
+
+  @override
+  String get inviteEarnPremium => 'आमंत्रित करें और प्रीमियम कमाएं';
+
+  @override
+  String get shareLoveEarnPremium => 'प्यार साझा करें, प्रीमियम कमाएं';
+
+  @override
+  String get helpFriendTrackBetter =>
+      'मित्रों को खर्च बेहतर ट्रैक करने में मदद करें और दोनों को इनाम मिले';
+
+  @override
+  String get howItWorks => 'यह कैसे काम करता है';
+
+  @override
+  String get shareYourLink => 'अपना लिंक साझा करें';
+
+  @override
+  String get sendToFriendsViaApp => 'किसी भी ऐप के माध्यम से मित्रों को भेजें';
+
+  @override
+  String get friendDownloadsOpens => 'मित्र डाउनलोड और ओपन करता है';
+
+  @override
+  String get installFromStore => 'वे प्ले/ऐप स्टोर से इंस्टॉल करते हैं';
+
+  @override
+  String get bothGet15Days => 'दोनों को 15 दिन का प्रीमियम मिलता है';
+
+  @override
+  String get unlockedInstantly => 'तुरंत अनलॉक, कोई शर्त नहीं!';
+
+  @override
+  String get statusHeader => 'स्थिति';
+
+  @override
+  String daysEarned(int days) {
+    return '$days दिन अर्जित';
+  }
+
+  @override
+  String expires(String date) {
+    return 'समाप्ति: $date';
+  }
+
+  @override
+  String friendsInvited(int count, int max) {
+    return 'आमंत्रित मित्र: $count / $max';
+  }
+
+  @override
+  String get maxInvitesReached => 'आप अधिकतम आमंत्रणों तक पहुँच गए हैं!';
+
+  @override
+  String inviteMoreToMax(int count, String s) {
+    return 'मैक्स आउट करने के लिए $count और मित्र$s को आमंत्रित करें!';
+  }
+
+  @override
+  String get yourReferralLink => 'आपका रेफरल लिंक';
+
+  @override
+  String get copyLink => 'लिंक कॉपी करें';
+
+  @override
+  String get shareVia => 'इसके माध्यम से साझा करें...';
+
+  @override
+  String get programTerms => 'कार्यक्रम की शर्तें';
+
+  @override
+  String get termNewUser =>
+      'प्रत्येक मित्र एक नया उपयोगकर्ता होना चाहिए जिसने पहले ऐप इंस्टॉल नहीं किया है।';
+
+  @override
+  String get termMaxInvites =>
+      'प्रति उपयोगकर्ता अधिकतम 3 सफल आमंत्रणों की अनुमति है।';
+
+  @override
+  String get termInstantActivation =>
+      'मित्र द्वारा आपके लिंक का उपयोग करके ऐप खोलने के तुरंत बाद प्रीमियम इनाम सक्रिय हो जाते हैं।';
+
+  @override
+  String get termReserveRight =>
+      'हम संदिग्ध गतिविधि के लिए इनाम रद्द करने का अधिकार सुरक्षित रखते हैं।';
 }

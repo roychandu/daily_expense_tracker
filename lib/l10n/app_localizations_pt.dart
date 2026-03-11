@@ -729,4 +729,364 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get noDataFoundInDatabase => 'No records found in database';
+
+  @override
+  String get cloudBackup => 'Cloud Backup';
+
+  @override
+  String get chooseBackupMethod => 'Choose Backup Method';
+
+  @override
+  String get signInWithGoogle => 'Sign in with Google';
+
+  @override
+  String get recommendedForAndroid => 'Recommended for Android';
+
+  @override
+  String get signInWithApple => 'Sign in with Apple';
+
+  @override
+  String get recommendedForIos => 'Recommended for iOS';
+
+  @override
+  String get signInWithEmail => 'Sign in with Email';
+
+  @override
+  String get privacyGuarantee => 'PRIVACY GUARANTEE';
+
+  @override
+  String get endToEndEncryption => 'End-to-end encryption';
+
+  @override
+  String get weNeverSeeData => 'We never see your expense data';
+
+  @override
+  String get deleteCloudDataAnytime => 'You can delete cloud data anytime';
+
+  @override
+  String get gdprCompliant => 'GDPR & privacy compliant';
+
+  @override
+  String get readPrivacyPolicy => 'Read our Privacy Policy';
+
+  @override
+  String get setUpLater => 'Set Up Later';
+
+  @override
+  String get enableBackupAnytime => 'You can enable backup anytime from\n';
+
+  @override
+  String get settingsCloudBackup => 'Settings → Cloud Backup';
+
+  @override
+  String get protectFinancialData => 'Protect Your\nFinancial Data';
+
+  @override
+  String get cloudBackupDescription =>
+      'Your expenses are safely stored\non your device. Add cloud\nbackup for extra peace of mind.';
+
+  @override
+  String get whyCloudBackup => 'Why Cloud Backup?';
+
+  @override
+  String get switchPhonesEasily => 'Switch Phones Easily';
+
+  @override
+  String get switchPhonesDesc => 'Move to a new device without losing any data';
+
+  @override
+  String get automaticSync => 'Automatic Sync';
+
+  @override
+  String get automaticSyncDesc =>
+      'Data backed up daily, no manual exports needed';
+
+  @override
+  String get enableCloudBackup => 'Enable Cloud Backup';
+
+  @override
+  String get partOfPremium => 'PART OF PREMIUM (\$3.99 ONE-TIME)';
+
+  @override
+  String get currentStatus => 'Current Status';
+
+  @override
+  String get localStorageActive => 'Local storage: Active';
+
+  @override
+  String get dataSafeOnDevice => 'Data safe on your device';
+
+  @override
+  String get expensesLogged24x7 => '24x7  expenses logged';
+
+  @override
+  String get notEnabled => 'NOT ENABLED';
+
+  @override
+  String get dataSync => 'Data Sync';
+
+  @override
+  String get activeAndSyncing => 'Active & syncing';
+
+  @override
+  String lastBackup(String time) {
+    return 'Last backup: $time';
+  }
+
+  @override
+  String accountEmail(String email) {
+    return 'Account: $email';
+  }
+
+  @override
+  String storageUsed(String size) {
+    return 'Storage used: $size';
+  }
+
+  @override
+  String get manageBackup => 'Manage Backup >';
+
+  @override
+  String get options => 'Options';
+
+  @override
+  String get syncFrequency => 'Sync frequency';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get downloadAllData => 'Download all data';
+
+  @override
+  String get disconnectDeleteCloud => 'Disconnect & delete cloud data';
+
+  @override
+  String get cloudSecureDesc =>
+      'Your financial data is encrypted and secure in your personal cloud storage.';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get forgotPassword => 'Forgot password';
+
+  @override
+  String get dontHaveAccount => 'Doesn\'t have an account? ';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get continueAsGuest => 'Continue as Guest';
+
+  @override
+  String get or => 'or';
+
+  @override
+  String get signUpWithGoogle => 'Sign up with Google';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get logInSmall => 'log in';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password';
+
+  @override
+  String get forgotPasswordDesc =>
+      'Enter your email address you used to sign up to reset your password';
+
+  @override
+  String get sendEmail => 'Send email';
+
+  @override
+  String get weWillSendResetEmail => 'We\'ll send you a password reset email.';
+
+  @override
+  String get repeatPassword => 'Repeat Password';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get woohoo => 'Woohoo!';
+
+  @override
+  String get friendJoined => 'Friend joined!';
+
+  @override
+  String referralSuccessDesc(String name) {
+    return '$name downloaded the app using\nyour link. You both just earned 15\ndays of premium access!';
+  }
+
+  @override
+  String get premiumActivated => 'Premium activated';
+
+  @override
+  String get validFor15Days => 'Valid for 15 days';
+
+  @override
+  String get allFeaturesUnlocked => 'All features unlocked';
+
+  @override
+  String get explorePremiumFeatures => 'Explore premium features';
+
+  @override
+  String get inviteMoreFriends => 'Invite More Friends';
+
+  @override
+  String invitesStatus(int used, int remaining) {
+    return '$used INVITES USED • $remaining INVITE REMAINING';
+  }
+
+  @override
+  String get welcomeToPremium => 'Welcome to\nPremium';
+
+  @override
+  String get upgradeActive => 'Your upgrade is now active';
+
+  @override
+  String get allAdsRemoved => 'All ads Removed';
+
+  @override
+  String get allInsightsUnlocked => 'All insights unlocked';
+
+  @override
+  String get unlimitedExportsActivated => 'Unlimited exports activated';
+
+  @override
+  String get premiumFeaturesReady => 'Premium features ready';
+
+  @override
+  String get byPurchasingAgree => 'By purchasing, you agree to our ';
+
+  @override
+  String get unlockPremium => 'Unlock Premium';
+
+  @override
+  String get oneTimePayment => 'One-time payment • Lifetime access';
+
+  @override
+  String get noSubscriptionEver => 'No subscription ever';
+
+  @override
+  String get removeAdsForever => 'Remove all ads forever';
+
+  @override
+  String get unlockAllInsights => 'Unlock all insights';
+
+  @override
+  String get unlimitedExports => 'Unlimited exports';
+
+  @override
+  String get advancedAnalytics => 'Advanced analytics';
+
+  @override
+  String get unlockPremiumPrice => 'Unlock Premium \$3.99';
+
+  @override
+  String get watchAd24h => 'Watch Ad for 24h Access';
+
+  @override
+  String get insightsUnlockedSnackbar => 'Insights unlocked for 2 minutes! 🔓';
+
+  @override
+  String get inviteEarnPremium => 'Invite & Earn Premium';
+
+  @override
+  String get shareLoveEarnPremium => 'Share the love, Earn Premium';
+
+  @override
+  String get helpFriendTrackBetter =>
+      'Help friend track expense better and both get rewarded';
+
+  @override
+  String get howItWorks => 'How it works';
+
+  @override
+  String get shareYourLink => 'Share Your Link';
+
+  @override
+  String get sendToFriendsViaApp => 'Send to friends via any app';
+
+  @override
+  String get friendDownloadsOpens => 'Friend Downloads & Opens';
+
+  @override
+  String get installFromStore => 'They install from Play/App Store';
+
+  @override
+  String get bothGet15Days => 'Both Get 15 Days Premium';
+
+  @override
+  String get unlockedInstantly => 'Unlocked instantly, no catch!';
+
+  @override
+  String get statusHeader => 'STATUS';
+
+  @override
+  String daysEarned(int days) {
+    return '$days days earned';
+  }
+
+  @override
+  String expires(String date) {
+    return 'Expires: $date';
+  }
+
+  @override
+  String friendsInvited(int count, int max) {
+    return 'Friends invited: $count / $max';
+  }
+
+  @override
+  String get maxInvitesReached => 'You have reached the maximum invites!';
+
+  @override
+  String inviteMoreToMax(int count, String s) {
+    return 'Invite $count more friend$s to max out!';
+  }
+
+  @override
+  String get yourReferralLink => 'Your Referral Link';
+
+  @override
+  String get copyLink => 'Copy Link';
+
+  @override
+  String get shareVia => 'Share via...';
+
+  @override
+  String get programTerms => 'Program Terms';
+
+  @override
+  String get termNewUser =>
+      'Each friend must be a new user who hasn\'t installed the app before.';
+
+  @override
+  String get termMaxInvites =>
+      'Maximum of 3 successful invites allowed per user.';
+
+  @override
+  String get termInstantActivation =>
+      'Premium rewards are activated immediately after the friend opens the app using your link.';
+
+  @override
+  String get termReserveRight =>
+      'We reserve the right to cancel rewards for suspicious activity.';
 }

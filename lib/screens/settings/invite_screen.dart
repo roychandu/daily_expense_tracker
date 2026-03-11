@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../controllers/settings_controller.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class InviteScreen extends StatelessWidget {
   const InviteScreen({super.key});
@@ -18,7 +19,7 @@ class InviteScreen extends StatelessWidget {
           : AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(
-          'Invite & Earn Premium',
+          AppLocalizations.of(context)!.inviteEarnPremium,
           style: AppTextStyles.h3Title.copyWith(
             color: isDark ? Colors.white : AppColors.charcoal,
           ),
@@ -38,32 +39,32 @@ class InviteScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTopPromoCard(),
+            _buildTopPromoCard(context),
             const SizedBox(height: 24),
-            _buildSectionHeader(context, 'How it works'),
+            _buildSectionHeader(context, AppLocalizations.of(context)!.howItWorks),
             const SizedBox(height: 12),
             _buildHowItWorksCard(
               isDark,
               1,
-              'Share Your Link',
-              'Send to friends via any app',
+              AppLocalizations.of(context)!.shareYourLink,
+              AppLocalizations.of(context)!.sendToFriendsViaApp,
             ),
             _buildHowItWorksCard(
               isDark,
               2,
-              'Friend Downloads & Opens',
-              'They install from Play/App Store',
+              AppLocalizations.of(context)!.friendDownloadsOpens,
+              AppLocalizations.of(context)!.installFromStore,
             ),
             _buildHowItWorksCard(
               isDark,
               3,
-              'Both Get 15 Days Premium',
-              'Unlocked instantly, no catch!',
+              AppLocalizations.of(context)!.bothGet15Days,
+              AppLocalizations.of(context)!.unlockedInstantly,
             ),
             const SizedBox(height: 24),
-            _buildStatusCard(isDark, settings),
+            _buildStatusCard(context, isDark, settings),
             const SizedBox(height: 24),
-            _buildReferralLinkSection(isDark),
+            _buildReferralLinkSection(context, isDark),
             const SizedBox(height: 24),
             _buildTermsSection(context, isDark),
             const SizedBox(height: 32),
@@ -73,7 +74,7 @@ class InviteScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopPromoCard() {
+  Widget _buildTopPromoCard(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
@@ -97,7 +98,7 @@ class InviteScreen extends StatelessWidget {
             ),
           ),
           Text(
-            'Share the love, Earn Premium',
+            AppLocalizations.of(context)!.shareLoveEarnPremium,
             textAlign: TextAlign.left,
             style: AppTextStyles.h2Section.copyWith(
               color: Colors.white,
@@ -106,7 +107,7 @@ class InviteScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Help friend track expense better and both get rewarded',
+            AppLocalizations.of(context)!.helpFriendTrackBetter,
             textAlign: TextAlign.left,
             style: AppTextStyles.body.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
@@ -190,7 +191,7 @@ class InviteScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusCard(bool isDark, SettingsController settings) {
+  Widget _buildStatusCard(BuildContext context, bool isDark, SettingsController settings) {
     final invitedCount = settings.invitedFriendsCount;
     final maxInvites = 3;
     final earnedDays = settings.earnedPremiumDays;
@@ -212,7 +213,7 @@ class InviteScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'STATUS',
+                AppLocalizations.of(context)!.statusHeader,
                 style: AppTextStyles.label.copyWith(
                   color: isDark ? Colors.white54 : AppColors.softGray,
                   fontWeight: FontWeight.bold,
@@ -222,7 +223,7 @@ class InviteScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '$earnedDays days earned',
+                    AppLocalizations.of(context)!.daysEarned(earnedDays),
                     style: AppTextStyles.label.copyWith(
                       color: Colors.orange,
                       fontWeight: FontWeight.bold,
@@ -230,7 +231,7 @@ class InviteScreen extends StatelessWidget {
                   ),
                   if (settings.referralExpiryDate != 'None')
                     Text(
-                      'Expires: ${settings.referralExpiryDate}',
+                      AppLocalizations.of(context)!.expires(settings.referralExpiryDate),
                       style: AppTextStyles.labelSmall.copyWith(
                         color: isDark ? Colors.white54 : AppColors.softGray,
                       ),
@@ -241,7 +242,7 @@ class InviteScreen extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Friends invited: $invitedCount / $maxInvites',
+            AppLocalizations.of(context)!.friendsInvited(invitedCount, maxInvites),
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.bold,
               color: isDark ? Colors.white : AppColors.charcoal,
@@ -263,8 +264,8 @@ class InviteScreen extends StatelessWidget {
           Center(
             child: Text(
               invitedCount >= maxInvites
-                  ? 'You have reached the maximum invites!'
-                  : 'Invite ${maxInvites - invitedCount} more friend${maxInvites - invitedCount > 1 ? 's' : ''} to max out!',
+                  ? AppLocalizations.of(context)!.maxInvitesReached
+                  : AppLocalizations.of(context)!.inviteMoreToMax(maxInvites - invitedCount, maxInvites - invitedCount > 1 ? 's' : ''),
               style: AppTextStyles.label.copyWith(
                 color: Colors.orange,
                 fontWeight: FontWeight.bold,
@@ -276,7 +277,7 @@ class InviteScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildReferralLinkSection(bool isDark) {
+  Widget _buildReferralLinkSection(BuildContext context, bool isDark) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -290,7 +291,7 @@ class InviteScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Your Referral Link',
+            AppLocalizations.of(context)!.yourReferralLink,
             style: AppTextStyles.label.copyWith(
               fontWeight: FontWeight.bold,
               color: isDark ? Colors.white : AppColors.charcoal,
@@ -339,9 +340,9 @@ class InviteScreen extends StatelessWidget {
               ),
               elevation: 4,
             ),
-            child: const Text(
-              'Copy Link',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              AppLocalizations.of(context)!.copyLink,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 12),
@@ -355,9 +356,9 @@ class InviteScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text(
-              'Share via...',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              AppLocalizations.of(context)!.shareVia,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 20),
@@ -413,7 +414,7 @@ class InviteScreen extends StatelessWidget {
               Icon(Icons.info_outline, color: Colors.blue, size: 18),
               const SizedBox(width: 8),
               Text(
-                'Program Terms',
+                AppLocalizations.of(context)!.programTerms,
                 style: AppTextStyles.body.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
@@ -425,19 +426,19 @@ class InviteScreen extends StatelessWidget {
           const SizedBox(height: 12),
           _buildTermBullet(
             isDark,
-            'Each friend must be a new user who hasn\'t installed the app before.',
+            AppLocalizations.of(context)!.termNewUser,
           ),
           _buildTermBullet(
             isDark,
-            'Maximum of 3 successful invites allowed per user.',
+            AppLocalizations.of(context)!.termMaxInvites,
           ),
           _buildTermBullet(
             isDark,
-            'Premium rewards are activated immediately after the friend opens the app using your link.',
+            AppLocalizations.of(context)!.termInstantActivation,
           ),
           _buildTermBullet(
             isDark,
-            'We reserve the right to cancel rewards for suspicious activity.',
+            AppLocalizations.of(context)!.termReserveRight,
           ),
         ],
       ),

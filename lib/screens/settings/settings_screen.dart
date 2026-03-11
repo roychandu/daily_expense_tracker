@@ -703,12 +703,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () async {
                   final l10n = AppLocalizations.of(context)!;
                   await settings.updateLocale(Locale(lang['code']!));
-                  if (!mounted) return;
+                  if (!context.mounted) return;
                   await settings.rescheduleReminder(
                     title: l10n.appTitle,
                     body: l10n.reminderBody,
                   );
-                  if (!mounted) return;
+                  if (!context.mounted) return;
                   Navigator.pop(context);
                 },
               );
@@ -789,7 +789,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
 
     if (picked != null) {
-      if (!mounted) return;
+      if (!context.mounted) return;
       showCustomSnackBar(
         context,
         isCsv ? l10n.generatingCsv : l10n.generatingPdf,
@@ -801,7 +801,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
       if (expenses.isEmpty) {
-        if (!mounted) return;
+        if (!context.mounted) return;
         showCustomSnackBar(context, l10n.noDataFound, isError: true);
         return;
       }
@@ -852,7 +852,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       }
 
-      if (!mounted) return;
+      if (!context.mounted) return;
       if (result != null && result.startsWith('File saved')) {
         showCustomSnackBar(context, result);
       } else {

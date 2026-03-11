@@ -44,7 +44,7 @@ class AdService {
     if (_isRewardedAdLoading || _rewardedAd != null) return;
     _isRewardedAdLoading = true;
 
-    debugPrint('AdService: Loading RewardedAd (${rewardedAdUnitId})...');
+    debugPrint('AdService: Loading RewardedAd ($rewardedAdUnitId)...');
 
     RewardedAd.load(
       adUnitId: rewardedAdUnitId,

@@ -5,6 +5,7 @@ import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/secondary_button.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import 'registration_screen.dart';
 import 'forgot_password_screen.dart';
 
@@ -33,8 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: const CustomAppBar(
-        title: 'Login',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.login,
         showBackButton: false,
       ),
       body: SafeArea(
@@ -46,13 +47,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
               CustomTextField(
                 controller: _emailController,
-                hintText: 'Email',
+                hintText: AppLocalizations.of(context)!.email,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context)!.password,
                 obscureText: !_isPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   child: Text(
-                    'Forgot password',
+                    AppLocalizations.of(context)!.forgotPassword,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.primarySelected,
                       fontWeight: FontWeight.w600,
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                title: 'Login',
+                title: AppLocalizations.of(context)!.login,
                 onPressed: () {
                   // TODO: Implement login logic
                 },
@@ -99,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Doesn't have an account? ",
+                    AppLocalizations.of(context)!.dontHaveAccount,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: isDark
                           ? AppColors.textSecondaryDark
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                     child: Text(
-                      'Register',
+                      AppLocalizations.of(context)!.register,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.primarySelected,
                         fontWeight: FontWeight.bold,
@@ -127,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 60),
               SecondaryButton(
-                title: 'Continue as Guest',
+                title: AppLocalizations.of(context)!.continueAsGuest,
                 borderColor: AppColors.primarySelected,
                 textColor: AppColors.primarySelected,
                 onPressed: () {
@@ -147,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      'or',
+                      AppLocalizations.of(context)!.or,
                       style: AppTextStyles.labelSmall.copyWith(
                         color: isDark
                             ? AppColors.textSecondaryDark
@@ -166,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 24),
               SecondaryButton(
-                title: 'Sign up with Google',
+                title: AppLocalizations.of(context)!.signUpWithGoogle,
                 icon: Image.asset('assets/icons/google-icon.png'),
                 onPressed: () {
                   // TODO: Implement Google sign up

@@ -234,5 +234,188 @@
   "totalExpenses": "Total Expenses",
   "totalIncome": "Total Income",
   "rawDatabaseViewer": "Raw Database Viewer",
-  "noDataFoundInDatabase": "No records found in database"
+  "noDataFoundInDatabase": "No records found in database",
+  "cloudBackup": "Cloud Backup",
+  "chooseBackupMethod": "Choose Backup Method",
+  "signInWithGoogle": "Sign in with Google",
+  "recommendedForAndroid": "Recommended for Android",
+  "signInWithApple": "Sign in with Apple",
+  "recommendedForIos": "Recommended for iOS",
+  "signInWithEmail": "Sign in with Email",
+  "privacyGuarantee": "PRIVACY GUARANTEE",
+  "endToEndEncryption": "End-to-end encryption",
+  "weNeverSeeData": "We never see your expense data",
+  "deleteCloudDataAnytime": "You can delete cloud data anytime",
+  "gdprCompliant": "GDPR & privacy compliant",
+  "readPrivacyPolicy": "Read our Privacy Policy",
+  "setUpLater": "Set Up Later",
+  "enableBackupAnytime": "You can enable backup anytime from\n",
+  "settingsCloudBackup": "Settings → Cloud Backup",
+  "protectFinancialData": "Protect Your\nFinancial Data",
+  "cloudBackupDescription": "Your expenses are safely stored\non your device. Add cloud\nbackup for extra peace of mind.",
+  "whyCloudBackup": "Why Cloud Backup?",
+  "switchPhonesEasily": "Switch Phones Easily",
+  "switchPhonesDesc": "Move to a new device without losing any data",
+  "automaticSync": "Automatic Sync",
+  "automaticSyncDesc": "Data backed up daily, no manual exports needed",
+  "enableCloudBackup": "Enable Cloud Backup",
+  "partOfPremium": "PART OF PREMIUM ($3.99 ONE-TIME)",
+  "currentStatus": "Current Status",
+  "localStorageActive": "Local storage: Active",
+  "dataSafeOnDevice": "Data safe on your device",
+  "expensesLogged24x7": "24x7  expenses logged",
+  "notEnabled": "NOT ENABLED",
+  "dataSync": "Data Sync",
+  "activeAndSyncing": "Active & syncing",
+  "lastBackup": "Last backup: {time}",
+  "@lastBackup": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "accountEmail": "Account: {email}",
+  "@accountEmail": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "storageUsed": "Storage used: {size}",
+  "@storageUsed": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "manageBackup": "Manage Backup >",
+  "options": "Options",
+  "syncFrequency": "Sync frequency",
+  "daily": "Daily",
+  "downloadAllData": "Download all data",
+  "disconnectDeleteCloud": "Disconnect & delete cloud data",
+  "cloudSecureDesc": "Your financial data is encrypted and secure in your personal cloud storage.",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password",
+  "dontHaveAccount": "Doesn't have an account? ",
+  "register": "Register",
+  "continueAsGuest": "Continue as Guest",
+  "or": "or",
+  "signUpWithGoogle": "Sign up with Google",
+  "confirmPassword": "Confirm Password",
+  "alreadyHaveAccount": "Already have an account? ",
+  "logInSmall": "log in",
+  "forgotPasswordTitle": "Forgot Password",
+  "forgotPasswordDesc": "Enter your email address you used to sign up to reset your password",
+  "sendEmail": "Send email",
+  "weWillSendResetEmail": "We'll send you a password reset email.",
+  "repeatPassword": "Repeat Password",
+  "resetPassword": "Reset Password",
+  "close": "Close",
+  "woohoo": "Woohoo!",
+  "friendJoined": "Friend joined!",
+  "referralSuccessDesc": "{name} downloaded the app using\nyour link. You both just earned 15\ndays of premium access!",
+  "@referralSuccessDesc": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumActivated": "Premium activated",
+  "validFor15Days": "Valid for 15 days",
+  "allFeaturesUnlocked": "All features unlocked",
+  "explorePremiumFeatures": "Explore premium features",
+  "inviteMoreFriends": "Invite More Friends",
+  "invitesStatus": "{used} INVITES USED • {remaining} INVITE REMAINING",
+  "@invitesStatus": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "welcomeToPremium": "Welcome to\nPremium",
+  "upgradeActive": "Your upgrade is now active",
+  "allAdsRemoved": "All ads Removed",
+  "allInsightsUnlocked": "All insights unlocked",
+  "unlimitedExportsActivated": "Unlimited exports activated",
+  "premiumFeaturesReady": "Premium features ready",
+  "byPurchasingAgree": "By purchasing, you agree to our ",
+  "unlockPremium": "Unlock Premium",
+  "oneTimePayment": "One-time payment • Lifetime access",
+  "noSubscriptionEver": "No subscription ever",
+  "removeAdsForever": "Remove all ads forever",
+  "unlockAllInsights": "Unlock all insights",
+  "unlimitedExports": "Unlimited exports",
+  "advancedAnalytics": "Advanced analytics",
+  "unlockPremiumPrice": "Unlock Premium $3.99",
+  "watchAd24h": "Watch Ad for 24h Access",
+  "insightsUnlockedSnackbar": "Insights unlocked for 2 minutes! 🔓",
+  "inviteEarnPremium": "Invite & Earn Premium",
+  "shareLoveEarnPremium": "Share the love, Earn Premium",
+  "helpFriendTrackBetter": "Help friend track expense better and both get rewarded",
+  "howItWorks": "How it works",
+  "shareYourLink": "Share Your Link",
+  "sendToFriendsViaApp": "Send to friends via any app",
+  "friendDownloadsOpens": "Friend Downloads & Opens",
+  "installFromStore": "They install from Play/App Store",
+  "bothGet15Days": "Both Get 15 Days Premium",
+  "unlockedInstantly": "Unlocked instantly, no catch!",
+  "statusHeader": "STATUS",
+  "daysEarned": "{days} days earned",
+  "@daysEarned": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "expires": "Expires: {date}",
+  "@expires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "friendsInvited": "Friends invited: {count} / {max}",
+  "@friendsInvited": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxInvitesReached": "You have reached the maximum invites!",
+  "inviteMoreToMax": "Invite {count} more friend{s} to max out!",
+  "@inviteMoreToMax": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "s": {
+        "type": "String"
+      }
+    }
+  },
+  "yourReferralLink": "Your Referral Link",
+  "copyLink": "Copy Link",
+  "shareVia": "Share via...",
+  "programTerms": "Program Terms",
+  "termNewUser": "Each friend must be a new user who hasn't installed the app before.",
+  "termMaxInvites": "Maximum of 3 successful invites allowed per user.",
+  "termInstantActivation": "Premium rewards are activated immediately after the friend opens the app using your link.",
+  "termReserveRight": "We reserve the right to cancel rewards for suspicious activity."
 }

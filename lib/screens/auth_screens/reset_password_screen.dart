@@ -4,6 +4,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
@@ -59,7 +60,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const SizedBox(height: 40),
               CustomTextField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context)!.password,
                 obscureText: !_isPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -72,7 +73,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _repeatPasswordController,
-                hintText: 'Repeat Password',
+                hintText: AppLocalizations.of(context)!.repeatPassword,
                 obscureText: !_isRepeatPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -84,7 +85,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
               const SizedBox(height: 120),
               PrimaryButton(
-                title: 'Reset Password',
+                title: AppLocalizations.of(context)!.resetPassword,
                 onPressed: () {
                   // TODO: Implement reset password logic
                   Navigator.of(context).popUntil((route) => route.isFirst);

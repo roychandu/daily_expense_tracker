@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class DataSyncScreen extends StatelessWidget {
   const DataSyncScreen({super.key});
@@ -14,7 +15,7 @@ class DataSyncScreen extends StatelessWidget {
       backgroundColor: isDark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      appBar: const CustomAppBar(title: 'Data Sync'),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.dataSync),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -31,7 +32,7 @@ class DataSyncScreen extends StatelessWidget {
                   boxShadow: [
                     if (!isDark)
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: Colors.black.withValues(alpha: 0.04),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -61,7 +62,7 @@ class DataSyncScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'CLOUD BACKUP',
+                                AppLocalizations.of(context)!.cloudBackup.toUpperCase(),
                                 style: AppTextStyles.h3Title.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDark
@@ -80,7 +81,7 @@ class DataSyncScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'Active & syncing',
+                                    AppLocalizations.of(context)!.activeAndSyncing,
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: const Color(0xFF238477),
                                       fontWeight: FontWeight.bold,
@@ -90,7 +91,7 @@ class DataSyncScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Last backup: 2 hours ago',
+                                AppLocalizations.of(context)!.lastBackup('2 hours ago'),
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
                                       ? AppColors.textSecondaryDark
@@ -109,7 +110,7 @@ class DataSyncScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Account: user@email.com',
+                            AppLocalizations.of(context)!.accountEmail('user@email.com'),
                             style: AppTextStyles.body.copyWith(
                               color: isDark
                                   ? AppColors.textDark
@@ -119,7 +120,7 @@ class DataSyncScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Storage used: 2.3 MB',
+                            AppLocalizations.of(context)!.storageUsed('2.3 MB'),
                             style: AppTextStyles.body.copyWith(
                               color: isDark
                                   ? AppColors.textDark
@@ -130,16 +131,16 @@ class DataSyncScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Align(
+                    Align(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        'Manage Backup >',
-                        style: TextStyle(
-                          color: Color(0xFF238477),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                        child: Text(
+                          AppLocalizations.of(context)!.manageBackup,
+                          style: const TextStyle(
+                            color: Color(0xFF238477),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
                     ),
                   ],
                 ),
@@ -147,8 +148,8 @@ class DataSyncScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              Text(
-                'Options',
+               Text(
+                AppLocalizations.of(context)!.options,
                 style: AppTextStyles.h3Title.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -165,7 +166,7 @@ class DataSyncScreen extends StatelessWidget {
                   boxShadow: [
                     if (!isDark)
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: Colors.black.withValues(alpha: 0.04),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -174,20 +175,20 @@ class DataSyncScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildOptionTile(
-                      title: 'Sync frequency',
-                      trailing: 'Daily',
+                      title: AppLocalizations.of(context)!.syncFrequency,
+                      trailing: AppLocalizations.of(context)!.daily,
                       isDark: isDark,
                       onTap: () {},
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     _buildOptionTile(
-                      title: 'Download all data',
+                      title: AppLocalizations.of(context)!.downloadAllData,
                       isDark: isDark,
                       onTap: () {},
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     _buildOptionTile(
-                      title: 'Disconnect & delete cloud data',
+                      title: AppLocalizations.of(context)!.disconnectDeleteCloud,
                       titleColor: const Color(0xFFF05151),
                       isDark: isDark,
                       onTap: () {},
@@ -220,7 +221,7 @@ class DataSyncScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Text(
-                        'Your financial data is encrypted and secure in your personal cloud storage.',
+                        AppLocalizations.of(context)!.cloudSecureDesc,
                         textAlign: TextAlign.center,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: isDark

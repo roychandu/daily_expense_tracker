@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/primary_button.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class InvitePremiumUnlockScreen extends StatelessWidget {
   const InvitePremiumUnlockScreen({super.key});
@@ -24,7 +25,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
               color: isDark ? AppColors.textDark : AppColors.deepBlue,
             ),
             label: Text(
-              'Close',
+              AppLocalizations.of(context)!.close,
               style: AppTextStyles.h3Title.copyWith(
                 color: isDark ? AppColors.textDark : AppColors.deepBlue,
                 fontWeight: FontWeight.bold,
@@ -52,7 +53,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
               const SizedBox(height: 20),
               // Success Text
               Text(
-                'Woohoo!',
+                AppLocalizations.of(context)!.woohoo,
                 style: AppTextStyles.h1Display.copyWith(
                   fontSize: 48,
                   fontWeight: FontWeight.w900,
@@ -60,7 +61,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Friend joined!',
+                AppLocalizations.of(context)!.friendJoined,
                 style: AppTextStyles.h1Display.copyWith(
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
@@ -69,7 +70,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Sarah downloaded the app using\nyour link. You both just earned 15\ndays of premium access!',
+                AppLocalizations.of(context)!.referralSuccessDesc('Sarah'),
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyLarge.copyWith(
                   color: isDark
@@ -107,19 +108,19 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
                     children: [
                       _buildBenefitItem(
                         Icons.check_circle,
-                        'Premium activated',
+                        AppLocalizations.of(context)!.premiumActivated,
                         isDark,
                       ),
                       const SizedBox(height: 16),
                       _buildBenefitItem(
                         Icons.check_circle,
-                        'Valid for 15 days',
+                        AppLocalizations.of(context)!.validFor15Days,
                         isDark,
                       ),
                       const SizedBox(height: 16),
                       _buildBenefitItem(
                         Icons.check_circle,
-                        'All features unlocked',
+                        AppLocalizations.of(context)!.allFeaturesUnlocked,
                         isDark,
                       ),
                     ],
@@ -129,7 +130,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
               const SizedBox(height: 48),
               // Actions
               PrimaryButton(
-                title: 'Explore premium features',
+                title: AppLocalizations.of(context)!.explorePremiumFeatures,
                 onPressed: () {
                   // Navigate to features or close
                   Navigator.of(context).pop();
@@ -141,7 +142,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
                   // TODO: Implement invitation logic
                 },
                 child: Text(
-                  'Invite More Friends',
+                  AppLocalizations.of(context)!.inviteMoreFriends,
                   style: AppTextStyles.bodyLarge.copyWith(
                     color: AppColors.primarySelected,
                     fontWeight: FontWeight.w700,
@@ -151,7 +152,7 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
               const SizedBox(height: 40),
               // Status footer
               Text(
-                '2 INVITES USED • 1 INVITE REMAINING',
+                AppLocalizations.of(context)!.invitesStatus(2, 1),
                 style: AppTextStyles.labelSmall.copyWith(
                   color: isDark
                       ? AppColors.textSecondaryDark
@@ -175,8 +176,8 @@ class InvitePremiumUnlockScreen extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: isDark 
-                ? Colors.white.withOpacity(0.2) 
-                : const Color(0xFFA5D6A7).withOpacity(0.5),
+                ? Colors.white.withValues(alpha: 0.2) 
+                : const Color(0xFFA5D6A7).withValues(alpha: 0.5),
             shape: BoxShape.circle,
           ),
           child: Icon(

@@ -4,6 +4,7 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_text_field.dart';
 import '../../common_widgets/primary_button.dart';
 import '../../common_widgets/custom_app_bar.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import 'reset_password_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -28,8 +29,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: const CustomAppBar(
-        title: 'Forgot Password',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.forgotPasswordTitle,
       ),
       body: SafeArea(
         child: Padding(
@@ -39,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               const SizedBox(height: 24),
               Text(
-                'Enter your email address you used to sign up to reset your password',
+                AppLocalizations.of(context)!.forgotPasswordDesc,
                 style: AppTextStyles.body.copyWith(
                   color: isDark ? AppColors.textDark : AppColors.charcoal,
                 ),
@@ -47,12 +48,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 40),
               CustomTextField(
                 controller: _emailController,
-                hintText: 'Email',
+                hintText: AppLocalizations.of(context)!.email,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 120),
               PrimaryButton(
-                title: 'Send email',
+                title: AppLocalizations.of(context)!.sendEmail,
                 onPressed: () {
                   // For demo purposes, we'll navigate to ResetPasswordScreen
                   Navigator.push(
@@ -66,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 24),
               Center(
                 child: Text(
-                  "We'll send you a password reset email.",
+                  AppLocalizations.of(context)!.weWillSendResetEmail,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: isDark ? AppColors.textSecondaryDark : AppColors.softGray,
                   ),

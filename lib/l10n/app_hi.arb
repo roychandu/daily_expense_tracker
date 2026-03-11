@@ -234,5 +234,188 @@
   "totalExpenses": "कुल खर्च",
   "totalIncome": "कुल आय",
   "rawDatabaseViewer": "रॉ डेटाबेस व्यूअर",
-  "noDataFoundInDatabase": "डेटाबेस में कोई रिकॉर्ड नहीं मिला"
+  "noDataFoundInDatabase": "डेटाबेस में कोई रिकॉर्ड नहीं मिला",
+  "cloudBackup": "क्लाउड बैकअप",
+  "chooseBackupMethod": "बैकअप विधि चुनें",
+  "signInWithGoogle": "गूगल के साथ साइन इन करें",
+  "recommendedForAndroid": "एंड्रॉइड के लिए अनुशंसित",
+  "signInWithApple": "एप्पल के साथ साइन इन करें",
+  "recommendedForIos": "आईओएस के लिए अनुशंसित",
+  "signInWithEmail": "ईमेल के साथ साइन इन करें",
+  "privacyGuarantee": "प्राइवेसी गारंटी",
+  "endToEndEncryption": "एंड-टू-एंड एन्क्रिप्शन",
+  "weNeverSeeData": "हम आपके खर्च का डेटा कभी नहीं देखते",
+  "deleteCloudDataAnytime": "आप कभी भी क्लाउड डेटा हटा सकते हैं",
+  "gdprCompliant": "GDPR और प्राइवेसी के अनुरूप",
+  "readPrivacyPolicy": "हमारी प्राइवेसी पॉलिसी पढ़ें",
+  "setUpLater": "बाद में सेटअप करें",
+  "enableBackupAnytime": "आप कभी भी बैकअप इनेबल कर सकते हैं\n",
+  "settingsCloudBackup": "सेटिंग्स → क्लाउड बैकअप",
+  "protectFinancialData": "अपने वित्तीय डेटा को\nसुरक्षित रखें",
+  "cloudBackupDescription": "आपके खर्च आपके डिवाइस पर सुरक्षित रूप से संग्रहीत हैं। अतिरिक्त मन की शांति के लिए क्लाउड बैकअप जोड़ें।",
+  "whyCloudBackup": "क्लाउड बैकअप क्यों?",
+  "switchPhonesEasily": "आसानी से फोन बदलें",
+  "switchPhonesDesc": "बिना कोई डेटा खोए नए डिवाइस पर जाएँ",
+  "automaticSync": "ऑटोमैटिक सिंक",
+  "automaticSyncDesc": "डेटा का प्रतिदिन बैकअप लिया जाता है, किसी मैनुअल एक्सपोर्ट की आवश्यकता नहीं है",
+  "enableCloudBackup": "क्लाउड बैकअप इनेबल करें",
+  "partOfPremium": "प्रीमियम का हिस्सा ($3.99 एक बार)",
+  "currentStatus": "वर्तमान स्थिति",
+  "localStorageActive": "लोकल स्टोरेज: सक्रिय",
+  "dataSafeOnDevice": "डेटा आपके डिवाइस पर सुरक्षित है",
+  "expensesLogged24x7": "24x7 खर्च लॉग किए गए",
+  "notEnabled": "इनेबल नहीं है",
+  "dataSync": "डेटा सिंक",
+  "activeAndSyncing": "सक्रिय और सिंक हो रहा है",
+  "lastBackup": "अंतिम बैकअप: {time}",
+  "@lastBackup": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "accountEmail": "अकाउंट: {email}",
+  "@accountEmail": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "storageUsed": "उपयोग किया गया स्टोरेज: {size}",
+  "@storageUsed": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "manageBackup": "बैकअप प्रबंधित करें >",
+  "options": "विकल्प",
+  "syncFrequency": "सिंक फ्रीक्वेंसी",
+  "daily": "दैनिक",
+  "downloadAllData": "सभी डेटा डाउनलोड करें",
+  "disconnectDeleteCloud": "डिस्कनेक्ट करें और क्लाउड डेटा हटा दें",
+  "cloudSecureDesc": "आपका वित्तीय डेटा आपके व्यक्तिगत क्लाउड स्टोरेज में एन्क्रिप्टेड और सुरक्षित है।",
+  "login": "लॉगिन",
+  "email": "ईमेल",
+  "password": "पासवर्ड",
+  "forgotPassword": "पासवर्ड भूल गए",
+  "dontHaveAccount": "अकाउंट नहीं है? ",
+  "register": "रजिस्टर",
+  "continueAsGuest": "अतिथि के रूप में जारी रखें",
+  "or": "या",
+  "signUpWithGoogle": "गूगल के साथ साइन अप करें",
+  "confirmPassword": "पासवर्ड की पुष्टि करें",
+  "alreadyHaveAccount": "पहले से ही एक अकाउंट है? ",
+  "logInSmall": "लॉग इन करें",
+  "forgotPasswordTitle": "पासवर्ड भूल गए",
+  "forgotPasswordDesc": "अपना पासवर्ड रीसेट करने के लिए वह ईमेल पता दर्ज करें जिसका उपयोग आपने साइन अप करने के लिए किया था",
+  "sendEmail": "ईमेल भेजें",
+  "weWillSendResetEmail": "हम आपको पासवर्ड रीसेट ईमेल भेजेंगे।",
+  "repeatPassword": "पासवर्ड दोहराएं",
+  "resetPassword": "पासवर्ड रीसेट करें",
+  "close": "बंद करें",
+  "woohoo": "वाह!",
+  "friendJoined": "मित्र शामिल हुआ!",
+  "referralSuccessDesc": "{name} ने आपके लिंक का उपयोग करके ऐप डाउनलोड किया। आप दोनों ने अभी 15 दिनों का प्रीमियम एक्सेस अर्जित किया है!",
+  "@referralSuccessDesc": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumActivated": "प्रीमियम सक्रिय",
+  "validFor15Days": "15 दिनों के लिए वैध",
+  "allFeaturesUnlocked": "सभी फीचर्स अनलॉक्ड",
+  "explorePremiumFeatures": "प्रीमियम फीचर्स देखें",
+  "inviteMoreFriends": "अधिक मित्रों को आमंत्रित करें",
+  "invitesStatus": "{used} आमंत्रण उपयोग किए गए • {remaining} आमंत्रण शेष",
+  "@invitesStatus": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "welcomeToPremium": "प्रीमियम में आपका स्वागत है",
+  "upgradeActive": "आपका अपग्रेड अब सक्रिय है",
+  "allAdsRemoved": "सभी एड्स हटा दिए गए",
+  "allInsightsUnlocked": "सभी इनसाइट्स अनलॉक्ड",
+  "unlimitedExportsActivated": "अनलिमिटेड एक्सपोर्ट सक्रिय",
+  "premiumFeaturesReady": "प्रीमियम फीचर्स तैयार हैं",
+  "byPurchasingAgree": "खरीदकर, आप हमारी शर्तों से सहमत होते हैं",
+  "unlockPremium": "प्रीमियम अनलॉक करें",
+  "oneTimePayment": "एक बार का भुगतान • आजीवन एक्सेस",
+  "noSubscriptionEver": "कोई सब्सक्रिप्शन नहीं",
+  "removeAdsForever": "हमेशा के लिए सभी एड्स हटाएँ",
+  "unlockAllInsights": "सभी इनसाइट्स अनलॉक करें",
+  "unlimitedExports": "अनलिमिटेड एक्सपोर्ट",
+  "advancedAnalytics": "उन्नत एनालिटिक्स",
+  "unlockPremiumPrice": "प्रीमियम अनलॉक करें $3.99",
+  "watchAd24h": "24 घंटे एक्सेस के लिए विज्ञापन देखें",
+  "insightsUnlockedSnackbar": "इनसाइट्स 2 मिनट के लिए अनलॉक्ड! 🔓",
+  "inviteEarnPremium": "आमंत्रित करें और प्रीमियम कमाएं",
+  "shareLoveEarnPremium": "प्यार साझा करें, प्रीमियम कमाएं",
+  "helpFriendTrackBetter": "मित्रों को खर्च बेहतर ट्रैक करने में मदद करें और दोनों को इनाम मिले",
+  "howItWorks": "यह कैसे काम करता है",
+  "shareYourLink": "अपना लिंक साझा करें",
+  "sendToFriendsViaApp": "किसी भी ऐप के माध्यम से मित्रों को भेजें",
+  "friendDownloadsOpens": "मित्र डाउनलोड और ओपन करता है",
+  "installFromStore": "वे प्ले/ऐप स्टोर से इंस्टॉल करते हैं",
+  "bothGet15Days": "दोनों को 15 दिन का प्रीमियम मिलता है",
+  "unlockedInstantly": "तुरंत अनलॉक, कोई शर्त नहीं!",
+  "statusHeader": "स्थिति",
+  "daysEarned": "{days} दिन अर्जित",
+  "@daysEarned": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "expires": "समाप्ति: {date}",
+  "@expires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "friendsInvited": "आमंत्रित मित्र: {count} / {max}",
+  "@friendsInvited": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxInvitesReached": "आप अधिकतम आमंत्रणों तक पहुँच गए हैं!",
+  "inviteMoreToMax": "मैक्स आउट करने के लिए {count} और मित्र{s} को आमंत्रित करें!",
+  "@inviteMoreToMax": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "s": {
+        "type": "String"
+      }
+    }
+  },
+  "yourReferralLink": "आपका रेफरल लिंक",
+  "copyLink": "लिंक कॉपी करें",
+  "shareVia": "इसके माध्यम से साझा करें...",
+  "programTerms": "कार्यक्रम की शर्तें",
+  "termNewUser": "प्रत्येक मित्र एक नया उपयोगकर्ता होना चाहिए जिसने पहले ऐप इंस्टॉल नहीं किया है।",
+  "termMaxInvites": "प्रति उपयोगकर्ता अधिकतम 3 सफल आमंत्रणों की अनुमति है।",
+  "termInstantActivation": "मित्र द्वारा आपके लिंक का उपयोग करके ऐप खोलने के तुरंत बाद प्रीमियम इनाम सक्रिय हो जाते हैं।",
+  "termReserveRight": "हम संदिग्ध गतिविधि के लिए इनाम रद्द करने का अधिकार सुरक्षित रखते हैं।"
 }

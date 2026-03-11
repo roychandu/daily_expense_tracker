@@ -3,6 +3,7 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
 import '../../common_widgets/primary_button.dart';
+import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class CloudBackupScreen extends StatelessWidget {
   const CloudBackupScreen({super.key});
@@ -15,7 +16,7 @@ class CloudBackupScreen extends StatelessWidget {
       backgroundColor: isDark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      appBar: const CustomAppBar(title: 'Cloud Backup'),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.cloudBackup),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -34,7 +35,7 @@ class CloudBackupScreen extends StatelessWidget {
 
               // Title
               Text(
-                'Protect Your\nFinancial Data',
+                AppLocalizations.of(context)!.protectFinancialData,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.h2Section.copyWith(
                   fontSize: 32,
@@ -47,7 +48,7 @@ class CloudBackupScreen extends StatelessWidget {
 
               // Subtitle
               Text(
-                'Your expenses are safely stored\non your device. Add cloud\nbackup for extra peace of mind.',
+                AppLocalizations.of(context)!.cloudBackupDescription,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyLarge.copyWith(
                   color: isDark
@@ -68,7 +69,7 @@ class CloudBackupScreen extends StatelessWidget {
                   boxShadow: [
                     if (!isDark)
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -78,7 +79,7 @@ class CloudBackupScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Why Cloud Backup?',
+                      AppLocalizations.of(context)!.whyCloudBackup,
                       style: AppTextStyles.h3Title.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -87,27 +88,27 @@ class CloudBackupScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     _buildFeatureItem(
                       Icons.phone_iphone_outlined,
-                      'Switch Phones Easily',
-                      'Move to a new device without losing any data',
+                      AppLocalizations.of(context)!.switchPhonesEasily,
+                      AppLocalizations.of(context)!.switchPhonesDesc,
                       isDark,
                     ),
                     const SizedBox(height: 20),
                     _buildFeatureItem(
                       Icons.loop_outlined,
-                      'Automatic Sync',
-                      'Data backed up daily, no manual exports needed',
+                      AppLocalizations.of(context)!.automaticSync,
+                      AppLocalizations.of(context)!.automaticSyncDesc,
                       isDark,
                     ),
                     const SizedBox(height: 20),
                     _buildFeatureItem(
                       Icons.lock_outline,
-                      'Automatic Sync',
-                      'Data backed up daily, no manual exports needed',
+                      AppLocalizations.of(context)!.automaticSync,
+                      AppLocalizations.of(context)!.automaticSyncDesc,
                       isDark,
                     ),
                     const SizedBox(height: 24),
                     PrimaryButton(
-                      title: 'Enable Cloud Backup',
+                      title: AppLocalizations.of(context)!.enableCloudBackup,
                       onPressed: () {
                         // TODO: Implement Cloud Backup activation
                       },
@@ -115,7 +116,7 @@ class CloudBackupScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Center(
                       child: Text(
-                        'PART OF PREMIUM (\$3.99 ONE-TIME)',
+                        AppLocalizations.of(context)!.partOfPremium,
                         style: AppTextStyles.labelSmall.copyWith(
                           color: isDark
                               ? AppColors.textSecondaryDark
@@ -144,7 +145,7 @@ class CloudBackupScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Current Status',
+                      AppLocalizations.of(context)!.currentStatus,
                       style: AppTextStyles.h3Title.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isDark ? AppColors.textDark : AppColors.charcoal,
@@ -153,19 +154,19 @@ class CloudBackupScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     _buildStatusItem(
                       Icons.check_circle,
-                      'Local storage: Active',
+                      AppLocalizations.of(context)!.localStorageActive,
                       isDark,
                     ),
                     const SizedBox(height: 8),
                     _buildStatusItem(
                       Icons.check_circle,
-                      'Data safe on your device',
+                      AppLocalizations.of(context)!.dataSafeOnDevice,
                       isDark,
                     ),
                     const SizedBox(height: 8),
                     _buildStatusItem(
                       Icons.check_circle,
-                      '24x7  expenses logged',
+                      AppLocalizations.of(context)!.expensesLogged24x7,
                       isDark,
                     ),
                     const SizedBox(height: 16),
@@ -175,7 +176,7 @@ class CloudBackupScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'CLOUD BACKUP',
+                          AppLocalizations.of(context)!.statusHeader,
                           style: AppTextStyles.labelSmall.copyWith(
                             color: isDark
                                 ? AppColors.textSecondaryDark
@@ -184,7 +185,7 @@ class CloudBackupScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'NOT ENABLED',
+                          AppLocalizations.of(context)!.notEnabled,
                           style: AppTextStyles.labelSmall.copyWith(
                             color: const Color(0xFFF05151),
                             fontWeight: FontWeight.bold,

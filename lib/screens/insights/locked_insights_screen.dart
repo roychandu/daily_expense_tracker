@@ -7,7 +7,6 @@ import '../../common_widgets/category_progress_bar.dart';
 import '../../controllers/settings_controller.dart';
 import '../../utils/formatters.dart';
 import '../../utils/app_layout.dart';
-import 'dart:ui';
 import '../../l10n/app_localizations.dart';
 import 'insights_breakdown_screen.dart';
 import '../premium/unlock_premium_screen.dart';
