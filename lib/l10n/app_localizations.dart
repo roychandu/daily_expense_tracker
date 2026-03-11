@@ -1472,6 +1472,138 @@ abstract class AppLocalizations {
   /// **'Note'**
   String get reportNote;
 
+  /// No description provided for @onboardingTrackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Expenses in under 3 seconds'**
+  String get onboardingTrackTitle;
+
+  /// No description provided for @onboardingTrackSubtitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'No login, No bank sync'**
+  String get onboardingTrackSubtitle1;
+
+  /// No description provided for @onboardingTrackSubtitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'100% Private, 100% Offline'**
+  String get onboardingTrackSubtitle2;
+
+  /// No description provided for @onboardingWhyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why People Love This App'**
+  String get onboardingWhyTitle;
+
+  /// No description provided for @onboardingLightningFastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lightning Fast'**
+  String get onboardingLightningFastTitle;
+
+  /// No description provided for @onboardingLightningFastDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log an expense in under 3 seconds. No forms, no fuss.'**
+  String get onboardingLightningFastDesc;
+
+  /// No description provided for @onboardingPrivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'100% Private'**
+  String get onboardingPrivateTitle;
+
+  /// No description provided for @onboardingPrivateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data never leaves your phone. No accounts, no tracking.'**
+  String get onboardingPrivateDesc;
+
+  /// No description provided for @onboardingInsightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Insights'**
+  String get onboardingInsightsTitle;
+
+  /// No description provided for @onboardingInsightsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'See spending patterns, build daily logging streaks.'**
+  String get onboardingInsightsDesc;
+
+  /// No description provided for @onboardingInvitedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve been Invited'**
+  String get onboardingInvitedTitle;
+
+  /// No description provided for @onboardingInvitedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A friend shared this app with you...'**
+  String get onboardingInvitedSubtitle;
+
+  /// No description provided for @onboardingEnterReferral.
+  ///
+  /// In en, this message translates to:
+  /// **'ENTER REFERRAL CODE'**
+  String get onboardingEnterReferral;
+
+  /// No description provided for @onboardingReferralPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'ABC123'**
+  String get onboardingReferralPlaceholder;
+
+  /// No description provided for @onboardingRewardPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'15 days premium access'**
+  String get onboardingRewardPremium;
+
+  /// No description provided for @onboardingRewardInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'All insights unlocked'**
+  String get onboardingRewardInsights;
+
+  /// No description provided for @onboardingRewardExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited exports'**
+  String get onboardingRewardExports;
+
+  /// No description provided for @onboardingRewardAds.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-free experience'**
+  String get onboardingRewardAds;
+
+  /// No description provided for @onboardingClaimPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim your Premium'**
+  String get onboardingClaimPremium;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingGetStarted;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
   /// No description provided for @fileSavedTo.
   ///
   /// In en, this message translates to:

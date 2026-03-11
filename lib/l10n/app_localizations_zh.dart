@@ -695,6 +695,76 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reportNote => 'Note';
 
   @override
+  String get onboardingTrackTitle => 'Track Expenses in under 3 seconds';
+
+  @override
+  String get onboardingTrackSubtitle1 => 'No login, No bank sync';
+
+  @override
+  String get onboardingTrackSubtitle2 => '100% Private, 100% Offline';
+
+  @override
+  String get onboardingWhyTitle => 'Why People Love This App';
+
+  @override
+  String get onboardingLightningFastTitle => 'Lightning Fast';
+
+  @override
+  String get onboardingLightningFastDesc =>
+      'Log an expense in under 3 seconds. No forms, no fuss.';
+
+  @override
+  String get onboardingPrivateTitle => '100% Private';
+
+  @override
+  String get onboardingPrivateDesc =>
+      'Your data never leaves your phone. No accounts, no tracking.';
+
+  @override
+  String get onboardingInsightsTitle => 'Smart Insights';
+
+  @override
+  String get onboardingInsightsDesc =>
+      'See spending patterns, build daily logging streaks.';
+
+  @override
+  String get onboardingInvitedTitle => 'You\'ve been Invited';
+
+  @override
+  String get onboardingInvitedSubtitle =>
+      'A friend shared this app with you...';
+
+  @override
+  String get onboardingEnterReferral => 'ENTER REFERRAL CODE';
+
+  @override
+  String get onboardingReferralPlaceholder => 'ABC123';
+
+  @override
+  String get onboardingRewardPremium => '15 days premium access';
+
+  @override
+  String get onboardingRewardInsights => 'All insights unlocked';
+
+  @override
+  String get onboardingRewardExports => 'Unlimited exports';
+
+  @override
+  String get onboardingRewardAds => 'Ad-free experience';
+
+  @override
+  String get onboardingClaimPremium => 'Claim your Premium';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
   String get fileSavedTo => 'File saved to:';
 
   @override
