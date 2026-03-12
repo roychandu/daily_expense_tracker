@@ -15,10 +15,10 @@ class CategoryUtils {
   }
 
   static List<Map<String, dynamic>> getSavedCategories({
-    required bool isExpense,
+    required String type,
   }) {
     return _customCache.values
-        .where((cat) => (cat['isExpense'] as int) == (isExpense ? 1 : 0))
+        .where((cat) => (cat['type'] as String) == type)
         .toList();
   }
 
@@ -279,10 +279,12 @@ class CategoryUtils {
       if (info['iconKind'] == 'asset') {
         return info['iconData'] as String;
       } else if (info['iconKind'] == 'material') {
-        final code = int.parse(info['iconData'] as String);
+        final codeString = info['iconData'] as String;
+        final code = int.tryParse(codeString) ?? 0;
         return materialIconMap[code] ?? Icons.category;
       } else if (info['iconKind'] == 'cupertino') {
-        final code = int.parse(info['iconData'] as String);
+        final codeString = info['iconData'] as String;
+        final code = int.tryParse(codeString) ?? 0;
         return cupertinoIconMap[code] ?? CupertinoIcons.square_grid_2x2;
       }
     }

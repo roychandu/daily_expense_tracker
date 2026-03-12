@@ -40,7 +40,7 @@ class ExportService {
           DateFormat('yyyy-MM-dd HH:mm').format(expense.date),
           expense.category,
           expense.amount,
-          expense.isExpense ? expenseLabel : incomeLabel,
+          expense.type == 'expense' ? expenseLabel : incomeLabel,
           expense.note,
         ]);
       }
@@ -108,7 +108,7 @@ class ExportService {
                     (e) => [
                       DateFormat('MMM dd, HH:mm').format(e.date),
                       _cleanString(e.category),
-                      e.isExpense ? expLabelShort : incLabelShort,
+                      e.type == 'expense' ? expLabelShort : incLabelShort,
                       e.amount.toStringAsFixed(2),
                       _cleanString(e.note),
                     ],
@@ -133,7 +133,7 @@ class ExportService {
               mainAxisAlignment: pw.MainAxisAlignment.end,
               children: [
                 pw.Text(
-                  '$totalExpenseLabel: ${expenses.where((e) => e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
+                  '$totalExpenseLabel: ${expenses.where((e) => e.type == 'expense').fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
                 ),
               ],
             ),
@@ -141,7 +141,7 @@ class ExportService {
               mainAxisAlignment: pw.MainAxisAlignment.end,
               children: [
                 pw.Text(
-                  '$totalIncomeLabel: ${expenses.where((e) => !e.isExpense).fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
+                  '$totalIncomeLabel: ${expenses.where((e) => e.type == 'income').fold(0.0, (sum, e) => sum + e.amount).toStringAsFixed(2)}',
                 ),
               ],
             ),

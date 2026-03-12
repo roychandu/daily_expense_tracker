@@ -186,18 +186,18 @@ class _InsightsScreenState extends State<InsightsScreen> {
     }).toList();
 
     final totalMonthlyIncome = monthTransactions
-        .where((e) => !e.isExpense)
+        .where((e) => e.type == 'income')
         .fold(0.0, (sum, e) => sum + e.amount);
 
     final totalMonthlyExpense = monthTransactions
-        .where((e) => e.isExpense)
+        .where((e) => e.type == 'expense')
         .fold(0.0, (sum, e) => sum + e.amount);
 
     final netBalance = totalMonthlyIncome - totalMonthlyExpense;
 
     // Category Breakdown
     final categoryTotals = <String, double>{};
-    for (final e in monthTransactions.where((e) => e.isExpense)) {
+    for (final e in monthTransactions.where((e) => e.type == 'expense')) {
       categoryTotals[e.category] =
           (categoryTotals[e.category] ?? 0.0) + e.amount;
     }
@@ -206,7 +206,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
     // Highest Spend Day
     final dayTotals = <String, double>{};
-    for (final e in monthTransactions.where((e) => e.isExpense)) {
+    for (final e in monthTransactions.where((e) => e.type == 'expense')) {
       final dayKey = DateFormat('yyyy-MM-dd').format(e.date);
       dayTotals[dayKey] = (dayTotals[dayKey] ?? 0.0) + e.amount;
     }
@@ -223,7 +223,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
     // Most Frequent Category
     final categoryFrequencies = <String, int>{};
-    for (final e in monthTransactions.where((e) => e.isExpense)) {
+    for (final e in monthTransactions.where((e) => e.type == 'expense')) {
       categoryFrequencies[e.category] =
           (categoryFrequencies[e.category] ?? 0) + 1;
     }
@@ -259,7 +259,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
     final weeklyExpense = List.filled(4, 0.0);
     for (final e in monthTransactions) {
       int week = ((e.date.day - 1) ~/ 7).clamp(0, 3);
-      if (e.isExpense) {
+      if (e.type == 'expense') {
         weeklyExpense[week] += e.amount;
       } else {
         weeklyIncome[week] += e.amount;
@@ -278,7 +278,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
         return e.date.month == monthDate.month && e.date.year == monthDate.year;
       });
       final monthIncome = monthTransactions6
-          .where((e) => !e.isExpense)
+          .where((e) => e.type == 'income')
           .fold(0.0, (sum, e) => sum + e.amount);
       sixMonthIncomeData.add({
         'month': DateFormat('MMM').format(monthDate),

@@ -16,10 +16,10 @@ import '../../common_widgets/category_icon.dart';
 import '../../utils/category_utils.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-  final bool isExpense;
+  final String type; // 'income' or 'expense'
   final Expense? expense;
 
-  const AddExpenseScreen({super.key, this.isExpense = true, this.expense});
+  const AddExpenseScreen({super.key, this.type = 'expense', this.expense});
 
   @override
   State<AddExpenseScreen> createState() => _AddExpenseScreenState();
@@ -30,14 +30,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final TextEditingController _noteController = TextEditingController();
   String _selectedCategory = '';
   DateTime _selectedDate = DateTime.now();
-  late bool _isExpense;
+  late String _type;
+  bool _isSaving = false;
 
   List<Map<String, dynamic>> get _displayCategories {
-    final List<Map<String, dynamic>> standard = _isExpense
+    final List<Map<String, dynamic>> standard = (_type == 'expense')
         ? List.from(CategoryUtils.expenseCategories)
         : List.from(CategoryUtils.incomeCategories);
 
-    final saved = CategoryUtils.getSavedCategories(isExpense: _isExpense);
+    final saved = CategoryUtils.getSavedCategories(type: _type);
 
     final List<Map<String, dynamic>> filtered = standard
         .where((cat) => cat['name'] != 'Add new')
@@ -53,13 +54,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   void initState() {
     super.initState();
-    _isExpense = widget.isExpense;
+    _type = widget.type;
     if (widget.expense != null) {
       _amountController.text = widget.expense!.amount.toString();
       _noteController.text = widget.expense!.note;
       _selectedCategory = widget.expense!.category;
       _selectedDate = widget.expense!.date;
-      _isExpense = widget.expense!.isExpense;
+      _type = widget.expense!.type;
     }
   }
 
@@ -112,6 +113,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       showCustomSnackBar(context, l10n.pleaseSelectCategory, isError: true);
       return;
     }
+    setState(() => _isSaving = true);
 
     final expense = Expense(
       id: widget.expense?.id,
@@ -119,21 +121,23 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       category: _selectedCategory,
       note: _noteController.text,
       date: _selectedDate,
-      isExpense: _isExpense,
+      type: _type,
     );
 
     final controller = context.read<ExpenseController>();
     final settings = context.read<SettingsController>();
+    
+    // Perform save without awaiting the controller (which now handles sync async)
     if (widget.expense != null) {
-      await controller.updateExpense(expense, settings.isCloudBackupEnabled);
+      controller.updateExpense(expense, settings.isCloudBackupEnabled);
     } else {
-      await controller.addExpense(expense, settings.isCloudBackupEnabled);
+      controller.addExpense(expense, settings.isCloudBackupEnabled);
     }
 
     if (!mounted) return;
     showCustomSnackBar(
       context,
-      _isExpense ? l10n.expenseSaved : l10n.incomeSaved,
+      (_type == 'expense') ? l10n.expenseSaved : l10n.incomeSaved,
     );
     Navigator.pop(context, true);
   }
@@ -220,11 +224,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => _isExpense = false),
+                        onTap: () => setState(() => _type = 'income'),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: !_isExpense
+                            color: !(_type == 'expense')
                                 ? AppColors.primarySelected
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(6),
@@ -233,7 +237,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           child: Text(
                             l10n.addIncome,
                             style: AppTextStyles.body.copyWith(
-                              color: !_isExpense
+                              color: !(_type == 'expense')
                                   ? Colors.white
                                   : AppColors.charcoal,
                               fontWeight: FontWeight.bold,
@@ -244,11 +248,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => _isExpense = true),
+                        onTap: () => setState(() => _type = 'expense'),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: _isExpense
+                            color: (_type == 'expense')
                                 ? AppColors.primarySelected
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(6),
@@ -257,7 +261,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           child: Text(
                             l10n.addExpense,
                             style: AppTextStyles.body.copyWith(
-                              color: _isExpense
+                              color: (_type == 'expense')
                                   ? Colors.white
                                   : AppColors.charcoal,
                               fontWeight: FontWeight.bold,
@@ -521,7 +525,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () => _handleSave(l10n),
+                  onPressed: _isSaving ? null : () => _handleSave(l10n),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primarySelected,
                     foregroundColor: AppColors.white,
@@ -533,12 +537,21 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       alpha: 0.5,
                     ),
                   ),
-                  child: Text(
-                    l10n.saveTransaction,
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: _isSaving
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(
+                          l10n.saveTransaction,
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -555,6 +568,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       backgroundColor: Colors.transparent,
       builder: (context) {
         return _CreateCategoryBottomSheet(
+          type: _type,
           onSaved: (categoryData) async {
             final icon = categoryData['iconData'];
             String kind = 'asset';
@@ -572,7 +586,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               'iconKind': kind,
               'iconData': data,
               'color': (categoryData['color'] as Color).toARGB32(),
-              'isExpense': _isExpense ? 1 : 0,
+              'type': _type,
             });
 
             await CategoryUtils.loadCustomCategories();
@@ -588,8 +602,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 }
 
 class _CreateCategoryBottomSheet extends StatefulWidget {
+  final String type;
   final Function(Map<String, dynamic>) onSaved;
-  const _CreateCategoryBottomSheet({required this.onSaved});
+  const _CreateCategoryBottomSheet({required this.type, required this.onSaved});
 
   @override
   State<_CreateCategoryBottomSheet> createState() =>
@@ -806,6 +821,7 @@ class _CreateCategoryBottomSheetState
                     'name': _nameController.text,
                     'iconData': _selectedIcon,
                     'color': _selectedColor,
+                    'type': widget.type,
                   });
                   Navigator.pop(context);
                 }

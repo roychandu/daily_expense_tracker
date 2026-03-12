@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AddExpenseScreen(isExpense: _isExpenseSelected),
+                            AddExpenseScreen(type: _isExpenseSelected ? 'expense' : 'income'),
                       ),
                     );
                     if (result == true) {
@@ -204,12 +204,12 @@ class _TodayViewState extends State<_TodayView> {
 
     final todayExpenses = allExpenses.where((e) {
       return StreakUtils.getStreakKey(e.date) == todayStr &&
-          e.isExpense == widget.isExpenseSelected;
+          e.type == (widget.isExpenseSelected ? 'expense' : 'income');
     }).toList();
 
     final yesterdayExpenses = allExpenses.where((e) {
       return StreakUtils.getStreakKey(e.date) == yesterdayStr &&
-          e.isExpense == widget.isExpenseSelected;
+          e.type == (widget.isExpenseSelected ? 'expense' : 'income');
     }).toList();
 
     double totalAmount = 0;

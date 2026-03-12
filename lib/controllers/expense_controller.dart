@@ -35,9 +35,9 @@ class ExpenseController extends ChangeNotifier {
         category: expense.category,
         note: expense.note,
         date: expense.date,
-        isExpense: expense.isExpense,
+        type: expense.type,
       );
-      await SyncService.instance.syncExpense(updatedExpense);
+      SyncService.instance.syncExpense(updatedExpense);
     }
   }
 
@@ -46,7 +46,7 @@ class ExpenseController extends ChangeNotifier {
     await refreshExpenses();
     
     if (isCloudEnabled) {
-      await SyncService.instance.syncExpense(expense);
+      SyncService.instance.syncExpense(expense);
     }
   }
 
@@ -55,7 +55,7 @@ class ExpenseController extends ChangeNotifier {
     await refreshExpenses();
     
     if (isCloudEnabled) {
-      await SyncService.instance.deleteExpense(id);
+      SyncService.instance.deleteExpense(id);
     }
   }
 }

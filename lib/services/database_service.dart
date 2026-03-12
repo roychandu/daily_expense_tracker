@@ -20,7 +20,7 @@ class DatabaseService {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -34,7 +34,7 @@ class DatabaseService {
         category TEXT NOT NULL,
         note TEXT,
         date TEXT NOT NULL,
-        isExpense INTEGER NOT NULL
+        type TEXT NOT NULL
       )
     ''');
 
@@ -45,7 +45,7 @@ class DatabaseService {
         iconKind TEXT NOT NULL,
         iconData TEXT NOT NULL,
         color INTEGER,
-        isExpense INTEGER NOT NULL
+        type TEXT NOT NULL
       )
     ''');
   }
@@ -62,6 +62,64 @@ class DatabaseService {
           isExpense INTEGER NOT NULL
         )
       ''');
+    }
+    if (oldVersion < 3) {
+      // Migrate categories table
+      await db.execute('ALTER TABLE categories ADD COLUMN type TEXT');
+      await db.execute(
+        "UPDATE categories SET type = 'expense' WHERE isExpense = 1",
+      );
+      await db.execute(
+        "UPDATE categories SET type = 'income' WHERE isExpense = 0",
+      );
+
+      // Migrate expenses table
+      await db.execute('ALTER TABLE expenses ADD COLUMN type TEXT');
+      await db.execute(
+        "UPDATE expenses SET type = 'expense' WHERE isExpense = 1",
+      );
+      await db.execute(
+        "UPDATE expenses SET type = 'income' WHERE isExpense = 0",
+      );
+    }
+    if (oldVersion < 4) {
+      // Recreate expenses table to remove legacy isExpense column
+      await db.execute('ALTER TABLE expenses RENAME TO expenses_old');
+      await db.execute('''
+        CREATE TABLE expenses (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          amount REAL NOT NULL,
+          category TEXT NOT NULL,
+          note TEXT,
+          date TEXT NOT NULL,
+          type TEXT NOT NULL
+        )
+      ''');
+      await db.execute('''
+        INSERT INTO expenses (id, amount, category, note, date, type)
+        SELECT id, amount, category, note, date, COALESCE(type, 'expense')
+        FROM expenses_old
+      ''');
+      await db.execute('DROP TABLE expenses_old');
+
+      // Recreate categories table to remove legacy isExpense column
+      await db.execute('ALTER TABLE categories RENAME TO categories_old');
+      await db.execute('''
+        CREATE TABLE categories (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL UNIQUE,
+          iconKind TEXT NOT NULL,
+          iconData TEXT NOT NULL,
+          color INTEGER,
+          type TEXT NOT NULL
+        )
+      ''');
+      await db.execute('''
+        INSERT INTO categories (id, name, iconKind, iconData, color, type)
+        SELECT id, name, iconKind, iconData, color, COALESCE(type, 'expense')
+        FROM categories_old
+      ''');
+      await db.execute('DROP TABLE categories_old');
     }
   }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:daily_expense_tracker/screens/database/database_viewer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common_widgets/app_colors.dart';
@@ -184,6 +185,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+                // _buildSettingsRow(
+                //   icon: Icons.dataset_rounded,
+                //   iconColor: Colors.greenAccent,
+                //   title: "Database Viewer",
+                //   onTap: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => const DatabaseViewerScreen(),
+                //     ),
+                //   ),
+                // ),
               ]),
 
               const SizedBox(height: 32),
@@ -455,8 +467,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PremiumScreen(),
+                                    builder: (context) => const PremiumScreen(),
                                   ),
                                 );
                               },

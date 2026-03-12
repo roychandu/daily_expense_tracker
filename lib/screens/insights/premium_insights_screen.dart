@@ -1105,7 +1105,7 @@ String _getFrequentCategoryInsight(
   SettingsController settings,
 ) {
   final categoryExpenses = monthTransactions
-      .where((e) => e.isExpense && e.category == category)
+      .where((e) => e.type == 'expense' && e.category == category)
       .toList();
   final totalCatAmount = categoryExpenses.fold(0.0, (sum, e) => sum + e.amount);
 
@@ -1132,7 +1132,7 @@ String _getDailyAverageInsight(
   List<Expense> monthTransactions,
   SettingsController settings,
 ) {
-  final expenses = monthTransactions.where((e) => e.isExpense).toList();
+  final expenses = monthTransactions.where((e) => e.type == 'expense').toList();
   final totalMonth = expenses.fold(0.0, (sum, e) => sum + e.amount);
 
   final dayTotals = <String, double>{};

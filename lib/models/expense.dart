@@ -4,7 +4,7 @@ class Expense {
   final String category;
   final String note;
   final DateTime date;
-  final bool isExpense;
+  final String type; // 'income' or 'expense'
 
   Expense({
     this.id,
@@ -12,7 +12,7 @@ class Expense {
     required this.category,
     this.note = '',
     required this.date,
-    this.isExpense = true,
+    required this.type,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,7 +22,7 @@ class Expense {
       'category': category,
       'note': note,
       'date': date.toIso8601String(),
-      'isExpense': isExpense ? 1 : 0,
+      'type': type,
     };
   }
 
@@ -33,7 +33,7 @@ class Expense {
       category: map['category'],
       note: map['note'],
       date: DateTime.parse(map['date']),
-      isExpense: map['isExpense'] == 1,
+      type: map['type'] ?? (map['isExpense'] == 1 ? 'expense' : 'income'),
     );
   }
 }

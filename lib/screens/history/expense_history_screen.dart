@@ -57,8 +57,8 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
       final matchesType =
           _selectedType == 'All' || // logic remains same for internal state
           _selectedType == l10n.all ||
-          (_selectedType == l10n.expense && e.isExpense) ||
-          (_selectedType == l10n.income && !e.isExpense);
+          (_selectedType == l10n.expense && e.type == 'expense') ||
+          (_selectedType == l10n.income && e.type == 'income');
       final matchesCategory =
           _selectedCategories.isEmpty ||
           _selectedCategories.contains(e.category);
@@ -223,15 +223,15 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                 ),
                                 child: CustomCard(
                                   onTap: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddExpenseScreen(
-                                          isExpense: item.isExpense,
-                                          expense: item,
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddExpenseScreen(
+                                            type: item.type,
+                                            expense: item,
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
                                   },
                                   padding: const EdgeInsets.all(12),
                                   child: Row(
@@ -284,7 +284,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                         ),
                                         style: AppTextStyles.body.copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: item.isExpense
+                                          color: item.type == 'expense'
                                               ? AppColors.softCoral
                                               : AppColors.successGreen,
                                         ),
