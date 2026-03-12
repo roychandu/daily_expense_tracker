@@ -10,8 +10,8 @@ import '../settings/privacy_screen.dart';
 import 'premium_unlocked_screen.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
-class UnlockPremiumScreen extends StatelessWidget {
-  const UnlockPremiumScreen({super.key});
+class PremiumScreen extends StatelessWidget {
+  const PremiumScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

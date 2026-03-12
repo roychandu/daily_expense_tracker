@@ -16,7 +16,7 @@ import '../../utils/app_layout.dart';
 import '../../common_widgets/premium_export_lock_section.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
-import '../premium/unlock_premium_screen.dart';
+import '../premium/premium_screen.dart';
 import 'invite_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -429,7 +429,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const UnlockPremiumScreen(),
+                                        const PremiumScreen(),
                                   ),
                                 );
                               },

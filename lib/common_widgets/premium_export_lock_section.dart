@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_text_styles.dart';
 import '../l10n/app_localizations.dart';
-import '../screens/premium/unlock_premium_screen.dart';
+import '../screens/premium/premium_screen.dart';
 
 class PremiumExportLockSection extends StatelessWidget {
   const PremiumExportLockSection({super.key});
@@ -57,7 +57,7 @@ class PremiumExportLockSection extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const UnlockPremiumScreen(),
+                builder: (context) => const PremiumScreen(),
               ),
             ),
             style: ElevatedButton.styleFrom(

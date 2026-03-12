@@ -9,7 +9,7 @@ import '../../utils/formatters.dart';
 import '../../utils/app_layout.dart';
 import '../../l10n/app_localizations.dart';
 import 'insights_breakdown_screen.dart';
-import '../premium/unlock_premium_screen.dart';
+import '../premium/premium_screen.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../services/ad_service.dart';
 
@@ -351,7 +351,7 @@ class _LockedInsightsCard extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UnlockPremiumScreen(),
+                      builder: (context) => const PremiumScreen(),
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
