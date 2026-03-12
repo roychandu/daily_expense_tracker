@@ -9,6 +9,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email'],
+    serverClientId: '106109845744-1jg6mub15mg56ddrres4emkv6ckb0rdr.apps.googleusercontent.com',
   );
 
   bool get isLoggedIn => _auth.currentUser != null;
@@ -22,8 +23,11 @@ class AuthService {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
+      await _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null;
+      if (googleUser == null) {
+        throw 'Sign-in cancelled by user';
+      }
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -34,7 +38,7 @@ class AuthService {
       return await _auth.signInWithCredential(credential);
     } catch (e) {
       print('Error during Google Sign-In: $e');
-      return null;
+      rethrow;
     }
   }
 

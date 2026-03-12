@@ -5,7 +5,10 @@ import '../../common_widgets/custom_app_bar.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import '../auth_screens/login_screen.dart';
 import '../../services/auth_service.dart';
-import 'data_sync_screen.dart';
+import '../settings/settings_screen.dart';
+import 'package:provider/provider.dart';
+import '../../controllers/settings_controller.dart';
+import '../../services/sync_service.dart';
 
 class CloudBackupMethodScreen extends StatefulWidget {
   const CloudBackupMethodScreen({super.key});
@@ -53,11 +56,30 @@ class _CloudBackupMethodScreenState extends State<CloudBackupMethodScreen> {
                       try {
                         final user = await AuthService().signInWithGoogle();
                         if (user != null && context.mounted) {
-                          Navigator.pushReplacement(
+                          // Enable cloud backup
+                          await context.read<SettingsController>().updateCloudBackup(true);
+                          
+                          // Sync local data to Firebase
+                          await SyncService.instance.syncLocalToCloud();
+                          
+                          if (!context.mounted) return;
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Successfully login! Your data is being synced.')),
+                          );
+
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const DataSyncScreen(),
+                              builder: (context) => const SettingsScreen(),
                             ),
+                            (route) => route.isFirst,
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Google Sign-In Error: $e')),
                           );
                         }
                       } finally {

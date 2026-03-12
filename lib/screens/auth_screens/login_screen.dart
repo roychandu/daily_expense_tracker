@@ -12,6 +12,7 @@ import '../../services/auth_service.dart';
 import '../settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/settings_controller.dart';
+import '../../services/sync_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -108,7 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (user != null && context.mounted) {
                           // Enable cloud backup and navigate to SettingsScreen
                           await context.read<SettingsController>().updateCloudBackup(true);
+                          
+                          // Perform initial sync of existing local data to Firebase
+                          await SyncService.instance.syncLocalToCloud();
                           if (!context.mounted) return;
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Successfully login! Your data is being synced.')),
+                          );
 
                           Navigator.pushAndRemoveUntil(
                             context,
@@ -169,7 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (user != null && context.mounted) {
                           // Enable cloud backup and navigate to SettingsScreen
                           await context.read<SettingsController>().updateCloudBackup(true);
+                          
+                          // Perform initial sync of existing local data to Firebase
+                          await SyncService.instance.syncLocalToCloud();
                           if (!context.mounted) return;
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Successfully login! Your data is being synced.')),
+                          );
 
                           Navigator.pushAndRemoveUntil(
                             context,
@@ -181,6 +196,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Google Sign-In Error: $e')),
                           );
                         }
                       } finally {

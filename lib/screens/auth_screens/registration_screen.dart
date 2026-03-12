@@ -152,31 +152,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     icon: Image.asset('assets/icons/google-icon.png'),
                     onPressed: () async {
                       setState(() => _isLoading = true);
-                      try {
-                        final user = await AuthService().signInWithGoogle();
-                        if (user != null && context.mounted) {
-                          // Sign out and go to Login as requested
-                          await AuthService().signOut();
-                          if (!context.mounted) return;
+                        try {
+                          final user = await AuthService().signInWithGoogle();
+                          if (user != null && context.mounted) {
+                            // Sign out and go to Login as requested
+                            await AuthService().signOut();
+                            if (!context.mounted) return;
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Google Registration successful! Please login.')),
-                          );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Google Registration successful! Please login.')),
+                            );
 
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                            ),
-                          );
-                        } else if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
-                          );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          } else if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Google Sign-In Error: $e')),
+                            );
+                          }
+                        } finally {
+                          if (mounted) setState(() => _isLoading = false);
                         }
-                      } finally {
-                        if (mounted) setState(() => _isLoading = false);
-                      }
                     },
                   ),
                   const SizedBox(height: 24),
