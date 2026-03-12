@@ -445,7 +445,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutUs => 'À propos de nous';
 
   @override
-  String get premiumUnlocked => 'Fonctionnalités Premium débloquées !';
+  String get premiumUnlocked => 'Premium Débloqué';
 
   @override
   String get switchedToFree => 'Passé à la version gratuite';

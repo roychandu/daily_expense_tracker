@@ -17,12 +17,14 @@ class SettingsController extends ChangeNotifier {
   String _currency = 'USD';
   bool _isDailyReminderEnabled = true;
   DateTime _reminderTime = DateTime(2024, 1, 1, 20, 0); // Default 8:00 PM
+  bool _isCloudBackupEnabled = false;
 
   ThemeMode get themeMode => _themeMode;
   Locale get locale => _locale;
   String get currency => _currency;
   bool get isDailyReminderEnabled => _isDailyReminderEnabled;
   DateTime get reminderTime => _reminderTime;
+  bool get isCloudBackupEnabled => _isCloudBackupEnabled;
 
   static const List<Map<String, String>> supportedLanguages = [
     {'code': 'en', 'name': 'English'},
@@ -73,6 +75,7 @@ class SettingsController extends ChangeNotifier {
 
     _currency = _prefs.getString('currency') ?? 'USD';
     _isDailyReminderEnabled = _prefs.getBool('isDailyReminderEnabled') ?? true;
+    _isCloudBackupEnabled = _prefs.getBool('isCloudBackupEnabled') ?? false;
 
     final timeStr = _prefs.getString('reminderTime') ?? "20:00";
     final parts = timeStr.split(':');
@@ -185,6 +188,12 @@ class SettingsController extends ChangeNotifier {
   Future<void> unlockInsightsViaAd() async {
     await _configService.activateAdAccess();
     notifyListeners();
+  }
+
+  Future<void> updateCloudBackup(bool enabled) async {
+    _isCloudBackupEnabled = enabled;
+    notifyListeners();
+    await _prefs.setBool('isCloudBackupEnabled', enabled);
   }
 
   // Referral / Invite System

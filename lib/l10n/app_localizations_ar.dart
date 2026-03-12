@@ -441,7 +441,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutUs => 'معلومات عنا';
 
   @override
-  String get premiumUnlocked => 'الميزات المميزة مقفلة!';
+  String get premiumUnlocked => 'تم إلغاء قفل بريميوم';
 
   @override
   String get switchedToFree => 'تحولت إلى الإصدار المجاني';

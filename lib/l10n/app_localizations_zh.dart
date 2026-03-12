@@ -438,7 +438,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutUs => '关于我们';
 
   @override
-  String get premiumUnlocked => '高级功能已解锁！';
+  String get premiumUnlocked => '高级版已解锁';
 
   @override
   String get switchedToFree => '切换到免费版本';

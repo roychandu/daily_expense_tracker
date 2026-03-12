@@ -136,6 +136,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
                 _buildSettingsRow(
+                  icon: Icons.cloud_done_rounded,
+                  iconColor: Colors.blue,
+                  title: l10n.cloudBackup,
+                  isSwitch: true,
+                  switchValue: settings.isCloudBackupEnabled,
+                  onSwitchChanged: (val) {
+                    settings.updateCloudBackup(val);
+                  },
+                ),
+                _buildSettingsRow(
                   icon: Icons.language_rounded,
                   iconColor: Colors.purpleAccent,
                   title: l10n.privacyPolicy,

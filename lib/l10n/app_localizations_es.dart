@@ -443,7 +443,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aboutUs => 'Sobre nosotros';
 
   @override
-  String get premiumUnlocked => '¡Funciones premium desbloqueadas!';
+  String get premiumUnlocked => 'Premium Desbloqueado';
 
   @override
   String get switchedToFree => 'Cambiado a la versión gratuita';

@@ -440,7 +440,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get aboutUs => 'अबाउट अस';
 
   @override
-  String get premiumUnlocked => 'प्रीमियम फीचर्स अनलॉक्ड!';
+  String get premiumUnlocked => 'प्रीमियम अनलॉक';
 
   @override
   String get switchedToFree => 'फ्री वर्जन पर स्विच किया';

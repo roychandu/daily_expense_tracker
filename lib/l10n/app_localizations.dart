@@ -971,7 +971,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumUnlocked.
   ///
   /// In en, this message translates to:
-  /// **'Premium Features Unlocked!'**
+  /// **'Premium Unlocked'**
   String get premiumUnlocked;
 
   /// No description provided for @switchedToFree.

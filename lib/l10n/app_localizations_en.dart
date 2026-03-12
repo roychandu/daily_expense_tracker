@@ -441,7 +441,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutUs => 'About Us';
 
   @override
-  String get premiumUnlocked => 'Premium Features Unlocked!';
+  String get premiumUnlocked => 'Premium Unlocked';
 
   @override
   String get switchedToFree => 'Switched to Free Version';
