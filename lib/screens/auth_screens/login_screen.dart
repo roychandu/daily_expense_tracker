@@ -8,6 +8,10 @@ import '../../common_widgets/custom_app_bar.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import 'registration_screen.dart';
 import 'forgot_password_screen.dart';
+import '../../services/auth_service.dart';
+import '../settings/settings_screen.dart';
+import 'package:provider/provider.dart';
+import '../../controllers/settings_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -32,152 +37,173 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.login,
-        showBackButton: false,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
-              CustomTextField(
-                controller: _emailController,
-                hintText: AppLocalizations.of(context)!.email,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _passwordController,
-                hintText: AppLocalizations.of(context)!.password,
-                obscureText: !_isPasswordVisible,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off_outlined,
-                    color: isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.softGray,
-                  ),
-                  onPressed: () =>
-                      setState(() => _isPasswordVisible = !_isPasswordVisible),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ForgotPasswordScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.forgotPassword,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.primarySelected,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              PrimaryButton(
-                title: AppLocalizations.of(context)!.login,
-                onPressed: () {
-                  // TODO: Implement login logic
-                },
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          appBar: CustomAppBar(
+            title: AppLocalizations.of(context)!.login,
+            showBackButton: false,
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.dontHaveAccount,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark
-                          ? AppColors.textSecondaryDark
-                          : AppColors.softGray,
-                    ),
+                  const SizedBox(height: 40),
+                  CustomTextField(
+                    controller: _emailController,
+                    hintText: AppLocalizations.of(context)!.email,
+                    keyboardType: TextInputType.emailAddress,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegistrationScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.register,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.primarySelected,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 60),
-              SecondaryButton(
-                title: AppLocalizations.of(context)!.continueAsGuest,
-                borderColor: AppColors.primarySelected,
-                textColor: AppColors.primarySelected,
-                onPressed: () {
-                  // TODO: Implement guest login
-                },
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: isDark
-                          ? AppColors.whiteOpacity20
-                          : AppColors.borderLight,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.or,
-                      style: AppTextStyles.labelSmall.copyWith(
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    controller: _passwordController,
+                    hintText: AppLocalizations.of(context)!.password,
+                    obscureText: !_isPasswordVisible,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off_outlined,
                         color: isDark
                             ? AppColors.textSecondaryDark
                             : AppColors.softGray,
                       ),
+                      onPressed: () =>
+                          setState(() => _isPasswordVisible = !_isPasswordVisible),
                     ),
                   ),
-                  Expanded(
-                    child: Divider(
-                      color: isDark
-                          ? AppColors.whiteOpacity20
-                          : AppColors.borderLight,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.forgotPassword,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.primarySelected,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
+                  const SizedBox(height: 24),
+                  PrimaryButton(
+                    title: AppLocalizations.of(context)!.login,
+                    onPressed: () async {
+                      setState(() => _isLoading = true);
+                      try {
+                        final user = await AuthService().signInWithEmail(
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
+                        if (user != null && context.mounted) {
+                          // Enable cloud backup and navigate to SettingsScreen
+                          await context.read<SettingsController>().updateCloudBackup(true);
+                          if (!context.mounted) return;
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SettingsScreen(),
+                            ),
+                            (route) => route.isFirst,
+                          );
+                        } else if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Login failed. Please check your email and password.')),
+                          );
+                        }
+                      } finally {
+                        if (mounted) setState(() => _isLoading = false);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.dontHaveAccount,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.softGray,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegistrationScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.register,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: AppColors.primarySelected,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  SecondaryButton(
+                    title: AppLocalizations.of(context)!.signUpWithGoogle,
+                    icon: Image.asset('assets/icons/google-icon.png'),
+                    onPressed: () async {
+                      setState(() => _isLoading = true);
+                      try {
+                        final user = await AuthService().signInWithGoogle();
+                        if (user != null && context.mounted) {
+                          // Enable cloud backup and navigate to SettingsScreen
+                          await context.read<SettingsController>().updateCloudBackup(true);
+                          if (!context.mounted) return;
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SettingsScreen(),
+                            ),
+                            (route) => route.isFirst,
+                          );
+                        } else if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
+                          );
+                        }
+                      } finally {
+                        if (mounted) setState(() => _isLoading = false);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 24),
                 ],
               ),
-              const SizedBox(height: 24),
-              SecondaryButton(
-                title: AppLocalizations.of(context)!.signUpWithGoogle,
-                icon: Image.asset('assets/icons/google-icon.png'),
-                onPressed: () {
-                  // TODO: Implement Google sign up
-                },
-              ),
-              const SizedBox(height: 24),
-            ],
+            ),
           ),
         ),
-      ),
+        if (_isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.3),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primarySelected,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

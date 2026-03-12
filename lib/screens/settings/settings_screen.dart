@@ -18,6 +18,9 @@ import 'about_screen.dart';
 import 'privacy_screen.dart';
 import '../premium/premium_screen.dart';
 import 'invite_screen.dart';
+import '../../services/auth_service.dart';
+import '../cloud_backup_screens/cloud_backup_screen.dart';
+import '../cloud_backup_screens/data_sync_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -142,7 +145,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   isSwitch: true,
                   switchValue: settings.isCloudBackupEnabled,
                   onSwitchChanged: (val) {
-                    settings.updateCloudBackup(val);
+                    if (AuthService().isLoggedIn) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DataSyncScreen(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CloudBackupScreen(),
+                        ),
+                      );
+                    }
                   },
                 ),
                 _buildSettingsRow(

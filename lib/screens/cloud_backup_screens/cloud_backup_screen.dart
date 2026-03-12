@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'cloud_backup_method_screen.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
@@ -110,7 +111,12 @@ class CloudBackupScreen extends StatelessWidget {
                     PrimaryButton(
                       title: AppLocalizations.of(context)!.enableCloudBackup,
                       onPressed: () {
-                        // TODO: Implement Cloud Backup activation
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CloudBackupMethodScreen(),
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(height: 12),

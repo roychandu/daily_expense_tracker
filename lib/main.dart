@@ -12,6 +12,7 @@ import 'common_widgets/app_theme.dart';
 import 'utils/category_utils.dart';
 import 'services/app_flow_service.dart';
 import 'screens/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ import 'services/ad_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await AdService().init();
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
