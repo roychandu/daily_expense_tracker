@@ -97,7 +97,8 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   }
 
   Future<void> _deleteExpense(int id) async {
-    await context.read<ExpenseController>().deleteExpense(id);
+    final settings = context.read<SettingsController>();
+    await context.read<ExpenseController>().deleteExpense(id, settings.isCloudBackupEnabled);
   }
 
   @override

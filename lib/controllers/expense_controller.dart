@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import '../models/expense.dart';
+import '../services/sync_service.dart';
 
 class ExpenseController extends ChangeNotifier {
   List<Expense> _expenses = [];
@@ -23,18 +24,38 @@ class ExpenseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addExpense(Expense expense) async {
-    await DatabaseService.instance.create(expense);
+  Future<void> addExpense(Expense expense, bool isCloudEnabled) async {
+    final id = await DatabaseService.instance.create(expense);
     await refreshExpenses();
+    
+    if (isCloudEnabled) {
+      final updatedExpense = Expense(
+        id: id,
+        amount: expense.amount,
+        category: expense.category,
+        note: expense.note,
+        date: expense.date,
+        isExpense: expense.isExpense,
+      );
+      await SyncService.instance.syncExpense(updatedExpense);
+    }
   }
 
-  Future<void> updateExpense(Expense expense) async {
+  Future<void> updateExpense(Expense expense, bool isCloudEnabled) async {
     await DatabaseService.instance.update(expense);
     await refreshExpenses();
+    
+    if (isCloudEnabled) {
+      await SyncService.instance.syncExpense(expense);
+    }
   }
 
-  Future<void> deleteExpense(int id) async {
+  Future<void> deleteExpense(int id, bool isCloudEnabled) async {
     await DatabaseService.instance.delete(id);
     await refreshExpenses();
+    
+    if (isCloudEnabled) {
+      await SyncService.instance.deleteExpense(id);
+    }
   }
 }

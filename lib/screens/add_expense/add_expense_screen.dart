@@ -123,10 +123,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     );
 
     final controller = context.read<ExpenseController>();
+    final settings = context.read<SettingsController>();
     if (widget.expense != null) {
-      await controller.updateExpense(expense);
+      await controller.updateExpense(expense, settings.isCloudBackupEnabled);
     } else {
-      await controller.addExpense(expense);
+      await controller.addExpense(expense, settings.isCloudBackupEnabled);
     }
 
     if (!mounted) return;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_service.dart';
 import '../services/app_config_service.dart';
+import '../services/sync_service.dart';
 
 class SettingsController extends ChangeNotifier {
   SettingsController(this._prefs) {
@@ -194,6 +195,12 @@ class SettingsController extends ChangeNotifier {
     _isCloudBackupEnabled = enabled;
     notifyListeners();
     await _prefs.setBool('isCloudBackupEnabled', enabled);
+    
+    // If enabled, trigger a full sync of existing data immediately
+    if (enabled) {
+      print('Cloud Backup enabled, triggering full sync...');
+      await SyncService.instance.syncLocalToCloud();
+    }
   }
 
   // Referral / Invite System

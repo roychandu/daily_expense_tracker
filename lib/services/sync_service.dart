@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'database_service.dart';
+import '../models/expense.dart';
 
 class SyncService {
   static final SyncService instance = SyncService._();
@@ -8,6 +9,35 @@ class SyncService {
 
   final _db = FirebaseDatabase.instance.ref();
   final _auth = FirebaseAuth.instance;
+
+  Future<void> syncExpense(Expense expense) async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    final uid = user.uid;
+    if (expense.id == null) return;
+
+    try {
+      await _db.child('users').child(uid).child('expenses').child(expense.id.toString()).set(expense.toMap());
+      print('Cloud Sync: Expense ${expense.id} updated.');
+    } catch (e) {
+      print('Cloud Sync Error: Failed to sync expense ${expense.id}: $e');
+    }
+  }
+
+  Future<void> deleteExpense(int id) async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    final uid = user.uid;
+
+    try {
+      await _db.child('users').child(uid).child('expenses').child(id.toString()).remove();
+      print('Cloud Sync: Expense $id deleted.');
+    } catch (e) {
+      print('Cloud Sync Error: Failed to delete expense $id: $e');
+    }
+  }
 
   Future<void> syncLocalToCloud() async {
     final user = _auth.currentUser;

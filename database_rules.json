@@ -1,0 +1,16 @@
+{
+    "rules": {
+        "users": {
+            "$uid": {
+                "categories": {
+                    ".read": "$uid === auth.uid",
+                    ".write": "$uid === auth.uid"
+                },
+                "expenses": {
+                    ".read": "$uid === auth.uid",
+                    ".write": "$uid === auth.uid"
+                }
+            }
+        }
+    }
+}
