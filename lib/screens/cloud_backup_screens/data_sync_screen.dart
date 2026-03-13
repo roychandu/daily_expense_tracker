@@ -3,6 +3,9 @@ import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+import '../../services/sync_service.dart';
 
 class DataSyncScreen extends StatelessWidget {
   const DataSyncScreen({super.key});
@@ -62,7 +65,9 @@ class DataSyncScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.cloudBackup.toUpperCase(),
+                                AppLocalizations.of(
+                                  context,
+                                )!.cloudBackup.toUpperCase(),
                                 style: AppTextStyles.h3Title.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDark
@@ -81,7 +86,9 @@ class DataSyncScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    AppLocalizations.of(context)!.activeAndSyncing,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.activeAndSyncing,
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: const Color(0xFF238477),
                                       fontWeight: FontWeight.bold,
@@ -89,14 +96,32 @@ class DataSyncScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 2),
-                              Text(
-                                AppLocalizations.of(context)!.lastBackup('2 hours ago'),
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: isDark
-                                      ? AppColors.textSecondaryDark
-                                      : AppColors.softGray,
-                                ),
+                              ValueListenableBuilder<DateTime?>(
+                                valueListenable: SyncService.instance.lastSyncTime,
+                                builder: (context, lastSync, _) {
+                                  String lastSyncStr = 'Never';
+                                  if (lastSync != null) {
+                                    final now = DateTime.now();
+                                    final diff = now.difference(lastSync);
+                                    if (diff.inMinutes < 1) {
+                                      lastSyncStr = 'Just now';
+                                    } else if (diff.inHours < 1) {
+                                      lastSyncStr = '${diff.inMinutes} minutes ago';
+                                    } else if (diff.inDays < 1) {
+                                      lastSyncStr = '${diff.inHours} hours ago';
+                                    } else {
+                                      lastSyncStr = DateFormat('MMM d, h:mm a').format(lastSync);
+                                    }
+                                  }
+                                  return Text(
+                                    AppLocalizations.of(context)!.lastBackup(lastSyncStr),
+                                    style: AppTextStyles.bodySmall.copyWith(
+                                      color: isDark
+                                          ? AppColors.textSecondaryDark
+                                          : AppColors.softGray,
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -110,7 +135,9 @@ class DataSyncScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.accountEmail('user@email.com'),
+                            AppLocalizations.of(context)!.accountEmail(
+                              FirebaseAuth.instance.currentUser?.email ?? 'Not logged in',
+                            ),
                             style: AppTextStyles.body.copyWith(
                               color: isDark
                                   ? AppColors.textDark
@@ -119,28 +146,22 @@ class DataSyncScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            AppLocalizations.of(context)!.storageUsed('2.3 MB'),
-                            style: AppTextStyles.body.copyWith(
-                              color: isDark
-                                  ? AppColors.textDark
-                                  : AppColors.charcoal,
-                              fontSize: 15,
-                            ),
+                          ValueListenableBuilder<String>(
+                            valueListenable: SyncService.instance.storageUsed,
+                            builder: (context, storage, _) {
+                              return Text(
+                                AppLocalizations.of(context)!.storageUsed(storage),
+                                style: AppTextStyles.body.copyWith(
+                                  color: isDark
+                                      ? AppColors.textDark
+                                      : AppColors.charcoal,
+                                  fontSize: 15,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                        child: Text(
-                          AppLocalizations.of(context)!.manageBackup,
-                          style: const TextStyle(
-                            color: Color(0xFF238477),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
                     ),
                   ],
                 ),
@@ -148,7 +169,7 @@ class DataSyncScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-               Text(
+              Text(
                 AppLocalizations.of(context)!.options,
                 style: AppTextStyles.h3Title.copyWith(
                   fontWeight: FontWeight.bold,
@@ -176,7 +197,7 @@ class DataSyncScreen extends StatelessWidget {
                   children: [
                     _buildOptionTile(
                       title: AppLocalizations.of(context)!.syncFrequency,
-                      trailing: AppLocalizations.of(context)!.daily,
+                      trailing: 'Every 2 Minutes',
                       isDark: isDark,
                       onTap: () {},
                     ),
@@ -188,7 +209,9 @@ class DataSyncScreen extends StatelessWidget {
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     _buildOptionTile(
-                      title: AppLocalizations.of(context)!.disconnectDeleteCloud,
+                      title: AppLocalizations.of(
+                        context,
+                      )!.disconnectDeleteCloud,
                       titleColor: const Color(0xFFF05151),
                       isDark: isDark,
                       onTap: () {},

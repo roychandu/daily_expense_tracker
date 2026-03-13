@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -17,6 +19,9 @@ class SyncService {
 
   Timer? _syncTimer;
   bool _isSyncing = false;
+  
+  final ValueNotifier<DateTime?> lastSyncTime = ValueNotifier<DateTime?>(null);
+  final ValueNotifier<String> storageUsed = ValueNotifier<String>('0 KB');
 
   void _handleConnectivityChange(List<ConnectivityResult> results) {
     if (results.any((r) => r != ConnectivityResult.none)) {
@@ -105,6 +110,21 @@ class SyncService {
       print(
         'Sync complete. Synced ${expenseData.length} expenses and ${categoryData.length} categories.',
       );
+      
+      // Update metadata
+      lastSyncTime.value = DateTime.now();
+      
+      // Estimate storage size (simplified JSON size check)
+      final totalData = jsonEncode({'expenses': expenseData, 'categories': categoryData});
+      final bytes = utf8.encode(totalData).length;
+      if (bytes < 1024) {
+        storageUsed.value = '$bytes Bytes';
+      } else if (bytes < 1024 * 1024) {
+        storageUsed.value = '${(bytes / 1024).toStringAsFixed(2)} KB';
+      } else {
+        storageUsed.value = '${(bytes / (1024 * 1024)).toStringAsFixed(2)} MB';
+      }
+
     } catch (e) {
       print('Error during sync to Firebase: $e');
     } finally {
