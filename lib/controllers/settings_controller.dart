@@ -8,6 +8,11 @@ class SettingsController extends ChangeNotifier {
   SettingsController(this._prefs) {
     _configService = AppConfigService(_prefs);
     _loadSettings();
+    // Initialize periodic sync if enabled
+    SyncService.instance.initPeriodicSync(
+      isEnabled: _isCloudBackupEnabled,
+      isPremium: isPremium,
+    );
   }
 
   final SharedPreferences _prefs;
@@ -192,14 +197,26 @@ class SettingsController extends ChangeNotifier {
   }
 
   Future<void> updateCloudBackup(bool enabled) async {
+    if (enabled) {
+      final hasNet = await SyncService.instance.hasInternet();
+      if (!hasNet) {
+        throw Exception('no-internet');
+      }
+    }
+
     _isCloudBackupEnabled = enabled;
     notifyListeners();
     await _prefs.setBool('isCloudBackupEnabled', enabled);
     
-    // If enabled, trigger a full sync of existing data immediately
     if (enabled) {
-      print('Cloud Backup enabled, triggering full sync...');
-      await SyncService.instance.syncLocalToCloud();
+      print('Cloud Backup enabled, starting periodic sync...');
+      SyncService.instance.initPeriodicSync(
+        isEnabled: true,
+        isPremium: isPremium,
+      );
+    } else {
+      print('Cloud Backup disabled, stopping periodic sync...');
+      SyncService.instance.stopPeriodicSync();
     }
   }
 

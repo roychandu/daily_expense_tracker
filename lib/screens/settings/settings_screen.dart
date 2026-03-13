@@ -145,34 +145,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: l10n.cloudBackup,
                   isSwitch: true,
                   switchValue: settings.isCloudBackupEnabled,
-                  onSwitchChanged: (val) {
+                  onSwitchChanged: (val) async {
                     if (settings.isPremium) {
-                      if (AuthService().isLoggedIn) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const DataSyncScreen(),
-                          ),
-                        );
+                      if (val) {
+                        try {
+                          await settings.updateCloudBackup(true);
+                          if (AuthService().isLoggedIn) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const DataSyncScreen(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const CloudBackupScreen(),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          if (e.toString().contains('no-internet')) {
+                            _showNoInternetDialog(context);
+                          }
+                        }
                       } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const CloudBackupScreen(),
-                          ),
-                        );
+                        await settings.updateCloudBackup(false);
                       }
                     } else {
                       final navigator = Navigator.of(context);
                       navigator.push(
                         MaterialPageRoute(
                           builder: (_) => PremiumScreen(
-                            onPremiumPurchased: () {
-                              navigator.pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (_) => const CloudBackupScreen(),
-                                ),
-                              );
+                            onPremiumPurchased: () async {
+                              try {
+                                await settings.updateCloudBackup(true);
+                                navigator.pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => const CloudBackupScreen(),
+                                  ),
+                                );
+                              } catch (e) {
+                                if (e.toString().contains('no-internet')) {
+                                  _showNoInternetDialog(context);
+                                }
+                              }
                             },
                           ),
                         ),
@@ -202,17 +220,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
-                // _buildSettingsRow(
-                //   icon: Icons.dataset_rounded,
-                //   iconColor: Colors.greenAccent,
-                //   title: "Database Viewer",
-                //   onTap: () => Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const DatabaseViewerScreen(),
-                //     ),
-                //   ),
-                // ),
+                _buildSettingsRow(
+                  icon: Icons.dataset_rounded,
+                  iconColor: Colors.greenAccent,
+                  title: "Database Viewer",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DatabaseViewerScreen(),
+                    ),
+                  ),
+                ),
               ]),
 
               const SizedBox(height: 32),
@@ -703,6 +721,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
         fontSize: 36,
         fontWeight: FontWeight.w900,
         letterSpacing: 1,
+      ),
+    );
+  }
+
+  void _showNoInternetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.wifi_off_rounded, color: Colors.orange),
+            SizedBox(width: 12),
+            Text('No Internet'),
+          ],
+        ),
+        content: const Text(
+          'Cloud backup requires an active internet connection. Please check your connection and try again.',
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
