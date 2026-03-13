@@ -11,7 +11,8 @@ import 'premium_unlocked_screen.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class PremiumScreen extends StatelessWidget {
-  const PremiumScreen({super.key});
+  final VoidCallback? onPremiumPurchased;
+  const PremiumScreen({super.key, this.onPremiumPurchased});
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +136,9 @@ class PremiumScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PremiumUnlockedScreen(),
+                    builder: (context) => PremiumUnlockedScreen(
+                      onExplorePressed: onPremiumPurchased,
+                    ),
                   ),
                 );
               }

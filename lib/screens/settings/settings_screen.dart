@@ -146,18 +146,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   isSwitch: true,
                   switchValue: settings.isCloudBackupEnabled,
                   onSwitchChanged: (val) {
-                    if (AuthService().isLoggedIn) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DataSyncScreen(),
-                        ),
-                      );
+                    if (settings.isPremium) {
+                      if (AuthService().isLoggedIn) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const DataSyncScreen(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const CloudBackupScreen(),
+                          ),
+                        );
+                      }
                     } else {
-                      Navigator.push(
-                        context,
+                      final navigator = Navigator.of(context);
+                      navigator.push(
                         MaterialPageRoute(
-                          builder: (context) => const CloudBackupScreen(),
+                          builder: (_) => PremiumScreen(
+                            onPremiumPurchased: () {
+                              navigator.pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (_) => const CloudBackupScreen(),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     }

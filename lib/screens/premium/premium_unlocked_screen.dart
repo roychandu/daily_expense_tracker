@@ -5,7 +5,8 @@ import '../../common_widgets/custom_app_bar.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class PremiumUnlockedScreen extends StatefulWidget {
-  const PremiumUnlockedScreen({super.key});
+  final VoidCallback? onExplorePressed;
+  const PremiumUnlockedScreen({super.key, this.onExplorePressed});
 
   @override
   State<PremiumUnlockedScreen> createState() => _PremiumUnlockedScreenState();
@@ -116,7 +117,13 @@ class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
               const SizedBox(height: 40),
               // Explore Button
               ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  if (widget.onExplorePressed != null) {
+                    widget.onExplorePressed!();
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primarySelected,
                   foregroundColor: Colors.white,
