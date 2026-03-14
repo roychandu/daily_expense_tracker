@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../common_widgets/app_colors.dart';
 import '../common_widgets/app_text_styles.dart';
 import '../services/app_flow_service.dart';
+import '../services/auth_service.dart';
+import 'auth_screens/login_screen.dart';
 import 'onboarding_screens/onboarding_screen.dart';
 import 'onboarding_screens/code_invitation_screen.dart';
 import 'home_screen/home_screen.dart';
@@ -26,16 +28,20 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     final appFlow = Provider.of<AppFlowService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: false);
     
     Widget nextScreen;
     if (appFlow.isFirstLaunch) {
       nextScreen = const OnboardingScreen();
     } else if (appFlow.getReferralCode() != null) {
       nextScreen = const CodeInvitationScreen();
+    } else if (!authService.isLoggedIn && !appFlow.hasSeenLoginPrompt) {
+      nextScreen = const LoginScreen();
     } else {
       nextScreen = const HomeScreen();
     }
 
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => nextScreen),
     );

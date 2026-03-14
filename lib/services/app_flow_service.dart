@@ -4,6 +4,7 @@ class AppFlowService {
   final SharedPreferences prefs;
   static const String _firstLaunchKey = 'is_first_launch';
   static const String _referralCodeKey = 'referral_code';
+  static const String _hasSeenLoginPromptKey = 'has_seen_login_prompt';
 
   AppFlowService(this.prefs);
 
@@ -13,6 +14,14 @@ class AppFlowService {
   /// Sets first launch as complete.
   Future<void> setFirstLaunchComplete() async {
     await prefs.setBool(_firstLaunchKey, false);
+  }
+
+  /// Checks if the user has already seen the login prompt.
+  bool get hasSeenLoginPrompt => prefs.getBool(_hasSeenLoginPromptKey) ?? false;
+
+  /// Sets that the user has seen the login prompt.
+  Future<void> setHasSeenLoginPrompt() async {
+    await prefs.setBool(_hasSeenLoginPromptKey, true);
   }
 
   /// Checks if the app was installed via a referral link (simulated).

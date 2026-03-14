@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:provider/provider.dart';
 
+import 'services/auth_service.dart';
 import 'services/notification_service.dart';
 import 'services/ad_service.dart';
 
@@ -39,6 +40,7 @@ void main() async {
   final settingsController = SettingsController(prefs);
   final expenseController = ExpenseController();
   final appFlowService = AppFlowService(prefs);
+  final authService = AuthService();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
@@ -47,6 +49,7 @@ void main() async {
         ChangeNotifierProvider.value(value: settingsController),
         ChangeNotifierProvider.value(value: expenseController),
         Provider.value(value: appFlowService),
+        Provider.value(value: authService),
       ],
       child: const MyApp(),
     ),

@@ -9,7 +9,8 @@ import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import 'registration_screen.dart';
 import 'forgot_password_screen.dart';
 import '../../services/auth_service.dart';
-import '../settings/settings_screen.dart';
+import '../home_screen/home_screen.dart';
+import '../../services/app_flow_service.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/settings_controller.dart';
 import '../../services/sync_service.dart';
@@ -114,16 +115,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SyncService.instance.syncLocalToCloud();
                           if (!context.mounted) return;
 
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Successfully login! Your data is being synced.')),
+                            const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
                           );
 
+                          // Mark login prompt as seen
+                          await context.read<AppFlowService>().setHasSeenLoginPrompt();
+
+                          if (!context.mounted) return;
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SettingsScreen(),
+                              builder: (context) => const HomeScreen(),
                             ),
-                            (route) => route.isFirst,
+                            (route) => false,
                           );
                         } else if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -182,16 +188,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SyncService.instance.syncLocalToCloud();
                           if (!context.mounted) return;
 
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Successfully login! Your data is being synced.')),
+                            const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
                           );
 
+                          // Mark login prompt as seen
+                          await context.read<AppFlowService>().setHasSeenLoginPrompt();
+
+                          if (!context.mounted) return;
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SettingsScreen(),
+                              builder: (context) => const HomeScreen(),
                             ),
-                            (route) => route.isFirst,
+                            (route) => false,
                           );
                         } else if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -208,6 +219,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (mounted) setState(() => _isLoading = false);
                       }
                     },
+                  ),
+                  const SizedBox(height: 16),
+                  TextButton(
+                    onPressed: () async {
+                      // Mark login prompt as seen and skip for now
+                      await context.read<AppFlowService>().setHasSeenLoginPrompt();
+                      if (!mounted) return;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Skip for now',
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.charcoal.withOpacity(0.6),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                 ],

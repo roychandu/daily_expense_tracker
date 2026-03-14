@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../../common_widgets/app_colors.dart';
 import '../../common_widgets/app_text_styles.dart';
 import '../home_screen/home_screen.dart';
+import '../auth_screens/login_screen.dart';
 import '../../services/app_flow_service.dart';
+import '../../services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -241,8 +243,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final appFlow = Provider.of<AppFlowService>(context, listen: false);
     await appFlow.setFirstLaunchComplete();
     if (!mounted) return;
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    Widget nextScreen;
+
+    if (authService.isLoggedIn) {
+      nextScreen = const HomeScreen();
+    } else {
+      nextScreen = const LoginScreen();
+    }
+
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => nextScreen),
     );
   }
 }
