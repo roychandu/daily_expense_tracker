@@ -4,15 +4,15 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
-class PremiumUnlockedScreen extends StatefulWidget {
+class PremiumSuccessScreen extends StatefulWidget {
   final VoidCallback? onExplorePressed;
-  const PremiumUnlockedScreen({super.key, this.onExplorePressed});
+  const PremiumSuccessScreen({super.key, this.onExplorePressed});
 
   @override
-  State<PremiumUnlockedScreen> createState() => _PremiumUnlockedScreenState();
+  State<PremiumSuccessScreen> createState() => _PremiumSuccessScreenState();
 }
 
-class _PremiumUnlockedScreenState extends State<PremiumUnlockedScreen> {
+class _PremiumSuccessScreenState extends State<PremiumSuccessScreen> {
   final ScrollController _scrollController = ScrollController();
   double _appBarOpacity = 0.0;
 

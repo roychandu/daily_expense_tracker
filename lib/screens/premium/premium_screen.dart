@@ -7,7 +7,7 @@ import '../../controllers/settings_controller.dart';
 import '../../common_widgets/custom_snackbar.dart';
 import '../../services/ad_service.dart';
 import '../settings/privacy_screen.dart';
-import 'premium_unlocked_screen.dart';
+import 'premium_success_screen.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class PremiumScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class PremiumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
     if (settings.isPremium) {
-      return const PremiumUnlockedScreen();
+      return const PremiumSuccessScreen();
     }
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -136,7 +136,7 @@ class PremiumScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PremiumUnlockedScreen(
+                    builder: (context) => PremiumSuccessScreen(
                       onExplorePressed: onPremiumPurchased,
                     ),
                   ),
