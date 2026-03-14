@@ -97,7 +97,8 @@ class DataSyncScreen extends StatelessWidget {
                                 ],
                               ),
                               ValueListenableBuilder<DateTime?>(
-                                valueListenable: SyncService.instance.lastSyncTime,
+                                valueListenable:
+                                    SyncService.instance.lastSyncTime,
                                 builder: (context, lastSync, _) {
                                   String lastSyncStr = 'Never';
                                   if (lastSync != null) {
@@ -106,15 +107,20 @@ class DataSyncScreen extends StatelessWidget {
                                     if (diff.inMinutes < 1) {
                                       lastSyncStr = 'Just now';
                                     } else if (diff.inHours < 1) {
-                                      lastSyncStr = '${diff.inMinutes} minutes ago';
+                                      lastSyncStr =
+                                          '${diff.inMinutes} minutes ago';
                                     } else if (diff.inDays < 1) {
                                       lastSyncStr = '${diff.inHours} hours ago';
                                     } else {
-                                      lastSyncStr = DateFormat('MMM d, h:mm a').format(lastSync);
+                                      lastSyncStr = DateFormat(
+                                        'MMM d, h:mm a',
+                                      ).format(lastSync);
                                     }
                                   }
                                   return Text(
-                                    AppLocalizations.of(context)!.lastBackup(lastSyncStr),
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.lastBackup(lastSyncStr),
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: isDark
                                           ? AppColors.textSecondaryDark
@@ -136,7 +142,8 @@ class DataSyncScreen extends StatelessWidget {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.accountEmail(
-                              FirebaseAuth.instance.currentUser?.email ?? 'Not logged in',
+                              FirebaseAuth.instance.currentUser?.email ??
+                                  'Not logged in',
                             ),
                             style: AppTextStyles.body.copyWith(
                               color: isDark
@@ -150,7 +157,9 @@ class DataSyncScreen extends StatelessWidget {
                             valueListenable: SyncService.instance.storageUsed,
                             builder: (context, storage, _) {
                               return Text(
-                                AppLocalizations.of(context)!.storageUsed(storage),
+                                AppLocalizations.of(
+                                  context,
+                                )!.storageUsed(storage),
                                 style: AppTextStyles.body.copyWith(
                                   color: isDark
                                       ? AppColors.textDark
@@ -197,7 +206,7 @@ class DataSyncScreen extends StatelessWidget {
                   children: [
                     _buildOptionTile(
                       title: AppLocalizations.of(context)!.syncFrequency,
-                      trailing: 'Every 2 Minutes',
+                      trailing: 'Every 4 Hours',
                       isDark: isDark,
                       onTap: () {},
                     ),

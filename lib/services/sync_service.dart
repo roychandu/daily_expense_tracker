@@ -19,7 +19,7 @@ class SyncService {
 
   Timer? _syncTimer;
   bool _isSyncing = false;
-  
+
   final ValueNotifier<DateTime?> lastSyncTime = ValueNotifier<DateTime?>(null);
   final ValueNotifier<String> storageUsed = ValueNotifier<String>('0 KB');
 
@@ -34,7 +34,7 @@ class SyncService {
     _syncTimer?.cancel();
     if (isEnabled && isPremium) {
       // Set to 10 minutes for testing as requested
-      _syncTimer = Timer.periodic(const Duration(minutes: 2), (timer) {
+      _syncTimer = Timer.periodic(const Duration(hours: 4), (timer) {
         syncLocalToCloud();
       });
       // Removed immediate syncLocalToCloud() call
@@ -110,12 +110,15 @@ class SyncService {
       print(
         'Sync complete. Synced ${expenseData.length} expenses and ${categoryData.length} categories.',
       );
-      
+
       // Update metadata
       lastSyncTime.value = DateTime.now();
-      
+
       // Estimate storage size (simplified JSON size check)
-      final totalData = jsonEncode({'expenses': expenseData, 'categories': categoryData});
+      final totalData = jsonEncode({
+        'expenses': expenseData,
+        'categories': categoryData,
+      });
       final bytes = utf8.encode(totalData).length;
       if (bytes < 1024) {
         storageUsed.value = '$bytes Bytes';
@@ -124,7 +127,6 @@ class SyncService {
       } else {
         storageUsed.value = '${(bytes / (1024 * 1024)).toStringAsFixed(2)} MB';
       }
-
     } catch (e) {
       print('Error during sync to Firebase: $e');
     } finally {
