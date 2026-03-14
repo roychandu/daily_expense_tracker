@@ -48,202 +48,224 @@ class _LoginScreenState extends State<LoginScreen> {
             showBackButton: false,
           ),
           body: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 40),
-                  CustomTextField(
-                    controller: _emailController,
-                    hintText: AppLocalizations.of(context)!.email,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: AppLocalizations.of(context)!.password,
-                    obscureText: !_isPasswordVisible,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off_outlined,
-                        color: isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.softGray,
-                      ),
-                      onPressed: () =>
-                          setState(() => _isPasswordVisible = !_isPasswordVisible),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordScreen(),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 40),
+                          CustomTextField(
+                            controller: _emailController,
+                            hintText: AppLocalizations.of(context)!.email,
+                            keyboardType: TextInputType.emailAddress,
                           ),
-                        );
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.forgotPassword,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.primarySelected,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  PrimaryButton(
-                    title: AppLocalizations.of(context)!.login,
-                    onPressed: () async {
-                      setState(() => _isLoading = true);
-                      try {
-                        final user = await AuthService().signInWithEmail(
-                          _emailController.text.trim(),
-                          _passwordController.text.trim(),
-                        );
-                        if (user != null && context.mounted) {
-                          // Enable cloud backup and navigate to SettingsScreen
-                          await context.read<SettingsController>().updateCloudBackup(true);
-                          
-                          // Perform initial sync of existing local data to Firebase
-                          await SyncService.instance.syncLocalToCloud();
-                          if (!context.mounted) return;
-
-                          if (!context.mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
-                          );
-
-                          // Mark login prompt as seen
-                          await context.read<AppFlowService>().setHasSeenLoginPrompt();
-
-                          if (!context.mounted) return;
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
+                          const SizedBox(height: 16),
+                          CustomTextField(
+                            controller: _passwordController,
+                            hintText: AppLocalizations.of(context)!.password,
+                            obscureText: !_isPasswordVisible,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off_outlined,
+                                color: isDark
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.softGray,
+                              ),
+                              onPressed: () =>
+                                  setState(() => _isPasswordVisible = !_isPasswordVisible),
                             ),
-                            (route) => false,
-                          );
-                        } else if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Login failed. Please check your email and password.')),
-                          );
-                        }
-                      } finally {
-                        if (mounted) setState(() => _isLoading = false);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.dontHaveAccount,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.softGray,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegistrationScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.register,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.primarySelected,
-                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  SecondaryButton(
-                    title: AppLocalizations.of(context)!.signUpWithGoogle,
-                    icon: Image.asset('assets/icons/google-icon.png'),
-                    onPressed: () async {
-                      setState(() => _isLoading = true);
-                      try {
-                        final user = await AuthService().signInWithGoogle();
-                        if (user != null && context.mounted) {
-                          // Enable cloud backup and navigate to SettingsScreen
-                          await context.read<SettingsController>().updateCloudBackup(true);
-                          
-                          // Perform initial sync of existing local data to Firebase
-                          await SyncService.instance.syncLocalToCloud();
-                          if (!context.mounted) return;
-
-                          if (!context.mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
-                          );
-
-                          // Mark login prompt as seen
-                          await context.read<AppFlowService>().setHasSeenLoginPrompt();
-
-                          if (!context.mounted) return;
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ForgotPasswordScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.forgotPassword,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: AppColors.primarySelected,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
-                            (route) => false,
-                          );
-                        } else if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
-                          );
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Google Sign-In Error: $e')),
-                          );
-                        }
-                      } finally {
-                        if (mounted) setState(() => _isLoading = false);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () async {
-                      // Mark login prompt as seen and skip for now
-                      await context.read<AppFlowService>().setHasSeenLoginPrompt();
-                      if (!mounted) return;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Skip for now',
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.charcoal.withOpacity(0.6),
-                        fontWeight: FontWeight.w600,
+                          ),
+                          const Spacer(),
+                          const SizedBox(height: 24),
+                          PrimaryButton(
+                            title: AppLocalizations.of(context)!.login,
+                            onPressed: () async {
+                              setState(() => _isLoading = true);
+                              try {
+                                final user = await AuthService().signInWithEmail(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                                if (user != null && context.mounted) {
+                                  // Enable cloud backup and navigate to SettingsScreen
+                                  await context.read<SettingsController>().updateCloudBackup(true);
+                                  
+                                  // Perform initial sync of existing local data to Firebase
+                                  await SyncService.instance.syncLocalToCloud();
+                                  if (!context.mounted) return;
+
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
+                                  );
+
+                                  // Mark login prompt as seen
+                                  await context.read<AppFlowService>().setHasSeenLoginPrompt();
+
+                                  if (!context.mounted) return;
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomeScreen(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                } else if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Login failed. Please check your email and password.')),
+                                  );
+                                }
+                              } finally {
+                                if (mounted) setState(() => _isLoading = false);
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.dontHaveAccount,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: isDark
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.softGray,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const RegistrationScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.register,
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    color: AppColors.primarySelected,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              const Expanded(child: Divider()),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Text(
+                                  "OR",
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    color: isDark ? AppColors.textSecondaryDark : AppColors.softGray,
+                                  ),
+                                ),
+                              ),
+                              const Expanded(child: Divider()),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          SecondaryButton(
+                            title: 'Continue Offline',
+                            textColor: AppColors.primarySelected,
+                            borderColor: AppColors.primarySelected,
+                            onPressed: () async {
+                              // Mark login prompt as seen and skip for now
+                              await context.read<AppFlowService>().setHasSeenLoginPrompt();
+                              if (!mounted) return;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 12),
+                          SecondaryButton(
+                            title: AppLocalizations.of(context)!.signInWithGoogle,
+                            icon: Image.asset('assets/icons/google-icon.png'),
+                            onPressed: () async {
+                              setState(() => _isLoading = true);
+                              try {
+                                final user = await AuthService().signInWithGoogle();
+                                if (user != null && context.mounted) {
+                                  // Enable cloud backup and navigate to SettingsScreen
+                                  await context.read<SettingsController>().updateCloudBackup(true);
+                                  
+                                  // Perform initial sync of existing local data to Firebase
+                                  await SyncService.instance.syncLocalToCloud();
+                                  if (!context.mounted) return;
+
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
+                                  );
+
+                                  // Mark login prompt as seen
+                                  await context.read<AppFlowService>().setHasSeenLoginPrompt();
+
+                                  if (!context.mounted) return;
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomeScreen(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                } else if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Google Sign-In Error: $e')),
+                                  );
+                                }
+                              } finally {
+                                if (mounted) setState(() => _isLoading = false);
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),
