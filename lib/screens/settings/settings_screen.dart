@@ -20,7 +20,7 @@ import 'privacy_screen.dart';
 import '../premium/premium_screen.dart';
 import 'invite_screen.dart';
 import '../../services/auth_service.dart';
-import '../cloud_backup_screens/cloud_backup_screen.dart';
+import '../cloud_backup_screens/cloud_backup_information_screen.dart';
 import '../cloud_backup_screens/data_sync_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -161,7 +161,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const CloudBackupScreen(),
+                                builder: (_) => const CloudBackupInformationScreen(),
                               ),
                             );
                           }
@@ -183,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 await settings.updateCloudBackup(true);
                                 navigator.pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (_) => const CloudBackupScreen(),
+                                    builder: (_) => const CloudBackupInformationScreen(),
                                   ),
                                 );
                               } catch (e) {

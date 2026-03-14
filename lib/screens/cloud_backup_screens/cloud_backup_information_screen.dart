@@ -6,8 +6,8 @@ import '../../common_widgets/custom_app_bar.dart';
 import '../../common_widgets/primary_button.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
-class CloudBackupScreen extends StatelessWidget {
-  const CloudBackupScreen({super.key});
+class CloudBackupInformationScreen extends StatelessWidget {
+  const CloudBackupInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
