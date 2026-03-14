@@ -5,6 +5,11 @@ import '../../common_widgets/app_text_styles.dart';
 import '../../common_widgets/custom_app_bar.dart';
 import '../../common_widgets/primary_button.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
+import '../../services/auth_service.dart';
+import 'data_sync_screen.dart';
+import 'package:provider/provider.dart';
+import '../../controllers/settings_controller.dart';
+import '../../services/sync_service.dart';
 
 class CloudBackupInformationScreen extends StatelessWidget {
   const CloudBackupInformationScreen({super.key});
@@ -110,13 +115,50 @@ class CloudBackupInformationScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     PrimaryButton(
                       title: AppLocalizations.of(context)!.enableCloudBackup,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CloudBackupMethodScreen(),
-                          ),
-                        );
+                      onPressed: () async {
+                        final authService = AuthService();
+                        if (authService.isLoggedIn) {
+                          try {
+                            // Enable cloud backup
+                            await context
+                                .read<SettingsController>()
+                                .updateCloudBackup(true);
+
+                            // Sync local data to Firebase
+                            await SyncService.instance.syncLocalToCloud();
+
+                            if (!context.mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DataSyncScreen(),
+                              ),
+                            );
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    e.toString().contains('no-internet')
+                                        ? AppLocalizations.of(context)!
+                                            .internetRequired
+                                        : 'Error: $e',
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CloudBackupMethodScreen(
+                                isFromCloudBackupFlow: true,
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                     const SizedBox(height: 12),

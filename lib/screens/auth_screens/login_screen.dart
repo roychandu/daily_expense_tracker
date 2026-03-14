@@ -14,9 +14,18 @@ import '../../services/app_flow_service.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/settings_controller.dart';
 import '../../services/sync_service.dart';
+import '../premium/premium_success_screen.dart';
+import '../cloud_backup_screens/cloud_backup_information_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final bool isFromPremiumFlow;
+  final bool isFromCloudBackupFlow;
+
+  const LoginScreen({
+    super.key,
+    this.isFromPremiumFlow = false,
+    this.isFromCloudBackupFlow = false,
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -35,6 +44,47 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _handlePostLoginNavigation(BuildContext context) {
+    if (widget.isFromPremiumFlow) {
+      // For premium flow, we upgrade the user and go to success screen
+      context.read<SettingsController>().updatePremium(true).then((_) {
+        if (!context.mounted) return;
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PremiumSuccessScreen(
+              onExplorePressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CloudBackupInformationScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+          (route) => false, // Remove all previous screens including Login/Register/Premium
+        );
+      });
+    } else if (widget.isFromCloudBackupFlow) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CloudBackupInformationScreen(),
+        ),
+        (route) => false,
+      );
+    } else {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -45,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: CustomAppBar(
             title: AppLocalizations.of(context)!.login,
-            showBackButton: false,
+            showBackButton: widget.isFromPremiumFlow || widget.isFromCloudBackupFlow,
           ),
           body: SafeArea(
             child: LayoutBuilder(
@@ -103,50 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const Spacer(),
-                          const SizedBox(height: 24),
-                          PrimaryButton(
-                            title: AppLocalizations.of(context)!.login,
-                            onPressed: () async {
-                              setState(() => _isLoading = true);
-                              try {
-                                final user = await AuthService().signInWithEmail(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                );
-                                if (user != null && context.mounted) {
-                                  // Enable cloud backup and navigate to SettingsScreen
-                                  await context.read<SettingsController>().updateCloudBackup(true);
-                                  
-                                  // Perform initial sync of existing local data to Firebase
-                                  await SyncService.instance.syncLocalToCloud();
-                                  if (!context.mounted) return;
-
-                                  if (!context.mounted) return;
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
-                                  );
-
-                                  // Mark login prompt as seen
-                                  await context.read<AppFlowService>().setHasSeenLoginPrompt();
-
-                                  if (!context.mounted) return;
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
-                                    ),
-                                    (route) => false,
-                                  );
-                                } else if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Login failed. Please check your email and password.')),
-                                  );
-                                }
-                              } finally {
-                                if (mounted) setState(() => _isLoading = false);
-                              }
-                            },
-                          ),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -159,12 +165,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                       : AppColors.softGray,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const RegistrationScreen(),
+                                      builder: (context) => RegistrationScreen(
+                                        isFromPremiumFlow: widget.isFromPremiumFlow,
+                                        isFromCloudBackupFlow: widget.isFromCloudBackupFlow,
+                                      ),
                                     ),
                                   );
                                 },
@@ -195,20 +205,38 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const SizedBox(height: 16),
-                          SecondaryButton(
-                            title: 'Continue Offline',
-                            textColor: AppColors.primarySelected,
-                            borderColor: AppColors.primarySelected,
+                          PrimaryButton(
+                            title: AppLocalizations.of(context)!.login,
                             onPressed: () async {
-                              // Mark login prompt as seen and skip for now
-                              await context.read<AppFlowService>().setHasSeenLoginPrompt();
-                              if (!mounted) return;
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
-                                ),
-                              );
+                              setState(() => _isLoading = true);
+                              try {
+                                final user = await AuthService().signInWithEmail(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                                if (user != null && context.mounted) {
+                                  // Enable cloud backup and perform initial sync
+                                  await context.read<SettingsController>().updateCloudBackup(true);
+                                  await SyncService.instance.syncLocalToCloud();
+                                  
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
+                                  );
+
+                                  // Mark login prompt as seen
+                                  await context.read<AppFlowService>().setHasSeenLoginPrompt();
+
+                                  if (!context.mounted) return;
+                                  _handlePostLoginNavigation(context);
+                                } else if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Login failed. Please check your email and password.')),
+                                  );
+                                }
+                              } finally {
+                                if (mounted) setState(() => _isLoading = false);
+                              }
                             },
                           ),
                           const SizedBox(height: 12),
@@ -220,13 +248,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               try {
                                 final user = await AuthService().signInWithGoogle();
                                 if (user != null && context.mounted) {
-                                  // Enable cloud backup and navigate to SettingsScreen
+                                  // Enable cloud backup and perform initial sync
                                   await context.read<SettingsController>().updateCloudBackup(true);
-                                  
-                                  // Perform initial sync of existing local data to Firebase
                                   await SyncService.instance.syncLocalToCloud();
-                                  if (!context.mounted) return;
-
+                                  
                                   if (!context.mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Successfully logged in! Your data is being synced.')),
@@ -236,13 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   await context.read<AppFlowService>().setHasSeenLoginPrompt();
 
                                   if (!context.mounted) return;
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
-                                    ),
-                                    (route) => false,
-                                  );
+                                  _handlePostLoginNavigation(context);
                                 } else if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Google Sign-In failed or was cancelled.')),
@@ -257,6 +276,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               } finally {
                                 if (mounted) setState(() => _isLoading = false);
                               }
+                            },
+                          ),
+                          const SizedBox(height: 0), // No space between Google and Continue Offline as per request 3.2
+                          SecondaryButton(
+                            title: 'Continue Offline',
+                            textColor: AppColors.primarySelected,
+                            borderColor: AppColors.primarySelected,
+                            onPressed: () async {
+                              // Mark login prompt as seen and skip for now
+                              await context.read<AppFlowService>().setHasSeenLoginPrompt();
+                              if (!mounted) return;
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                                (route) => false,
+                              );
                             },
                           ),
                           const SizedBox(height: 24),

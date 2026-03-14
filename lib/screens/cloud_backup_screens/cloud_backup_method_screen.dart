@@ -11,7 +11,8 @@ import '../../controllers/settings_controller.dart';
 import '../../services/sync_service.dart';
 
 class CloudBackupMethodScreen extends StatefulWidget {
-  const CloudBackupMethodScreen({super.key});
+  final bool isFromCloudBackupFlow;
+  const CloudBackupMethodScreen({super.key, this.isFromCloudBackupFlow = false});
 
   @override
   State<CloudBackupMethodScreen> createState() => _CloudBackupMethodScreenState();
@@ -73,7 +74,7 @@ class _CloudBackupMethodScreenState extends State<CloudBackupMethodScreen> {
                             MaterialPageRoute(
                               builder: (context) => const SettingsScreen(),
                             ),
-                            (route) => route.isFirst,
+                            (route) => false, // Clear all stack
                           );
                         }
                       } catch (e) {
@@ -98,7 +99,9 @@ class _CloudBackupMethodScreenState extends State<CloudBackupMethodScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
+                          builder: (context) => LoginScreen(
+                            isFromCloudBackupFlow: widget.isFromCloudBackupFlow,
+                          ),
                         ),
                       );
                     },

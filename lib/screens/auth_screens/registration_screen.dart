@@ -13,7 +13,14 @@ import '../../services/app_flow_service.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  final bool isFromPremiumFlow;
+  final bool isFromCloudBackupFlow;
+
+  const RegistrationScreen({
+    super.key,
+    this.isFromPremiumFlow = false,
+    this.isFromCloudBackupFlow = false,
+  });
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -90,47 +97,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           const Spacer(),
-                          const SizedBox(height: 24),
-                          PrimaryButton(
-                            title: AppLocalizations.of(context)!.register,
-                            onPressed: () async {
-                              if (_passwordController.text != _confirmPasswordController.text) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Passwords do not match')),
-                                );
-                                return;
-                              }
-                              setState(() => _isLoading = true);
-                              try {
-                                final user = await AuthService().registerWithEmail(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                );
-                                if (user != null && context.mounted) {
-                                  // Sign out after registration as requested by user to go through login flow
-                                  await AuthService().signOut();
-                                  if (!context.mounted) return;
-                                  
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Registration successful! Please login.')),
-                                  );
-                                  
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginScreen(),
-                                    ),
-                                  );
-                                } else if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Registration failed. Please check your details.')),
-                                  );
-                                }
-                              } finally {
-                                if (mounted) setState(() => _isLoading = false);
-                              }
-                            },
-                          ),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -141,9 +107,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   color: isDark ? AppColors.textSecondaryDark : AppColors.softGray,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  if (widget.isFromPremiumFlow || widget.isFromCloudBackupFlow) {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginScreen(
+                                          isFromPremiumFlow: widget.isFromPremiumFlow,
+                                          isFromCloudBackupFlow: widget.isFromCloudBackupFlow,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pop(context);
+                                  }
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.logInSmall,
@@ -172,20 +151,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ],
                           ),
                           const SizedBox(height: 16),
-                          SecondaryButton(
-                            title: 'Continue Offline',
-                            textColor: AppColors.primarySelected,
-                            borderColor: AppColors.primarySelected,
+                          PrimaryButton(
+                            title: AppLocalizations.of(context)!.register,
                             onPressed: () async {
-                              // Mark login prompt as seen and skip for now
-                              await context.read<AppFlowService>().setHasSeenLoginPrompt();
-                              if (!mounted) return;
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
-                                ),
-                              );
+                              if (_passwordController.text != _confirmPasswordController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Passwords do not match')),
+                                );
+                                return;
+                              }
+                              setState(() => _isLoading = true);
+                              try {
+                                final user = await AuthService().registerWithEmail(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                                if (user != null && context.mounted) {
+                                  // Sign out after registration as requested by user to go through login flow
+                                  await AuthService().signOut();
+                                  if (!context.mounted) return;
+                                  
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Registration successful! Please login.')),
+                                  );
+                                  
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(
+                                        isFromPremiumFlow: widget.isFromPremiumFlow,
+                                        isFromCloudBackupFlow: widget.isFromCloudBackupFlow,
+                                      ),
+                                    ),
+                                  );
+                                } else if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Registration failed. Please check your details.')),
+                                  );
+                                }
+                              } finally {
+                                if (mounted) setState(() => _isLoading = false);
+                              }
                             },
                           ),
                           const SizedBox(height: 12),
@@ -200,15 +206,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     // Sign out and go to Login as requested
                                     await AuthService().signOut();
                                     if (!context.mounted) return;
-
+ 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(content: Text('Google Registration successful! Please login.')),
                                     );
-
+ 
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const LoginScreen(),
+                                        builder: (context) => LoginScreen(
+                                          isFromPremiumFlow: widget.isFromPremiumFlow,
+                                          isFromCloudBackupFlow: widget.isFromCloudBackupFlow,
+                                        ),
                                       ),
                                     );
                                   } else if (context.mounted) {
@@ -225,6 +234,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 } finally {
                                   if (mounted) setState(() => _isLoading = false);
                                 }
+                            },
+                          ),
+                          const SizedBox(height: 12), // Space between secondary buttons as per Request 6
+                          SecondaryButton(
+                            title: 'Continue Offline',
+                            textColor: AppColors.primarySelected,
+                            borderColor: AppColors.primarySelected,
+                            onPressed: () async {
+                              // Mark login prompt as seen and skip for now
+                              await context.read<AppFlowService>().setHasSeenLoginPrompt();
+                              if (!mounted) return;
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                                (route) => false,
+                              );
                             },
                           ),
                           const SizedBox(height: 24),

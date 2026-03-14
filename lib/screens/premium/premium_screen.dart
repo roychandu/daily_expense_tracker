@@ -8,6 +8,8 @@ import '../../common_widgets/custom_snackbar.dart';
 import '../../services/ad_service.dart';
 import '../settings/privacy_screen.dart';
 import 'premium_success_screen.dart';
+import '../auth_screens/registration_screen.dart';
+import '../../services/auth_service.dart';
 import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 
 class PremiumScreen extends StatelessWidget {
@@ -131,6 +133,20 @@ class PremiumScreen extends StatelessWidget {
           const SizedBox(height: 32),
           ElevatedButton(
             onPressed: () async {
+              final authService = AuthService();
+              if (!authService.isLoggedIn) {
+                // If not logged in, redirect to registration
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegistrationScreen(
+                      isFromPremiumFlow: true,
+                    ),
+                  ),
+                );
+                return;
+              }
+
               await context.read<SettingsController>().updatePremium(true);
               if (context.mounted) {
                 Navigator.pushReplacement(

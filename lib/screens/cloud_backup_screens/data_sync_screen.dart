@@ -6,6 +6,7 @@ import 'package:daily_expense_tracker/l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import '../../services/sync_service.dart';
+import '../home_screen/home_screen.dart';
 
 class DataSyncScreen extends StatelessWidget {
   const DataSyncScreen({super.key});
@@ -18,7 +19,18 @@ class DataSyncScreen extends StatelessWidget {
       backgroundColor: isDark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.dataSync),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.dataSync,
+        onBackPressed: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(initialIndex: 3),
+            ),
+            (route) => false,
+          );
+        },
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
